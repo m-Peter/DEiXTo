@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DEiXTo.Services;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -16,7 +17,11 @@ namespace DEiXTo
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new Form1());
+
+            WindowsViewLoader viewLoader = new WindowsViewLoader();
+            viewLoader.LoadMainView();
+            Application.Run(viewLoader.LastLoadedView);
+            //Application.Run(new Form1());
         }
     }
 }
