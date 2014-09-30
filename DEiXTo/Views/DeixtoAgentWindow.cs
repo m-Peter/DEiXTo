@@ -15,6 +15,39 @@ namespace DEiXTo.Views
         public DeixtoAgentWindow()
         {
             InitializeComponent();
+            DeixtoAgentTooltip.SetToolTip(this.URLComboBox, "Please specify URL to navigate");
+            DeixtoAgentTooltip.SetToolTip(this.SilentlyCheckBox, "If checked, JavaScript errors are supressed.");
+            DeixtoAgentTooltip.SetToolTip(this.HighlightModeCheckBox, "If checked, HTML elements are highlighted when mouse passes over them");
+            DeixtoAgentTooltip.SetToolTip(this.RebuildDOMButton, "Rebuilds DOM Tree. Useful when DOM is altered by AJAX calls.");
+            DeixtoAgentTooltip.SetToolTip(this.SimplifyDOMButton, "Simplify DOM Tree");
+            DeixtoAgentTooltip.SetToolTip(this.StopExecutionButton, "Stop execution");
+            DeixtoAgentTooltip.SetToolTip(this.CreateSnapshotButton, "Create Snapshot");
+            DeixtoAgentTooltip.SetToolTip(this.ClearTreeViewsButton, "Clear All TreeViews");
+            DeixtoAgentTooltip.SetToolTip(this.SavePatternButton, "Save record instance as pattern...");
+            DeixtoAgentTooltip.SetToolTip(this.LevelUpButton, "Up one level");
+            DeixtoAgentTooltip.SetToolTip(this.LevelDownButton, "Down one level");
+            DeixtoAgentTooltip.SetToolTip(this.ExecuteButton, "Execute Rule");
+            DeixtoAgentTooltip.SetToolTip(this.URLSTextBox, "Target url container - double click to open site");
+            DeixtoAgentTooltip.SetToolTip(this.AddURLTextBox, "Use this to add a URL to the list");
+            DeixtoAgentTooltip.SetToolTip(this.FileTextBox, "Use this to add URLs from file");
+            DeixtoAgentTooltip.SetToolTip(this.AddURLButton, "Add to list");
+            DeixtoAgentTooltip.SetToolTip(this.SelectButton, "Select output file");
+            DeixtoAgentTooltip.SetToolTip(this.DelayNUD, "Delay in sec between successive http calls");
+            DeixtoAgentTooltip.SetToolTip(this.RemoveURLButton, "Delete selected");
+            DeixtoAgentTooltip.SetToolTip(this.BrowseFileButton, "Define file with additional URLs");
+            DeixtoAgentTooltip.SetToolTip(this.IgnoreHTMLTagsGroupBox, "Select tags to ignore and press the 'Simplify' button above");
+            DeixtoAgentTooltip.SetToolTip(this.TunePatternButton, "Create a working pattern");
+            DeixtoAgentTooltip.SetToolTip(this.LoadPatternButton, "Load a previously saved pattern...");
+            DeixtoAgentTooltip.SetToolTip(this.AutoFillCheckBox, "Check this to automatically submit a search form");
+            DeixtoAgentTooltip.SetToolTip(this.NameTextBox, "Use this to give output filename");
+            DeixtoAgentTooltip.SetToolTip(this.FormatComboBox, "Select output format");
+            DeixtoAgentTooltip.SetToolTip(this.BrowseFileButton, "Define file with additional URLs");
+            DeixtoAgentTooltip.SetToolTip(this.OutputModeGroupBox, "Output file mode");
+            DeixtoAgentTooltip.SetToolTip(this.HitsNUD, "Considered only if > 0");
+            DeixtoAgentTooltip.SetToolTip(this.CrawlingCheckBox, "Check this to handle records that span in many pages");
+            DeixtoAgentTooltip.SetToolTip(this.GoButton, "Run in auto mode");
+            DeixtoAgentTooltip.SetToolTip(this.OpenButton, "Open Project File");
+            DeixtoAgentTooltip.SetToolTip(this.SaveButton, "Open Project File");
         }
     }
 }
