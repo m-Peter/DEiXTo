@@ -106,6 +106,33 @@
             this.tabPage8 = new System.Windows.Forms.TabPage();
             this.tabPage9 = new System.Windows.Forms.TabPage();
             this.ExtractionPatternTreeView = new System.Windows.Forms.TreeView();
+            this.OuterHtmlLabel = new System.Windows.Forms.Label();
+            this.OuterHtmlTextBox = new System.Windows.Forms.TextBox();
+            this.InnerTextLabel = new System.Windows.Forms.Label();
+            this.InnerTextTextBox = new System.Windows.Forms.TextBox();
+            this.RegularExpressionLabel = new System.Windows.Forms.Label();
+            this.RegularExpressionTextBox = new System.Windows.Forms.TextBox();
+            this.HtmlPathLabel = new System.Windows.Forms.Label();
+            this.HtmlPathTextBox = new System.Windows.Forms.TextBox();
+            this.RSSDataGridView = new System.Windows.Forms.DataGridView();
+            this.ColumnLabel = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.ColumnValue = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.ColumnDescription = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.ColumnExample = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.LogTextBox = new System.Windows.Forms.TextBox();
+            this.ClearLogButton = new System.Windows.Forms.Button();
+            this.StatisticsDataGridView = new System.Windows.Forms.DataGridView();
+            this.ColumnMetric = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.StatisticsCheckBox = new System.Windows.Forms.CheckBox();
+            this.SnapshotsGroupBox = new System.Windows.Forms.GroupBox();
+            this.SnapshotTreeView = new System.Windows.Forms.TreeView();
+            this.tabPage10 = new System.Windows.Forms.TabPage();
+            this.SilentlyCheckBox = new System.Windows.Forms.CheckBox();
+            this.AutoScrollCheckBox = new System.Windows.Forms.CheckBox();
+            this.HighlightModeCheckBox = new System.Windows.Forms.CheckBox();
+            this.RebuildDOMButton = new System.Windows.Forms.Button();
+            this.SimplifyDOMButton = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
@@ -137,6 +164,14 @@
             this.ExtractionPatternGroupBox.SuspendLayout();
             this.groupBox5.SuspendLayout();
             this.TargetURLSGroupBox.SuspendLayout();
+            this.tabPage5.SuspendLayout();
+            this.tabPage6.SuspendLayout();
+            this.tabPage7.SuspendLayout();
+            this.tabPage8.SuspendLayout();
+            this.tabPage9.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.RSSDataGridView)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.StatisticsDataGridView)).BeginInit();
+            this.SnapshotsGroupBox.SuspendLayout();
             this.SuspendLayout();
             // 
             // splitContainer1
@@ -180,6 +215,8 @@
             // 
             // BrowserGroupBox
             // 
+            this.BrowserGroupBox.Controls.Add(this.AutoScrollCheckBox);
+            this.BrowserGroupBox.Controls.Add(this.SilentlyCheckBox);
             this.BrowserGroupBox.Controls.Add(this.BrowseButton);
             this.BrowserGroupBox.Controls.Add(this.URLComboBox);
             this.BrowserGroupBox.Controls.Add(this.URLLabel);
@@ -195,9 +232,9 @@
             // BrowseButton
             // 
             this.BrowseButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.BrowseButton.Location = new System.Drawing.Point(574, 175);
+            this.BrowseButton.Location = new System.Drawing.Point(595, 175);
             this.BrowseButton.Name = "BrowseButton";
-            this.BrowseButton.Size = new System.Drawing.Size(74, 23);
+            this.BrowseButton.Size = new System.Drawing.Size(53, 23);
             this.BrowseButton.TabIndex = 3;
             this.BrowseButton.Text = "Browse";
             this.BrowseButton.UseVisualStyleBackColor = true;
@@ -207,9 +244,9 @@
             this.URLComboBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.URLComboBox.FormattingEnabled = true;
-            this.URLComboBox.Location = new System.Drawing.Point(59, 175);
+            this.URLComboBox.Location = new System.Drawing.Point(44, 175);
             this.URLComboBox.Name = "URLComboBox";
-            this.URLComboBox.Size = new System.Drawing.Size(490, 21);
+            this.URLComboBox.Size = new System.Drawing.Size(400, 21);
             this.URLComboBox.TabIndex = 2;
             // 
             // URLLabel
@@ -236,6 +273,9 @@
             // 
             // DOMGroupBox
             // 
+            this.DOMGroupBox.Controls.Add(this.SimplifyDOMButton);
+            this.DOMGroupBox.Controls.Add(this.RebuildDOMButton);
+            this.DOMGroupBox.Controls.Add(this.HighlightModeCheckBox);
             this.DOMGroupBox.Controls.Add(this.RefreshButton);
             this.DOMGroupBox.Controls.Add(this.AttributesCheckBox);
             this.DOMGroupBox.Controls.Add(this.HtmlTreeView);
@@ -250,9 +290,9 @@
             // RefreshButton
             // 
             this.RefreshButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.RefreshButton.Location = new System.Drawing.Point(269, 180);
+            this.RefreshButton.Location = new System.Drawing.Point(310, 180);
             this.RefreshButton.Name = "RefreshButton";
-            this.RefreshButton.Size = new System.Drawing.Size(75, 23);
+            this.RefreshButton.Size = new System.Drawing.Size(34, 23);
             this.RefreshButton.TabIndex = 2;
             this.RefreshButton.Text = "Refresh";
             this.RefreshButton.UseVisualStyleBackColor = true;
@@ -263,7 +303,7 @@
             this.AttributesCheckBox.AutoSize = true;
             this.AttributesCheckBox.Checked = true;
             this.AttributesCheckBox.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.AttributesCheckBox.Location = new System.Drawing.Point(6, 186);
+            this.AttributesCheckBox.Location = new System.Drawing.Point(150, 183);
             this.AttributesCheckBox.Name = "AttributesCheckBox";
             this.AttributesCheckBox.Size = new System.Drawing.Size(70, 17);
             this.AttributesCheckBox.TabIndex = 1;
@@ -461,6 +501,7 @@
             this.SettingsTabControl.Controls.Add(this.tabPage7);
             this.SettingsTabControl.Controls.Add(this.tabPage8);
             this.SettingsTabControl.Controls.Add(this.tabPage9);
+            this.SettingsTabControl.Controls.Add(this.tabPage10);
             this.SettingsTabControl.Dock = System.Windows.Forms.DockStyle.Fill;
             this.SettingsTabControl.Location = new System.Drawing.Point(0, 0);
             this.SettingsTabControl.Name = "SettingsTabControl";
@@ -955,6 +996,14 @@
             // 
             // tabPage5
             // 
+            this.tabPage5.Controls.Add(this.HtmlPathTextBox);
+            this.tabPage5.Controls.Add(this.HtmlPathLabel);
+            this.tabPage5.Controls.Add(this.RegularExpressionTextBox);
+            this.tabPage5.Controls.Add(this.RegularExpressionLabel);
+            this.tabPage5.Controls.Add(this.InnerTextTextBox);
+            this.tabPage5.Controls.Add(this.InnerTextLabel);
+            this.tabPage5.Controls.Add(this.OuterHtmlTextBox);
+            this.tabPage5.Controls.Add(this.OuterHtmlLabel);
             this.tabPage5.Location = new System.Drawing.Point(4, 22);
             this.tabPage5.Name = "tabPage5";
             this.tabPage5.Size = new System.Drawing.Size(525, 366);
@@ -964,6 +1013,7 @@
             // 
             // tabPage6
             // 
+            this.tabPage6.Controls.Add(this.RSSDataGridView);
             this.tabPage6.Location = new System.Drawing.Point(4, 22);
             this.tabPage6.Name = "tabPage6";
             this.tabPage6.Size = new System.Drawing.Size(525, 366);
@@ -973,6 +1023,8 @@
             // 
             // tabPage7
             // 
+            this.tabPage7.Controls.Add(this.ClearLogButton);
+            this.tabPage7.Controls.Add(this.LogTextBox);
             this.tabPage7.Location = new System.Drawing.Point(4, 22);
             this.tabPage7.Name = "tabPage7";
             this.tabPage7.Size = new System.Drawing.Size(525, 366);
@@ -982,6 +1034,8 @@
             // 
             // tabPage8
             // 
+            this.tabPage8.Controls.Add(this.StatisticsCheckBox);
+            this.tabPage8.Controls.Add(this.StatisticsDataGridView);
             this.tabPage8.Location = new System.Drawing.Point(4, 22);
             this.tabPage8.Name = "tabPage8";
             this.tabPage8.Size = new System.Drawing.Size(525, 366);
@@ -991,6 +1045,7 @@
             // 
             // tabPage9
             // 
+            this.tabPage9.Controls.Add(this.SnapshotsGroupBox);
             this.tabPage9.Location = new System.Drawing.Point(4, 22);
             this.tabPage9.Name = "tabPage9";
             this.tabPage9.Size = new System.Drawing.Size(525, 366);
@@ -1007,6 +1062,255 @@
             this.ExtractionPatternTreeView.Name = "ExtractionPatternTreeView";
             this.ExtractionPatternTreeView.Size = new System.Drawing.Size(179, 128);
             this.ExtractionPatternTreeView.TabIndex = 3;
+            // 
+            // OuterHtmlLabel
+            // 
+            this.OuterHtmlLabel.AutoSize = true;
+            this.OuterHtmlLabel.Location = new System.Drawing.Point(10, 8);
+            this.OuterHtmlLabel.Name = "OuterHtmlLabel";
+            this.OuterHtmlLabel.Size = new System.Drawing.Size(242, 13);
+            this.OuterHtmlLabel.TabIndex = 0;
+            this.OuterHtmlLabel.Text = "OuterHTML (the selected element and its subtree)";
+            // 
+            // OuterHtmlTextBox
+            // 
+            this.OuterHtmlTextBox.Location = new System.Drawing.Point(13, 24);
+            this.OuterHtmlTextBox.Multiline = true;
+            this.OuterHtmlTextBox.Name = "OuterHtmlTextBox";
+            this.OuterHtmlTextBox.ScrollBars = System.Windows.Forms.ScrollBars.Both;
+            this.OuterHtmlTextBox.Size = new System.Drawing.Size(504, 99);
+            this.OuterHtmlTextBox.TabIndex = 1;
+            // 
+            // InnerTextLabel
+            // 
+            this.InnerTextLabel.AutoSize = true;
+            this.InnerTextLabel.Location = new System.Drawing.Point(10, 132);
+            this.InnerTextLabel.Name = "InnerTextLabel";
+            this.InnerTextLabel.Size = new System.Drawing.Size(201, 13);
+            this.InnerTextLabel.TabIndex = 2;
+            this.InnerTextLabel.Text = "InnerText (content that can be extracted)";
+            // 
+            // InnerTextTextBox
+            // 
+            this.InnerTextTextBox.Location = new System.Drawing.Point(13, 148);
+            this.InnerTextTextBox.Multiline = true;
+            this.InnerTextTextBox.Name = "InnerTextTextBox";
+            this.InnerTextTextBox.ScrollBars = System.Windows.Forms.ScrollBars.Both;
+            this.InnerTextTextBox.Size = new System.Drawing.Size(504, 59);
+            this.InnerTextTextBox.TabIndex = 3;
+            // 
+            // RegularExpressionLabel
+            // 
+            this.RegularExpressionLabel.AutoSize = true;
+            this.RegularExpressionLabel.Location = new System.Drawing.Point(10, 214);
+            this.RegularExpressionLabel.Name = "RegularExpressionLabel";
+            this.RegularExpressionLabel.Size = new System.Drawing.Size(240, 13);
+            this.RegularExpressionLabel.TabIndex = 4;
+            this.RegularExpressionLabel.Text = "Regular expression set on this element (if defined)";
+            // 
+            // RegularExpressionTextBox
+            // 
+            this.RegularExpressionTextBox.Location = new System.Drawing.Point(13, 230);
+            this.RegularExpressionTextBox.Multiline = true;
+            this.RegularExpressionTextBox.Name = "RegularExpressionTextBox";
+            this.RegularExpressionTextBox.Size = new System.Drawing.Size(504, 59);
+            this.RegularExpressionTextBox.TabIndex = 5;
+            // 
+            // HtmlPathLabel
+            // 
+            this.HtmlPathLabel.AutoSize = true;
+            this.HtmlPathLabel.Location = new System.Drawing.Point(10, 298);
+            this.HtmlPathLabel.Name = "HtmlPathLabel";
+            this.HtmlPathLabel.Size = new System.Drawing.Size(62, 13);
+            this.HtmlPathLabel.TabIndex = 6;
+            this.HtmlPathLabel.Text = "HTML Path";
+            // 
+            // HtmlPathTextBox
+            // 
+            this.HtmlPathTextBox.Location = new System.Drawing.Point(13, 317);
+            this.HtmlPathTextBox.Multiline = true;
+            this.HtmlPathTextBox.Name = "HtmlPathTextBox";
+            this.HtmlPathTextBox.Size = new System.Drawing.Size(504, 41);
+            this.HtmlPathTextBox.TabIndex = 7;
+            // 
+            // RSSDataGridView
+            // 
+            this.RSSDataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.RSSDataGridView.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.ColumnLabel,
+            this.ColumnValue,
+            this.ColumnDescription,
+            this.ColumnExample});
+            this.RSSDataGridView.Location = new System.Drawing.Point(3, 3);
+            this.RSSDataGridView.Name = "RSSDataGridView";
+            this.RSSDataGridView.RowHeadersVisible = false;
+            this.RSSDataGridView.RowHeadersWidth = 50;
+            this.RSSDataGridView.Size = new System.Drawing.Size(519, 330);
+            this.RSSDataGridView.TabIndex = 0;
+            // 
+            // ColumnLabel
+            // 
+            this.ColumnLabel.HeaderText = "Label";
+            this.ColumnLabel.Name = "ColumnLabel";
+            this.ColumnLabel.Width = 125;
+            // 
+            // ColumnValue
+            // 
+            this.ColumnValue.HeaderText = "Value";
+            this.ColumnValue.Name = "ColumnValue";
+            this.ColumnValue.Width = 125;
+            // 
+            // ColumnDescription
+            // 
+            this.ColumnDescription.HeaderText = "Description";
+            this.ColumnDescription.Name = "ColumnDescription";
+            this.ColumnDescription.Width = 125;
+            // 
+            // ColumnExample
+            // 
+            this.ColumnExample.HeaderText = "Example";
+            this.ColumnExample.Name = "ColumnExample";
+            this.ColumnExample.Width = 125;
+            // 
+            // LogTextBox
+            // 
+            this.LogTextBox.Location = new System.Drawing.Point(3, 3);
+            this.LogTextBox.Multiline = true;
+            this.LogTextBox.Name = "LogTextBox";
+            this.LogTextBox.ReadOnly = true;
+            this.LogTextBox.Size = new System.Drawing.Size(514, 326);
+            this.LogTextBox.TabIndex = 0;
+            // 
+            // ClearLogButton
+            // 
+            this.ClearLogButton.Location = new System.Drawing.Point(442, 335);
+            this.ClearLogButton.Name = "ClearLogButton";
+            this.ClearLogButton.Size = new System.Drawing.Size(75, 23);
+            this.ClearLogButton.TabIndex = 1;
+            this.ClearLogButton.Text = "Clear";
+            this.ClearLogButton.UseVisualStyleBackColor = true;
+            // 
+            // StatisticsDataGridView
+            // 
+            this.StatisticsDataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.StatisticsDataGridView.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.ColumnMetric,
+            this.dataGridViewTextBoxColumn1});
+            this.StatisticsDataGridView.Location = new System.Drawing.Point(3, 3);
+            this.StatisticsDataGridView.Name = "StatisticsDataGridView";
+            this.StatisticsDataGridView.RowHeadersVisible = false;
+            this.StatisticsDataGridView.RowHeadersWidth = 45;
+            this.StatisticsDataGridView.Size = new System.Drawing.Size(514, 332);
+            this.StatisticsDataGridView.TabIndex = 0;
+            // 
+            // ColumnMetric
+            // 
+            this.ColumnMetric.HeaderText = "Metric";
+            this.ColumnMetric.Name = "ColumnMetric";
+            this.ColumnMetric.Width = 255;
+            // 
+            // dataGridViewTextBoxColumn1
+            // 
+            this.dataGridViewTextBoxColumn1.HeaderText = "Value";
+            this.dataGridViewTextBoxColumn1.Name = "dataGridViewTextBoxColumn1";
+            this.dataGridViewTextBoxColumn1.Width = 255;
+            // 
+            // StatisticsCheckBox
+            // 
+            this.StatisticsCheckBox.AutoSize = true;
+            this.StatisticsCheckBox.Checked = true;
+            this.StatisticsCheckBox.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.StatisticsCheckBox.Location = new System.Drawing.Point(12, 341);
+            this.StatisticsCheckBox.Name = "StatisticsCheckBox";
+            this.StatisticsCheckBox.Size = new System.Drawing.Size(102, 17);
+            this.StatisticsCheckBox.TabIndex = 1;
+            this.StatisticsCheckBox.Text = "Enable statistics";
+            this.StatisticsCheckBox.UseVisualStyleBackColor = true;
+            // 
+            // SnapshotsGroupBox
+            // 
+            this.SnapshotsGroupBox.Controls.Add(this.SnapshotTreeView);
+            this.SnapshotsGroupBox.Location = new System.Drawing.Point(3, 3);
+            this.SnapshotsGroupBox.Name = "SnapshotsGroupBox";
+            this.SnapshotsGroupBox.Size = new System.Drawing.Size(519, 359);
+            this.SnapshotsGroupBox.TabIndex = 0;
+            this.SnapshotsGroupBox.TabStop = false;
+            this.SnapshotsGroupBox.Text = "Pattern Snapshot";
+            // 
+            // SnapshotTreeView
+            // 
+            this.SnapshotTreeView.Location = new System.Drawing.Point(6, 19);
+            this.SnapshotTreeView.Name = "SnapshotTreeView";
+            this.SnapshotTreeView.Size = new System.Drawing.Size(517, 336);
+            this.SnapshotTreeView.TabIndex = 0;
+            // 
+            // tabPage10
+            // 
+            this.tabPage10.Location = new System.Drawing.Point(4, 22);
+            this.tabPage10.Name = "tabPage10";
+            this.tabPage10.Size = new System.Drawing.Size(525, 366);
+            this.tabPage10.TabIndex = 7;
+            this.tabPage10.Text = "About";
+            this.tabPage10.UseVisualStyleBackColor = true;
+            // 
+            // SilentlyCheckBox
+            // 
+            this.SilentlyCheckBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.SilentlyCheckBox.AutoSize = true;
+            this.SilentlyCheckBox.Checked = true;
+            this.SilentlyCheckBox.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.SilentlyCheckBox.Location = new System.Drawing.Point(456, 179);
+            this.SilentlyCheckBox.Name = "SilentlyCheckBox";
+            this.SilentlyCheckBox.Size = new System.Drawing.Size(59, 17);
+            this.SilentlyCheckBox.TabIndex = 4;
+            this.SilentlyCheckBox.Text = "Silently";
+            this.SilentlyCheckBox.UseVisualStyleBackColor = true;
+            // 
+            // AutoScrollCheckBox
+            // 
+            this.AutoScrollCheckBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.AutoScrollCheckBox.AutoSize = true;
+            this.AutoScrollCheckBox.Checked = true;
+            this.AutoScrollCheckBox.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.AutoScrollCheckBox.Location = new System.Drawing.Point(521, 181);
+            this.AutoScrollCheckBox.Name = "AutoScrollCheckBox";
+            this.AutoScrollCheckBox.Size = new System.Drawing.Size(74, 17);
+            this.AutoScrollCheckBox.TabIndex = 5;
+            this.AutoScrollCheckBox.Text = "AutoScroll";
+            this.AutoScrollCheckBox.UseVisualStyleBackColor = true;
+            // 
+            // HighlightModeCheckBox
+            // 
+            this.HighlightModeCheckBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.HighlightModeCheckBox.AutoSize = true;
+            this.HighlightModeCheckBox.Checked = true;
+            this.HighlightModeCheckBox.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.HighlightModeCheckBox.Location = new System.Drawing.Point(6, 182);
+            this.HighlightModeCheckBox.Name = "HighlightModeCheckBox";
+            this.HighlightModeCheckBox.Size = new System.Drawing.Size(138, 17);
+            this.HighlightModeCheckBox.TabIndex = 3;
+            this.HighlightModeCheckBox.Text = "Highlight Browser Mode";
+            this.HighlightModeCheckBox.UseVisualStyleBackColor = true;
+            // 
+            // RebuildDOMButton
+            // 
+            this.RebuildDOMButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.RebuildDOMButton.Location = new System.Drawing.Point(239, 181);
+            this.RebuildDOMButton.Name = "RebuildDOMButton";
+            this.RebuildDOMButton.Size = new System.Drawing.Size(32, 23);
+            this.RebuildDOMButton.TabIndex = 4;
+            this.RebuildDOMButton.Text = "button7";
+            this.RebuildDOMButton.UseVisualStyleBackColor = true;
+            // 
+            // SimplifyDOMButton
+            // 
+            this.SimplifyDOMButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.SimplifyDOMButton.Location = new System.Drawing.Point(272, 180);
+            this.SimplifyDOMButton.Name = "SimplifyDOMButton";
+            this.SimplifyDOMButton.Size = new System.Drawing.Size(32, 23);
+            this.SimplifyDOMButton.TabIndex = 5;
+            this.SimplifyDOMButton.Text = "button7";
+            this.SimplifyDOMButton.UseVisualStyleBackColor = true;
             // 
             // DeixtoAgentWindow
             // 
@@ -1055,6 +1359,17 @@
             this.groupBox5.ResumeLayout(false);
             this.TargetURLSGroupBox.ResumeLayout(false);
             this.TargetURLSGroupBox.PerformLayout();
+            this.tabPage5.ResumeLayout(false);
+            this.tabPage5.PerformLayout();
+            this.tabPage6.ResumeLayout(false);
+            this.tabPage7.ResumeLayout(false);
+            this.tabPage7.PerformLayout();
+            this.tabPage8.ResumeLayout(false);
+            this.tabPage8.PerformLayout();
+            this.tabPage9.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.RSSDataGridView)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.StatisticsDataGridView)).EndInit();
+            this.SnapshotsGroupBox.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -1139,5 +1454,32 @@
         private System.Windows.Forms.NumericUpDown HitsNUD;
         private System.Windows.Forms.Label HitsLabel;
         private System.Windows.Forms.TreeView ExtractionPatternTreeView;
+        private System.Windows.Forms.TextBox OuterHtmlTextBox;
+        private System.Windows.Forms.Label OuterHtmlLabel;
+        private System.Windows.Forms.TextBox InnerTextTextBox;
+        private System.Windows.Forms.Label InnerTextLabel;
+        private System.Windows.Forms.TextBox HtmlPathTextBox;
+        private System.Windows.Forms.Label HtmlPathLabel;
+        private System.Windows.Forms.TextBox RegularExpressionTextBox;
+        private System.Windows.Forms.Label RegularExpressionLabel;
+        private System.Windows.Forms.DataGridView RSSDataGridView;
+        private System.Windows.Forms.DataGridViewTextBoxColumn ColumnLabel;
+        private System.Windows.Forms.DataGridViewTextBoxColumn ColumnValue;
+        private System.Windows.Forms.DataGridViewTextBoxColumn ColumnDescription;
+        private System.Windows.Forms.DataGridViewTextBoxColumn ColumnExample;
+        private System.Windows.Forms.TextBox LogTextBox;
+        private System.Windows.Forms.Button ClearLogButton;
+        private System.Windows.Forms.DataGridView StatisticsDataGridView;
+        private System.Windows.Forms.DataGridViewTextBoxColumn ColumnMetric;
+        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn1;
+        private System.Windows.Forms.CheckBox StatisticsCheckBox;
+        private System.Windows.Forms.GroupBox SnapshotsGroupBox;
+        private System.Windows.Forms.TreeView SnapshotTreeView;
+        private System.Windows.Forms.TabPage tabPage10;
+        private System.Windows.Forms.CheckBox SilentlyCheckBox;
+        private System.Windows.Forms.CheckBox AutoScrollCheckBox;
+        private System.Windows.Forms.CheckBox HighlightModeCheckBox;
+        private System.Windows.Forms.Button SimplifyDOMButton;
+        private System.Windows.Forms.Button RebuildDOMButton;
     }
 }
