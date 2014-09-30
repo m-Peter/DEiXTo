@@ -20,6 +20,12 @@ namespace DEiXTo.Presenters
             _viewLoader = loader;
 
             _view.NewAgent += _view_NewAgent;
+            _view.ResetCounter += _view_ResetCounter;
+        }
+
+        void _view_ResetCounter()
+        {
+            ClearCounter();
         }
 
         void _view_NewAgent()
@@ -32,6 +38,11 @@ namespace DEiXTo.Presenters
         public int FormCounter
         {
             get { return _formCounter; }
+        }
+
+        void ClearCounter()
+        {
+            _formCounter = 0;
         }
 
     }

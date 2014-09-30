@@ -21,7 +21,6 @@ namespace DEiXTo
             WindowsViewLoader viewLoader = new WindowsViewLoader();
             viewLoader.LoadMainView();
             Application.Run(viewLoader.LastLoadedView);
-            //Application.Run(new Form1());
         }
     }
 }

@@ -9,5 +9,6 @@ namespace DEiXTo.Views
     public interface IMainView
     {
         event Action NewAgent;
+        event Action ResetCounter;
     }
 }

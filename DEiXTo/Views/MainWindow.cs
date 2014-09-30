@@ -13,6 +13,7 @@ namespace DEiXTo.Views
     public partial class MainWindow : Form, IMainView
     {
         public event Action NewAgent;
+        public event Action ResetCounter;
 
         public MainWindow()
         {
@@ -37,6 +38,11 @@ namespace DEiXTo.Views
             foreach (Form childForm in this.MdiChildren)
             {
                 childForm.Close();
+            }
+
+            if (ResetCounter != null)
+            {
+                ResetCounter();
             }
         }
 
