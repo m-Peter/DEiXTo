@@ -36,16 +36,22 @@
             this.LblURL = new System.Windows.Forms.Label();
             this.CbUrl = new System.Windows.Forms.ComboBox();
             this.BtnBrowse = new System.Windows.Forms.Button();
+            this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.TreeViewHtml = new System.Windows.Forms.TreeView();
+            this.CbAttributes = new System.Windows.Forms.CheckBox();
+            this.BtnRefresh = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
             this.splitContainer1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer2)).BeginInit();
             this.splitContainer2.Panel1.SuspendLayout();
+            this.splitContainer2.Panel2.SuspendLayout();
             this.splitContainer2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer3)).BeginInit();
             this.splitContainer3.SuspendLayout();
             this.groupBox1.SuspendLayout();
+            this.groupBox2.SuspendLayout();
             this.SuspendLayout();
             // 
             // splitContainer1
@@ -78,6 +84,10 @@
             // 
             this.splitContainer2.Panel1.Controls.Add(this.groupBox1);
             this.splitContainer2.Panel1MinSize = 450;
+            // 
+            // splitContainer2.Panel2
+            // 
+            this.splitContainer2.Panel2.Controls.Add(this.groupBox2);
             this.splitContainer2.Panel2MinSize = 350;
             this.splitContainer2.Size = new System.Drawing.Size(1008, 206);
             this.splitContainer2.SplitterDistance = 654;
@@ -150,6 +160,52 @@
             this.BtnBrowse.Text = "Browse";
             this.BtnBrowse.UseVisualStyleBackColor = true;
             // 
+            // groupBox2
+            // 
+            this.groupBox2.Controls.Add(this.BtnRefresh);
+            this.groupBox2.Controls.Add(this.CbAttributes);
+            this.groupBox2.Controls.Add(this.TreeViewHtml);
+            this.groupBox2.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.groupBox2.Location = new System.Drawing.Point(0, 0);
+            this.groupBox2.Name = "groupBox2";
+            this.groupBox2.Size = new System.Drawing.Size(350, 206);
+            this.groupBox2.TabIndex = 0;
+            this.groupBox2.TabStop = false;
+            this.groupBox2.Text = "DOM Tree";
+            // 
+            // TreeViewHtml
+            // 
+            this.TreeViewHtml.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.TreeViewHtml.Location = new System.Drawing.Point(6, 19);
+            this.TreeViewHtml.Name = "TreeViewHtml";
+            this.TreeViewHtml.Size = new System.Drawing.Size(338, 155);
+            this.TreeViewHtml.TabIndex = 0;
+            // 
+            // CbAttributes
+            // 
+            this.CbAttributes.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.CbAttributes.AutoSize = true;
+            this.CbAttributes.Checked = true;
+            this.CbAttributes.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.CbAttributes.Location = new System.Drawing.Point(6, 186);
+            this.CbAttributes.Name = "CbAttributes";
+            this.CbAttributes.Size = new System.Drawing.Size(70, 17);
+            this.CbAttributes.TabIndex = 1;
+            this.CbAttributes.Text = "Attributes";
+            this.CbAttributes.UseVisualStyleBackColor = true;
+            // 
+            // BtnRefresh
+            // 
+            this.BtnRefresh.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.BtnRefresh.Location = new System.Drawing.Point(269, 180);
+            this.BtnRefresh.Name = "BtnRefresh";
+            this.BtnRefresh.Size = new System.Drawing.Size(75, 23);
+            this.BtnRefresh.TabIndex = 2;
+            this.BtnRefresh.Text = "Refresh";
+            this.BtnRefresh.UseVisualStyleBackColor = true;
+            // 
             // DeixtoAgentWindow
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -163,12 +219,15 @@
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).EndInit();
             this.splitContainer1.ResumeLayout(false);
             this.splitContainer2.Panel1.ResumeLayout(false);
+            this.splitContainer2.Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer2)).EndInit();
             this.splitContainer2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer3)).EndInit();
             this.splitContainer3.ResumeLayout(false);
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
+            this.groupBox2.ResumeLayout(false);
+            this.groupBox2.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -183,5 +242,9 @@
         private System.Windows.Forms.Label LblURL;
         private System.Windows.Forms.ComboBox CbUrl;
         private System.Windows.Forms.Button BtnBrowse;
+        private System.Windows.Forms.GroupBox groupBox2;
+        private System.Windows.Forms.Button BtnRefresh;
+        private System.Windows.Forms.CheckBox CbAttributes;
+        private System.Windows.Forms.TreeView TreeViewHtml;
     }
 }
