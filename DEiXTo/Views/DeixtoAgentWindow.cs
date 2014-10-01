@@ -13,6 +13,7 @@ namespace DEiXTo.Views
     public partial class DeixtoAgentWindow : Form, IDeixtoAgentView
     {
         public event Action BrowseToUrl;
+        public event Action<KeyEventArgs> KeyDownPress;
 
         public DeixtoAgentWindow()
         {
@@ -50,6 +51,17 @@ namespace DEiXTo.Views
             DeixtoAgentTooltip.SetToolTip(this.GoButton, "Run in auto mode");
             DeixtoAgentTooltip.SetToolTip(this.OpenButton, "Open Project File");
             DeixtoAgentTooltip.SetToolTip(this.SaveButton, "Open Project File");
+
+            this.KeyPreview = true;
+            this.KeyDown += DeixtoAgentWindow_KeyDown;
+        }
+
+        void DeixtoAgentWindow_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (KeyDownPress != null)
+            {
+                KeyDownPress(e);
+            }
         }
 
         public string Url
@@ -65,6 +77,16 @@ namespace DEiXTo.Views
         public void NavigateTo(string url)
         {
             WebBrowser.Navigate(url);
+        }
+
+        public void NavigateForward()
+        {
+            WebBrowser.GoForward();
+        }
+
+        public void NavigateBack()
+        {
+            WebBrowser.GoBack();
         }
 
         private void BrowseToURLButton_Click(object sender, EventArgs e)

@@ -78,21 +78,21 @@
             // cascadeToolStripMenuItem
             // 
             this.cascadeToolStripMenuItem.Name = "cascadeToolStripMenuItem";
-            this.cascadeToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.cascadeToolStripMenuItem.Size = new System.Drawing.Size(120, 22);
             this.cascadeToolStripMenuItem.Text = "Cascade";
             this.cascadeToolStripMenuItem.Click += new System.EventHandler(this.cascadeToolStripMenuItem_Click);
             // 
             // closeAllToolStripMenuItem
             // 
             this.closeAllToolStripMenuItem.Name = "closeAllToolStripMenuItem";
-            this.closeAllToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.closeAllToolStripMenuItem.Size = new System.Drawing.Size(120, 22);
             this.closeAllToolStripMenuItem.Text = "Close All";
             this.closeAllToolStripMenuItem.Click += new System.EventHandler(this.closeAllToolStripMenuItem_Click);
             // 
             // floatAllToolStripMenuItem
             // 
             this.floatAllToolStripMenuItem.Name = "floatAllToolStripMenuItem";
-            this.floatAllToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.floatAllToolStripMenuItem.Size = new System.Drawing.Size(120, 22);
             this.floatAllToolStripMenuItem.Text = "Float All";
             this.floatAllToolStripMenuItem.Click += new System.EventHandler(this.floatAllToolStripMenuItem_Click);
             // 
