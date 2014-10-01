@@ -10,8 +10,10 @@ using System.Windows.Forms;
 
 namespace DEiXTo.Views
 {
-    public partial class DeixtoAgentWindow : Form
+    public partial class DeixtoAgentWindow : Form, IDeixtoAgentView
     {
+        public event Action BrowseToUrl;
+
         public DeixtoAgentWindow()
         {
             InitializeComponent();
@@ -48,6 +50,29 @@ namespace DEiXTo.Views
             DeixtoAgentTooltip.SetToolTip(this.GoButton, "Run in auto mode");
             DeixtoAgentTooltip.SetToolTip(this.OpenButton, "Open Project File");
             DeixtoAgentTooltip.SetToolTip(this.SaveButton, "Open Project File");
+        }
+
+        public string Url
+        {
+            get { return URLComboBox.Text; }
+        }
+
+        public void ShowWarningMessage()
+        {
+            MessageBox.Show("Please specify URL!");
+        }
+
+        public void NavigateTo(string url)
+        {
+            WebBrowser.Navigate(url);
+        }
+
+        private void BrowseToURLButton_Click(object sender, EventArgs e)
+        {
+            if (BrowseToUrl != null)
+            {
+                BrowseToUrl();
+            }
         }
     }
 }

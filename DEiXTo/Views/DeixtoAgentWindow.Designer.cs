@@ -266,6 +266,7 @@
             this.BrowseToURLButton.TabIndex = 3;
             this.BrowseToURLButton.Text = "Browse";
             this.BrowseToURLButton.UseVisualStyleBackColor = true;
+            this.BrowseToURLButton.Click += new System.EventHandler(this.BrowseToURLButton_Click);
             // 
             // URLComboBox
             // 
