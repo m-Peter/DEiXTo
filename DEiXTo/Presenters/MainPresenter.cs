@@ -20,12 +20,25 @@ namespace DEiXTo.Presenters
             _viewLoader = loader;
 
             _view.NewAgent += _view_NewAgent;
-            _view.ResetCounter += _view_ResetCounter;
+            _view.CascadeAgentWindows += _view_CascadeAgentWindows;
+            _view.CloseAgentWindows += _view_CloseAgentWindows;
+            _view.FloatAgentWindows += _view_FloatAgentWindows;
         }
 
-        void _view_ResetCounter()
+        void _view_FloatAgentWindows()
         {
-            ClearCounter();
+            _view.FloatAgents();
+        }
+
+        void _view_CloseAgentWindows()
+        {
+            _view.CloseAgents();
+            _formCounter = 0;
+        }
+
+        void _view_CascadeAgentWindows()
+        {
+            _view.CascadeAgents();
         }
 
         void _view_NewAgent()
@@ -38,11 +51,6 @@ namespace DEiXTo.Presenters
         public int FormCounter
         {
             get { return _formCounter; }
-        }
-
-        void ClearCounter()
-        {
-            _formCounter = 0;
         }
 
     }

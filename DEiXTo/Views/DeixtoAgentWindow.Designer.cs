@@ -34,7 +34,7 @@
             this.BrowserGroupBox = new System.Windows.Forms.GroupBox();
             this.AutoScrollCheckBox = new System.Windows.Forms.CheckBox();
             this.SilentlyCheckBox = new System.Windows.Forms.CheckBox();
-            this.BrowseButton = new System.Windows.Forms.Button();
+            this.BrowseToURLButton = new System.Windows.Forms.Button();
             this.URLComboBox = new System.Windows.Forms.ComboBox();
             this.URLLabel = new System.Windows.Forms.Label();
             this.WebBrowser = new System.Windows.Forms.WebBrowser();
@@ -46,10 +46,10 @@
             this.AttributesCheckBox = new System.Windows.Forms.CheckBox();
             this.HtmlTreeView = new System.Windows.Forms.TreeView();
             this.splitContainer3 = new System.Windows.Forms.SplitContainer();
-            this.PatternGroupBox = new System.Windows.Forms.GroupBox();
+            this.WorkingPatternGroupBox = new System.Windows.Forms.GroupBox();
             this.AttributesTabControl = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
-            this.ListViewAttributes = new System.Windows.Forms.ListView();
+            this.AttributesListView = new System.Windows.Forms.ListView();
             this.AttributeHeader = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.ValueHeader = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.tabPage2 = new System.Windows.Forms.TabPage();
@@ -60,15 +60,15 @@
             this.SavePatternButton = new System.Windows.Forms.Button();
             this.ClearTreeViewsButton = new System.Windows.Forms.Button();
             this.CreateSnapshotButton = new System.Windows.Forms.Button();
-            this.PatternTreeView = new System.Windows.Forms.TreeView();
+            this.WorkingPatternTreeView = new System.Windows.Forms.TreeView();
             this.SettingsTabControl = new System.Windows.Forms.TabControl();
             this.tabPage3 = new System.Windows.Forms.TabPage();
             this.SaveButton = new System.Windows.Forms.Button();
             this.OpenButton = new System.Windows.Forms.Button();
             this.GoButton = new System.Windows.Forms.Button();
             this.CrawlingGroupBox = new System.Windows.Forms.GroupBox();
-            this.LinkTextBox = new System.Windows.Forms.TextBox();
-            this.LinkUrl = new System.Windows.Forms.Label();
+            this.HTMLLinkTextBox = new System.Windows.Forms.TextBox();
+            this.HTMLLinkLabel = new System.Windows.Forms.Label();
             this.CrawlingDepthNUD = new System.Windows.Forms.NumericUpDown();
             this.CrawlingDepthLabel = new System.Windows.Forms.Label();
             this.CrawlingCheckBox = new System.Windows.Forms.CheckBox();
@@ -82,16 +82,16 @@
             this.AppendRadioBtn = new System.Windows.Forms.RadioButton();
             this.OverwriteRadioBtn = new System.Windows.Forms.RadioButton();
             this.SubmitFormGroupBox = new System.Windows.Forms.GroupBox();
-            this.QueryTextBox = new System.Windows.Forms.TextBox();
+            this.SearchQueryTextBox = new System.Windows.Forms.TextBox();
             this.InputNameTextBox = new System.Windows.Forms.TextBox();
             this.FormNameTextBox = new System.Windows.Forms.TextBox();
             this.AutoFillCheckBox = new System.Windows.Forms.CheckBox();
             this.OutputFileGroupBox = new System.Windows.Forms.GroupBox();
-            this.SelectButton = new System.Windows.Forms.Button();
-            this.FormatComboBox = new System.Windows.Forms.ComboBox();
-            this.FormatLabel = new System.Windows.Forms.Label();
-            this.NameTextBox = new System.Windows.Forms.TextBox();
-            this.NameLabel = new System.Windows.Forms.Label();
+            this.SelectOutputFileButton = new System.Windows.Forms.Button();
+            this.OutputFileFormatComboBox = new System.Windows.Forms.ComboBox();
+            this.OutputFileFormatLabel = new System.Windows.Forms.Label();
+            this.OutputFileNameTextBox = new System.Windows.Forms.TextBox();
+            this.OutputFileNameLabel = new System.Windows.Forms.Label();
             this.ExtractionPatternGroupBox = new System.Windows.Forms.GroupBox();
             this.ExtractionPatternTreeView = new System.Windows.Forms.TreeView();
             this.LoadPatternButton = new System.Windows.Forms.Button();
@@ -99,13 +99,13 @@
             this.IgnoreHTMLTagsGroupBox = new System.Windows.Forms.GroupBox();
             this.checkedListBox1 = new System.Windows.Forms.CheckedListBox();
             this.TargetURLSGroupBox = new System.Windows.Forms.GroupBox();
-            this.BrowseFileButton = new System.Windows.Forms.Button();
-            this.FileTextBox = new System.Windows.Forms.TextBox();
+            this.BrowseURLsFileButton = new System.Windows.Forms.Button();
+            this.URLsFileTextBox = new System.Windows.Forms.TextBox();
             this.FileLabel = new System.Windows.Forms.Label();
             this.RemoveURLButton = new System.Windows.Forms.Button();
             this.AddURLButton = new System.Windows.Forms.Button();
             this.AddURLTextBox = new System.Windows.Forms.TextBox();
-            this.URLSTextBox = new System.Windows.Forms.TextBox();
+            this.TargetURLSTextBox = new System.Windows.Forms.TextBox();
             this.tabPage4 = new System.Windows.Forms.TabPage();
             this.tabPage5 = new System.Windows.Forms.TabPage();
             this.HtmlPathTextBox = new System.Windows.Forms.TextBox();
@@ -149,7 +149,7 @@
             this.splitContainer3.Panel1.SuspendLayout();
             this.splitContainer3.Panel2.SuspendLayout();
             this.splitContainer3.SuspendLayout();
-            this.PatternGroupBox.SuspendLayout();
+            this.WorkingPatternGroupBox.SuspendLayout();
             this.AttributesTabControl.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.tabPage2.SuspendLayout();
@@ -219,7 +219,7 @@
             // 
             this.BrowserGroupBox.Controls.Add(this.AutoScrollCheckBox);
             this.BrowserGroupBox.Controls.Add(this.SilentlyCheckBox);
-            this.BrowserGroupBox.Controls.Add(this.BrowseButton);
+            this.BrowserGroupBox.Controls.Add(this.BrowseToURLButton);
             this.BrowserGroupBox.Controls.Add(this.URLComboBox);
             this.BrowserGroupBox.Controls.Add(this.URLLabel);
             this.BrowserGroupBox.Controls.Add(this.WebBrowser);
@@ -257,15 +257,15 @@
             this.SilentlyCheckBox.Text = "Silently";
             this.SilentlyCheckBox.UseVisualStyleBackColor = true;
             // 
-            // BrowseButton
+            // BrowseToURLButton
             // 
-            this.BrowseButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.BrowseButton.Location = new System.Drawing.Point(595, 175);
-            this.BrowseButton.Name = "BrowseButton";
-            this.BrowseButton.Size = new System.Drawing.Size(53, 23);
-            this.BrowseButton.TabIndex = 3;
-            this.BrowseButton.Text = "Browse";
-            this.BrowseButton.UseVisualStyleBackColor = true;
+            this.BrowseToURLButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.BrowseToURLButton.Location = new System.Drawing.Point(595, 175);
+            this.BrowseToURLButton.Name = "BrowseToURLButton";
+            this.BrowseToURLButton.Size = new System.Drawing.Size(53, 23);
+            this.BrowseToURLButton.TabIndex = 3;
+            this.BrowseToURLButton.Text = "Browse";
+            this.BrowseToURLButton.UseVisualStyleBackColor = true;
             // 
             // URLComboBox
             // 
@@ -389,7 +389,7 @@
             // 
             // splitContainer3.Panel1
             // 
-            this.splitContainer3.Panel1.Controls.Add(this.PatternGroupBox);
+            this.splitContainer3.Panel1.Controls.Add(this.WorkingPatternGroupBox);
             this.splitContainer3.Panel1MinSize = 471;
             // 
             // splitContainer3.Panel2
@@ -400,23 +400,23 @@
             this.splitContainer3.SplitterDistance = 471;
             this.splitContainer3.TabIndex = 0;
             // 
-            // PatternGroupBox
+            // WorkingPatternGroupBox
             // 
-            this.PatternGroupBox.Controls.Add(this.AttributesTabControl);
-            this.PatternGroupBox.Controls.Add(this.ExecuteButton);
-            this.PatternGroupBox.Controls.Add(this.LevelDownButton);
-            this.PatternGroupBox.Controls.Add(this.LevelUpButton);
-            this.PatternGroupBox.Controls.Add(this.SavePatternButton);
-            this.PatternGroupBox.Controls.Add(this.ClearTreeViewsButton);
-            this.PatternGroupBox.Controls.Add(this.CreateSnapshotButton);
-            this.PatternGroupBox.Controls.Add(this.PatternTreeView);
-            this.PatternGroupBox.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.PatternGroupBox.Location = new System.Drawing.Point(0, 0);
-            this.PatternGroupBox.Name = "PatternGroupBox";
-            this.PatternGroupBox.Size = new System.Drawing.Size(471, 392);
-            this.PatternGroupBox.TabIndex = 0;
-            this.PatternGroupBox.TabStop = false;
-            this.PatternGroupBox.Text = "Record Instance - Working Pattern";
+            this.WorkingPatternGroupBox.Controls.Add(this.AttributesTabControl);
+            this.WorkingPatternGroupBox.Controls.Add(this.ExecuteButton);
+            this.WorkingPatternGroupBox.Controls.Add(this.LevelDownButton);
+            this.WorkingPatternGroupBox.Controls.Add(this.LevelUpButton);
+            this.WorkingPatternGroupBox.Controls.Add(this.SavePatternButton);
+            this.WorkingPatternGroupBox.Controls.Add(this.ClearTreeViewsButton);
+            this.WorkingPatternGroupBox.Controls.Add(this.CreateSnapshotButton);
+            this.WorkingPatternGroupBox.Controls.Add(this.WorkingPatternTreeView);
+            this.WorkingPatternGroupBox.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.WorkingPatternGroupBox.Location = new System.Drawing.Point(0, 0);
+            this.WorkingPatternGroupBox.Name = "WorkingPatternGroupBox";
+            this.WorkingPatternGroupBox.Size = new System.Drawing.Size(471, 392);
+            this.WorkingPatternGroupBox.TabIndex = 0;
+            this.WorkingPatternGroupBox.TabStop = false;
+            this.WorkingPatternGroupBox.Text = "Record Instance - Working Pattern";
             // 
             // AttributesTabControl
             // 
@@ -432,7 +432,7 @@
             // 
             // tabPage1
             // 
-            this.tabPage1.Controls.Add(this.ListViewAttributes);
+            this.tabPage1.Controls.Add(this.AttributesListView);
             this.tabPage1.Location = new System.Drawing.Point(4, 22);
             this.tabPage1.Name = "tabPage1";
             this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
@@ -441,18 +441,18 @@
             this.tabPage1.Text = "Attributes";
             this.tabPage1.UseVisualStyleBackColor = true;
             // 
-            // ListViewAttributes
+            // AttributesListView
             // 
-            this.ListViewAttributes.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.AttributesListView.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
             this.AttributeHeader,
             this.ValueHeader});
-            this.ListViewAttributes.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.ListViewAttributes.Location = new System.Drawing.Point(3, 3);
-            this.ListViewAttributes.Name = "ListViewAttributes";
-            this.ListViewAttributes.Size = new System.Drawing.Size(202, 345);
-            this.ListViewAttributes.TabIndex = 0;
-            this.ListViewAttributes.UseCompatibleStateImageBehavior = false;
-            this.ListViewAttributes.View = System.Windows.Forms.View.Details;
+            this.AttributesListView.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.AttributesListView.Location = new System.Drawing.Point(3, 3);
+            this.AttributesListView.Name = "AttributesListView";
+            this.AttributesListView.Size = new System.Drawing.Size(202, 345);
+            this.AttributesListView.TabIndex = 0;
+            this.AttributesListView.UseCompatibleStateImageBehavior = false;
+            this.AttributesListView.View = System.Windows.Forms.View.Details;
             // 
             // AttributeHeader
             // 
@@ -543,15 +543,15 @@
             this.CreateSnapshotButton.Text = "btn";
             this.CreateSnapshotButton.UseVisualStyleBackColor = true;
             // 
-            // PatternTreeView
+            // WorkingPatternTreeView
             // 
-            this.PatternTreeView.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.WorkingPatternTreeView.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.PatternTreeView.Location = new System.Drawing.Point(7, 22);
-            this.PatternTreeView.Name = "PatternTreeView";
-            this.PatternTreeView.Size = new System.Drawing.Size(239, 337);
-            this.PatternTreeView.TabIndex = 0;
+            this.WorkingPatternTreeView.Location = new System.Drawing.Point(7, 22);
+            this.WorkingPatternTreeView.Name = "WorkingPatternTreeView";
+            this.WorkingPatternTreeView.Size = new System.Drawing.Size(239, 337);
+            this.WorkingPatternTreeView.TabIndex = 0;
             // 
             // SettingsTabControl
             // 
@@ -625,8 +625,8 @@
             // 
             this.CrawlingGroupBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.CrawlingGroupBox.Controls.Add(this.LinkTextBox);
-            this.CrawlingGroupBox.Controls.Add(this.LinkUrl);
+            this.CrawlingGroupBox.Controls.Add(this.HTMLLinkTextBox);
+            this.CrawlingGroupBox.Controls.Add(this.HTMLLinkLabel);
             this.CrawlingGroupBox.Controls.Add(this.CrawlingDepthNUD);
             this.CrawlingGroupBox.Controls.Add(this.CrawlingDepthLabel);
             this.CrawlingGroupBox.Controls.Add(this.CrawlingCheckBox);
@@ -637,22 +637,22 @@
             this.CrawlingGroupBox.TabStop = false;
             this.CrawlingGroupBox.Text = "Multi/Chained Crawling Page";
             // 
-            // LinkTextBox
+            // HTMLLinkTextBox
             // 
-            this.LinkTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
-            this.LinkTextBox.Location = new System.Drawing.Point(196, 43);
-            this.LinkTextBox.Name = "LinkTextBox";
-            this.LinkTextBox.Size = new System.Drawing.Size(100, 20);
-            this.LinkTextBox.TabIndex = 4;
+            this.HTMLLinkTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+            this.HTMLLinkTextBox.Location = new System.Drawing.Point(196, 43);
+            this.HTMLLinkTextBox.Name = "HTMLLinkTextBox";
+            this.HTMLLinkTextBox.Size = new System.Drawing.Size(100, 20);
+            this.HTMLLinkTextBox.TabIndex = 4;
             // 
-            // LinkUrl
+            // HTMLLinkLabel
             // 
-            this.LinkUrl.AutoSize = true;
-            this.LinkUrl.Location = new System.Drawing.Point(7, 50);
-            this.LinkUrl.Name = "LinkUrl";
-            this.LinkUrl.Size = new System.Drawing.Size(186, 13);
-            this.LinkUrl.TabIndex = 3;
-            this.LinkUrl.Text = "Text or title of the HTML link to follow:";
+            this.HTMLLinkLabel.AutoSize = true;
+            this.HTMLLinkLabel.Location = new System.Drawing.Point(7, 50);
+            this.HTMLLinkLabel.Name = "HTMLLinkLabel";
+            this.HTMLLinkLabel.Size = new System.Drawing.Size(186, 13);
+            this.HTMLLinkLabel.TabIndex = 3;
+            this.HTMLLinkLabel.Text = "Text or title of the HTML link to follow:";
             // 
             // CrawlingDepthNUD
             // 
@@ -777,7 +777,7 @@
             // SubmitFormGroupBox
             // 
             this.SubmitFormGroupBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.SubmitFormGroupBox.Controls.Add(this.QueryTextBox);
+            this.SubmitFormGroupBox.Controls.Add(this.SearchQueryTextBox);
             this.SubmitFormGroupBox.Controls.Add(this.InputNameTextBox);
             this.SubmitFormGroupBox.Controls.Add(this.FormNameTextBox);
             this.SubmitFormGroupBox.Controls.Add(this.AutoFillCheckBox);
@@ -788,12 +788,12 @@
             this.SubmitFormGroupBox.TabStop = false;
             this.SubmitFormGroupBox.Text = "Submit Form";
             // 
-            // QueryTextBox
+            // SearchQueryTextBox
             // 
-            this.QueryTextBox.Location = new System.Drawing.Point(6, 92);
-            this.QueryTextBox.Name = "QueryTextBox";
-            this.QueryTextBox.Size = new System.Drawing.Size(100, 20);
-            this.QueryTextBox.TabIndex = 3;
+            this.SearchQueryTextBox.Location = new System.Drawing.Point(6, 92);
+            this.SearchQueryTextBox.Name = "SearchQueryTextBox";
+            this.SearchQueryTextBox.Size = new System.Drawing.Size(100, 20);
+            this.SearchQueryTextBox.TabIndex = 3;
             // 
             // InputNameTextBox
             // 
@@ -824,11 +824,11 @@
             // 
             this.OutputFileGroupBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.OutputFileGroupBox.Controls.Add(this.SelectButton);
-            this.OutputFileGroupBox.Controls.Add(this.FormatComboBox);
-            this.OutputFileGroupBox.Controls.Add(this.FormatLabel);
-            this.OutputFileGroupBox.Controls.Add(this.NameTextBox);
-            this.OutputFileGroupBox.Controls.Add(this.NameLabel);
+            this.OutputFileGroupBox.Controls.Add(this.SelectOutputFileButton);
+            this.OutputFileGroupBox.Controls.Add(this.OutputFileFormatComboBox);
+            this.OutputFileGroupBox.Controls.Add(this.OutputFileFormatLabel);
+            this.OutputFileGroupBox.Controls.Add(this.OutputFileNameTextBox);
+            this.OutputFileGroupBox.Controls.Add(this.OutputFileNameLabel);
             this.OutputFileGroupBox.Location = new System.Drawing.Point(3, 211);
             this.OutputFileGroupBox.Name = "OutputFileGroupBox";
             this.OutputFileGroupBox.Size = new System.Drawing.Size(213, 71);
@@ -836,54 +836,54 @@
             this.OutputFileGroupBox.TabStop = false;
             this.OutputFileGroupBox.Text = "Output File";
             // 
-            // SelectButton
+            // SelectOutputFileButton
             // 
-            this.SelectButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.SelectButton.Location = new System.Drawing.Point(139, 46);
-            this.SelectButton.Name = "SelectButton";
-            this.SelectButton.Size = new System.Drawing.Size(57, 23);
-            this.SelectButton.TabIndex = 4;
-            this.SelectButton.Text = "Select";
-            this.SelectButton.UseVisualStyleBackColor = true;
+            this.SelectOutputFileButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.SelectOutputFileButton.Location = new System.Drawing.Point(139, 46);
+            this.SelectOutputFileButton.Name = "SelectOutputFileButton";
+            this.SelectOutputFileButton.Size = new System.Drawing.Size(57, 23);
+            this.SelectOutputFileButton.TabIndex = 4;
+            this.SelectOutputFileButton.Text = "Select";
+            this.SelectOutputFileButton.UseVisualStyleBackColor = true;
             // 
-            // FormatComboBox
+            // OutputFileFormatComboBox
             // 
-            this.FormatComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.FormatComboBox.FormattingEnabled = true;
-            this.FormatComboBox.Items.AddRange(new object[] {
+            this.OutputFileFormatComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.OutputFileFormatComboBox.FormattingEnabled = true;
+            this.OutputFileFormatComboBox.Items.AddRange(new object[] {
             "Text (*.txt)",
             "XML (*.xml)",
             "RSS (*.rss)"});
-            this.FormatComboBox.Location = new System.Drawing.Point(52, 46);
-            this.FormatComboBox.Name = "FormatComboBox";
-            this.FormatComboBox.Size = new System.Drawing.Size(80, 21);
-            this.FormatComboBox.TabIndex = 3;
+            this.OutputFileFormatComboBox.Location = new System.Drawing.Point(52, 46);
+            this.OutputFileFormatComboBox.Name = "OutputFileFormatComboBox";
+            this.OutputFileFormatComboBox.Size = new System.Drawing.Size(80, 21);
+            this.OutputFileFormatComboBox.TabIndex = 3;
             // 
-            // FormatLabel
+            // OutputFileFormatLabel
             // 
-            this.FormatLabel.AutoSize = true;
-            this.FormatLabel.Location = new System.Drawing.Point(7, 52);
-            this.FormatLabel.Name = "FormatLabel";
-            this.FormatLabel.Size = new System.Drawing.Size(42, 13);
-            this.FormatLabel.TabIndex = 2;
-            this.FormatLabel.Text = "Format:";
+            this.OutputFileFormatLabel.AutoSize = true;
+            this.OutputFileFormatLabel.Location = new System.Drawing.Point(7, 52);
+            this.OutputFileFormatLabel.Name = "OutputFileFormatLabel";
+            this.OutputFileFormatLabel.Size = new System.Drawing.Size(42, 13);
+            this.OutputFileFormatLabel.TabIndex = 2;
+            this.OutputFileFormatLabel.Text = "Format:";
             // 
-            // NameTextBox
+            // OutputFileNameTextBox
             // 
-            this.NameTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
-            this.NameTextBox.Location = new System.Drawing.Point(52, 20);
-            this.NameTextBox.Name = "NameTextBox";
-            this.NameTextBox.Size = new System.Drawing.Size(144, 20);
-            this.NameTextBox.TabIndex = 1;
+            this.OutputFileNameTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+            this.OutputFileNameTextBox.Location = new System.Drawing.Point(52, 20);
+            this.OutputFileNameTextBox.Name = "OutputFileNameTextBox";
+            this.OutputFileNameTextBox.Size = new System.Drawing.Size(144, 20);
+            this.OutputFileNameTextBox.TabIndex = 1;
             // 
-            // NameLabel
+            // OutputFileNameLabel
             // 
-            this.NameLabel.AutoSize = true;
-            this.NameLabel.Location = new System.Drawing.Point(7, 20);
-            this.NameLabel.Name = "NameLabel";
-            this.NameLabel.Size = new System.Drawing.Size(38, 13);
-            this.NameLabel.TabIndex = 0;
-            this.NameLabel.Text = "Name:";
+            this.OutputFileNameLabel.AutoSize = true;
+            this.OutputFileNameLabel.Location = new System.Drawing.Point(7, 20);
+            this.OutputFileNameLabel.Name = "OutputFileNameLabel";
+            this.OutputFileNameLabel.Size = new System.Drawing.Size(38, 13);
+            this.OutputFileNameLabel.TabIndex = 0;
+            this.OutputFileNameLabel.Text = "Name:";
             // 
             // ExtractionPatternGroupBox
             // 
@@ -970,13 +970,13 @@
             this.TargetURLSGroupBox.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.TargetURLSGroupBox.Controls.Add(this.BrowseFileButton);
-            this.TargetURLSGroupBox.Controls.Add(this.FileTextBox);
+            this.TargetURLSGroupBox.Controls.Add(this.BrowseURLsFileButton);
+            this.TargetURLSGroupBox.Controls.Add(this.URLsFileTextBox);
             this.TargetURLSGroupBox.Controls.Add(this.FileLabel);
             this.TargetURLSGroupBox.Controls.Add(this.RemoveURLButton);
             this.TargetURLSGroupBox.Controls.Add(this.AddURLButton);
             this.TargetURLSGroupBox.Controls.Add(this.AddURLTextBox);
-            this.TargetURLSGroupBox.Controls.Add(this.URLSTextBox);
+            this.TargetURLSGroupBox.Controls.Add(this.TargetURLSTextBox);
             this.TargetURLSGroupBox.Location = new System.Drawing.Point(3, 3);
             this.TargetURLSGroupBox.Name = "TargetURLSGroupBox";
             this.TargetURLSGroupBox.Size = new System.Drawing.Size(192, 204);
@@ -984,24 +984,24 @@
             this.TargetURLSGroupBox.TabStop = false;
             this.TargetURLSGroupBox.Text = "Target URLs";
             // 
-            // BrowseFileButton
+            // BrowseURLsFileButton
             // 
-            this.BrowseFileButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.BrowseFileButton.Location = new System.Drawing.Point(140, 172);
-            this.BrowseFileButton.Name = "BrowseFileButton";
-            this.BrowseFileButton.Size = new System.Drawing.Size(50, 23);
-            this.BrowseFileButton.TabIndex = 6;
-            this.BrowseFileButton.Text = "browse";
-            this.BrowseFileButton.UseVisualStyleBackColor = true;
+            this.BrowseURLsFileButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.BrowseURLsFileButton.Location = new System.Drawing.Point(140, 172);
+            this.BrowseURLsFileButton.Name = "BrowseURLsFileButton";
+            this.BrowseURLsFileButton.Size = new System.Drawing.Size(50, 23);
+            this.BrowseURLsFileButton.TabIndex = 6;
+            this.BrowseURLsFileButton.Text = "browse";
+            this.BrowseURLsFileButton.UseVisualStyleBackColor = true;
             // 
-            // FileTextBox
+            // URLsFileTextBox
             // 
-            this.FileTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            this.URLsFileTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.FileTextBox.Location = new System.Drawing.Point(39, 172);
-            this.FileTextBox.Name = "FileTextBox";
-            this.FileTextBox.Size = new System.Drawing.Size(93, 20);
-            this.FileTextBox.TabIndex = 5;
+            this.URLsFileTextBox.Location = new System.Drawing.Point(39, 172);
+            this.URLsFileTextBox.Name = "URLsFileTextBox";
+            this.URLsFileTextBox.Size = new System.Drawing.Size(93, 20);
+            this.URLsFileTextBox.TabIndex = 5;
             // 
             // FileLabel
             // 
@@ -1042,18 +1042,18 @@
             this.AddURLTextBox.Size = new System.Drawing.Size(126, 20);
             this.AddURLTextBox.TabIndex = 1;
             // 
-            // URLSTextBox
+            // TargetURLSTextBox
             // 
-            this.URLSTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.TargetURLSTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.URLSTextBox.Location = new System.Drawing.Point(7, 20);
-            this.URLSTextBox.Multiline = true;
-            this.URLSTextBox.Name = "URLSTextBox";
-            this.URLSTextBox.ScrollBars = System.Windows.Forms.ScrollBars.Horizontal;
-            this.URLSTextBox.Size = new System.Drawing.Size(183, 112);
-            this.URLSTextBox.TabIndex = 0;
-            this.URLSTextBox.WordWrap = false;
+            this.TargetURLSTextBox.Location = new System.Drawing.Point(7, 20);
+            this.TargetURLSTextBox.Multiline = true;
+            this.TargetURLSTextBox.Name = "TargetURLSTextBox";
+            this.TargetURLSTextBox.ScrollBars = System.Windows.Forms.ScrollBars.Horizontal;
+            this.TargetURLSTextBox.Size = new System.Drawing.Size(183, 112);
+            this.TargetURLSTextBox.TabIndex = 0;
+            this.TargetURLSTextBox.WordWrap = false;
             // 
             // tabPage4
             // 
@@ -1338,7 +1338,7 @@
             this.splitContainer3.Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer3)).EndInit();
             this.splitContainer3.ResumeLayout(false);
-            this.PatternGroupBox.ResumeLayout(false);
+            this.WorkingPatternGroupBox.ResumeLayout(false);
             this.AttributesTabControl.ResumeLayout(false);
             this.tabPage1.ResumeLayout(false);
             this.tabPage2.ResumeLayout(false);
@@ -1385,13 +1385,13 @@
         private System.Windows.Forms.WebBrowser WebBrowser;
         private System.Windows.Forms.Label URLLabel;
         private System.Windows.Forms.ComboBox URLComboBox;
-        private System.Windows.Forms.Button BrowseButton;
+        private System.Windows.Forms.Button BrowseToURLButton;
         private System.Windows.Forms.GroupBox DOMGroupBox;
         private System.Windows.Forms.Button StopExecutionButton;
         private System.Windows.Forms.CheckBox AttributesCheckBox;
         private System.Windows.Forms.TreeView HtmlTreeView;
-        private System.Windows.Forms.GroupBox PatternGroupBox;
-        private System.Windows.Forms.TreeView PatternTreeView;
+        private System.Windows.Forms.GroupBox WorkingPatternGroupBox;
+        private System.Windows.Forms.TreeView WorkingPatternTreeView;
         private System.Windows.Forms.Button ExecuteButton;
         private System.Windows.Forms.Button LevelDownButton;
         private System.Windows.Forms.Button LevelUpButton;
@@ -1400,7 +1400,7 @@
         private System.Windows.Forms.Button CreateSnapshotButton;
         private System.Windows.Forms.TabControl AttributesTabControl;
         private System.Windows.Forms.TabPage tabPage1;
-        private System.Windows.Forms.ListView ListViewAttributes;
+        private System.Windows.Forms.ListView AttributesListView;
         private System.Windows.Forms.ColumnHeader AttributeHeader;
         private System.Windows.Forms.ColumnHeader ValueHeader;
         private System.Windows.Forms.TabPage tabPage2;
@@ -1424,29 +1424,29 @@
         private System.Windows.Forms.Button SaveButton;
         private System.Windows.Forms.Button OpenButton;
         private System.Windows.Forms.Button GoButton;
-        private System.Windows.Forms.TextBox URLSTextBox;
+        private System.Windows.Forms.TextBox TargetURLSTextBox;
         private System.Windows.Forms.TextBox AddURLTextBox;
-        private System.Windows.Forms.Label FormatLabel;
-        private System.Windows.Forms.TextBox NameTextBox;
-        private System.Windows.Forms.Label NameLabel;
-        private System.Windows.Forms.Button BrowseFileButton;
-        private System.Windows.Forms.TextBox FileTextBox;
+        private System.Windows.Forms.Label OutputFileFormatLabel;
+        private System.Windows.Forms.TextBox OutputFileNameTextBox;
+        private System.Windows.Forms.Label OutputFileNameLabel;
+        private System.Windows.Forms.Button BrowseURLsFileButton;
+        private System.Windows.Forms.TextBox URLsFileTextBox;
         private System.Windows.Forms.Label FileLabel;
         private System.Windows.Forms.Button RemoveURLButton;
         private System.Windows.Forms.Button AddURLButton;
-        private System.Windows.Forms.ComboBox FormatComboBox;
-        private System.Windows.Forms.TextBox LinkTextBox;
-        private System.Windows.Forms.Label LinkUrl;
+        private System.Windows.Forms.ComboBox OutputFileFormatComboBox;
+        private System.Windows.Forms.TextBox HTMLLinkTextBox;
+        private System.Windows.Forms.Label HTMLLinkLabel;
         private System.Windows.Forms.NumericUpDown CrawlingDepthNUD;
         private System.Windows.Forms.Label CrawlingDepthLabel;
         private System.Windows.Forms.CheckBox CrawlingCheckBox;
         private System.Windows.Forms.RadioButton AppendRadioBtn;
         private System.Windows.Forms.RadioButton OverwriteRadioBtn;
-        private System.Windows.Forms.TextBox QueryTextBox;
+        private System.Windows.Forms.TextBox SearchQueryTextBox;
         private System.Windows.Forms.TextBox InputNameTextBox;
         private System.Windows.Forms.TextBox FormNameTextBox;
         private System.Windows.Forms.CheckBox AutoFillCheckBox;
-        private System.Windows.Forms.Button SelectButton;
+        private System.Windows.Forms.Button SelectOutputFileButton;
         private System.Windows.Forms.CheckedListBox checkedListBox1;
         private System.Windows.Forms.Button LoadPatternButton;
         private System.Windows.Forms.Button TunePatternButton;

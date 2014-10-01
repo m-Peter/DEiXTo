@@ -13,7 +13,9 @@ namespace DEiXTo.Views
     public partial class MainWindow : Form, IMainView
     {
         public event Action NewAgent;
-        public event Action ResetCounter;
+        public event Action CascadeAgentWindows;
+        public event Action CloseAgentWindows;
+        public event Action FloatAgentWindows;
 
         public MainWindow()
         {
@@ -30,27 +32,46 @@ namespace DEiXTo.Views
 
         private void cascadeToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            if (CascadeAgentWindows != null)
+            {
+                CascadeAgentWindows();
+            }
+        }
+
+        public void CascadeAgents()
+        {
             this.LayoutMdi(MdiLayout.Cascade);
         }
 
-        private void closeAllToolStripMenuItem_Click(object sender, EventArgs e)
+        public void FloatAgents()
+        {
+            foreach (Form childForm in this.MdiChildren)
+            {
+                childForm.WindowState = FormWindowState.Maximized;
+            }
+        }
+
+        public void CloseAgents()
         {
             foreach (Form childForm in this.MdiChildren)
             {
                 childForm.Close();
             }
+        }
 
-            if (ResetCounter != null)
+        private void closeAllToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (CloseAgentWindows != null)
             {
-                ResetCounter();
+                CloseAgentWindows();
             }
         }
 
         private void floatAllToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            foreach (Form childForm in this.MdiChildren)
+            if (FloatAgentWindows != null)
             {
-                childForm.WindowState = FormWindowState.Maximized;
+                FloatAgentWindows();
             }
         }
     }
