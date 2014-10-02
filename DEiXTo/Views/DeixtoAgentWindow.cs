@@ -146,15 +146,6 @@ namespace DEiXTo.Views
             HTMLLinkTextBox.Enabled = state;
         }
 
-        /// <summary>
-        /// Get the HTML element of the WebBrowser's document
-        /// </summary>
-        /// <returns></returns>
-        public HtmlElement GetHTMLElement()
-        {
-            return WebBrowser.Document.GetElementsByTagName("HTML")[0];
-        }
-
         public HtmlDocument GetHTMLDocument()
         {
             return WebBrowser.Document;

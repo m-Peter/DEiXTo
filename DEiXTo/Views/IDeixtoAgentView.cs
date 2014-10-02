@@ -26,7 +26,6 @@ namespace DEiXTo.Views
         void NavigateBack();
         void ApplyVisibilityStateInAutoFill(bool state);
         void ApplyVisibilityStateInCrawling(bool state);
-        HtmlElement GetHTMLElement();
         HtmlDocument GetHTMLDocument();
         void FillDomTree(TreeNode node);
         bool HighlightModeEnabled();
