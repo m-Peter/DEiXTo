@@ -135,6 +135,7 @@ namespace DEiXTo.Presenters
             var elem = _view.GetHTMLElement();
             var rootNode = BuildDom(elem);
             _view.FillDomTree(rootNode);
+            _view.AppendTargetUrl(_view.Url);
         }
     }
 }

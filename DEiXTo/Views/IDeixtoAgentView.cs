@@ -28,5 +28,6 @@ namespace DEiXTo.Views
         HtmlElement GetHTMLElement();
         void FillDomTree(TreeNode node);
         bool HighlightModeEnabled();
+        void AppendTargetUrl(string url);
     }
 }

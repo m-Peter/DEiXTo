@@ -105,7 +105,6 @@
             this.RemoveURLButton = new System.Windows.Forms.Button();
             this.AddURLButton = new System.Windows.Forms.Button();
             this.AddURLTextBox = new System.Windows.Forms.TextBox();
-            this.TargetURLSTextBox = new System.Windows.Forms.TextBox();
             this.tabPage4 = new System.Windows.Forms.TabPage();
             this.tabPage5 = new System.Windows.Forms.TabPage();
             this.HtmlPathTextBox = new System.Windows.Forms.TextBox();
@@ -135,6 +134,7 @@
             this.SnapshotTreeView = new System.Windows.Forms.TreeView();
             this.tabPage10 = new System.Windows.Forms.TabPage();
             this.DeixtoAgentTooltip = new System.Windows.Forms.ToolTip(this.components);
+            this.TargetURLsListBox = new System.Windows.Forms.ListBox();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
@@ -979,13 +979,13 @@
             this.TargetURLSGroupBox.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.TargetURLSGroupBox.Controls.Add(this.TargetURLsListBox);
             this.TargetURLSGroupBox.Controls.Add(this.BrowseURLsFileButton);
             this.TargetURLSGroupBox.Controls.Add(this.URLsFileTextBox);
             this.TargetURLSGroupBox.Controls.Add(this.FileLabel);
             this.TargetURLSGroupBox.Controls.Add(this.RemoveURLButton);
             this.TargetURLSGroupBox.Controls.Add(this.AddURLButton);
             this.TargetURLSGroupBox.Controls.Add(this.AddURLTextBox);
-            this.TargetURLSGroupBox.Controls.Add(this.TargetURLSTextBox);
             this.TargetURLSGroupBox.Location = new System.Drawing.Point(3, 3);
             this.TargetURLSGroupBox.Name = "TargetURLSGroupBox";
             this.TargetURLSGroupBox.Size = new System.Drawing.Size(192, 204);
@@ -1050,19 +1050,6 @@
             this.AddURLTextBox.Name = "AddURLTextBox";
             this.AddURLTextBox.Size = new System.Drawing.Size(126, 20);
             this.AddURLTextBox.TabIndex = 1;
-            // 
-            // TargetURLSTextBox
-            // 
-            this.TargetURLSTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.TargetURLSTextBox.Location = new System.Drawing.Point(7, 20);
-            this.TargetURLSTextBox.Multiline = true;
-            this.TargetURLSTextBox.Name = "TargetURLSTextBox";
-            this.TargetURLSTextBox.ScrollBars = System.Windows.Forms.ScrollBars.Horizontal;
-            this.TargetURLSTextBox.Size = new System.Drawing.Size(183, 112);
-            this.TargetURLSTextBox.TabIndex = 0;
-            this.TargetURLSTextBox.WordWrap = false;
             // 
             // tabPage4
             // 
@@ -1323,6 +1310,14 @@
             this.tabPage10.Text = "About";
             this.tabPage10.UseVisualStyleBackColor = true;
             // 
+            // TargetURLsListBox
+            // 
+            this.TargetURLsListBox.FormattingEnabled = true;
+            this.TargetURLsListBox.Location = new System.Drawing.Point(3, 16);
+            this.TargetURLsListBox.Name = "TargetURLsListBox";
+            this.TargetURLsListBox.Size = new System.Drawing.Size(187, 121);
+            this.TargetURLsListBox.TabIndex = 7;
+            // 
             // DeixtoAgentWindow
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -1434,7 +1429,6 @@
         private System.Windows.Forms.Button SaveButton;
         private System.Windows.Forms.Button OpenButton;
         private System.Windows.Forms.Button GoButton;
-        private System.Windows.Forms.TextBox TargetURLSTextBox;
         private System.Windows.Forms.TextBox AddURLTextBox;
         private System.Windows.Forms.Label OutputFileFormatLabel;
         private System.Windows.Forms.TextBox OutputFileNameTextBox;
@@ -1494,5 +1488,6 @@
         private System.Windows.Forms.Button SimplifyDOMButton;
         private System.Windows.Forms.Button RebuildDOMButton;
         private System.Windows.Forms.ToolTip DeixtoAgentTooltip;
+        private System.Windows.Forms.ListBox TargetURLsListBox;
     }
 }

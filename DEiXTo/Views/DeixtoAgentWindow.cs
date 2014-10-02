@@ -42,7 +42,7 @@ namespace DEiXTo.Views
             DeixtoAgentTooltip.SetToolTip(this.LevelUpButton, "Up one level");
             DeixtoAgentTooltip.SetToolTip(this.LevelDownButton, "Down one level");
             DeixtoAgentTooltip.SetToolTip(this.ExecuteButton, "Execute Rule");
-            DeixtoAgentTooltip.SetToolTip(this.TargetURLSTextBox, "Target url container - double click to open site");
+            DeixtoAgentTooltip.SetToolTip(this.TargetURLsListBox, "Target url container - double click to open site");
             DeixtoAgentTooltip.SetToolTip(this.AddURLTextBox, "Use this to add a URL to the list");
             DeixtoAgentTooltip.SetToolTip(this.URLsFileTextBox, "Use this to add URLs from file");
             DeixtoAgentTooltip.SetToolTip(this.AddURLButton, "Add to list");
@@ -164,6 +164,16 @@ namespace DEiXTo.Views
             HtmlTreeView.EndUpdate();
         }
 
+        /// <summary>
+        /// Append the given URL to the collection of TargetURLs
+        /// </summary>
+        /// <param name="url"></param>
+        public void AppendTargetUrl(string url)
+        {
+            TargetURLsListBox.Items.Clear();
+            TargetURLsListBox.Items.Add(url);
+        }
+
         private void BrowseToURLButton_Click(object sender, EventArgs e)
         {
             if (BrowseToUrl != null)
@@ -200,6 +210,9 @@ namespace DEiXTo.Views
         {
             if (BrowserCompleted != null && e.Url.Equals(WebBrowser.Url))
             {
+                HtmlTreeView.BeginUpdate();
+                HtmlTreeView.Nodes.Clear();
+                HtmlTreeView.EndUpdate();
                 WebBrowser.Document.MouseOver += Document_MouseOver;
                 WebBrowser.Document.MouseLeave += Document_MouseLeave;
                 BrowserCompleted();
