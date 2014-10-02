@@ -55,29 +55,30 @@ namespace DEiXTo.Presenters
 
         void _view_DocumentMouseLeave(HtmlElement element)
         {
-            if (!_view.HighlightModeEnabled())
+            if (_view.HighlightModeEnabled())
             {
-                return;
+                _styling.Unstyle(element);
             }
 
-            _styling.Unstyle(element);
+            _view.ClearElementInfo();
         }
 
         void _view_DocumentMouseOver(HtmlElement element)
         {
-            if (!_view.HighlightModeEnabled())
+            if (_view.HighlightModeEnabled())
             {
-                return;
+                _styling.UnstyleElements();
+                _styling.Style(element);
             }
-            
-            _styling.UnstyleElements();
-            _styling.Style(element);
 
             // Retrieve the TreeNode that corresponds to the given HTML element
             var node = _builder.TreeNodeFromElement(element);
 
             // Scroll the TreeView to the specified TreeNode
             _view.SelectDOMNode(node);
+
+            var path = node.GetPath();
+            _view.FillElementInfo(element, path);
         }
 
         void _view_CrawlingChanged(bool state)

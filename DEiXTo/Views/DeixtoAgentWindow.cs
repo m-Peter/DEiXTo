@@ -120,6 +120,16 @@ namespace DEiXTo.Views
         }
 
         /// <summary>
+        /// Clear the element info tab page.
+        /// </summary>
+        public void ClearElementInfo()
+        {
+            OuterHtmlTextBox.Text = String.Empty;
+            InnerTextTextBox.Text = String.Empty;
+            HtmlPathTextBox.Text = String.Empty;
+        }
+
+        /// <summary>
         /// Navigates the WebBrowser to the given URL
         /// </summary>
         /// <param name="url"></param>
