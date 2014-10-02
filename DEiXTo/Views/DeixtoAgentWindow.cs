@@ -112,11 +112,11 @@ namespace DEiXTo.Views
         /// </summary>
         /// <param name="element"></param>
         /// <param name="path"></param>
-        public void FillElementInfo(HtmlElement element, string path)
+        public void FillElementInfo(TreeNode node, string outerHtml)
         {
-            OuterHtmlTextBox.Text = element.OuterHtml;
-            InnerTextTextBox.Text = element.InnerText;
-            HtmlPathTextBox.Text = path;
+            OuterHtmlTextBox.Text = outerHtml;
+            InnerTextTextBox.Text = node.GetContent();
+            HtmlPathTextBox.Text = node.GetPath();
         }
 
         /// <summary>

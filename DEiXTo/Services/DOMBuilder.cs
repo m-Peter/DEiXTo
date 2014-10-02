@@ -76,6 +76,31 @@ namespace DEiXTo.Services
             return path;
         }
 
+        private string GetContentFor(IHTMLElement element)
+        {
+            var tagName = element.tagName;
+            var content = "";
+
+            switch (tagName)
+            {
+                case "A":
+                    content = element.getAttribute("href");
+                    break;
+                case "IMG":
+                    content = element.getAttribute("src");
+                    break;
+                case "FORM":
+                case "INPUT":
+                    content = element.getAttribute("name");
+                    break;
+                default:
+                    content = element.innerText;
+                    break;
+            }
+
+            return content;
+        }
+        
         private void BuildDomTree(IHTMLDOMNode element, TreeNode treeNode, bool IsRoot = false)
         {
             if (element.nodeName == "#text" || element.nodeName == "#comment")
@@ -96,6 +121,7 @@ namespace DEiXTo.Services
 
             pInfo.ElementSourceIndex = tmpElem.sourceIndex;
             pInfo.Path = ComputePath(treeNode, tmpElem);
+            pInfo.Content = GetContentFor(tmpElem);
             tmpNode.Tag = pInfo;
 
             IHTMLDOMChildrenCollection childrenElements = element.childNodes as IHTMLDOMChildrenCollection;
@@ -111,8 +137,6 @@ namespace DEiXTo.Services
                 {
                     var txtNode = new TreeNode("TEXT");
                     txtNode.ToolTipText = curElement.nodeValue;
-                    txtNode.ImageIndex = 0;
-                    txtNode.SelectedImageIndex = 0;
                     tmpNode.Nodes.Add(txtNode);
                 }
                 BuildDomTree(curElement, tmpNode, false);

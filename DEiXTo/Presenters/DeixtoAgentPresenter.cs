@@ -45,7 +45,7 @@ namespace DEiXTo.Presenters
             var node = _builder.GetNodeFor(element);
             var path = node.GetPath();
 
-            _view.FillElementInfo(element, path);
+            _view.FillElementInfo(node, element.OuterHtml);
 
             if (_view.CanAutoScroll())
             {
@@ -78,7 +78,7 @@ namespace DEiXTo.Presenters
             _view.SelectDOMNode(node);
 
             var path = node.GetPath();
-            _view.FillElementInfo(element, path);
+            _view.FillElementInfo(node, element.OuterHtml);
         }
 
         void _view_CrawlingChanged(bool state)

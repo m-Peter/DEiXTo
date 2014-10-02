@@ -33,5 +33,17 @@ namespace DEiXTo.Services
 
             return "";
         }
+
+        public static string GetContent(this TreeNode node)
+        {
+            PointerInfo pInfo = node.Tag as PointerInfo;
+
+            if (pInfo != null)
+            {
+                return pInfo.Content;
+            }
+
+            return "";
+        }
     }
 }

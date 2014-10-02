@@ -31,7 +31,7 @@ namespace DEiXTo.Views
         bool HighlightModeEnabled();
         void AppendTargetUrl(string url);
         void SelectDOMNode(TreeNode node);
-        void FillElementInfo(HtmlElement element, string path);
+        void FillElementInfo(TreeNode node, string outerHtml);
         void ClearElementInfo();
         bool CanAutoScroll();
     }
