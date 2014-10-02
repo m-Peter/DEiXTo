@@ -22,6 +22,10 @@ namespace DEiXTo.Views
         public event Action<Boolean> CrawlingChanged;
         // Fires when the Document specified by the URL has completed downloading
         public event Action BrowserCompleted;
+        // Fires when the user's mouse passes over an element in WebBrowser's Document
+        public event Action<HtmlElement> DocumentMouseOver;
+        // Fires when the user's mouse leaves an element of WebBrowser's Document
+        public event Action<HtmlElement> DocumentMouseLeave;
 
         public DeixtoAgentWindow()
         {
@@ -187,8 +191,20 @@ namespace DEiXTo.Views
         {
             if (BrowserCompleted != null && e.Url.Equals(WebBrowser.Url))
             {
+                WebBrowser.Document.MouseOver += Document_MouseOver;
+                WebBrowser.Document.MouseLeave += Document_MouseLeave;
                 BrowserCompleted();
             }
+        }
+
+        void Document_MouseLeave(object sender, HtmlElementEventArgs e)
+        {
+            DocumentMouseLeave(e.FromElement);
+        }
+
+        void Document_MouseOver(object sender, HtmlElementEventArgs e)
+        {
+            DocumentMouseOver(e.ToElement);
         }
 
         void DeixtoAgentWindow_KeyDown(object sender, KeyEventArgs e)

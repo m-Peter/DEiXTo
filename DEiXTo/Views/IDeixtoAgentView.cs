@@ -14,6 +14,8 @@ namespace DEiXTo.Views
         event Action<Boolean> AutoFillChanged;
         event Action<Boolean> CrawlingChanged;
         event Action BrowserCompleted;
+        event Action<HtmlElement> DocumentMouseOver;
+        event Action<HtmlElement> DocumentMouseLeave;
         
         string Url { get; }
 

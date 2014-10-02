@@ -6,16 +6,19 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using mshtml;
+using DEiXTo.Services;
 
 namespace DEiXTo.Presenters
 {
     public class DeixtoAgentPresenter
     {
         private readonly IDeixtoAgentView _view;
+        private ElementStyling _styling;
 
         public DeixtoAgentPresenter(IDeixtoAgentView view)
         {
             _view = view;
+            _styling = new ElementStyling();
 
             // ATTACH THE EVENTS OF THE VIEW TO LOCAL METHODS
             _view.BrowseToUrl += _view_BrowseToUrl;
@@ -23,7 +26,11 @@ namespace DEiXTo.Presenters
             _view.AutoFillChanged += _view_AutoFillChanged;
             _view.CrawlingChanged += _view_CrawlingChanged;
             _view.BrowserCompleted += _view_BrowserCompleted;
+            _view.DocumentMouseOver += _view_DocumentMouseOver;
+            _view.DocumentMouseLeave += _view_DocumentMouseLeave;
         }
+
+        
 
         private TreeNode BuildDom(HtmlElement element)
         {
@@ -63,6 +70,17 @@ namespace DEiXTo.Presenters
                 }
                 BuildDomTree(curElement, tmpNode, false);
             }
+        }
+
+        void _view_DocumentMouseLeave(HtmlElement element)
+        {
+            _styling.Unstyle(element);
+        }
+
+        void _view_DocumentMouseOver(HtmlElement element)
+        {
+            _styling.UnstyleElements();
+            _styling.Style(element);
         }
 
         void _view_CrawlingChanged(bool state)
