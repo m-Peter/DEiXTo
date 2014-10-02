@@ -74,11 +74,19 @@ namespace DEiXTo.Presenters
 
         void _view_DocumentMouseLeave(HtmlElement element)
         {
+            if (!_view.HighlightModeEnabled())
+            {
+                return;
+            }
             _styling.Unstyle(element);
         }
 
         void _view_DocumentMouseOver(HtmlElement element)
         {
+            if (!_view.HighlightModeEnabled())
+            {
+                return;
+            }
             _styling.UnstyleElements();
             _styling.Style(element);
         }

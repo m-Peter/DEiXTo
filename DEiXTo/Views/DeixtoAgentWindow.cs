@@ -87,6 +87,15 @@ namespace DEiXTo.Views
         }
 
         /// <summary>
+        /// Returns whether the Highlight Mode checkbox is enabled.
+        /// </summary>
+        /// <returns></returns>
+        public bool HighlightModeEnabled()
+        {
+            return HighlightModeCheckBox.Checked;
+        }
+
+        /// <summary>
         /// Navigates the WebBrowser to the given URL
         /// </summary>
         /// <param name="url"></param>
