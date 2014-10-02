@@ -21,5 +21,17 @@ namespace DEiXTo.Services
 
             return -1;
         }
+
+        public static string GetPath(this TreeNode node)
+        {
+            PointerInfo pInfo = node.Tag as PointerInfo;
+
+            if (pInfo != null)
+            {
+                return pInfo.Path;
+            }
+
+            return "";
+        }
     }
 }

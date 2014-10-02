@@ -9,6 +9,10 @@ using System.Windows.Forms;
 
 namespace DEiXTo.Services
 {
+    /// <summary>
+    /// This class builds the DOM tree structure from a page and maps HtmlElements
+    /// to TreeNodes.
+    /// </summary>
     public class DOMBuilder
     {
         private IDictionary<IHTMLDOMNode, TreeNode> _domTree = new Dictionary<IHTMLDOMNode, TreeNode>();
@@ -30,6 +34,48 @@ namespace DEiXTo.Services
             return node;
         }
 
+        public TreeNode GetNodeFor(HtmlElement element)
+        {
+            var curElem = element.DomElement as IHTMLDOMNode;
+
+            return _domTree[curElem];
+        }
+
+        public string ComputePath(TreeNode node, IHTMLElement element)
+        {
+            TreeNode bro;
+            int cnt = 0;
+            string path = "";
+
+            if (node != null)
+            {
+                bro = node.FirstNode;
+                if (bro != null)
+                {
+                    while (bro != null)
+                    {
+                        if (bro.Text == element.tagName)
+                        {
+                            cnt += 1;
+                        }
+                        bro = bro.NextNode;
+                    }
+
+                    path = node.GetPath() + String.Format(".{0}[{1}]", element.tagName, cnt);
+                }
+                else
+                {
+                    path = node.GetPath() + String.Format(".{0}[1]", element.tagName);
+                }
+            }
+            else
+            {
+                path = "HTML[1]";
+            }
+
+            return path;
+        }
+
         private void BuildDomTree(IHTMLDOMNode element, TreeNode treeNode, bool IsRoot = false)
         {
             if (element.nodeName == "#text" || element.nodeName == "#comment")
@@ -49,6 +95,7 @@ namespace DEiXTo.Services
             var tmpElem = (IHTMLElement)element;
 
             pInfo.ElementSourceIndex = tmpElem.sourceIndex;
+            pInfo.Path = ComputePath(treeNode, tmpElem);
             tmpNode.Tag = pInfo;
 
             IHTMLDOMChildrenCollection childrenElements = element.childNodes as IHTMLDOMChildrenCollection;

@@ -37,9 +37,20 @@ namespace DEiXTo.Presenters
         void _view_DOMNodeClick(int index)
         {
             _styling.UnstyleElements();
+            // Retrieve the HTML element that corresponds to the DOM TreeNode
             var element = _document.GetElementByIndex(index);
-
+            // Style the HTML element in the WebBrowser
             _styling.Style(element);
+
+            var node = _builder.GetNodeFor(element);
+            var path = node.GetPath();
+
+            _view.FillElementInfo(element, path);
+
+            if (_view.CanAutoScroll())
+            {
+                element.ScrollIntoView(false);
+            }
         }
 
         void _view_DocumentMouseLeave(HtmlElement element)
@@ -58,11 +69,14 @@ namespace DEiXTo.Presenters
             {
                 return;
             }
+            
             _styling.UnstyleElements();
             _styling.Style(element);
 
+            // Retrieve the TreeNode that corresponds to the given HTML element
             var node = _builder.TreeNodeFromElement(element);
 
+            // Scroll the TreeView to the specified TreeNode
             _view.SelectDOMNode(node);
         }
 
@@ -108,10 +122,12 @@ namespace DEiXTo.Presenters
         void _view_BrowserCompleted()
         {
             _document = new DocumentQuery(_view.GetHTMLDocument());
-
             var elem = _document.GetHTMLElement();
+            // Build the DOM tree structure from the HTML element of the page
             var rootNode = _builder.BuildDom(elem);
+            // Assign the DOM tree structure to the DOM TreeView
             _view.FillDomTree(rootNode);
+            // Append the URL of the current page to the TargetURLs container
             _view.AppendTargetUrl(_view.Url);
         }
     }

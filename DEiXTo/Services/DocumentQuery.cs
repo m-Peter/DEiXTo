@@ -8,6 +8,10 @@ using System.Windows.Forms;
 
 namespace DEiXTo.Services
 {
+    /// <summary>
+    /// This class wraps a HtmlDocument and provides some useful query methods
+    /// that operate on it.
+    /// </summary>
     public class DocumentQuery
     {
         private HtmlDocument _document;

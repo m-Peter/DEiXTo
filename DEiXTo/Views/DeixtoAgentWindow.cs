@@ -99,6 +99,27 @@ namespace DEiXTo.Views
         }
 
         /// <summary>
+        /// Returns whether the AutoScroll option is enabled.
+        /// </summary>
+        /// <returns></returns>
+        public bool CanAutoScroll()
+        {
+            return AutoScrollCheckBox.Checked;
+        }
+
+        /// <summary>
+        /// Fill the element info tab page with the element's information.
+        /// </summary>
+        /// <param name="element"></param>
+        /// <param name="path"></param>
+        public void FillElementInfo(HtmlElement element, string path)
+        {
+            OuterHtmlTextBox.Text = element.OuterHtml;
+            InnerTextTextBox.Text = element.InnerText;
+            HtmlPathTextBox.Text = path;
+        }
+
+        /// <summary>
         /// Navigates the WebBrowser to the given URL
         /// </summary>
         /// <param name="url"></param>
@@ -146,6 +167,10 @@ namespace DEiXTo.Views
             HTMLLinkTextBox.Enabled = state;
         }
 
+        /// <summary>
+        /// Gets the HtmlDocument of the current page
+        /// </summary>
+        /// <returns></returns>
         public HtmlDocument GetHTMLDocument()
         {
             return WebBrowser.Document;
@@ -173,6 +198,11 @@ namespace DEiXTo.Views
             TargetURLsListBox.Items.Add(url);
         }
 
+        /// <summary>
+        /// Select the given TreeNode and scroll the TreeView to its
+        /// position
+        /// </summary>
+        /// <param name="node"></param>
         public void SelectDOMNode(TreeNode node)
         {
             if (node == null)
