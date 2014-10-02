@@ -51,6 +51,7 @@
     <Compile Include="Presenters\MainPresenter.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Services\DOMBuilder.cs" />
     <Compile Include="Services\ElementStyling.cs" />
     <Compile Include="Services\IViewLoader.cs" />
     <Compile Include="Services\WindowsViewLoader.cs" />

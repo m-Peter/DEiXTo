@@ -29,5 +29,6 @@ namespace DEiXTo.Views
         void FillDomTree(TreeNode node);
         bool HighlightModeEnabled();
         void AppendTargetUrl(string url);
+        void SelectDOMNode(TreeNode node);
     }
 }

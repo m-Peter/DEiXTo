@@ -174,6 +174,18 @@ namespace DEiXTo.Views
             TargetURLsListBox.Items.Add(url);
         }
 
+        public void SelectDOMNode(TreeNode node)
+        {
+            if (node == null)
+            {
+                return;
+            }
+
+            node.EnsureVisible();
+            HtmlTreeView.SelectedNode = node;
+            HtmlTreeView.Focus();
+        }
+
         private void BrowseToURLButton_Click(object sender, EventArgs e)
         {
             if (BrowseToUrl != null)

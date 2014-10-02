@@ -14,11 +14,13 @@ namespace DEiXTo.Presenters
     {
         private readonly IDeixtoAgentView _view;
         private ElementStyling _styling;
+        private DOMBuilder _builder;
 
         public DeixtoAgentPresenter(IDeixtoAgentView view)
         {
             _view = view;
             _styling = new ElementStyling();
+            _builder = new DOMBuilder();
 
             // ATTACH THE EVENTS OF THE VIEW TO LOCAL METHODS
             _view.BrowseToUrl += _view_BrowseToUrl;
@@ -30,54 +32,13 @@ namespace DEiXTo.Presenters
             _view.DocumentMouseLeave += _view_DocumentMouseLeave;
         }
 
-        
-
-        private TreeNode BuildDom(HtmlElement element)
-        {
-            var curElem = element.DomElement as IHTMLDOMNode;
-            var rootNode = new TreeNode();
-            BuildDomTree(curElem, rootNode, true);
-
-            return rootNode.FirstNode;
-        }
-
-        private void BuildDomTree(IHTMLDOMNode element, TreeNode treeNode, bool IsRoot = false)
-        {
-            if (element.nodeName == "#text" || element.nodeName == "#comment")
-            {
-                return;
-            }
-
-            var tmpNode = treeNode.Nodes.Add(element.nodeName);
-            var tmpElem = (IHTMLElement)element;
-
-            IHTMLDOMChildrenCollection childrenElements = element.childNodes as IHTMLDOMChildrenCollection;
-            int len = childrenElements.length;
-            IHTMLDOMNode curElement;
-            string value;
-
-            for (int i = 0; i < len; i++)
-            {
-                curElement = childrenElements.item(i);
-                value = curElement.nodeValue as string;
-                if (curElement.nodeName == "#text" && !String.IsNullOrWhiteSpace(value))
-                {
-                    var txtNode = new TreeNode("TEXT");
-                    txtNode.ToolTipText = curElement.nodeValue;
-                    txtNode.ImageIndex = 0;
-                    txtNode.SelectedImageIndex = 0;
-                    tmpNode.Nodes.Add(txtNode);
-                }
-                BuildDomTree(curElement, tmpNode, false);
-            }
-        }
-
         void _view_DocumentMouseLeave(HtmlElement element)
         {
             if (!_view.HighlightModeEnabled())
             {
                 return;
             }
+
             _styling.Unstyle(element);
         }
 
@@ -89,6 +50,10 @@ namespace DEiXTo.Presenters
             }
             _styling.UnstyleElements();
             _styling.Style(element);
+
+            var node = _builder.TreeNodeFromElement(element);
+
+            _view.SelectDOMNode(node);
         }
 
         void _view_CrawlingChanged(bool state)
@@ -133,7 +98,7 @@ namespace DEiXTo.Presenters
         void _view_BrowserCompleted()
         {
             var elem = _view.GetHTMLElement();
-            var rootNode = BuildDom(elem);
+            var rootNode = _builder.BuildDom(elem);
             _view.FillDomTree(rootNode);
             _view.AppendTargetUrl(_view.Url);
         }
