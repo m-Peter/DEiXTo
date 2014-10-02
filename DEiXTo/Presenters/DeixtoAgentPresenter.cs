@@ -18,6 +18,18 @@ namespace DEiXTo.Presenters
 
             _view.BrowseToUrl += _view_BrowseToUrl;
             _view.KeyDownPress += _view_KeyDownPress;
+            _view.AutoFillChanged += _view_AutoFillChanged;
+            _view.CrawlingChanged += _view_CrawlingChanged;
+        }
+
+        void _view_CrawlingChanged(bool state)
+        {
+            _view.ApplyVisibilityStateInCrawling(state);
+        }
+
+        void _view_AutoFillChanged(bool state)
+        {
+            _view.ApplyVisibilityStateInAutoFill(state);
         }
 
         void _view_KeyDownPress(KeyEventArgs e)

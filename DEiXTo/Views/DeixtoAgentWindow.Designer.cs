@@ -641,6 +641,7 @@
             // HTMLLinkTextBox
             // 
             this.HTMLLinkTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+            this.HTMLLinkTextBox.Enabled = false;
             this.HTMLLinkTextBox.Location = new System.Drawing.Point(196, 43);
             this.HTMLLinkTextBox.Name = "HTMLLinkTextBox";
             this.HTMLLinkTextBox.Size = new System.Drawing.Size(100, 20);
@@ -658,6 +659,7 @@
             // CrawlingDepthNUD
             // 
             this.CrawlingDepthNUD.Anchor = System.Windows.Forms.AnchorStyles.Right;
+            this.CrawlingDepthNUD.Enabled = false;
             this.CrawlingDepthNUD.Location = new System.Drawing.Point(240, 20);
             this.CrawlingDepthNUD.Name = "CrawlingDepthNUD";
             this.CrawlingDepthNUD.Size = new System.Drawing.Size(54, 20);
@@ -682,6 +684,7 @@
             this.CrawlingCheckBox.TabIndex = 0;
             this.CrawlingCheckBox.Text = "Multi Page Crawling";
             this.CrawlingCheckBox.UseVisualStyleBackColor = true;
+            this.CrawlingCheckBox.CheckedChanged += new System.EventHandler(this.CrawlingCheckBox_CheckedChanged);
             // 
             // OptionsGroupBox
             // 
@@ -791,6 +794,7 @@
             // 
             // SearchQueryTextBox
             // 
+            this.SearchQueryTextBox.Enabled = false;
             this.SearchQueryTextBox.Location = new System.Drawing.Point(6, 92);
             this.SearchQueryTextBox.Name = "SearchQueryTextBox";
             this.SearchQueryTextBox.Size = new System.Drawing.Size(100, 20);
@@ -798,6 +802,7 @@
             // 
             // InputNameTextBox
             // 
+            this.InputNameTextBox.Enabled = false;
             this.InputNameTextBox.Location = new System.Drawing.Point(7, 69);
             this.InputNameTextBox.Name = "InputNameTextBox";
             this.InputNameTextBox.Size = new System.Drawing.Size(100, 20);
@@ -805,6 +810,7 @@
             // 
             // FormNameTextBox
             // 
+            this.FormNameTextBox.Enabled = false;
             this.FormNameTextBox.Location = new System.Drawing.Point(6, 42);
             this.FormNameTextBox.Name = "FormNameTextBox";
             this.FormNameTextBox.Size = new System.Drawing.Size(100, 20);
@@ -820,6 +826,7 @@
             this.AutoFillCheckBox.TabIndex = 0;
             this.AutoFillCheckBox.Text = "Enable auto fill";
             this.AutoFillCheckBox.UseVisualStyleBackColor = true;
+            this.AutoFillCheckBox.CheckedChanged += new System.EventHandler(this.AutoFillCheckBox_CheckedChanged);
             // 
             // OutputFileGroupBox
             // 

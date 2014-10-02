@@ -14,6 +14,8 @@ namespace DEiXTo.Views
     {
         public event Action BrowseToUrl;
         public event Action<KeyEventArgs> KeyDownPress;
+        public event Action<Boolean> AutoFillChanged;
+        public event Action<Boolean> CrawlingChanged;
 
         public DeixtoAgentWindow()
         {
@@ -54,6 +56,8 @@ namespace DEiXTo.Views
 
             this.KeyPreview = true;
             this.KeyDown += DeixtoAgentWindow_KeyDown;
+
+            OutputFileFormatComboBox.SelectedIndex = 0;
         }
 
         void DeixtoAgentWindow_KeyDown(object sender, KeyEventArgs e)
@@ -89,11 +93,42 @@ namespace DEiXTo.Views
             WebBrowser.GoBack();
         }
 
+        public void ApplyVisibilityStateInAutoFill(bool state)
+        {
+            FormNameTextBox.Enabled = state;
+            InputNameTextBox.Enabled = state;
+            SearchQueryTextBox.Enabled = state;
+        }
+
+        public void ApplyVisibilityStateInCrawling(bool state)
+        {
+            CrawlingDepthNUD.Enabled = state;
+            HTMLLinkTextBox.Enabled = state;
+        }
+
         private void BrowseToURLButton_Click(object sender, EventArgs e)
         {
             if (BrowseToUrl != null)
             {
                 BrowseToUrl();
+            }
+        }
+
+        private void AutoFillCheckBox_CheckedChanged(object sender, EventArgs e)
+        {
+            var state = AutoFillCheckBox.Checked;
+            if (AutoFillChanged != null)
+            {
+                AutoFillChanged(state);
+            }
+        }
+
+        private void CrawlingCheckBox_CheckedChanged(object sender, EventArgs e)
+        {
+            var state = CrawlingCheckBox.Checked;
+            if (CrawlingChanged != null)
+            {
+                CrawlingChanged(state);
             }
         }
     }
