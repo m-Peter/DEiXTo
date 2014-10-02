@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using DEiXTo.Services;
 
 namespace DEiXTo.Views
 {
@@ -26,6 +27,8 @@ namespace DEiXTo.Views
         public event Action<HtmlElement> DocumentMouseOver;
         // Fires when the user's mouse leaves an element of WebBrowser's Document
         public event Action<HtmlElement> DocumentMouseLeave;
+        // Fires when the user clicks a Node of the DOM Tree
+        public event Action<int> DOMNodeClick;
 
         public DeixtoAgentWindow()
         {
@@ -152,6 +155,11 @@ namespace DEiXTo.Views
             return WebBrowser.Document.GetElementsByTagName("HTML")[0];
         }
 
+        public HtmlDocument GetHTMLDocument()
+        {
+            return WebBrowser.Document;
+        }
+
         /// <summary>
         /// Fill the DOM TreeView with the given node
         /// </summary>
@@ -246,6 +254,14 @@ namespace DEiXTo.Views
             if (KeyDownPress != null)
             {
                 KeyDownPress(e);
+            }
+        }
+
+        private void HtmlTreeView_NodeMouseClick(object sender, TreeNodeMouseClickEventArgs e)
+        {
+            if (DOMNodeClick != null)
+            {
+                DOMNodeClick(e.Node.SourceIndex());
             }
         }
     }

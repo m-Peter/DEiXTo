@@ -16,6 +16,7 @@ namespace DEiXTo.Views
         event Action BrowserCompleted;
         event Action<HtmlElement> DocumentMouseOver;
         event Action<HtmlElement> DocumentMouseLeave;
+        event Action<int> DOMNodeClick;
         
         string Url { get; }
 
@@ -26,6 +27,7 @@ namespace DEiXTo.Views
         void ApplyVisibilityStateInAutoFill(bool state);
         void ApplyVisibilityStateInCrawling(bool state);
         HtmlElement GetHTMLElement();
+        HtmlDocument GetHTMLDocument();
         void FillDomTree(TreeNode node);
         bool HighlightModeEnabled();
         void AppendTargetUrl(string url);

@@ -15,6 +15,7 @@ namespace DEiXTo.Presenters
         private readonly IDeixtoAgentView _view;
         private ElementStyling _styling;
         private DOMBuilder _builder;
+        private DocumentQuery _document;
 
         public DeixtoAgentPresenter(IDeixtoAgentView view)
         {
@@ -30,6 +31,15 @@ namespace DEiXTo.Presenters
             _view.BrowserCompleted += _view_BrowserCompleted;
             _view.DocumentMouseOver += _view_DocumentMouseOver;
             _view.DocumentMouseLeave += _view_DocumentMouseLeave;
+            _view.DOMNodeClick += _view_DOMNodeClick;
+        }
+
+        void _view_DOMNodeClick(int index)
+        {
+            _styling.UnstyleElements();
+            var element = _document.GetElementByIndex(index);
+
+            _styling.Style(element);
         }
 
         void _view_DocumentMouseLeave(HtmlElement element)
@@ -97,7 +107,9 @@ namespace DEiXTo.Presenters
 
         void _view_BrowserCompleted()
         {
-            var elem = _view.GetHTMLElement();
+            _document = new DocumentQuery(_view.GetHTMLDocument());
+
+            var elem = _document.GetHTMLElement();
             var rootNode = _builder.BuildDom(elem);
             _view.FillDomTree(rootNode);
             _view.AppendTargetUrl(_view.Url);

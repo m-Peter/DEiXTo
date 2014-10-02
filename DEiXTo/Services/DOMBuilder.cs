@@ -1,4 +1,5 @@
-﻿using mshtml;
+﻿using DEiXTo.Models;
+using mshtml;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -43,7 +44,12 @@ namespace DEiXTo.Services
                 _domTree.Add(element, tmpNode);
             }
 
+            PointerInfo pInfo = new PointerInfo();
+
             var tmpElem = (IHTMLElement)element;
+
+            pInfo.ElementSourceIndex = tmpElem.sourceIndex;
+            tmpNode.Tag = pInfo;
 
             IHTMLDOMChildrenCollection childrenElements = element.childNodes as IHTMLDOMChildrenCollection;
             int len = childrenElements.length;

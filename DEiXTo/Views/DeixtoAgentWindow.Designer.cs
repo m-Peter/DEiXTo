@@ -99,6 +99,7 @@
             this.IgnoreHTMLTagsGroupBox = new System.Windows.Forms.GroupBox();
             this.HTMLTagsListBox = new System.Windows.Forms.CheckedListBox();
             this.TargetURLSGroupBox = new System.Windows.Forms.GroupBox();
+            this.TargetURLsListBox = new System.Windows.Forms.ListBox();
             this.BrowseURLsFileButton = new System.Windows.Forms.Button();
             this.URLsFileTextBox = new System.Windows.Forms.TextBox();
             this.FileLabel = new System.Windows.Forms.Label();
@@ -134,7 +135,6 @@
             this.SnapshotTreeView = new System.Windows.Forms.TreeView();
             this.tabPage10 = new System.Windows.Forms.TabPage();
             this.DeixtoAgentTooltip = new System.Windows.Forms.ToolTip(this.components);
-            this.TargetURLsListBox = new System.Windows.Forms.ListBox();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
@@ -382,6 +382,7 @@
             this.HtmlTreeView.Name = "HtmlTreeView";
             this.HtmlTreeView.Size = new System.Drawing.Size(338, 155);
             this.HtmlTreeView.TabIndex = 0;
+            this.HtmlTreeView.NodeMouseClick += new System.Windows.Forms.TreeNodeMouseClickEventHandler(this.HtmlTreeView_NodeMouseClick);
             // 
             // splitContainer3
             // 
@@ -993,6 +994,14 @@
             this.TargetURLSGroupBox.TabStop = false;
             this.TargetURLSGroupBox.Text = "Target URLs";
             // 
+            // TargetURLsListBox
+            // 
+            this.TargetURLsListBox.FormattingEnabled = true;
+            this.TargetURLsListBox.Location = new System.Drawing.Point(3, 16);
+            this.TargetURLsListBox.Name = "TargetURLsListBox";
+            this.TargetURLsListBox.Size = new System.Drawing.Size(187, 121);
+            this.TargetURLsListBox.TabIndex = 7;
+            // 
             // BrowseURLsFileButton
             // 
             this.BrowseURLsFileButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
@@ -1309,14 +1318,6 @@
             this.tabPage10.TabIndex = 7;
             this.tabPage10.Text = "About";
             this.tabPage10.UseVisualStyleBackColor = true;
-            // 
-            // TargetURLsListBox
-            // 
-            this.TargetURLsListBox.FormattingEnabled = true;
-            this.TargetURLsListBox.Location = new System.Drawing.Point(3, 16);
-            this.TargetURLsListBox.Name = "TargetURLsListBox";
-            this.TargetURLsListBox.Size = new System.Drawing.Size(187, 121);
-            this.TargetURLsListBox.TabIndex = 7;
             // 
             // DeixtoAgentWindow
             // 
