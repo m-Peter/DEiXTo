@@ -14,10 +14,10 @@ namespace DEiXTo.Presenters
         private readonly IViewLoader _viewLoader;
         private int _formCounter = 0;
 
-        public MainPresenter(IMainView view, IViewLoader loader)
+        public MainPresenter(IMainView view, IViewLoader viewLoader)
         {
             _view = view;
-            _viewLoader = loader;
+            _viewLoader = viewLoader;
 
             _view.NewAgent += _view_NewAgent;
             _view.CascadeAgentWindows += _view_CascadeAgentWindows;
@@ -46,11 +46,6 @@ namespace DEiXTo.Presenters
             string title = string.Format("Agent {0}", _formCounter + 1);
             _viewLoader.LoadAgentView(title, _view);
             _formCounter++;
-        }
-
-        public int FormCounter
-        {
-            get { return _formCounter; }
         }
 
     }

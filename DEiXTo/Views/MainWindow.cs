@@ -22,22 +22,6 @@ namespace DEiXTo.Views
             InitializeComponent();
         }
 
-        private void newAgentToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            if (NewAgent != null)
-            {
-                NewAgent();
-            }
-        }
-
-        private void cascadeToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            if (CascadeAgentWindows != null)
-            {
-                CascadeAgentWindows();
-            }
-        }
-
         public void CascadeAgents()
         {
             this.LayoutMdi(MdiLayout.Cascade);
@@ -56,6 +40,22 @@ namespace DEiXTo.Views
             foreach (Form childForm in this.MdiChildren)
             {
                 childForm.Close();
+            }
+        }
+
+        private void newAgentToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (NewAgent != null)
+            {
+                NewAgent();
+            }
+        }
+
+        private void cascadeToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (CascadeAgentWindows != null)
+            {
+                CascadeAgentWindows();
             }
         }
 

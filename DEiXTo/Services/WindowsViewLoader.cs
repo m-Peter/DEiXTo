@@ -32,15 +32,15 @@ namespace DEiXTo.Services
             LoadView(window);
         }
 
+        public Form LastLoadedView
+        {
+            get { return lastLoadedView; }
+        }
+
         private void LoadView(Form view)
         {
             view.Show();
             lastLoadedView = view;
-        }
-
-        public Form LastLoadedView
-        {
-            get { return lastLoadedView; }
         }
     }
 }

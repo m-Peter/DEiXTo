@@ -16,6 +16,7 @@ namespace DEiXTo.Views
         public event Action<KeyEventArgs> KeyDownPress;
         public event Action<Boolean> AutoFillChanged;
         public event Action<Boolean> CrawlingChanged;
+        public event Action BrowserCompleted;
 
         public DeixtoAgentWindow()
         {
@@ -60,14 +61,6 @@ namespace DEiXTo.Views
             OutputFileFormatComboBox.SelectedIndex = 0;
         }
 
-        void DeixtoAgentWindow_KeyDown(object sender, KeyEventArgs e)
-        {
-            if (KeyDownPress != null)
-            {
-                KeyDownPress(e);
-            }
-        }
-
         public string Url
         {
             get { return URLComboBox.Text; }
@@ -106,6 +99,19 @@ namespace DEiXTo.Views
             HTMLLinkTextBox.Enabled = state;
         }
 
+        public HtmlElement GetHTMLElement()
+        {
+            return WebBrowser.Document.GetElementsByTagName("HTML")[0];
+        }
+
+        public void FillDomTree(TreeNode node)
+        {
+            HtmlTreeView.BeginUpdate();
+            HtmlTreeView.Nodes.Add(node);
+            HtmlTreeView.ExpandAll();
+            HtmlTreeView.EndUpdate();
+        }
+
         private void BrowseToURLButton_Click(object sender, EventArgs e)
         {
             if (BrowseToUrl != null)
@@ -129,6 +135,28 @@ namespace DEiXTo.Views
             if (CrawlingChanged != null)
             {
                 CrawlingChanged(state);
+            }
+        }
+
+        private void DeixtoAgentWindow_ClientSizeChanged(object sender, EventArgs e)
+        {
+            splitContainer1.SplitterDistance += 500;
+            splitContainer3.SplitterDistance += 200;
+        }
+
+        private void WebBrowser_DocumentCompleted(object sender, WebBrowserDocumentCompletedEventArgs e)
+        {
+            if (BrowserCompleted != null && e.Url.Equals(WebBrowser.Url))
+            {
+                BrowserCompleted();
+            }
+        }
+
+        void DeixtoAgentWindow_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (KeyDownPress != null)
+            {
+                KeyDownPress(e);
             }
         }
     }

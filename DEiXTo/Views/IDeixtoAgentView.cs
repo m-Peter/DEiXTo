@@ -13,6 +13,7 @@ namespace DEiXTo.Views
         event Action<KeyEventArgs> KeyDownPress;
         event Action<Boolean> AutoFillChanged;
         event Action<Boolean> CrawlingChanged;
+        event Action BrowserCompleted;
         
         string Url { get; }
 
@@ -22,5 +23,7 @@ namespace DEiXTo.Views
         void NavigateBack();
         void ApplyVisibilityStateInAutoFill(bool state);
         void ApplyVisibilityStateInCrawling(bool state);
+        HtmlElement GetHTMLElement();
+        void FillDomTree(TreeNode node);
     }
 }

@@ -97,7 +97,7 @@
             this.LoadPatternButton = new System.Windows.Forms.Button();
             this.TunePatternButton = new System.Windows.Forms.Button();
             this.IgnoreHTMLTagsGroupBox = new System.Windows.Forms.GroupBox();
-            this.checkedListBox1 = new System.Windows.Forms.CheckedListBox();
+            this.HTMLTagsListBox = new System.Windows.Forms.CheckedListBox();
             this.TargetURLSGroupBox = new System.Windows.Forms.GroupBox();
             this.BrowseURLsFileButton = new System.Windows.Forms.Button();
             this.URLsFileTextBox = new System.Windows.Forms.TextBox();
@@ -299,6 +299,7 @@
             this.WebBrowser.ScriptErrorsSuppressed = true;
             this.WebBrowser.Size = new System.Drawing.Size(642, 144);
             this.WebBrowser.TabIndex = 0;
+            this.WebBrowser.DocumentCompleted += new System.Windows.Forms.WebBrowserDocumentCompletedEventHandler(this.WebBrowser_DocumentCompleted);
             // 
             // DOMGroupBox
             // 
@@ -941,7 +942,7 @@
             // 
             this.IgnoreHTMLTagsGroupBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.IgnoreHTMLTagsGroupBox.Controls.Add(this.checkedListBox1);
+            this.IgnoreHTMLTagsGroupBox.Controls.Add(this.HTMLTagsListBox);
             this.IgnoreHTMLTagsGroupBox.Location = new System.Drawing.Point(205, 3);
             this.IgnoreHTMLTagsGroupBox.Name = "IgnoreHTMLTagsGroupBox";
             this.IgnoreHTMLTagsGroupBox.Size = new System.Drawing.Size(114, 86);
@@ -949,12 +950,12 @@
             this.IgnoreHTMLTagsGroupBox.TabStop = false;
             this.IgnoreHTMLTagsGroupBox.Text = "Ignore HTML Tags";
             // 
-            // checkedListBox1
+            // HTMLTagsListBox
             // 
-            this.checkedListBox1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.HTMLTagsListBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left)));
-            this.checkedListBox1.FormattingEnabled = true;
-            this.checkedListBox1.Items.AddRange(new object[] {
+            this.HTMLTagsListBox.FormattingEnabled = true;
+            this.HTMLTagsListBox.Items.AddRange(new object[] {
             "<B>",
             "<STRONG>",
             "<I>",
@@ -968,10 +969,10 @@
             "<DIV>",
             "<WBR>",
             "<P>"});
-            this.checkedListBox1.Location = new System.Drawing.Point(6, 16);
-            this.checkedListBox1.Name = "checkedListBox1";
-            this.checkedListBox1.Size = new System.Drawing.Size(102, 64);
-            this.checkedListBox1.TabIndex = 0;
+            this.HTMLTagsListBox.Location = new System.Drawing.Point(6, 16);
+            this.HTMLTagsListBox.Name = "HTMLTagsListBox";
+            this.HTMLTagsListBox.Size = new System.Drawing.Size(102, 64);
+            this.HTMLTagsListBox.TabIndex = 0;
             // 
             // TargetURLSGroupBox
             // 
@@ -1330,6 +1331,7 @@
             this.Controls.Add(this.splitContainer1);
             this.Name = "DeixtoAgentWindow";
             this.Text = "DeixtoAgentWindow";
+            this.ClientSizeChanged += new System.EventHandler(this.DeixtoAgentWindow_ClientSizeChanged);
             this.splitContainer1.Panel1.ResumeLayout(false);
             this.splitContainer1.Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).EndInit();
@@ -1455,7 +1457,7 @@
         private System.Windows.Forms.TextBox FormNameTextBox;
         private System.Windows.Forms.CheckBox AutoFillCheckBox;
         private System.Windows.Forms.Button SelectOutputFileButton;
-        private System.Windows.Forms.CheckedListBox checkedListBox1;
+        private System.Windows.Forms.CheckedListBox HTMLTagsListBox;
         private System.Windows.Forms.Button LoadPatternButton;
         private System.Windows.Forms.Button TunePatternButton;
         private System.Windows.Forms.CheckBox ExtractURLCheckBox;
