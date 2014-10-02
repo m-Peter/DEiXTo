@@ -12,9 +12,13 @@ namespace DEiXTo.Views
 {
     public partial class MainWindow : Form, IMainView
     {
+        // Fires when the NewAgent menu item gets clicked
         public event Action NewAgent;
+        // Fires when the CascadeAgents menu item gets clicked
         public event Action CascadeAgentWindows;
+        // Fires when the CloseAgents menu item gets clicked
         public event Action CloseAgentWindows;
+        // Fires when the FloatAgents menu item gets clicked
         public event Action FloatAgentWindows;
 
         public MainWindow()

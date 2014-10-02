@@ -17,6 +17,7 @@ namespace DEiXTo.Presenters
         {
             _view = view;
 
+            // ATTACH THE EVENTS OF THE VIEW TO LOCAL METHODS
             _view.BrowseToUrl += _view_BrowseToUrl;
             _view.KeyDownPress += _view_KeyDownPress;
             _view.AutoFillChanged += _view_AutoFillChanged;

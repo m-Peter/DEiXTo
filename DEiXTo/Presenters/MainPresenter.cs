@@ -12,6 +12,7 @@ namespace DEiXTo.Presenters
     {
         private readonly IMainView _view;
         private readonly IViewLoader _viewLoader;
+        // count the number of childs the associated View contains
         private int _formCounter = 0;
 
         public MainPresenter(IMainView view, IViewLoader viewLoader)
@@ -19,6 +20,7 @@ namespace DEiXTo.Presenters
             _view = view;
             _viewLoader = viewLoader;
 
+            // ATTACH THE EVENTS OF THE VIEW TO LOCAL METHODS
             _view.NewAgent += _view_NewAgent;
             _view.CascadeAgentWindows += _view_CascadeAgentWindows;
             _view.CloseAgentWindows += _view_CloseAgentWindows;

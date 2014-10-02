@@ -12,10 +12,15 @@ namespace DEiXTo.Views
 {
     public partial class DeixtoAgentWindow : Form, IDeixtoAgentView
     {
+        // Fires when the user clicks the Browse button
         public event Action BrowseToUrl;
+        // Fires when the user enters a keyboard key
         public event Action<KeyEventArgs> KeyDownPress;
+        // Fires when the user checks the Auto Fill Check Box
         public event Action<Boolean> AutoFillChanged;
+        // Fires when the user checks the Crawling Check Box
         public event Action<Boolean> CrawlingChanged;
+        // Fires when the Document specified by the URL has completed downloading
         public event Action BrowserCompleted;
 
         public DeixtoAgentWindow()
@@ -61,31 +66,52 @@ namespace DEiXTo.Views
             OutputFileFormatComboBox.SelectedIndex = 0;
         }
 
+        /// <summary>
+        /// Get the URL specified by the user
+        /// </summary>
         public string Url
         {
             get { return URLComboBox.Text; }
         }
 
+        /// <summary>
+        /// Shows a warning message when the URL is empty
+        /// </summary>
         public void ShowWarningMessage()
         {
             MessageBox.Show("Please specify URL!");
         }
 
+        /// <summary>
+        /// Navigates the WebBrowser to the given URL
+        /// </summary>
+        /// <param name="url"></param>
         public void NavigateTo(string url)
         {
             WebBrowser.Navigate(url);
         }
 
+        /// <summary>
+        /// Navigates the WebBrowser to the next URL
+        /// </summary>
         public void NavigateForward()
         {
             WebBrowser.GoForward();
         }
 
+        /// <summary>
+        /// Navigates the WebBrowser to the previous URL
+        /// </summary>
         public void NavigateBack()
         {
             WebBrowser.GoBack();
         }
 
+        /// <summary>
+        /// Changes the visibility of the AutoFill fields according
+        /// to the CheckBox state
+        /// </summary>
+        /// <param name="state"></param>
         public void ApplyVisibilityStateInAutoFill(bool state)
         {
             FormNameTextBox.Enabled = state;
@@ -93,17 +119,30 @@ namespace DEiXTo.Views
             SearchQueryTextBox.Enabled = state;
         }
 
+        /// <summary>
+        /// Changes the visibility of the Crawling fields according
+        /// to the CheckBox state
+        /// </summary>
+        /// <param name="state"></param>
         public void ApplyVisibilityStateInCrawling(bool state)
         {
             CrawlingDepthNUD.Enabled = state;
             HTMLLinkTextBox.Enabled = state;
         }
 
+        /// <summary>
+        /// Get the HTML element of the WebBrowser's document
+        /// </summary>
+        /// <returns></returns>
         public HtmlElement GetHTMLElement()
         {
             return WebBrowser.Document.GetElementsByTagName("HTML")[0];
         }
 
+        /// <summary>
+        /// Fill the DOM TreeView with the given node
+        /// </summary>
+        /// <param name="node"></param>
         public void FillDomTree(TreeNode node)
         {
             HtmlTreeView.BeginUpdate();
