@@ -32,6 +32,28 @@ namespace DEiXTo.Presenters
             _view.DocumentMouseOver += _view_DocumentMouseOver;
             _view.DocumentMouseLeave += _view_DocumentMouseLeave;
             _view.DOMNodeClick += _view_DOMNodeClick;
+            _view.CreateWorkingPattern += _view_CreateWorkingPattern;
+            _view.CreateAuxiliaryPattern += _view_CreateAuxiliaryPattern;
+        }
+
+        void _view_CreateAuxiliaryPattern(HtmlElement element)
+        {
+            _view.ClearAuxiliaryTree();
+
+            var node = _builder.BuildDom(element);
+            _view.FillAuxiliaryTree(node);
+
+            _view.ExpandAuxiliaryTree();
+        }
+
+        void _view_CreateWorkingPattern(HtmlElement element)
+        {
+            _view.ClearPatternTree();
+
+            var node = _builder.BuildDom(element);
+            _view.FillPatternTree(node);
+
+            _view.ExpandPatternTree();
         }
 
         void _view_DOMNodeClick(int index)

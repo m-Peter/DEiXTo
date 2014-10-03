@@ -29,6 +29,8 @@ namespace DEiXTo.Views
         public event Action<HtmlElement> DocumentMouseLeave;
         // Fires when the user clicks a Node of the DOM Tree
         public event Action<int> DOMNodeClick;
+        public event Action<HtmlElement> CreateWorkingPattern;
+        public event Action<HtmlElement> CreateAuxiliaryPattern;
 
         public DeixtoAgentWindow()
         {
@@ -225,6 +227,45 @@ namespace DEiXTo.Views
             HtmlTreeView.Focus();
         }
 
+        public void ClearPatternTree()
+        {
+            WorkingPatternTreeView.BeginUpdate();
+            WorkingPatternTreeView.Nodes.Clear();
+            WorkingPatternTreeView.EndUpdate();
+        }
+
+        public void ClearAuxiliaryTree()
+        {
+            AuxiliaryTreeView.BeginUpdate();
+            AuxiliaryTreeView.Nodes.Clear();
+            AuxiliaryTreeView.EndUpdate();
+        }
+
+        public void FillPatternTree(TreeNode node)
+        {
+            node.NodeFont = new Font(WorkingPatternTreeView.Font, FontStyle.Bold);
+            WorkingPatternTreeView.Nodes.Add(node);
+        }
+
+        public void FillAuxiliaryTree(TreeNode node)
+        {
+            AuxiliaryTreeView.Nodes.Add(node);
+        }
+
+        public void ExpandPatternTree()
+        {
+            WorkingPatternTreeView.BeginUpdate();
+            WorkingPatternTreeView.ExpandAll();
+            WorkingPatternTreeView.EndUpdate();
+        }
+
+        public void ExpandAuxiliaryTree()
+        {
+            AuxiliaryTreeView.BeginUpdate();
+            AuxiliaryTreeView.ExpandAll();
+            AuxiliaryTreeView.EndUpdate();
+        }
+
         private void BrowseToURLButton_Click(object sender, EventArgs e)
         {
             if (BrowseToUrl != null)
@@ -290,9 +331,37 @@ namespace DEiXTo.Views
 
         private void HtmlTreeView_NodeMouseClick(object sender, TreeNodeMouseClickEventArgs e)
         {
+            if (e.Button == MouseButtons.Right)
+            {
+                e.Node.ContextMenuStrip = CreatePatternsMenuStrip;
+            }
             if (DOMNodeClick != null)
             {
                 DOMNodeClick(e.Node.SourceIndex());
+            }
+        }
+
+        private void WorkingPatternMenuItem_Click(object sender, EventArgs e)
+        {
+            var node = HtmlTreeView.SelectedNode;
+            int index = node.SourceIndex();
+            var element = WebBrowser.Document.All[index];
+
+            if (CreateWorkingPattern != null)
+            {
+                CreateWorkingPattern(element);
+            }
+        }
+
+        private void AuxiliaryPatternMenuItem_Click(object sender, EventArgs e)
+        {
+            var node = HtmlTreeView.SelectedNode;
+            int index = node.SourceIndex();
+            var element = WebBrowser.Document.All[index];
+
+            if (CreateAuxiliaryPattern != null)
+            {
+                CreateAuxiliaryPattern(element);
             }
         }
     }

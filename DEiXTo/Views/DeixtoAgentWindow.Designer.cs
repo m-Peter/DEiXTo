@@ -53,7 +53,7 @@
             this.AttributeHeader = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.ValueHeader = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.tabPage2 = new System.Windows.Forms.TabPage();
-            this.TreeViewAuxiliary = new System.Windows.Forms.TreeView();
+            this.AuxiliaryTreeView = new System.Windows.Forms.TreeView();
             this.ExecuteButton = new System.Windows.Forms.Button();
             this.LevelDownButton = new System.Windows.Forms.Button();
             this.LevelUpButton = new System.Windows.Forms.Button();
@@ -135,6 +135,9 @@
             this.SnapshotTreeView = new System.Windows.Forms.TreeView();
             this.tabPage10 = new System.Windows.Forms.TabPage();
             this.DeixtoAgentTooltip = new System.Windows.Forms.ToolTip(this.components);
+            this.CreatePatternsMenuStrip = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.WorkingPatternMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.AuxiliaryPatternMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
@@ -174,6 +177,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.StatisticsDataGridView)).BeginInit();
             this.tabPage9.SuspendLayout();
             this.SnapshotsGroupBox.SuspendLayout();
+            this.CreatePatternsMenuStrip.SuspendLayout();
             this.SuspendLayout();
             // 
             // splitContainer1
@@ -469,7 +473,7 @@
             // 
             // tabPage2
             // 
-            this.tabPage2.Controls.Add(this.TreeViewAuxiliary);
+            this.tabPage2.Controls.Add(this.AuxiliaryTreeView);
             this.tabPage2.Location = new System.Drawing.Point(4, 22);
             this.tabPage2.Name = "tabPage2";
             this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
@@ -478,13 +482,13 @@
             this.tabPage2.Text = "Auxiliary";
             this.tabPage2.UseVisualStyleBackColor = true;
             // 
-            // TreeViewAuxiliary
+            // AuxiliaryTreeView
             // 
-            this.TreeViewAuxiliary.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.TreeViewAuxiliary.Location = new System.Drawing.Point(3, 3);
-            this.TreeViewAuxiliary.Name = "TreeViewAuxiliary";
-            this.TreeViewAuxiliary.Size = new System.Drawing.Size(202, 345);
-            this.TreeViewAuxiliary.TabIndex = 0;
+            this.AuxiliaryTreeView.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.AuxiliaryTreeView.Location = new System.Drawing.Point(3, 3);
+            this.AuxiliaryTreeView.Name = "AuxiliaryTreeView";
+            this.AuxiliaryTreeView.Size = new System.Drawing.Size(202, 345);
+            this.AuxiliaryTreeView.TabIndex = 0;
             // 
             // ExecuteButton
             // 
@@ -1319,6 +1323,28 @@
             this.tabPage10.Text = "About";
             this.tabPage10.UseVisualStyleBackColor = true;
             // 
+            // CreatePatternsMenuStrip
+            // 
+            this.CreatePatternsMenuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.WorkingPatternMenuItem,
+            this.AuxiliaryPatternMenuItem});
+            this.CreatePatternsMenuStrip.Name = "CreatePatternsMenuStrip";
+            this.CreatePatternsMenuStrip.Size = new System.Drawing.Size(195, 48);
+            // 
+            // WorkingPatternMenuItem
+            // 
+            this.WorkingPatternMenuItem.Name = "WorkingPatternMenuItem";
+            this.WorkingPatternMenuItem.Size = new System.Drawing.Size(194, 22);
+            this.WorkingPatternMenuItem.Text = "Use as working pattern";
+            this.WorkingPatternMenuItem.Click += new System.EventHandler(this.WorkingPatternMenuItem_Click);
+            // 
+            // AuxiliaryPatternMenuItem
+            // 
+            this.AuxiliaryPatternMenuItem.Name = "AuxiliaryPatternMenuItem";
+            this.AuxiliaryPatternMenuItem.Size = new System.Drawing.Size(194, 22);
+            this.AuxiliaryPatternMenuItem.Text = "Use as auxiliary pattern";
+            this.AuxiliaryPatternMenuItem.Click += new System.EventHandler(this.AuxiliaryPatternMenuItem_Click);
+            // 
             // DeixtoAgentWindow
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -1378,6 +1404,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.StatisticsDataGridView)).EndInit();
             this.tabPage9.ResumeLayout(false);
             this.SnapshotsGroupBox.ResumeLayout(false);
+            this.CreatePatternsMenuStrip.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -1410,7 +1437,7 @@
         private System.Windows.Forms.ColumnHeader AttributeHeader;
         private System.Windows.Forms.ColumnHeader ValueHeader;
         private System.Windows.Forms.TabPage tabPage2;
-        private System.Windows.Forms.TreeView TreeViewAuxiliary;
+        private System.Windows.Forms.TreeView AuxiliaryTreeView;
         private System.Windows.Forms.TabControl SettingsTabControl;
         private System.Windows.Forms.TabPage tabPage3;
         private System.Windows.Forms.TabPage tabPage4;
@@ -1490,5 +1517,8 @@
         private System.Windows.Forms.Button RebuildDOMButton;
         private System.Windows.Forms.ToolTip DeixtoAgentTooltip;
         private System.Windows.Forms.ListBox TargetURLsListBox;
+        private System.Windows.Forms.ContextMenuStrip CreatePatternsMenuStrip;
+        private System.Windows.Forms.ToolStripMenuItem WorkingPatternMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem AuxiliaryPatternMenuItem;
     }
 }
