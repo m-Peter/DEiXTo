@@ -26,13 +26,13 @@ namespace DEiXTo.Services
             return rootNode.FirstNode;
         }
 
-        public TreeNode TreeNodeFromElement(HtmlElement element)
+        /*public TreeNode TreeNodeFromElement(HtmlElement element)
         {
             var tmpElem = (IHTMLDOMNode)element.DomElement;
             var node = _domTree[tmpElem];
 
             return node;
-        }
+        }*/
 
         public TreeNode GetNodeFor(HtmlElement element)
         {

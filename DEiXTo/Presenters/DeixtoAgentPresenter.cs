@@ -69,16 +69,16 @@ namespace DEiXTo.Presenters
             {
                 _styling.UnstyleElements();
                 _styling.Style(element);
+
+                // Retrieve the TreeNode that corresponds to the given HTML element
+                var node = _builder.GetNodeFor(element);
+
+                // Scroll the TreeView to the specified TreeNode
+                _view.SelectDOMNode(node);
+
+                var path = node.GetPath();
+                _view.FillElementInfo(node, element.OuterHtml);
             }
-
-            // Retrieve the TreeNode that corresponds to the given HTML element
-            var node = _builder.TreeNodeFromElement(element);
-
-            // Scroll the TreeView to the specified TreeNode
-            _view.SelectDOMNode(node);
-
-            var path = node.GetPath();
-            _view.FillElementInfo(node, element.OuterHtml);
         }
 
         void _view_CrawlingChanged(bool state)
