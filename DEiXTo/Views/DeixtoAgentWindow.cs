@@ -32,6 +32,10 @@ namespace DEiXTo.Views
         public event Action<TreeNode> CreateWorkingPattern;
         public event Action<TreeNode> CreateAuxiliaryPattern;
         public event Action<TreeNode, MouseButtons> WorkingPatternNodeClick;
+        public event Action<HtmlElement> CreateWorkingPatternFromDocument;
+        public event HtmlElementEventHandler ShowBrowserContextMenu;
+        
+        private HtmlElement _currentElement; 
 
         public DeixtoAgentWindow()
         {
@@ -82,6 +86,12 @@ namespace DEiXTo.Views
         public string Url
         {
             get { return URLComboBox.Text; }
+        }
+
+        public HtmlElement CurrentElement
+        {
+            get { return _currentElement; }
+            set { _currentElement = value; }
         }
 
         /// <summary>
@@ -272,6 +282,16 @@ namespace DEiXTo.Views
             node.ContextMenuStrip = CreatePatternsMenuStrip;
         }
 
+        public void ShowBrowserMenu()
+        {
+            BrowserMenuStrip.Show(Cursor.Position);
+        }
+
+        public bool BrowserContextMenuEnabled()
+        {
+            return BrowserMenuStrip.Enabled;
+        }
+
         private void BrowseToURLButton_Click(object sender, EventArgs e)
         {
             if (BrowseToUrl != null)
@@ -313,7 +333,16 @@ namespace DEiXTo.Views
                 HtmlTreeView.EndUpdate();
                 WebBrowser.Document.MouseOver += Document_MouseOver;
                 WebBrowser.Document.MouseLeave += Document_MouseLeave;
+                WebBrowser.Document.ContextMenuShowing += Document_ContextMenuShowing;
                 BrowserCompleted();
+            }
+        }
+
+        void Document_ContextMenuShowing(object sender, HtmlElementEventArgs e)
+        {
+            if (ShowBrowserContextMenu != null)
+            {
+                ShowBrowserContextMenu(sender, e);
             }
         }
 
@@ -366,6 +395,14 @@ namespace DEiXTo.Views
             if (WorkingPatternNodeClick != null)
             {
                 WorkingPatternNodeClick(e.Node, e.Button);
+            }
+        }
+
+        private void UseAsWorkingPatternMenuItem_Click(object sender, EventArgs e)
+        {
+            if (CreateWorkingPatternFromDocument != null)
+            {
+                CreateWorkingPatternFromDocument(CurrentElement);
             }
         }
     }

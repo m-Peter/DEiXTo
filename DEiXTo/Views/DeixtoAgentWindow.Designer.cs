@@ -138,6 +138,11 @@
             this.CreatePatternsMenuStrip = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.WorkingPatternMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.AuxiliaryPatternMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.BrowserMenuStrip = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.UseAsWorkingPatternMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.UseAsAuxiliaryPatternMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.DisableHighlightingMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
@@ -178,6 +183,7 @@
             this.tabPage9.SuspendLayout();
             this.SnapshotsGroupBox.SuspendLayout();
             this.CreatePatternsMenuStrip.SuspendLayout();
+            this.BrowserMenuStrip.SuspendLayout();
             this.SuspendLayout();
             // 
             // splitContainer1
@@ -1347,6 +1353,40 @@
             this.AuxiliaryPatternMenuItem.Text = "Use as auxiliary pattern";
             this.AuxiliaryPatternMenuItem.Click += new System.EventHandler(this.AuxiliaryPatternMenuItem_Click);
             // 
+            // BrowserMenuStrip
+            // 
+            this.BrowserMenuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.UseAsWorkingPatternMenuItem,
+            this.UseAsAuxiliaryPatternMenuItem,
+            this.toolStripSeparator1,
+            this.DisableHighlightingMenuItem});
+            this.BrowserMenuStrip.Name = "BrowserMenuStrip";
+            this.BrowserMenuStrip.Size = new System.Drawing.Size(195, 98);
+            // 
+            // UseAsWorkingPatternMenuItem
+            // 
+            this.UseAsWorkingPatternMenuItem.Name = "UseAsWorkingPatternMenuItem";
+            this.UseAsWorkingPatternMenuItem.Size = new System.Drawing.Size(194, 22);
+            this.UseAsWorkingPatternMenuItem.Text = "Use as working pattern";
+            this.UseAsWorkingPatternMenuItem.Click += new System.EventHandler(this.UseAsWorkingPatternMenuItem_Click);
+            // 
+            // UseAsAuxiliaryPatternMenuItem
+            // 
+            this.UseAsAuxiliaryPatternMenuItem.Name = "UseAsAuxiliaryPatternMenuItem";
+            this.UseAsAuxiliaryPatternMenuItem.Size = new System.Drawing.Size(194, 22);
+            this.UseAsAuxiliaryPatternMenuItem.Text = "Use as auxiliary pattern";
+            // 
+            // DisableHighlightingMenuItem
+            // 
+            this.DisableHighlightingMenuItem.Name = "DisableHighlightingMenuItem";
+            this.DisableHighlightingMenuItem.Size = new System.Drawing.Size(194, 22);
+            this.DisableHighlightingMenuItem.Text = "Disable Highlighting";
+            // 
+            // toolStripSeparator1
+            // 
+            this.toolStripSeparator1.Name = "toolStripSeparator1";
+            this.toolStripSeparator1.Size = new System.Drawing.Size(191, 6);
+            // 
             // DeixtoAgentWindow
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -1407,6 +1447,7 @@
             this.tabPage9.ResumeLayout(false);
             this.SnapshotsGroupBox.ResumeLayout(false);
             this.CreatePatternsMenuStrip.ResumeLayout(false);
+            this.BrowserMenuStrip.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -1522,5 +1563,10 @@
         private System.Windows.Forms.ContextMenuStrip CreatePatternsMenuStrip;
         private System.Windows.Forms.ToolStripMenuItem WorkingPatternMenuItem;
         private System.Windows.Forms.ToolStripMenuItem AuxiliaryPatternMenuItem;
+        private System.Windows.Forms.ContextMenuStrip BrowserMenuStrip;
+        private System.Windows.Forms.ToolStripMenuItem UseAsWorkingPatternMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem UseAsAuxiliaryPatternMenuItem;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
+        private System.Windows.Forms.ToolStripMenuItem DisableHighlightingMenuItem;
     }
 }

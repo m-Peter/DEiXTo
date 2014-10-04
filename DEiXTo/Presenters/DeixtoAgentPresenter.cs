@@ -35,6 +35,38 @@ namespace DEiXTo.Presenters
             _view.CreateWorkingPattern += _view_CreateWorkingPattern;
             _view.CreateAuxiliaryPattern += _view_CreateAuxiliaryPattern;
             _view.WorkingPatternNodeClick += _view_WorkingPatternNodeClick;
+            _view.CreateWorkingPatternFromDocument += _view_CreateWorkingPatternFromDocument;
+            _view.ShowBrowserContextMenu += _view_ShowBrowserContextMenu;
+        }
+
+        void _view_ShowBrowserContextMenu(object sender, HtmlElementEventArgs e)
+        {
+            e.ReturnValue = e.CtrlKeyPressed;
+
+            if (e.CtrlKeyPressed)
+            {
+                return;
+            }
+
+            if (!e.ReturnValue)
+            {
+                if (_view.BrowserContextMenuEnabled())
+                {
+                    _view.CurrentElement = _document.GetElementFromPoint(e.ClientMousePosition);
+                    _view.ShowBrowserMenu();
+                }
+            }
+        }
+
+        void _view_CreateWorkingPatternFromDocument(HtmlElement element)
+        {
+            _view.ClearPatternTree();
+
+            var node = _builder.GetNodeFor(element);
+
+            _view.FillPatternTree((TreeNode)node.Clone());
+
+            _view.ExpandPatternTree();
         }
 
         void _view_WorkingPatternNodeClick(TreeNode node, MouseButtons button)
