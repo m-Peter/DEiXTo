@@ -31,6 +31,7 @@ namespace DEiXTo.Views
         public event Action<TreeNode, MouseButtons> DOMNodeClick;
         public event Action<TreeNode> CreateWorkingPattern;
         public event Action<TreeNode> CreateAuxiliaryPattern;
+        public event Action<TreeNode, MouseButtons> WorkingPatternNodeClick;
 
         public DeixtoAgentWindow()
         {
@@ -221,10 +222,30 @@ namespace DEiXTo.Views
             {
                 return;
             }
-
+            
             node.EnsureVisible();
             HtmlTreeView.SelectedNode = node;
             HtmlTreeView.Focus();
+        }
+
+        public TreeNode FindNode(TreeNodeCollection nodes, int index)
+        {
+            foreach (TreeNode node in nodes)
+            {
+                if (node.SourceIndex() == index)
+                {
+                    return node;
+                }
+
+                TreeNode candidate = FindNode(node.Nodes, index);
+
+                if (candidate != null)
+                {
+                    return candidate;
+                }
+            }
+
+            return null;
         }
 
         public void ClearPatternTree()
@@ -357,6 +378,14 @@ namespace DEiXTo.Views
             {
                 var node = HtmlTreeView.SelectedNode;
                 CreateAuxiliaryPattern(node);
+            }
+        }
+
+        private void WorkingPatternTreeView_NodeMouseClick(object sender, TreeNodeMouseClickEventArgs e)
+        {
+            if (WorkingPatternNodeClick != null)
+            {
+                WorkingPatternNodeClick(e.Node, e.Button);
             }
         }
     }

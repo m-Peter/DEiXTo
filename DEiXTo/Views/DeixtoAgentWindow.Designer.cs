@@ -560,6 +560,7 @@
             this.WorkingPatternTreeView.ShowNodeToolTips = true;
             this.WorkingPatternTreeView.Size = new System.Drawing.Size(239, 337);
             this.WorkingPatternTreeView.TabIndex = 0;
+            this.WorkingPatternTreeView.NodeMouseClick += new System.Windows.Forms.TreeNodeMouseClickEventHandler(this.WorkingPatternTreeView_NodeMouseClick);
             // 
             // SettingsTabControl
             // 

@@ -19,6 +19,7 @@ namespace DEiXTo.Views
         event Action<TreeNode, MouseButtons> DOMNodeClick;
         event Action<TreeNode> CreateWorkingPattern;
         event Action<TreeNode> CreateAuxiliaryPattern;
+        event Action<TreeNode, MouseButtons> WorkingPatternNodeClick;
         
         string Url { get; }
 
