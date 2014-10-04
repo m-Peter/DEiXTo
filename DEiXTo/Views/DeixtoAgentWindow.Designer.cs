@@ -496,6 +496,7 @@
             this.AuxiliaryTreeView.ShowNodeToolTips = true;
             this.AuxiliaryTreeView.Size = new System.Drawing.Size(202, 345);
             this.AuxiliaryTreeView.TabIndex = 0;
+            this.AuxiliaryTreeView.NodeMouseClick += new System.Windows.Forms.TreeNodeMouseClickEventHandler(this.AuxiliaryTreeView_NodeMouseClick);
             // 
             // ExecuteButton
             // 
