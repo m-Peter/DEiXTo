@@ -16,7 +16,7 @@ namespace DEiXTo.Views
         event Action BrowserCompleted;
         event Action<HtmlElement> DocumentMouseOver;
         event Action<HtmlElement> DocumentMouseLeave;
-        event Action<int> DOMNodeClick;
+        event Action<TreeNode, MouseButtons> DOMNodeClick;
         event Action<HtmlElement> CreateWorkingPattern;
         event Action<HtmlElement> CreateAuxiliaryPattern;
         
@@ -42,5 +42,6 @@ namespace DEiXTo.Views
         void ExpandPatternTree();
         void ClearAuxiliaryTree();
         void ExpandAuxiliaryTree();
+        void SetContextMenuFor(TreeNode node);
     }
 }

@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 namespace DEiXTo.Models
 {
     /// <summary>
-    /// Maintain various necessary properties for a TreeNode of DOM Tree.
+    /// Maintains various necessary properties for a TreeNode of DOM Tree.
     /// </summary>
     public class PointerInfo
     {

@@ -28,7 +28,7 @@ namespace DEiXTo.Views
         // Fires when the user's mouse leaves an element of WebBrowser's Document
         public event Action<HtmlElement> DocumentMouseLeave;
         // Fires when the user clicks a Node of the DOM Tree
-        public event Action<int> DOMNodeClick;
+        public event Action<TreeNode, MouseButtons> DOMNodeClick;
         public event Action<HtmlElement> CreateWorkingPattern;
         public event Action<HtmlElement> CreateAuxiliaryPattern;
 
@@ -266,6 +266,11 @@ namespace DEiXTo.Views
             AuxiliaryTreeView.EndUpdate();
         }
 
+        public void SetContextMenuFor(TreeNode node)
+        {
+            node.ContextMenuStrip = CreatePatternsMenuStrip;
+        }
+
         private void BrowseToURLButton_Click(object sender, EventArgs e)
         {
             if (BrowseToUrl != null)
@@ -331,13 +336,9 @@ namespace DEiXTo.Views
 
         private void HtmlTreeView_NodeMouseClick(object sender, TreeNodeMouseClickEventArgs e)
         {
-            if (e.Button == MouseButtons.Right)
-            {
-                e.Node.ContextMenuStrip = CreatePatternsMenuStrip;
-            }
             if (DOMNodeClick != null)
             {
-                DOMNodeClick(e.Node.SourceIndex());
+                DOMNodeClick(e.Node, e.Button);
             }
         }
 

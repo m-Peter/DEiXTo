@@ -56,15 +56,20 @@ namespace DEiXTo.Presenters
             _view.ExpandPatternTree();
         }
 
-        void _view_DOMNodeClick(int index)
+        void _view_DOMNodeClick(TreeNode node, MouseButtons button)
         {
+            if (button == MouseButtons.Right)
+            {
+                _view.SetContextMenuFor(node);
+            }
+
             _styling.UnstyleElements();
             // Retrieve the HTML element that corresponds to the DOM TreeNode
+            int index = node.SourceIndex();
             var element = _document.GetElementByIndex(index);
             // Style the HTML element in the WebBrowser
             _styling.Style(element);
-
-            var node = _builder.GetNodeFor(element);
+            
             var path = node.GetPath();
 
             _view.FillElementInfo(node, element.OuterHtml);
