@@ -141,8 +141,8 @@
             this.BrowserMenuStrip = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.UseAsWorkingPatternMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.UseAsAuxiliaryPatternMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.DisableHighlightingMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
+            this.DisableHighlightingMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
@@ -493,6 +493,7 @@
             this.AuxiliaryTreeView.Dock = System.Windows.Forms.DockStyle.Fill;
             this.AuxiliaryTreeView.Location = new System.Drawing.Point(3, 3);
             this.AuxiliaryTreeView.Name = "AuxiliaryTreeView";
+            this.AuxiliaryTreeView.ShowNodeToolTips = true;
             this.AuxiliaryTreeView.Size = new System.Drawing.Size(202, 345);
             this.AuxiliaryTreeView.TabIndex = 0;
             // 
@@ -1361,7 +1362,7 @@
             this.toolStripSeparator1,
             this.DisableHighlightingMenuItem});
             this.BrowserMenuStrip.Name = "BrowserMenuStrip";
-            this.BrowserMenuStrip.Size = new System.Drawing.Size(195, 98);
+            this.BrowserMenuStrip.Size = new System.Drawing.Size(195, 76);
             // 
             // UseAsWorkingPatternMenuItem
             // 
@@ -1375,17 +1376,18 @@
             this.UseAsAuxiliaryPatternMenuItem.Name = "UseAsAuxiliaryPatternMenuItem";
             this.UseAsAuxiliaryPatternMenuItem.Size = new System.Drawing.Size(194, 22);
             this.UseAsAuxiliaryPatternMenuItem.Text = "Use as auxiliary pattern";
+            this.UseAsAuxiliaryPatternMenuItem.Click += new System.EventHandler(this.UseAsAuxiliaryPatternMenuItem_Click);
+            // 
+            // toolStripSeparator1
+            // 
+            this.toolStripSeparator1.Name = "toolStripSeparator1";
+            this.toolStripSeparator1.Size = new System.Drawing.Size(191, 6);
             // 
             // DisableHighlightingMenuItem
             // 
             this.DisableHighlightingMenuItem.Name = "DisableHighlightingMenuItem";
             this.DisableHighlightingMenuItem.Size = new System.Drawing.Size(194, 22);
             this.DisableHighlightingMenuItem.Text = "Disable Highlighting";
-            // 
-            // toolStripSeparator1
-            // 
-            this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(191, 6);
             // 
             // DeixtoAgentWindow
             // 

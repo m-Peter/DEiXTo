@@ -33,6 +33,7 @@ namespace DEiXTo.Views
         public event Action<TreeNode> CreateAuxiliaryPattern;
         public event Action<TreeNode, MouseButtons> WorkingPatternNodeClick;
         public event Action<HtmlElement> CreateWorkingPatternFromDocument;
+        public event Action<HtmlElement> CreateAuxiliaryPatternFromDocument;
         public event HtmlElementEventHandler ShowBrowserContextMenu;
         
         private HtmlElement _currentElement; 
@@ -403,6 +404,14 @@ namespace DEiXTo.Views
             if (CreateWorkingPatternFromDocument != null)
             {
                 CreateWorkingPatternFromDocument(CurrentElement);
+            }
+        }
+
+        private void UseAsAuxiliaryPatternMenuItem_Click(object sender, EventArgs e)
+        {
+            if (CreateAuxiliaryPatternFromDocument != null)
+            {
+                CreateAuxiliaryPatternFromDocument(CurrentElement);
             }
         }
     }

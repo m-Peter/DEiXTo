@@ -22,6 +22,7 @@ namespace DEiXTo.Views
         event Action<HtmlElement> CreateWorkingPatternFromDocument;
         event Action<TreeNode, MouseButtons> WorkingPatternNodeClick;
         event HtmlElementEventHandler ShowBrowserContextMenu;
+        event Action<HtmlElement> CreateAuxiliaryPatternFromDocument;
         
         string Url { get; }
         HtmlElement CurrentElement { get; set; }
