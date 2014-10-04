@@ -16,7 +16,6 @@ namespace DEiXTo.Models
         private int _elementSourceIndex;
         private string _path;
         private string _content;
-        private IHTMLDOMNode _element;
 
         public int ElementSourceIndex
         {
@@ -34,12 +33,6 @@ namespace DEiXTo.Models
         {
             get { return _content; }
             set { _content = value; }
-        }
-
-        public IHTMLDOMNode Element
-        {
-            get { return _element; }
-            set { _element = value; }
         }
     }
 }

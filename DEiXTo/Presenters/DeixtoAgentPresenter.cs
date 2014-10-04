@@ -51,7 +51,7 @@ namespace DEiXTo.Presenters
             var path = node.GetPath();
 
             _view.FillElementInfo(node, element.OuterHtml);
-            _view.SelectDOMNode(_builder.GetNodeFromElement(node.GetElement()));
+            _view.SelectDOMNode(_builder.GetNodeFor(element));
 
             if (_view.CanAutoScroll())
             {

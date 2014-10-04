@@ -11,18 +11,6 @@ namespace DEiXTo.Services
 {
     public static class TreeNodeExtensions
     {
-        public static IHTMLDOMNode GetElement(this TreeNode node)
-        {
-            PointerInfo pInfo = node.Tag as PointerInfo;
-
-            if (pInfo != null)
-            {
-                return pInfo.Element;
-            }
-
-            return null;
-        }
-
         public static int SourceIndex(this TreeNode node)
         {
             PointerInfo pInfo = node.Tag as PointerInfo;

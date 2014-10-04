@@ -17,11 +17,6 @@ namespace DEiXTo.Services
     {
         private IDictionary<IHTMLDOMNode, TreeNode> _domTree = new Dictionary<IHTMLDOMNode, TreeNode>();
 
-        public TreeNode GetNodeFromElement(IHTMLDOMNode element)
-        {
-            return _domTree[element];
-        }
-
         public TreeNode BuildDom(HtmlElement element)
         {
             var curElem = element.DomElement as IHTMLDOMNode;
@@ -141,7 +136,6 @@ namespace DEiXTo.Services
             pInfo.ElementSourceIndex = tmpElem.sourceIndex;
             pInfo.Path = ComputePath(treeNode, tmpElem);
             pInfo.Content = GetContentFor(tmpElem);
-            pInfo.Element = element;
             tmpNode.Tag = pInfo;
             tmpNode.ToolTipText = GetTooltipFor(tmpElem);
 
