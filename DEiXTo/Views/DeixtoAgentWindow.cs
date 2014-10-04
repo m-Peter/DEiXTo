@@ -29,8 +29,8 @@ namespace DEiXTo.Views
         public event Action<HtmlElement> DocumentMouseLeave;
         // Fires when the user clicks a Node of the DOM Tree
         public event Action<TreeNode, MouseButtons> DOMNodeClick;
-        public event Action<HtmlElement> CreateWorkingPattern;
-        public event Action<HtmlElement> CreateAuxiliaryPattern;
+        public event Action<TreeNode> CreateWorkingPattern;
+        public event Action<TreeNode> CreateAuxiliaryPattern;
 
         public DeixtoAgentWindow()
         {
@@ -344,25 +344,19 @@ namespace DEiXTo.Views
 
         private void WorkingPatternMenuItem_Click(object sender, EventArgs e)
         {
-            var node = HtmlTreeView.SelectedNode;
-            int index = node.SourceIndex();
-            var element = WebBrowser.Document.All[index];
-
             if (CreateWorkingPattern != null)
             {
-                CreateWorkingPattern(element);
+                var node = HtmlTreeView.SelectedNode;
+                CreateWorkingPattern(node);
             }
         }
 
         private void AuxiliaryPatternMenuItem_Click(object sender, EventArgs e)
         {
-            var node = HtmlTreeView.SelectedNode;
-            int index = node.SourceIndex();
-            var element = WebBrowser.Document.All[index];
-
             if (CreateAuxiliaryPattern != null)
             {
-                CreateAuxiliaryPattern(element);
+                var node = HtmlTreeView.SelectedNode;
+                CreateAuxiliaryPattern(node);
             }
         }
     }

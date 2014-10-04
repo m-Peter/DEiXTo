@@ -17,8 +17,8 @@ namespace DEiXTo.Views
         event Action<HtmlElement> DocumentMouseOver;
         event Action<HtmlElement> DocumentMouseLeave;
         event Action<TreeNode, MouseButtons> DOMNodeClick;
-        event Action<HtmlElement> CreateWorkingPattern;
-        event Action<HtmlElement> CreateAuxiliaryPattern;
+        event Action<TreeNode> CreateWorkingPattern;
+        event Action<TreeNode> CreateAuxiliaryPattern;
         
         string Url { get; }
 

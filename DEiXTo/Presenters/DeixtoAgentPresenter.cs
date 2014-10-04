@@ -36,22 +36,26 @@ namespace DEiXTo.Presenters
             _view.CreateAuxiliaryPattern += _view_CreateAuxiliaryPattern;
         }
 
-        void _view_CreateAuxiliaryPattern(HtmlElement element)
+        void _view_CreateAuxiliaryPattern(TreeNode node)
         {
             _view.ClearAuxiliaryTree();
 
-            var node = _builder.BuildDom(element);
-            _view.FillAuxiliaryTree(node);
+            int index = node.SourceIndex();
+            var element = _document.GetElementByIndex(index);
+
+            _view.FillAuxiliaryTree((TreeNode)node.Clone());
 
             _view.ExpandAuxiliaryTree();
         }
 
-        void _view_CreateWorkingPattern(HtmlElement element)
+        void _view_CreateWorkingPattern(TreeNode node)
         {
             _view.ClearPatternTree();
 
-            var node = _builder.BuildDom(element);
-            _view.FillPatternTree(node);
+            int index = node.SourceIndex();
+            var element = _document.GetElementByIndex(index);
+
+            _view.FillPatternTree((TreeNode)node.Clone());
 
             _view.ExpandPatternTree();
         }
