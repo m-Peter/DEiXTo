@@ -26,14 +26,6 @@ namespace DEiXTo.Services
             return rootNode.FirstNode;
         }
 
-        /*public TreeNode TreeNodeFromElement(HtmlElement element)
-        {
-            var tmpElem = (IHTMLDOMNode)element.DomElement;
-            var node = _domTree[tmpElem];
-
-            return node;
-        }*/
-
         public TreeNode GetNodeFor(HtmlElement element)
         {
             var curElem = element.DomElement as IHTMLDOMNode;
@@ -100,6 +92,28 @@ namespace DEiXTo.Services
 
             return content;
         }
+
+        private string GetTooltipFor(IHTMLElement element)
+        {
+            var tagName = element.tagName;
+            var tooltip = "";
+
+            switch (tagName)
+            {
+                case "A":
+                    tooltip = element.getAttribute("href");
+                    break;
+                case "IMG":
+                    tooltip = element.getAttribute("src");
+                    break;
+                case "FORM":
+                case "INPUT":
+                    tooltip = element.getAttribute("name");
+                    break;
+            }
+
+            return tooltip;
+        }
         
         private void BuildDomTree(IHTMLDOMNode element, TreeNode treeNode, bool IsRoot = false)
         {
@@ -123,6 +137,7 @@ namespace DEiXTo.Services
             pInfo.Path = ComputePath(treeNode, tmpElem);
             pInfo.Content = GetContentFor(tmpElem);
             tmpNode.Tag = pInfo;
+            tmpNode.ToolTipText = GetTooltipFor(tmpElem);
 
             IHTMLDOMChildrenCollection childrenElements = element.childNodes as IHTMLDOMChildrenCollection;
             int len = childrenElements.length;

@@ -557,6 +557,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.WorkingPatternTreeView.Location = new System.Drawing.Point(7, 22);
             this.WorkingPatternTreeView.Name = "WorkingPatternTreeView";
+            this.WorkingPatternTreeView.ShowNodeToolTips = true;
             this.WorkingPatternTreeView.Size = new System.Drawing.Size(239, 337);
             this.WorkingPatternTreeView.TabIndex = 0;
             // 
