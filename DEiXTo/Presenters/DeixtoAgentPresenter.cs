@@ -224,6 +224,10 @@ namespace DEiXTo.Presenters
                 }
                 e.Handled = true;
             }
+            else if (e.KeyCode == Keys.Enter)
+            {
+                _view_BrowseToUrl();
+            }
         }
 
         void _view_BrowseToUrl()
@@ -233,6 +237,7 @@ namespace DEiXTo.Presenters
             if (String.IsNullOrWhiteSpace(url))
             {
                 _view.ShowWarningMessage();
+                return;
             }
 
             _view.NavigateTo(url);
