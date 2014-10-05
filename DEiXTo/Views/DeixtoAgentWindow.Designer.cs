@@ -336,6 +336,7 @@
             this.SimplifyDOMButton.TabIndex = 5;
             this.SimplifyDOMButton.Text = "button7";
             this.SimplifyDOMButton.UseVisualStyleBackColor = true;
+            this.SimplifyDOMButton.Click += new System.EventHandler(this.SimplifyDOMButton_Click);
             // 
             // RebuildDOMButton
             // 

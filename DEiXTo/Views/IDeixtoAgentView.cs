@@ -10,6 +10,7 @@ namespace DEiXTo.Views
     public interface IDeixtoAgentView
     {
         event Action BrowseToUrl;
+        event Action SimplifyDOMTree;
         event Action<KeyEventArgs> KeyDownPress;
         event Action<Boolean> AutoFillChanged;
         event Action<Boolean> CrawlingChanged;
@@ -43,6 +44,7 @@ namespace DEiXTo.Views
         void ClearElementInfo();
         bool CanAutoScroll();
         void ClearPatternTree();
+        void ClearDOMTree();
         void FillPatternTree(TreeNode node);
         void FillAuxiliaryTree(TreeNode node);
         void ExpandPatternTree();
@@ -51,5 +53,6 @@ namespace DEiXTo.Views
         void SetContextMenuFor(TreeNode node);
         void ShowBrowserMenu();
         bool BrowserContextMenuEnabled();
+        string[] IgnoredTags();
     }
 }

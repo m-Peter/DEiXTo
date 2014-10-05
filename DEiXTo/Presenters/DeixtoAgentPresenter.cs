@@ -39,6 +39,22 @@ namespace DEiXTo.Presenters
             _view.CreateAuxiliaryPatternFromDocument += _view_CreateAuxiliaryPatternFromDocument;
             _view.ShowBrowserContextMenu += _view_ShowBrowserContextMenu;
             _view.AuxiliaryPatternNodeClick += _view_AuxiliaryPatternNodeClick;
+            _view.SimplifyDOMTree += _view_SimplifyDOMTree;
+        }
+
+        void _view_SimplifyDOMTree()
+        {
+            _builder.ClearDOM();
+            _view.ClearDOMTree();
+            _document = new DocumentQuery(_view.GetHTMLDocument());
+            var elem = _document.GetHTMLElement();
+            // Build the DOM tree structure from the HTML element of the page
+            var ignoredTags = _view.IgnoredTags();
+            var rootNode = _builder.BuildSimplifiedDom(elem, ignoredTags);
+            // Assign the DOM tree structure to the DOM TreeView
+            _view.FillDomTree(rootNode);
+            // Append the URL of the current page to the TargetURLs container
+            _view.AppendTargetUrl(_view.Url);
         }
 
         void _view_AuxiliaryPatternNodeClick(TreeNode node)
@@ -245,6 +261,7 @@ namespace DEiXTo.Presenters
 
         void _view_BrowserCompleted()
         {
+            _view.ClearDOMTree();
             _document = new DocumentQuery(_view.GetHTMLDocument());
             var elem = _document.GetHTMLElement();
             // Build the DOM tree structure from the HTML element of the page

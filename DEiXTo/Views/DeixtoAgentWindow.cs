@@ -36,6 +36,7 @@ namespace DEiXTo.Views
         public event Action<HtmlElement> CreateAuxiliaryPatternFromDocument;
         public event HtmlElementEventHandler ShowBrowserContextMenu;
         public event Action<TreeNode> AuxiliaryPatternNodeClick;
+        public event Action SimplifyDOMTree;
         
         private HtmlElement _currentElement; 
 
@@ -254,6 +255,13 @@ namespace DEiXTo.Views
             AuxiliaryTreeView.EndUpdate();
         }
 
+        public void ClearDOMTree()
+        {
+            HtmlTreeView.BeginUpdate();
+            HtmlTreeView.Nodes.Clear();
+            HtmlTreeView.EndUpdate();
+        }
+
         public void FillPatternTree(TreeNode node)
         {
             node.NodeFont = new Font(WorkingPatternTreeView.Font, FontStyle.Bold);
@@ -294,6 +302,21 @@ namespace DEiXTo.Views
             return BrowserMenuStrip.Enabled;
         }
 
+        public string[] IgnoredTags()
+        {
+            var items = HTMLTagsListBox.CheckedItems;
+            string[] ignoredTags = new string[items.Count];
+            int i = 0;
+            foreach (var item in items)
+            {
+                var tag = item as string;
+                ignoredTags[i] = tag;
+                i++;
+            }
+
+            return ignoredTags;
+        }
+
         private void BrowseToURLButton_Click(object sender, EventArgs e)
         {
             if (BrowseToUrl != null)
@@ -330,9 +353,6 @@ namespace DEiXTo.Views
         {
             if (BrowserCompleted != null && e.Url.Equals(WebBrowser.Url))
             {
-                HtmlTreeView.BeginUpdate();
-                HtmlTreeView.Nodes.Clear();
-                HtmlTreeView.EndUpdate();
                 WebBrowser.Document.MouseOver += Document_MouseOver;
                 WebBrowser.Document.MouseLeave += Document_MouseLeave;
                 WebBrowser.Document.ContextMenuShowing += Document_ContextMenuShowing;
@@ -421,6 +441,14 @@ namespace DEiXTo.Views
             if (AuxiliaryPatternNodeClick != null)
             {
                 AuxiliaryPatternNodeClick(e.Node);
+            }
+        }
+
+        private void SimplifyDOMButton_Click(object sender, EventArgs e)
+        {
+            if (SimplifyDOMTree != null)
+            {
+                SimplifyDOMTree();
             }
         }
     }

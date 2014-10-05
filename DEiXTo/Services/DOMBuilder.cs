@@ -26,11 +26,25 @@ namespace DEiXTo.Services
             return rootNode.FirstNode;
         }
 
+        public TreeNode BuildSimplifiedDom(HtmlElement element, string[] ignoredTags)
+        {
+            var curElem = element.DomElement as IHTMLDOMNode;
+            var rootNode = new TreeNode();
+            BuildSimplifiedDomTree(curElem, rootNode, ignoredTags, true);
+
+            return rootNode.FirstNode;
+        }
+
         public TreeNode GetNodeFor(HtmlElement element)
         {
             var curElem = element.DomElement as IHTMLDOMNode;
 
             return _domTree[curElem];
+        }
+
+        public void ClearDOM()
+        {
+            _domTree.Clear();
         }
 
         public string ComputePath(TreeNode node, IHTMLElement element)
@@ -155,6 +169,67 @@ namespace DEiXTo.Services
                     tmpNode.Nodes.Add(txtNode);
                 }
                 BuildDomTree(curElement, tmpNode, false);
+            }
+        }
+
+        private void BuildSimplifiedDomTree(IHTMLDOMNode element, TreeNode treeNode, string[] ignoredTags, bool IsRoot = false)
+        {
+            if (element.nodeName == "#text" || element.nodeName == "#comment")
+            {
+                return;
+            }
+
+            IHTMLDOMChildrenCollection childrenElements = element.childNodes as IHTMLDOMChildrenCollection;
+            int len = childrenElements.length;
+            IHTMLDOMNode curElement;
+            string value;
+
+            string tag = "<" + element.nodeName.ToUpper() + ">";
+            if (ignoredTags.Contains(tag))
+            {
+                for (int i = 0; i < len; i++)
+                {
+                    curElement = childrenElements.item(i);
+                    value = curElement.nodeValue as string;
+                    if (curElement.nodeName == "#text" && !String.IsNullOrWhiteSpace(value))
+                    {
+                        var txtNode = new TreeNode("TEXT");
+                        txtNode.ToolTipText = curElement.nodeValue;
+                        treeNode.Nodes.Add(txtNode);
+                    }
+                    BuildSimplifiedDomTree(curElement, treeNode, ignoredTags, false);
+                }
+                return;
+            }
+
+            var tmpNode = treeNode.Nodes.Add(element.nodeName);
+
+            if (_domTree.ContainsKey(element) == false)
+            {
+                _domTree.Add(element, tmpNode);
+            }
+
+            PointerInfo pInfo = new PointerInfo();
+
+            var tmpElem = (IHTMLElement)element;
+
+            pInfo.ElementSourceIndex = tmpElem.sourceIndex;
+            pInfo.Path = ComputePath(treeNode, tmpElem);
+            pInfo.Content = GetContentFor(tmpElem);
+            tmpNode.Tag = pInfo;
+            tmpNode.ToolTipText = GetTooltipFor(tmpElem);
+
+            for (int i = 0; i < len; i++)
+            {
+                curElement = childrenElements.item(i);
+                value = curElement.nodeValue as string;
+                if (curElement.nodeName == "#text" && !String.IsNullOrWhiteSpace(value))
+                {
+                    var txtNode = new TreeNode("TEXT");
+                    txtNode.ToolTipText = curElement.nodeValue;
+                    tmpNode.Nodes.Add(txtNode);
+                }
+                BuildSimplifiedDomTree(curElement, tmpNode, ignoredTags, false);
             }
         }
     }
