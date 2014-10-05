@@ -13,7 +13,7 @@ namespace DEiXTo.Views
     public partial class MainWindow : Form, IMainView
     {
         // Fires when the NewAgent menu item gets clicked
-        public event Action NewAgent;
+        public event Action CreateNewAgent;
         // Fires when the CascadeAgents menu item gets clicked
         public event Action CascadeAgentWindows;
         // Fires when the CloseAgents menu item gets clicked
@@ -26,11 +26,17 @@ namespace DEiXTo.Views
             InitializeComponent();
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
         public void CascadeAgents()
         {
             this.LayoutMdi(MdiLayout.Cascade);
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
         public void FloatAgents()
         {
             foreach (Form childForm in this.MdiChildren)
@@ -39,6 +45,9 @@ namespace DEiXTo.Views
             }
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
         public void CloseAgents()
         {
             foreach (Form childForm in this.MdiChildren)
@@ -49,9 +58,9 @@ namespace DEiXTo.Views
 
         private void newAgentToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            if (NewAgent != null)
+            if (CreateNewAgent != null)
             {
-                NewAgent();
+                CreateNewAgent();
             }
         }
 

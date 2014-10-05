@@ -8,7 +8,7 @@ namespace DEiXTo.Views
 {
     public interface IMainView
     {
-        event Action NewAgent;
+        event Action CreateNewAgent;
         event Action CascadeAgentWindows;
         event Action CloseAgentWindows;
         event Action FloatAgentWindows;

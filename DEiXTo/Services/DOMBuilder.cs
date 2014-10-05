@@ -15,7 +15,7 @@ namespace DEiXTo.Services
     /// </summary>
     public class DOMBuilder
     {
-        private IDictionary<IHTMLDOMNode, TreeNode> _domTree = new Dictionary<IHTMLDOMNode, TreeNode>();
+        private IDictionary<IHTMLDOMNode, TreeNode> _DOMTree = new Dictionary<IHTMLDOMNode, TreeNode>();
 
         public TreeNode BuildDom(HtmlElement element)
         {
@@ -39,12 +39,12 @@ namespace DEiXTo.Services
         {
             var curElem = element.DomElement as IHTMLDOMNode;
 
-            return _domTree[curElem];
+            return _DOMTree[curElem];
         }
 
         public void ClearDOM()
         {
-            _domTree.Clear();
+            _DOMTree.Clear();
         }
 
         public string ComputePath(TreeNode node, IHTMLElement element)
@@ -80,6 +80,16 @@ namespace DEiXTo.Services
             }
 
             return path;
+        }
+
+        private bool containsKey(IHTMLDOMNode key)
+        {
+            return _DOMTree.ContainsKey(key);
+        }
+
+        private void add(IHTMLDOMNode key, TreeNode value)
+        {
+            _DOMTree.Add(key, value);
         }
 
         private string GetContentFor(IHTMLElement element)
@@ -137,10 +147,10 @@ namespace DEiXTo.Services
             }
 
             var tmpNode = treeNode.Nodes.Add(element.nodeName);
-            
-            if (_domTree.ContainsKey(element) == false)
+
+            if (!containsKey(element))
             {
-                _domTree.Add(element, tmpNode);
+                add(element, tmpNode);
             }
 
             PointerInfo pInfo = new PointerInfo();
@@ -204,9 +214,9 @@ namespace DEiXTo.Services
 
             var tmpNode = treeNode.Nodes.Add(element.nodeName);
 
-            if (_domTree.ContainsKey(element) == false)
+            if (!containsKey(element))
             {
-                _domTree.Add(element, tmpNode);
+                add(element, tmpNode);
             }
 
             PointerInfo pInfo = new PointerInfo();

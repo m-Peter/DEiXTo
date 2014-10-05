@@ -11,7 +11,7 @@ namespace DEiXTo.Services
 {
     public class WindowsViewLoader : IViewLoader
     {
-        private Form lastLoadedView;
+        private Form _lastLoadedView;
 
         public void LoadMainView()
         {
@@ -34,13 +34,13 @@ namespace DEiXTo.Services
 
         public Form LastLoadedView
         {
-            get { return lastLoadedView; }
+            get { return _lastLoadedView; }
         }
 
         private void LoadView(Form view)
         {
             view.Show();
-            lastLoadedView = view;
+            _lastLoadedView = view;
         }
     }
 }

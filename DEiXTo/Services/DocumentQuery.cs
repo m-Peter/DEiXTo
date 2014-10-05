@@ -14,31 +14,31 @@ namespace DEiXTo.Services
     /// </summary>
     public class DocumentQuery
     {
-        private HtmlDocument _document;
+        private HtmlDocument _htmlDocument;
 
         public DocumentQuery(HtmlDocument document)
         {
-            _document = document;
+            _htmlDocument = document;
         }
 
         public HtmlElement GetElementByIndex(int index)
         {
-            return _document.All[index];
+            return _htmlDocument.All[index];
         }
 
-        public HtmlElement GetHTMLElement()
+        public HtmlElement GetHtmlElement()
         {
-            return _document.GetElementsByTagName("HTML")[0];
+            return _htmlDocument.GetElementsByTagName("HTML")[0];
         }
 
         public HtmlElement GetElementFromPoint(Point point)
         {
-            return _document.GetElementFromPoint(point);
+            return _htmlDocument.GetElementFromPoint(point);
         }
 
         public int CountElements()
         {
-            return _document.All.Count;
+            return _htmlDocument.All.Count;
         }
     }
 }

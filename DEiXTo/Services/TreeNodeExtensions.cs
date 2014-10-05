@@ -13,7 +13,7 @@ namespace DEiXTo.Services
     {
         public static int SourceIndex(this TreeNode node)
         {
-            PointerInfo pInfo = node.Tag as PointerInfo;
+            PointerInfo pInfo = GetPointerInfo(node);
 
             if (pInfo != null)
             {
@@ -25,7 +25,7 @@ namespace DEiXTo.Services
 
         public static string GetPath(this TreeNode node)
         {
-            PointerInfo pInfo = node.Tag as PointerInfo;
+            PointerInfo pInfo = GetPointerInfo(node);
 
             if (pInfo != null)
             {
@@ -37,7 +37,7 @@ namespace DEiXTo.Services
 
         public static string GetContent(this TreeNode node)
         {
-            PointerInfo pInfo = node.Tag as PointerInfo;
+            PointerInfo pInfo = GetPointerInfo(node);
 
             if (pInfo != null)
             {
@@ -45,6 +45,11 @@ namespace DEiXTo.Services
             }
 
             return "";
+        }
+
+        private static PointerInfo GetPointerInfo(this TreeNode node)
+        {
+            return node.Tag as PointerInfo;
         }
     }
 }

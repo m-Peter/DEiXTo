@@ -9,14 +9,14 @@ namespace DEiXTo.Services
 {
     public class ElementStyling
     {
-        private IDictionary<HtmlElement, string> elementStyles = new Dictionary<HtmlElement, string>();
+        private IDictionary<HtmlElement, string> _elementStyles = new Dictionary<HtmlElement, string>();
 
         public void Style(HtmlElement element)
         {
-            if (!elementStyles.ContainsKey(element))
+            if (!containsKey(element))
             {
                 string style = element.Style;
-                elementStyles.Add(element, style);
+                add(element, style);
                 element.Style = style + "; background-color: yellow; border: 2px solid red";
             }
             else
@@ -28,18 +28,28 @@ namespace DEiXTo.Services
 
         public void Unstyle(HtmlElement element)
         {
-            if (elementStyles.ContainsKey(element))
+            if (containsKey(element))
             {
-                element.Style = elementStyles[element];
+                element.Style = _elementStyles[element];
             }
         }
 
         public void UnstyleElements()
         {
-            foreach (var item in elementStyles)
+            foreach (var item in _elementStyles)
             {
                 Unstyle(item.Key);
             }
+        }
+
+        private void add(HtmlElement key, string value)
+        {
+            _elementStyles.Add(key, value);
+        }
+
+        private bool containsKey(HtmlElement key)
+        {
+            return _elementStyles.ContainsKey(key);
         }
     }
 }

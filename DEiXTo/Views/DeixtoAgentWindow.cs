@@ -91,6 +91,9 @@ namespace DEiXTo.Views
             get { return URLComboBox.Text; }
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
         public HtmlElement CurrentElement
         {
             get { return _currentElement; }
@@ -241,6 +244,9 @@ namespace DEiXTo.Views
             HtmlTreeView.Focus();
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
         public void ClearPatternTree()
         {
             WorkingPatternTreeView.BeginUpdate();
@@ -248,6 +254,9 @@ namespace DEiXTo.Views
             WorkingPatternTreeView.EndUpdate();
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
         public void ClearAuxiliaryTree()
         {
             AuxiliaryTreeView.BeginUpdate();
@@ -255,6 +264,9 @@ namespace DEiXTo.Views
             AuxiliaryTreeView.EndUpdate();
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
         public void ClearDOMTree()
         {
             HtmlTreeView.BeginUpdate();
@@ -262,17 +274,28 @@ namespace DEiXTo.Views
             HtmlTreeView.EndUpdate();
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="node"></param>
         public void FillPatternTree(TreeNode node)
         {
             node.NodeFont = new Font(WorkingPatternTreeView.Font, FontStyle.Bold);
             WorkingPatternTreeView.Nodes.Add(node);
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="node"></param>
         public void FillAuxiliaryTree(TreeNode node)
         {
             AuxiliaryTreeView.Nodes.Add(node);
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
         public void ExpandPatternTree()
         {
             WorkingPatternTreeView.BeginUpdate();
@@ -280,6 +303,9 @@ namespace DEiXTo.Views
             WorkingPatternTreeView.EndUpdate();
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
         public void ExpandAuxiliaryTree()
         {
             AuxiliaryTreeView.BeginUpdate();
@@ -287,21 +313,36 @@ namespace DEiXTo.Views
             AuxiliaryTreeView.EndUpdate();
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="node"></param>
         public void SetContextMenuFor(TreeNode node)
         {
             node.ContextMenuStrip = CreatePatternsMenuStrip;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
         public void ShowBrowserMenu()
         {
             BrowserMenuStrip.Show(Cursor.Position);
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
         public bool BrowserContextMenuEnabled()
         {
             return BrowserMenuStrip.Enabled;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
         public string[] IgnoredTags()
         {
             var items = HTMLTagsListBox.CheckedItems;
