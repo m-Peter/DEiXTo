@@ -109,6 +109,14 @@ namespace DEiXTo.Views
         }
 
         /// <summary>
+        /// 
+        /// </summary>
+        public void ShowRequestNotFoundMessage()
+        {
+            MessageBox.Show("Request resource is not found", "Microsoft Internet Explorer", MessageBoxButtons.OK, MessageBoxIcon.Error);
+        }
+
+        /// <summary>
         /// Returns whether the Highlight Mode checkbox is enabled.
         /// </summary>
         /// <returns></returns>

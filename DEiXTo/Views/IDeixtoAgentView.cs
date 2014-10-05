@@ -30,6 +30,7 @@ namespace DEiXTo.Views
         HtmlElement CurrentElement { get; set; }
 
         void ShowWarningMessage();
+        void ShowRequestNotFoundMessage();
         void NavigateTo(string url);
         void NavigateForward();
         void NavigateBack();

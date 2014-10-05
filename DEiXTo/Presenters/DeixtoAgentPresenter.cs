@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using mshtml;
 using DEiXTo.Services;
+using System.Net;
 
 namespace DEiXTo.Presenters
 {
@@ -255,8 +256,21 @@ namespace DEiXTo.Presenters
                 _view.ShowWarningMessage();
                 return;
             }
-
-            _view.NavigateTo(url);
+            
+            try
+            {
+                HttpWebRequest request = WebRequest.Create(url) as HttpWebRequest;
+                request.Method = "HEAD";
+                HttpWebResponse response = request.GetResponse() as HttpWebResponse;
+                if (response.StatusCode == HttpStatusCode.OK)
+                {
+                    _view.NavigateTo(url);
+                }
+            }
+            catch (Exception)
+            {
+                _view.ShowRequestNotFoundMessage();
+            }
         }
 
         void browserCompleted()
