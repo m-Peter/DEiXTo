@@ -38,6 +38,8 @@ namespace DEiXTo.Views
         public event Action<TreeNode> AuxiliaryPatternNodeClick;
         public event Action SimplifyDOMTree;
         public event Action<TreeNode> CreateSnapshot;
+        public event Action<TreeNode> MakeWorkingPatternFromSnapshot;
+        public event Action<TreeNode> DeleteSnapshot;
         
         private HtmlElement _currentElement;
 
@@ -316,6 +318,7 @@ namespace DEiXTo.Views
         /// <param name="node"></param>
         public void FillSnapshotTree(TreeNode node)
         {
+            node.ContextMenuStrip = SnapshotsMenuStrip;
             SnapshotsTreeView.Nodes.Insert(0, node);
         }
 
@@ -392,6 +395,15 @@ namespace DEiXTo.Views
             WebBrowser.Document.MouseOver += Document_MouseOver;
             WebBrowser.Document.MouseLeave += Document_MouseLeave;
             WebBrowser.Document.ContextMenuShowing += Document_ContextMenuShowing;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="node"></param>
+        public void DeleteSnapshotInstance(TreeNode node)
+        {
+            SnapshotsTreeView.Nodes.Remove(node);
         }
 
         private void BrowseToURLButton_Click(object sender, EventArgs e)
@@ -538,6 +550,24 @@ namespace DEiXTo.Views
             {
                 var node = WorkingPatternTreeView.Nodes[0];
                 CreateSnapshot(node);
+            }
+        }
+
+        private void MakeItWorkingPatternToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (MakeWorkingPatternFromSnapshot != null)
+            {
+                var node = SnapshotsTreeView.SelectedNode.FirstNode;
+                MakeWorkingPatternFromSnapshot(node);
+            }
+        }
+
+        private void DeleteSnapshotToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (DeleteSnapshot != null)
+            {
+                var node = SnapshotsTreeView.SelectedNode;
+                DeleteSnapshot(node);
             }
         }
     }

@@ -43,6 +43,20 @@ namespace DEiXTo.Presenters
             _view.AuxiliaryPatternNodeClick += auxiliaryPatternNodeClick;
             _view.SimplifyDOMTree += simplifyDOMTree;
             _view.CreateSnapshot += createSnapshot;
+            _view.DeleteSnapshot += deleteSnapshot;
+            _view.MakeWorkingPatternFromSnapshot += makeWorkingPatternFromSnapshot;
+        }
+
+        void makeWorkingPatternFromSnapshot(TreeNode node)
+        {
+            _view.ClearPatternTree();
+            _view.FillPatternTree((TreeNode)node.Clone());
+            _view.ExpandPatternTree();
+        }
+
+        void deleteSnapshot(TreeNode node)
+        {
+            _view.DeleteSnapshotInstance(node);
         }
 
         void createSnapshot(TreeNode node)

@@ -143,6 +143,9 @@
             this.UseAsAuxiliaryPatternMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.DisableHighlightingMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.SnapshotsMenuStrip = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.MakeItWorkingPatternToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.DeleteSnapshotToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
@@ -184,6 +187,7 @@
             this.SnapshotsGroupBox.SuspendLayout();
             this.CreatePatternsMenuStrip.SuspendLayout();
             this.BrowserMenuStrip.SuspendLayout();
+            this.SnapshotsMenuStrip.SuspendLayout();
             this.SuspendLayout();
             // 
             // splitContainer1
@@ -1393,6 +1397,28 @@
             this.DisableHighlightingMenuItem.Size = new System.Drawing.Size(194, 22);
             this.DisableHighlightingMenuItem.Text = "Disable Highlighting";
             // 
+            // SnapshotsMenuStrip
+            // 
+            this.SnapshotsMenuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.MakeItWorkingPatternToolStripMenuItem,
+            this.DeleteSnapshotToolStripMenuItem});
+            this.SnapshotsMenuStrip.Name = "SnapshotsMenuStrip";
+            this.SnapshotsMenuStrip.Size = new System.Drawing.Size(201, 70);
+            // 
+            // MakeItWorkingPatternToolStripMenuItem
+            // 
+            this.MakeItWorkingPatternToolStripMenuItem.Name = "MakeItWorkingPatternToolStripMenuItem";
+            this.MakeItWorkingPatternToolStripMenuItem.Size = new System.Drawing.Size(200, 22);
+            this.MakeItWorkingPatternToolStripMenuItem.Text = "Make it working pattern";
+            this.MakeItWorkingPatternToolStripMenuItem.Click += new System.EventHandler(this.MakeItWorkingPatternToolStripMenuItem_Click);
+            // 
+            // DeleteSnapshotToolStripMenuItem
+            // 
+            this.DeleteSnapshotToolStripMenuItem.Name = "DeleteSnapshotToolStripMenuItem";
+            this.DeleteSnapshotToolStripMenuItem.Size = new System.Drawing.Size(200, 22);
+            this.DeleteSnapshotToolStripMenuItem.Text = "Delete snapshot";
+            this.DeleteSnapshotToolStripMenuItem.Click += new System.EventHandler(this.DeleteSnapshotToolStripMenuItem_Click);
+            // 
             // DeixtoAgentWindow
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -1454,6 +1480,7 @@
             this.SnapshotsGroupBox.ResumeLayout(false);
             this.CreatePatternsMenuStrip.ResumeLayout(false);
             this.BrowserMenuStrip.ResumeLayout(false);
+            this.SnapshotsMenuStrip.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -1574,5 +1601,8 @@
         private System.Windows.Forms.ToolStripMenuItem UseAsAuxiliaryPatternMenuItem;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
         private System.Windows.Forms.ToolStripMenuItem DisableHighlightingMenuItem;
+        private System.Windows.Forms.ContextMenuStrip SnapshotsMenuStrip;
+        private System.Windows.Forms.ToolStripMenuItem MakeItWorkingPatternToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem DeleteSnapshotToolStripMenuItem;
     }
 }

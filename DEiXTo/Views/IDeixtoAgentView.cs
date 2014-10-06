@@ -26,6 +26,8 @@ namespace DEiXTo.Views
         event Action<TreeNode> AuxiliaryPatternNodeClick;
         event HtmlElementEventHandler ShowBrowserContextMenu;
         event Action<HtmlElement> CreateAuxiliaryPatternFromDocument;
+        event Action<TreeNode> MakeWorkingPatternFromSnapshot;
+        event Action<TreeNode> DeleteSnapshot;
         
         string Url { get; }
         HtmlElement CurrentElement { get; set; }
@@ -59,5 +61,6 @@ namespace DEiXTo.Views
         bool BrowserContextMenuEnabled();
         string[] IgnoredTags();
         void AttachDocumentEvents();
+        void DeleteSnapshotInstance(TreeNode node);
     }
 }
