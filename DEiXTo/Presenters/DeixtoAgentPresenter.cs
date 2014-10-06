@@ -41,6 +41,14 @@ namespace DEiXTo.Presenters
             _view.ShowBrowserContextMenu += showBrowserContextMenu;
             _view.AuxiliaryPatternNodeClick += auxiliaryPatternNodeClick;
             _view.SimplifyDOMTree += simplifyDOMTree;
+            _view.CreateSnapshot += createSnapshot;
+        }
+
+        void createSnapshot(TreeNode node)
+        {
+            TreeNode root = new TreeNode("SNAP " + string.Format("{0:hh:mm:ss tt}", DateTime.Now));
+            root.AddNode((TreeNode)node.Clone());
+            _view.FillSnapshotTree(root);
         }
 
         void simplifyDOMTree()

@@ -132,7 +132,7 @@
             this.dataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.tabPage9 = new System.Windows.Forms.TabPage();
             this.SnapshotsGroupBox = new System.Windows.Forms.GroupBox();
-            this.SnapshotTreeView = new System.Windows.Forms.TreeView();
+            this.SnapshotsTreeView = new System.Windows.Forms.TreeView();
             this.tabPage10 = new System.Windows.Forms.TabPage();
             this.DeixtoAgentTooltip = new System.Windows.Forms.ToolTip(this.components);
             this.CreatePatternsMenuStrip = new System.Windows.Forms.ContextMenuStrip(this.components);
@@ -558,6 +558,7 @@
             this.CreateSnapshotButton.TabIndex = 1;
             this.CreateSnapshotButton.Text = "btn";
             this.CreateSnapshotButton.UseVisualStyleBackColor = true;
+            this.CreateSnapshotButton.Click += new System.EventHandler(this.CreateSnapshotButton_Click);
             // 
             // WorkingPatternTreeView
             // 
@@ -1311,20 +1312,20 @@
             // 
             // SnapshotsGroupBox
             // 
-            this.SnapshotsGroupBox.Controls.Add(this.SnapshotTreeView);
+            this.SnapshotsGroupBox.Controls.Add(this.SnapshotsTreeView);
             this.SnapshotsGroupBox.Location = new System.Drawing.Point(3, 3);
             this.SnapshotsGroupBox.Name = "SnapshotsGroupBox";
             this.SnapshotsGroupBox.Size = new System.Drawing.Size(519, 359);
             this.SnapshotsGroupBox.TabIndex = 0;
             this.SnapshotsGroupBox.TabStop = false;
-            this.SnapshotsGroupBox.Text = "Pattern Snapshot";
+            this.SnapshotsGroupBox.Text = "Pattern Snapshots";
             // 
-            // SnapshotTreeView
+            // SnapshotsTreeView
             // 
-            this.SnapshotTreeView.Location = new System.Drawing.Point(6, 19);
-            this.SnapshotTreeView.Name = "SnapshotTreeView";
-            this.SnapshotTreeView.Size = new System.Drawing.Size(517, 336);
-            this.SnapshotTreeView.TabIndex = 0;
+            this.SnapshotsTreeView.Location = new System.Drawing.Point(6, 19);
+            this.SnapshotsTreeView.Name = "SnapshotsTreeView";
+            this.SnapshotsTreeView.Size = new System.Drawing.Size(517, 336);
+            this.SnapshotsTreeView.TabIndex = 0;
             // 
             // tabPage10
             // 
@@ -1556,7 +1557,7 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn1;
         private System.Windows.Forms.CheckBox StatisticsCheckBox;
         private System.Windows.Forms.GroupBox SnapshotsGroupBox;
-        private System.Windows.Forms.TreeView SnapshotTreeView;
+        private System.Windows.Forms.TreeView SnapshotsTreeView;
         private System.Windows.Forms.TabPage tabPage10;
         private System.Windows.Forms.CheckBox SilentlyCheckBox;
         private System.Windows.Forms.CheckBox AutoScrollCheckBox;

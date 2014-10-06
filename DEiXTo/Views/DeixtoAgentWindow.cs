@@ -37,6 +37,7 @@ namespace DEiXTo.Views
         public event HtmlElementEventHandler ShowBrowserContextMenu;
         public event Action<TreeNode> AuxiliaryPatternNodeClick;
         public event Action SimplifyDOMTree;
+        public event Action<TreeNode> CreateSnapshot;
         
         private HtmlElement _currentElement; 
 
@@ -304,6 +305,15 @@ namespace DEiXTo.Views
         /// <summary>
         /// 
         /// </summary>
+        /// <param name="node"></param>
+        public void FillSnapshotTree(TreeNode node)
+        {
+            SnapshotsTreeView.Nodes.Insert(0, node);
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
         public void ExpandPatternTree()
         {
             WorkingPatternTreeView.BeginUpdate();
@@ -498,6 +508,15 @@ namespace DEiXTo.Views
             if (SimplifyDOMTree != null)
             {
                 SimplifyDOMTree();
+            }
+        }
+
+        private void CreateSnapshotButton_Click(object sender, EventArgs e)
+        {
+            if (CreateSnapshot != null)
+            {
+                var node = WorkingPatternTreeView.Nodes[0];
+                CreateSnapshot(node);
             }
         }
     }

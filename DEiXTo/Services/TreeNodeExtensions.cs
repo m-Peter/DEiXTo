@@ -11,6 +11,11 @@ namespace DEiXTo.Services
 {
     public static class TreeNodeExtensions
     {
+        public static void AddNode(this TreeNode node, TreeNode newNode)
+        {
+            node.Nodes.Add(newNode);
+        }
+
         public static int SourceIndex(this TreeNode node)
         {
             PointerInfo pInfo = GetPointerInfo(node);

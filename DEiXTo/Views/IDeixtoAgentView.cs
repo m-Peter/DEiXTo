@@ -20,6 +20,7 @@ namespace DEiXTo.Views
         event Action<TreeNode, MouseButtons> DOMNodeClick;
         event Action<TreeNode> CreateWorkingPattern;
         event Action<TreeNode> CreateAuxiliaryPattern;
+        event Action<TreeNode> CreateSnapshot;
         event Action<HtmlElement> CreateWorkingPatternFromDocument;
         event Action<TreeNode, MouseButtons> WorkingPatternNodeClick;
         event Action<TreeNode> AuxiliaryPatternNodeClick;
@@ -38,6 +39,7 @@ namespace DEiXTo.Views
         void ApplyVisibilityStateInCrawling(bool state);
         HtmlDocument GetHtmlDocument();
         void FillDomTree(TreeNode node);
+        void FillSnapshotTree(TreeNode node);
         bool HighlightModeEnabled();
         void AppendTargetUrl(string url);
         void SelectDOMNode(TreeNode node);

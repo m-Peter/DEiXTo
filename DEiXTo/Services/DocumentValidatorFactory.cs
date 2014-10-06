@@ -10,11 +10,11 @@ namespace DEiXTo.Services
     {
         public IDocumentValidator createValidator(string url)
         {
-            if (url.StartsWith("http"))
+            if (url.Contains("www"))
             {
                 return new WebDocumentValidator(url);
             }
-            else if (url.StartsWith("file"))
+            else if (url.Contains("file"))
             {
                 return new LocalDocumentValidator(url);
             }
