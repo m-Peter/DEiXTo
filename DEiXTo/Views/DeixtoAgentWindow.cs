@@ -158,6 +158,14 @@ namespace DEiXTo.Views
         }
 
         /// <summary>
+        /// 
+        /// </summary>
+        public void ClearSnapshotTree()
+        {
+            SnapshotsTreeView.Nodes.Clear();
+        }
+
+        /// <summary>
         /// Navigates the WebBrowser to the given URL
         /// </summary>
         /// <param name="url"></param>

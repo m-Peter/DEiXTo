@@ -48,6 +48,7 @@ namespace DEiXTo.Views
         bool CanAutoScroll();
         void ClearPatternTree();
         void ClearDOMTree();
+        void ClearSnapshotTree();
         void FillPatternTree(TreeNode node);
         void FillAuxiliaryTree(TreeNode node);
         void ExpandPatternTree();

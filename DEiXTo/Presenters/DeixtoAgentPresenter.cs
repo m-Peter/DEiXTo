@@ -275,6 +275,9 @@ namespace DEiXTo.Presenters
 
             if (documentValidator.IsValid())
             {
+                _view.ClearAuxiliaryTree();
+                _view.ClearPatternTree();
+                _view.ClearSnapshotTree();
                 _view.NavigateTo(url);
             }
             else
