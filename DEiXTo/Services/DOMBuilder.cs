@@ -38,8 +38,12 @@ namespace DEiXTo.Services
         public TreeNode GetNodeFor(HtmlElement element)
         {
             var curElem = element.DomElement as IHTMLDOMNode;
+            if (containsKey(curElem))
+            {
+                return _DOMTree[curElem];
+            }
 
-            return _DOMTree[curElem];
+            return null;
         }
 
         public void ClearDOM()

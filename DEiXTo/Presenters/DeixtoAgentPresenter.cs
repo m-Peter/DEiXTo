@@ -8,6 +8,7 @@ using System.Windows.Forms;
 using mshtml;
 using DEiXTo.Services;
 using System.Net;
+using System.Diagnostics;
 
 namespace DEiXTo.Presenters
 {
@@ -215,6 +216,10 @@ namespace DEiXTo.Presenters
 
                 // Retrieve the TreeNode that corresponds to the given HTML element
                 var node = _builder.GetNodeFor(element);
+                if (node == null)
+                {
+                    return;
+                }
 
                 // Scroll the TreeView to the specified TreeNode
                 _view.SelectDOMNode(node);
@@ -297,6 +302,7 @@ namespace DEiXTo.Presenters
             _view.FillDomTree(rootNode);
             // Append the URL of the current page to the TargetURLs container
             _view.AppendTargetUrl(_view.Url);
+            _view.AttachDocumentEvents();
         }
     }
 }

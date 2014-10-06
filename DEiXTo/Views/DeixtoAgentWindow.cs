@@ -39,7 +39,7 @@ namespace DEiXTo.Views
         public event Action SimplifyDOMTree;
         public event Action<TreeNode> CreateSnapshot;
         
-        private HtmlElement _currentElement; 
+        private HtmlElement _currentElement;
 
         public DeixtoAgentWindow()
         {
@@ -384,6 +384,16 @@ namespace DEiXTo.Views
             return ignoredTags;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        public void AttachDocumentEvents()
+        {
+            WebBrowser.Document.MouseOver += Document_MouseOver;
+            WebBrowser.Document.MouseLeave += Document_MouseLeave;
+            WebBrowser.Document.ContextMenuShowing += Document_ContextMenuShowing;
+        }
+
         private void BrowseToURLButton_Click(object sender, EventArgs e)
         {
             if (BrowseToUrl != null)
@@ -420,9 +430,6 @@ namespace DEiXTo.Views
         {
             if (BrowserCompleted != null && e.Url.Equals(WebBrowser.Url))
             {
-                WebBrowser.Document.MouseOver += Document_MouseOver;
-                WebBrowser.Document.MouseLeave += Document_MouseLeave;
-                WebBrowser.Document.ContextMenuShowing += Document_ContextMenuShowing;
                 BrowserCompleted();
             }
         }
@@ -437,12 +444,18 @@ namespace DEiXTo.Views
 
         void Document_MouseLeave(object sender, HtmlElementEventArgs e)
         {
-            DocumentMouseLeave(e.FromElement);
+            if (DocumentMouseLeave != null)
+            {
+                DocumentMouseLeave(e.FromElement);
+            }
         }
 
         void Document_MouseOver(object sender, HtmlElementEventArgs e)
         {
-            DocumentMouseOver(e.ToElement);
+            if (DocumentMouseOver != null)
+            {
+                DocumentMouseOver(e.ToElement);
+            }
         }
 
         void DeixtoAgentWindow_KeyDown(object sender, KeyEventArgs e)

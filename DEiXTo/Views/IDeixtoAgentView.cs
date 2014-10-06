@@ -58,5 +58,6 @@ namespace DEiXTo.Views
         void ShowBrowserMenu();
         bool BrowserContextMenuEnabled();
         string[] IgnoredTags();
+        void AttachDocumentEvents();
     }
 }
