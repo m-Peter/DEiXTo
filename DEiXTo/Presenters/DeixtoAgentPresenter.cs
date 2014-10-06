@@ -262,36 +262,14 @@ namespace DEiXTo.Presenters
                 _view.ShowWarningMessage();
                 return;
             }
-            
-            try
-            {
-                if (url.StartsWith("http"))
-                {
-                    HttpWebRequest request = WebRequest.Create(url) as HttpWebRequest;
-                    request.Method = "HEAD";
-                    HttpWebResponse response = request.GetResponse() as HttpWebResponse;
-                    if (response.StatusCode == HttpStatusCode.OK)
-                    {
-                        _view.NavigateTo(url);
-                    }
-                }
-                else
-                {
-                    try
-                    {
-                        FileWebRequest request = FileWebRequest.Create(url) as FileWebRequest;
-                        request.Method = "HEAD";
-                        FileWebResponse response = request.GetResponse() as FileWebResponse;
-                        _view.NavigateTo(url);
-                    }
-                    catch (Exception)
-                    {
 
-                        _view.ShowRequestNotFoundMessage();
-                    }
-                }
+            var documentValidator = new DocumentValidatorFactory().createValidator(url);
+
+            if (documentValidator.IsValid())
+            {
+                _view.NavigateTo(url);
             }
-            catch (Exception)
+            else
             {
                 _view.ShowRequestNotFoundMessage();
             }

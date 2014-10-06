@@ -53,10 +53,14 @@
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\DocumentQuery.cs" />
+    <Compile Include="Services\DocumentValidatorFactory.cs" />
     <Compile Include="Services\DOMBuilder.cs" />
     <Compile Include="Services\ElementStyling.cs" />
+    <Compile Include="Services\IDocumentValidator.cs" />
     <Compile Include="Services\IViewLoader.cs" />
+    <Compile Include="Services\LocalDocumentValidator.cs" />
     <Compile Include="Services\TreeNodeExtensions.cs" />
+    <Compile Include="Services\WebDocumentValidator.cs" />
     <Compile Include="Services\WindowsViewLoader.cs" />
     <Compile Include="Views\DeixtoAgentWindow.cs">
       <SubType>Form</SubType>
