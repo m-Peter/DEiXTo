@@ -40,6 +40,7 @@ namespace DEiXTo.Views
         public event Action<TreeNode> CreateSnapshot;
         public event Action<TreeNode> MakeWorkingPatternFromSnapshot;
         public event Action<TreeNode> DeleteSnapshot;
+        public event Action<int> ClearTreeViews;
         
         private HtmlElement _currentElement;
 
@@ -406,6 +407,17 @@ namespace DEiXTo.Views
             SnapshotsTreeView.Nodes.Remove(node);
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        public bool AskUserToClearTreeViews()
+        {
+            var result = MessageBox.Show("Are you sure you want to clear the treeviews?", "DEiXTo", MessageBoxButtons.YesNo);
+
+            return result == DialogResult.Yes;
+        }
+
         private void BrowseToURLButton_Click(object sender, EventArgs e)
         {
             if (BrowseToUrl != null)
@@ -568,6 +580,15 @@ namespace DEiXTo.Views
             {
                 var node = SnapshotsTreeView.SelectedNode;
                 DeleteSnapshot(node);
+            }
+        }
+
+        private void ClearTreeViewsButton_Click(object sender, EventArgs e)
+        {
+            if (ClearTreeViews != null)
+            {
+                int count = WorkingPatternTreeView.Nodes.Count + AuxiliaryTreeView.Nodes.Count + SnapshotsTreeView.Nodes.Count;
+                ClearTreeViews(count);
             }
         }
     }

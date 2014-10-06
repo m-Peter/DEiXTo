@@ -552,6 +552,7 @@
             this.ClearTreeViewsButton.TabIndex = 2;
             this.ClearTreeViewsButton.Text = "btn";
             this.ClearTreeViewsButton.UseVisualStyleBackColor = true;
+            this.ClearTreeViewsButton.Click += new System.EventHandler(this.ClearTreeViewsButton_Click);
             // 
             // CreateSnapshotButton
             // 
@@ -1403,7 +1404,7 @@
             this.MakeItWorkingPatternToolStripMenuItem,
             this.DeleteSnapshotToolStripMenuItem});
             this.SnapshotsMenuStrip.Name = "SnapshotsMenuStrip";
-            this.SnapshotsMenuStrip.Size = new System.Drawing.Size(201, 70);
+            this.SnapshotsMenuStrip.Size = new System.Drawing.Size(201, 48);
             // 
             // MakeItWorkingPatternToolStripMenuItem
             // 

@@ -45,6 +45,23 @@ namespace DEiXTo.Presenters
             _view.CreateSnapshot += createSnapshot;
             _view.DeleteSnapshot += deleteSnapshot;
             _view.MakeWorkingPatternFromSnapshot += makeWorkingPatternFromSnapshot;
+            _view.ClearTreeViews += clearTreeViews;
+        }
+
+        void clearTreeViews(int nodesCount)
+        {
+            if (nodesCount == 0)
+            {
+                return;
+            }
+
+            bool answer = _view.AskUserToClearTreeViews();
+            if (answer)
+            {
+                _view.ClearAuxiliaryTree();
+                _view.ClearPatternTree();
+                _view.ClearSnapshotTree();
+            }
         }
 
         void makeWorkingPatternFromSnapshot(TreeNode node)
