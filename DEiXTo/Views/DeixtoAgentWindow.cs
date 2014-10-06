@@ -208,7 +208,7 @@ namespace DEiXTo.Views
         /// Gets the HtmlDocument of the current page
         /// </summary>
         /// <returns></returns>
-        public HtmlDocument GetHTMLDocument()
+        public HtmlDocument GetHtmlDocument()
         {
             return WebBrowser.Document;
         }

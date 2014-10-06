@@ -36,7 +36,7 @@ namespace DEiXTo.Views
         void NavigateBack();
         void ApplyVisibilityStateInAutoFill(bool state);
         void ApplyVisibilityStateInCrawling(bool state);
-        HtmlDocument GetHTMLDocument();
+        HtmlDocument GetHtmlDocument();
         void FillDomTree(TreeNode node);
         bool HighlightModeEnabled();
         void AppendTargetUrl(string url);

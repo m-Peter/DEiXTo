@@ -47,7 +47,7 @@ namespace DEiXTo.Presenters
         {
             _builder.ClearDOM();
             _view.ClearDOMTree();
-            _document = new DocumentQuery(_view.GetHTMLDocument());
+            _document = new DocumentQuery(_view.GetHtmlDocument());
             var elem = _document.GetHtmlElement();
             // Build the DOM tree structure from the HTML element of the page
             var ignoredTags = _view.IgnoredTags();
@@ -247,6 +247,12 @@ namespace DEiXTo.Presenters
             }
         }
 
+        /// <summary>
+        /// Navigates the WebBrowser to the user specified URL. The URL can also
+        /// refer to a local HTML document. If the download of a page fails for
+        /// some reason, a message describing the error is shown. It clears all
+        /// the trees and the target URLs.
+        /// </summary>
         void browseToUrl()
         {
             var url = _view.Url;
@@ -259,12 +265,30 @@ namespace DEiXTo.Presenters
             
             try
             {
-                HttpWebRequest request = WebRequest.Create(url) as HttpWebRequest;
-                request.Method = "HEAD";
-                HttpWebResponse response = request.GetResponse() as HttpWebResponse;
-                if (response.StatusCode == HttpStatusCode.OK)
+                if (url.StartsWith("http"))
                 {
-                    _view.NavigateTo(url);
+                    HttpWebRequest request = WebRequest.Create(url) as HttpWebRequest;
+                    request.Method = "HEAD";
+                    HttpWebResponse response = request.GetResponse() as HttpWebResponse;
+                    if (response.StatusCode == HttpStatusCode.OK)
+                    {
+                        _view.NavigateTo(url);
+                    }
+                }
+                else
+                {
+                    try
+                    {
+                        FileWebRequest request = FileWebRequest.Create(url) as FileWebRequest;
+                        request.Method = "HEAD";
+                        FileWebResponse response = request.GetResponse() as FileWebResponse;
+                        _view.NavigateTo(url);
+                    }
+                    catch (Exception)
+                    {
+
+                        _view.ShowRequestNotFoundMessage();
+                    }
                 }
             }
             catch (Exception)
@@ -276,7 +300,7 @@ namespace DEiXTo.Presenters
         void browserCompleted()
         {
             _view.ClearDOMTree();
-            _document = new DocumentQuery(_view.GetHTMLDocument());
+            _document = new DocumentQuery(_view.GetHtmlDocument());
             var elem = _document.GetHtmlElement();
             // Build the DOM tree structure from the HTML element of the page
             var rootNode = _builder.BuildDom(elem);

@@ -970,6 +970,7 @@
             // 
             this.HTMLTagsListBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left)));
+            this.HTMLTagsListBox.CheckOnClick = true;
             this.HTMLTagsListBox.FormattingEnabled = true;
             this.HTMLTagsListBox.Items.AddRange(new object[] {
             "<B>",
