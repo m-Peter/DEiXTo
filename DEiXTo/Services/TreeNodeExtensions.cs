@@ -11,6 +11,11 @@ namespace DEiXTo.Services
 {
     public static class TreeNodeExtensions
     {
+        public static bool IsTextNode(this TreeNode node)
+        {
+            return node.Text == "TEXT";
+        }
+
         public static void AddNode(this TreeNode node, TreeNode newNode)
         {
             node.Nodes.Add(newNode);

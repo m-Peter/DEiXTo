@@ -141,6 +141,11 @@ namespace DEiXTo.Presenters
 
         void auxiliaryPatternNodeClick(TreeNode node)
         {
+            if (node.IsTextNode())
+            {
+                _view.FillTextNodeElementInfo(node);
+                return;
+            }
             int index = node.SourceIndex();
             var element = _document.GetElementByIndex(index);
 
@@ -201,6 +206,12 @@ namespace DEiXTo.Presenters
 
         void workingPatternNodeClick(TreeNode node, MouseButtons button)
         {
+            if (node.IsTextNode())
+            {
+                _view.FillTextNodeElementInfo(node);
+                return;
+            }
+
             int index = node.SourceIndex();
             var element = _document.GetElementByIndex(index);
 
@@ -250,6 +261,12 @@ namespace DEiXTo.Presenters
             if (button == MouseButtons.Right)
             {
                 _view.SetContextMenuFor(node);
+            }
+
+            if (node.IsTextNode())
+            {
+                _view.FillTextNodeElementInfo(node);
+                return;
             }
 
             _styling.UnstyleElements();

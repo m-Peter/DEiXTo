@@ -35,6 +35,7 @@ namespace DEiXTo.Views
         string Url { get; }
         HtmlElement CurrentElement { get; set; }
 
+        void FillTextNodeElementInfo(TreeNode node);
         void ShowWarningMessage();
         void ShowRequestNotFoundMessage();
         void NavigateTo(string url);

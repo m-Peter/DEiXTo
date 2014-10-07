@@ -183,6 +183,7 @@ namespace DEiXTo.Services
                     var txtNode = new TreeNode("TEXT");
                     txtNode.ToolTipText = curElement.nodeValue;
                     PointerInfo pointer = new PointerInfo();
+                    pointer.Path = pInfo.Path + ".TEXT";
                     pointer.Content = curElement.nodeValue;
                     txtNode.ImageIndex = 0;
                     txtNode.SelectedImageIndex = 0;

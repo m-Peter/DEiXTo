@@ -169,6 +169,17 @@ namespace DEiXTo.Views
         }
 
         /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="node"></param>
+        public void FillTextNodeElementInfo(TreeNode node)
+        {
+            OuterHtmlTextBox.Text = "This is an artificial text node.";
+            InnerTextTextBox.Text = node.GetContent();
+            HtmlPathTextBox.Text = node.GetPath();
+        }
+
+        /// <summary>
         /// Clear the element info tab page.
         /// </summary>
         public void ClearElementInfo()
