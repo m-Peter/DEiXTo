@@ -369,6 +369,7 @@ namespace DEiXTo.Presenters
             // Append the URL of the current page to the TargetURLs container
             _view.AppendTargetUrl(_view.Url);
             _view.AttachDocumentEvents();
+            _view.UpdateDocumentUrl();
         }
     }
 }

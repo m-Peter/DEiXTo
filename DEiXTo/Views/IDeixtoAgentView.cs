@@ -72,5 +72,6 @@ namespace DEiXTo.Views
         void AddOutputColumn(string columnHeader);
         void AddOutputItem(string[] contents);
         void SetExtractedResults(int count);
+        void UpdateDocumentUrl();
     }
 }

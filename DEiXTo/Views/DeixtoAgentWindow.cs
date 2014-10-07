@@ -97,6 +97,11 @@ namespace DEiXTo.Views
             get { return "http://" + URLComboBox.Text; }
         }
 
+        public void UpdateDocumentUrl()
+        {
+            URLComboBox.Text = WebBrowser.Document.Url.ToString();
+        }
+
         /// <summary>
         /// 
         /// </summary>
