@@ -10,7 +10,16 @@ namespace DEiXTo.Services
     {
         public IDocumentValidator createValidator(string address)
         {
-            Uri uri = new Uri(address);
+            Uri uri;
+
+            if (address.StartsWith("http"))
+            {
+                uri = new Uri(address);
+            }
+            else
+            {
+                uri = new Uri("http://" + address);
+            }
 
             if (uri.IsFile)
             {
