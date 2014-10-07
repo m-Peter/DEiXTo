@@ -46,6 +46,13 @@ namespace DEiXTo.Presenters
             _view.DeleteSnapshot += deleteSnapshot;
             _view.MakeWorkingPatternFromSnapshot += makeWorkingPatternFromSnapshot;
             _view.ClearTreeViews += clearTreeViews;
+            _view.RebuildDOM += rebuildDOM;
+        }
+
+        void rebuildDOM()
+        {
+            _builder.ClearDOM();
+            browserCompleted();
         }
 
         void clearTreeViews(int nodesCount)
@@ -85,12 +92,18 @@ namespace DEiXTo.Presenters
 
         void simplifyDOMTree()
         {
+            var ignoredTags = _view.IgnoredTags();
+            if (ignoredTags.Count() == 0)
+            {
+                _view.ShowNoTagSelectedMessage();
+                return;
+            }
+            
             _builder.ClearDOM();
             _view.ClearDOMTree();
             _document = new DocumentQuery(_view.GetHtmlDocument());
             var elem = _document.GetHtmlElement();
             // Build the DOM tree structure from the HTML element of the page
-            var ignoredTags = _view.IgnoredTags();
             var rootNode = _builder.BuildSimplifiedDom(elem, ignoredTags);
             // Assign the DOM tree structure to the DOM TreeView
             _view.FillDomTree(rootNode);

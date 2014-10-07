@@ -41,6 +41,7 @@ namespace DEiXTo.Views
         public event Action<TreeNode> MakeWorkingPatternFromSnapshot;
         public event Action<TreeNode> DeleteSnapshot;
         public event Action<int> ClearTreeViews;
+        public event Action RebuildDOM;
         
         private HtmlElement _currentElement;
 
@@ -118,6 +119,14 @@ namespace DEiXTo.Views
         public void ShowRequestNotFoundMessage()
         {
             MessageBox.Show("Request resource is not found", "Microsoft Internet Explorer", MessageBoxButtons.OK, MessageBoxIcon.Error);
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public void ShowNoTagSelectedMessage()
+        {
+            MessageBox.Show("At least one HTML tag type should be selected", "DEiXTo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
         }
 
         /// <summary>
@@ -589,6 +598,14 @@ namespace DEiXTo.Views
             {
                 int count = WorkingPatternTreeView.Nodes.Count + AuxiliaryTreeView.Nodes.Count + SnapshotsTreeView.Nodes.Count;
                 ClearTreeViews(count);
+            }
+        }
+
+        private void RebuildDOMButton_Click(object sender, EventArgs e)
+        {
+            if (RebuildDOM != null)
+            {
+                RebuildDOM();
             }
         }
     }

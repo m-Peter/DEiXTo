@@ -29,6 +29,7 @@ namespace DEiXTo.Views
         event Action<TreeNode> MakeWorkingPatternFromSnapshot;
         event Action<TreeNode> DeleteSnapshot;
         event Action<int> ClearTreeViews;
+        event Action RebuildDOM;
         
         string Url { get; }
         HtmlElement CurrentElement { get; set; }
@@ -64,5 +65,6 @@ namespace DEiXTo.Views
         void AttachDocumentEvents();
         void DeleteSnapshotInstance(TreeNode node);
         bool AskUserToClearTreeViews();
+        void ShowNoTagSelectedMessage();
     }
 }

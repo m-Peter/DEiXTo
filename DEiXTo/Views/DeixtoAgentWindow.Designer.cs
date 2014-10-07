@@ -351,6 +351,7 @@
             this.RebuildDOMButton.TabIndex = 4;
             this.RebuildDOMButton.Text = "button7";
             this.RebuildDOMButton.UseVisualStyleBackColor = true;
+            this.RebuildDOMButton.Click += new System.EventHandler(this.RebuildDOMButton_Click);
             // 
             // HighlightModeCheckBox
             // 
