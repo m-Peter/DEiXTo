@@ -97,6 +97,9 @@ namespace DEiXTo.Views
             get { return "http://" + URLComboBox.Text; }
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
         public void UpdateDocumentUrl()
         {
             URLComboBox.Text = WebBrowser.Document.Url.ToString();
@@ -173,6 +176,15 @@ namespace DEiXTo.Views
             OuterHtmlTextBox.Text = String.Empty;
             InnerTextTextBox.Text = String.Empty;
             HtmlPathTextBox.Text = String.Empty;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="imageList"></param>
+        public void AddWorkingPatterImages(ImageList imageList)
+        {
+            WorkingPatternTreeView.ImageList = imageList;
         }
 
         /// <summary>

@@ -73,5 +73,6 @@ namespace DEiXTo.Views
         void AddOutputItem(string[] contents);
         void SetExtractedResults(int count);
         void UpdateDocumentUrl();
+        void AddWorkingPatterImages(ImageList imageList);
     }
 }

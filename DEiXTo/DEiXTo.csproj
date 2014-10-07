@@ -61,6 +61,7 @@
     <Compile Include="Services\IViewLoader.cs" />
     <Compile Include="Services\LocalDocumentValidator.cs" />
     <Compile Include="Services\PatternExtraction.cs" />
+    <Compile Include="Services\StatesImageLoader.cs" />
     <Compile Include="Services\TreeNodeExtensions.cs" />
     <Compile Include="Services\WebDocumentValidator.cs" />
     <Compile Include="Services\WindowsViewLoader.cs" />

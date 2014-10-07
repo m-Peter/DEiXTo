@@ -159,6 +159,8 @@ namespace DEiXTo.Services
 
             PointerInfo pInfo = new PointerInfo();
 
+            tmpNode.ImageIndex = 3;
+            tmpNode.SelectedImageIndex = 3;
             var tmpElem = (IHTMLElement)element;
 
             pInfo.ElementSourceIndex = tmpElem.sourceIndex;
@@ -182,6 +184,8 @@ namespace DEiXTo.Services
                     txtNode.ToolTipText = curElement.nodeValue;
                     PointerInfo pointer = new PointerInfo();
                     pointer.Content = curElement.nodeValue;
+                    txtNode.ImageIndex = 0;
+                    txtNode.SelectedImageIndex = 0;
                     txtNode.Tag = pointer;
                     tmpNode.Nodes.Add(txtNode);
                 }

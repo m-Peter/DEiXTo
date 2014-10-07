@@ -18,12 +18,14 @@ namespace DEiXTo.Presenters
         private ElementStyling _styling;
         private DOMBuilder _builder;
         private DocumentQuery _document;
+        private StatesImageLoader _imageLoader;
 
         public DeixtoAgentPresenter(IDeixtoAgentView view)
         {
             _view = view;
             _styling = new ElementStyling();
             _builder = new DOMBuilder();
+            _imageLoader = new StatesImageLoader();
 
             // ATTACH THE EVENTS OF THE VIEW TO LOCAL METHODS
             _view.BrowseToUrl += browseToUrl;
@@ -48,6 +50,10 @@ namespace DEiXTo.Presenters
             _view.ClearTreeViews += clearTreeViews;
             _view.RebuildDOM += rebuildDOM;
             _view.ExecuteRule += executeRule;
+
+            var imagesList = _imageLoader.LoadImages();
+
+            _view.AddWorkingPatterImages(imagesList);
         }
 
         void executeRule()
