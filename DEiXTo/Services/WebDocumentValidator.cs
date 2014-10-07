@@ -9,18 +9,18 @@ namespace DEiXTo.Services
 {
     public class WebDocumentValidator : IDocumentValidator
     {
-        private string _url;
+        private Uri _uri;
 
-        public WebDocumentValidator(string url)
+        public WebDocumentValidator(Uri uri)
         {
-            _url = url;
+            _uri = uri;
         }
 
         public bool IsValid()
         {
             try
             {
-                HttpWebRequest request = WebRequest.Create(_url) as HttpWebRequest;
+                HttpWebRequest request = WebRequest.Create(_uri) as HttpWebRequest;
                 request.Method = "HEAD";
                 HttpWebResponse response = request.GetResponse() as HttpWebResponse;
                 if (response.StatusCode == HttpStatusCode.OK)

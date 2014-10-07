@@ -8,15 +8,17 @@ namespace DEiXTo.Services
 {
     public class DocumentValidatorFactory
     {
-        public IDocumentValidator createValidator(string url)
+        public IDocumentValidator createValidator(string address)
         {
-            if (url.Contains("www"))
+            Uri uri = new Uri(address);
+
+            if (uri.IsFile)
             {
-                return new WebDocumentValidator(url);
+                return new LocalDocumentValidator(uri);
             }
-            else if (url.Contains("file"))
+            else
             {
-                return new LocalDocumentValidator(url);
+                return new WebDocumentValidator(uri);
             }
 
             throw new ArgumentException("No Validator found for this URL");

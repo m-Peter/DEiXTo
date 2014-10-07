@@ -9,18 +9,18 @@ namespace DEiXTo.Services
 {
     public class LocalDocumentValidator : IDocumentValidator
     {
-        private string _url;
+        private Uri _uri;
 
-        public LocalDocumentValidator(string url)
+        public LocalDocumentValidator(Uri uri)
         {
-            _url = url;
+            _uri = uri;
         }
 
         public bool IsValid()
         {
             try
             {
-                FileWebRequest request = FileWebRequest.Create(_url) as FileWebRequest;
+                FileWebRequest request = FileWebRequest.Create(_uri) as FileWebRequest;
                 request.Method = "HEAD";
                 FileWebResponse response = request.GetResponse() as FileWebResponse;
 

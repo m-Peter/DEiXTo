@@ -94,7 +94,7 @@ namespace DEiXTo.Views
         /// </summary>
         public string Url
         {
-            get { return URLComboBox.Text; }
+            get { return "http://" + URLComboBox.Text; }
         }
 
         /// <summary>
