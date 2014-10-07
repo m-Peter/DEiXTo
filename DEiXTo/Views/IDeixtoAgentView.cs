@@ -30,6 +30,7 @@ namespace DEiXTo.Views
         event Action<TreeNode> DeleteSnapshot;
         event Action<int> ClearTreeViews;
         event Action RebuildDOM;
+        event Action ExecuteRule;
         
         string Url { get; }
         HtmlElement CurrentElement { get; set; }
@@ -66,5 +67,10 @@ namespace DEiXTo.Views
         void DeleteSnapshotInstance(TreeNode node);
         bool AskUserToClearTreeViews();
         void ShowNoTagSelectedMessage();
+        TreeNode GetWorkingPattern();
+        TreeNodeCollection GetDOMTreeNodes();
+        void AddOutputColumn(string columnHeader);
+        void AddOutputItem(string[] contents);
+        void SetExtractedResults(int count);
     }
 }

@@ -47,6 +47,28 @@ namespace DEiXTo.Presenters
             _view.MakeWorkingPatternFromSnapshot += makeWorkingPatternFromSnapshot;
             _view.ClearTreeViews += clearTreeViews;
             _view.RebuildDOM += rebuildDOM;
+            _view.ExecuteRule += executeRule;
+        }
+
+        void executeRule()
+        {
+            var pattern = _view.GetWorkingPattern();
+            var domNodes = _view.GetDOMTreeNodes();
+            PatternExtraction extraction = new PatternExtraction(pattern, domNodes);
+            extraction.FindMatches();
+            var results = extraction.ExtractedResults();
+            var columnFormat = "VAR";
+
+            for (int i = 0; i < results[0].Count; i++)
+            {
+                _view.AddOutputColumn(columnFormat + i);
+            }
+
+            foreach (var item in results)
+            {
+                _view.AddOutputItem(item.ToStringArray());
+            }
+            _view.SetExtractedResults(results.Count);
         }
 
         void rebuildDOM()

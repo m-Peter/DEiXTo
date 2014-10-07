@@ -42,6 +42,7 @@ namespace DEiXTo.Views
         public event Action<TreeNode> DeleteSnapshot;
         public event Action<int> ClearTreeViews;
         public event Action RebuildDOM;
+        public event Action ExecuteRule;
         
         private HtmlElement _currentElement;
 
@@ -427,6 +428,48 @@ namespace DEiXTo.Views
             return result == DialogResult.Yes;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        public TreeNode GetWorkingPattern()
+        {
+            return WorkingPatternTreeView.Nodes[0];
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        public TreeNodeCollection GetDOMTreeNodes()
+        {
+            return HtmlTreeView.Nodes;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="columnHeader"></param>
+        public void AddOutputColumn(string columnHeader)
+        {
+            OutputListView.Columns.Add(columnHeader);
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="contents"></param>
+        public void AddOutputItem(string[] contents)
+        {
+            ListViewItem item = new ListViewItem(contents);
+            OutputListView.Items.Add(item);
+        }
+
+        public void SetExtractedResults(int count)
+        {
+            ExtractionResultsLabel.Text += count;
+        }
+
         private void BrowseToURLButton_Click(object sender, EventArgs e)
         {
             if (BrowseToUrl != null)
@@ -606,6 +649,14 @@ namespace DEiXTo.Views
             if (RebuildDOM != null)
             {
                 RebuildDOM();
+            }
+        }
+
+        private void ExecuteButton_Click(object sender, EventArgs e)
+        {
+            if (ExecuteRule != null)
+            {
+                ExecuteRule();
             }
         }
     }

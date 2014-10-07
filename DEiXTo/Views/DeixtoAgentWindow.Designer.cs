@@ -107,6 +107,8 @@
             this.AddURLButton = new System.Windows.Forms.Button();
             this.AddURLTextBox = new System.Windows.Forms.TextBox();
             this.tabPage4 = new System.Windows.Forms.TabPage();
+            this.ExtractionResultsLabel = new System.Windows.Forms.Label();
+            this.OutputListView = new System.Windows.Forms.ListView();
             this.tabPage5 = new System.Windows.Forms.TabPage();
             this.HtmlPathTextBox = new System.Windows.Forms.TextBox();
             this.HtmlPathLabel = new System.Windows.Forms.Label();
@@ -177,6 +179,7 @@
             this.ExtractionPatternGroupBox.SuspendLayout();
             this.IgnoreHTMLTagsGroupBox.SuspendLayout();
             this.TargetURLSGroupBox.SuspendLayout();
+            this.tabPage4.SuspendLayout();
             this.tabPage5.SuspendLayout();
             this.tabPage6.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.RSSDataGridView)).BeginInit();
@@ -513,6 +516,7 @@
             this.ExecuteButton.TabIndex = 6;
             this.ExecuteButton.Text = "btn";
             this.ExecuteButton.UseVisualStyleBackColor = true;
+            this.ExecuteButton.Click += new System.EventHandler(this.ExecuteButton_Click);
             // 
             // LevelDownButton
             // 
@@ -1085,6 +1089,8 @@
             // 
             // tabPage4
             // 
+            this.tabPage4.Controls.Add(this.ExtractionResultsLabel);
+            this.tabPage4.Controls.Add(this.OutputListView);
             this.tabPage4.Location = new System.Drawing.Point(4, 22);
             this.tabPage4.Name = "tabPage4";
             this.tabPage4.Padding = new System.Windows.Forms.Padding(3);
@@ -1092,6 +1098,26 @@
             this.tabPage4.TabIndex = 1;
             this.tabPage4.Text = "Output";
             this.tabPage4.UseVisualStyleBackColor = true;
+            // 
+            // ExtractionResultsLabel
+            // 
+            this.ExtractionResultsLabel.AutoSize = true;
+            this.ExtractionResultsLabel.Location = new System.Drawing.Point(6, 344);
+            this.ExtractionResultsLabel.Name = "ExtractionResultsLabel";
+            this.ExtractionResultsLabel.Size = new System.Drawing.Size(95, 13);
+            this.ExtractionResultsLabel.TabIndex = 1;
+            this.ExtractionResultsLabel.Text = "Extraction Results:";
+            // 
+            // OutputListView
+            // 
+            this.OutputListView.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.OutputListView.Location = new System.Drawing.Point(6, 6);
+            this.OutputListView.Name = "OutputListView";
+            this.OutputListView.Size = new System.Drawing.Size(513, 319);
+            this.OutputListView.TabIndex = 0;
+            this.OutputListView.UseCompatibleStateImageBehavior = false;
+            this.OutputListView.View = System.Windows.Forms.View.Details;
             // 
             // tabPage5
             // 
@@ -1469,6 +1495,8 @@
             this.IgnoreHTMLTagsGroupBox.ResumeLayout(false);
             this.TargetURLSGroupBox.ResumeLayout(false);
             this.TargetURLSGroupBox.PerformLayout();
+            this.tabPage4.ResumeLayout(false);
+            this.tabPage4.PerformLayout();
             this.tabPage5.ResumeLayout(false);
             this.tabPage5.PerformLayout();
             this.tabPage6.ResumeLayout(false);
@@ -1606,5 +1634,7 @@
         private System.Windows.Forms.ContextMenuStrip SnapshotsMenuStrip;
         private System.Windows.Forms.ToolStripMenuItem MakeItWorkingPatternToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem DeleteSnapshotToolStripMenuItem;
+        private System.Windows.Forms.Label ExtractionResultsLabel;
+        private System.Windows.Forms.ListView OutputListView;
     }
 }

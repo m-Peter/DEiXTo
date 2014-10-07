@@ -180,6 +180,9 @@ namespace DEiXTo.Services
                 {
                     var txtNode = new TreeNode("TEXT");
                     txtNode.ToolTipText = curElement.nodeValue;
+                    PointerInfo pointer = new PointerInfo();
+                    pointer.Content = curElement.nodeValue;
+                    txtNode.Tag = pointer;
                     tmpNode.Nodes.Add(txtNode);
                 }
                 BuildDomTree(curElement, tmpNode, false);

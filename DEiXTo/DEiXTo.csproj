@@ -48,6 +48,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Models\PointerInfo.cs" />
+    <Compile Include="Models\Result.cs" />
     <Compile Include="Presenters\DeixtoAgentPresenter.cs" />
     <Compile Include="Presenters\MainPresenter.cs" />
     <Compile Include="Program.cs" />
@@ -59,6 +60,7 @@
     <Compile Include="Services\IDocumentValidator.cs" />
     <Compile Include="Services\IViewLoader.cs" />
     <Compile Include="Services\LocalDocumentValidator.cs" />
+    <Compile Include="Services\PatternExtraction.cs" />
     <Compile Include="Services\TreeNodeExtensions.cs" />
     <Compile Include="Services\WebDocumentValidator.cs" />
     <Compile Include="Services\WindowsViewLoader.cs" />
