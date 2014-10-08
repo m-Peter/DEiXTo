@@ -1,16 +1,10 @@
 ﻿using DEiXTo.Views;
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using mshtml;
 using DEiXTo.Services;
-using System.Net;
-using System.Diagnostics;
 using DEiXTo.Models;
-using System.Drawing;
 
 namespace DEiXTo.Presenters
 {
