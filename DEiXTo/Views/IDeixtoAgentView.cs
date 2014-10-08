@@ -32,6 +32,7 @@ namespace DEiXTo.Views
         event Action RebuildDOM;
         event Action ExecuteRule;
         event Action<TreeNode> LevelUpWorkingPattern;
+        event Action<TreeNode> LevelDownWorkingPattern;
         
         string Url { get; }
         HtmlElement CurrentElement { get; set; }
@@ -77,5 +78,6 @@ namespace DEiXTo.Views
         void UpdateDocumentUrl();
         void AddWorkingPatterImages(ImageList imageList);
         void SetNodeFont(TreeNode node);
+        void ShowCannotDeleteRootMessage();
     }
 }

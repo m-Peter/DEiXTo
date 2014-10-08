@@ -164,6 +164,7 @@ namespace DEiXTo.Services
             var tmpElem = (IHTMLElement)element;
 
             pInfo.ElementSourceIndex = tmpElem.sourceIndex;
+            pInfo.IsRoot = IsRoot;
             pInfo.Path = ComputePath(treeNode, tmpElem);
             pInfo.Content = GetContentFor(tmpElem);
             tmpNode.Tag = pInfo;

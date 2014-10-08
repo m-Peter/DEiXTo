@@ -53,10 +53,26 @@ namespace DEiXTo.Presenters
             _view.RebuildDOM += rebuildDOM;
             _view.ExecuteRule += executeRule;
             _view.LevelUpWorkingPattern += levelUpWorkingPattern;
+            _view.LevelDownWorkingPattern += levelDownWorkingPattern;
 
             var imagesList = _imageLoader.LoadImages();
 
             _view.AddWorkingPatterImages(imagesList);
+        }
+
+        void levelDownWorkingPattern(TreeNode node)
+        {
+            if (node.IsRoot())
+            {
+                _view.ShowCannotDeleteRootMessage();
+                return;
+            }
+
+            var newNode = (TreeNode)node.FirstNode.Clone();
+
+            _view.ClearPatternTree();
+            _view.FillPatternTree(newNode);
+            _view.ExpandPatternTree();
         }
 
         void levelUpWorkingPattern(TreeNode node)
@@ -229,7 +245,7 @@ namespace DEiXTo.Presenters
             _view.ClearPatternTree();
 
             var node = _builder.GetNodeFor(element);
-            var newNode = (TreeNode)node.Clone();
+            var newNode = _builder.BuildDom(element);
 
             _view.SetNodeFont(newNode);
             _view.FillPatternTree(newNode);
@@ -239,6 +255,7 @@ namespace DEiXTo.Presenters
 
         void workingPatternNodeClick(TreeNode node, MouseButtons button)
         {
+            MessageBox.Show("Is Root of Pattern: " + node.IsRoot());
             if (node.IsTextNode())
             {
                 _view.FillTextNodeElementInfo(node);
@@ -283,7 +300,7 @@ namespace DEiXTo.Presenters
 
             int index = node.SourceIndex();
             var element = _document.GetElementByIndex(index);
-            var newNode = (TreeNode)node.Clone();
+            var newNode = _builder.BuildDom(element);
 
             _view.SetNodeFont(newNode);
             _view.FillPatternTree(newNode);

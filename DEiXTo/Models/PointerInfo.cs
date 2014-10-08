@@ -16,6 +16,7 @@ namespace DEiXTo.Models
         private int _elementSourceIndex;
         private string _path;
         private string _content;
+        private bool _isRoot;
 
         public int ElementSourceIndex
         {
@@ -33,6 +34,12 @@ namespace DEiXTo.Models
         {
             get { return _content; }
             set { _content = value; }
+        }
+
+        public bool IsRoot
+        {
+            get { return _isRoot; }
+            set { _isRoot = value; }
         }
     }
 }

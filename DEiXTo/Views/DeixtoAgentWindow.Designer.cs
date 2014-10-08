@@ -527,6 +527,7 @@
             this.LevelDownButton.TabIndex = 5;
             this.LevelDownButton.Text = "btn";
             this.LevelDownButton.UseVisualStyleBackColor = true;
+            this.LevelDownButton.Click += new System.EventHandler(this.LevelDownButton_Click);
             // 
             // LevelUpButton
             // 

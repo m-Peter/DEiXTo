@@ -44,6 +44,7 @@ namespace DEiXTo.Views
         public event Action RebuildDOM;
         public event Action ExecuteRule;
         public event Action<TreeNode> LevelUpWorkingPattern;
+        public event Action<TreeNode> LevelDownWorkingPattern;
         
         private HtmlElement _currentElement;
 
@@ -137,6 +138,14 @@ namespace DEiXTo.Views
         public void ShowNoTagSelectedMessage()
         {
             MessageBox.Show("At least one HTML tag type should be selected", "DEiXTo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public void ShowCannotDeleteRootMessage()
+        {
+            MessageBox.Show("Cannot remove the root of the pattern", "DEiXTo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
         }
 
         /// <summary>
@@ -699,14 +708,19 @@ namespace DEiXTo.Views
 
         private void LevelUpButton_Click(object sender, EventArgs e)
         {
-            // I want to insert the parent of the WorkingPattern's
-            // TreeNode. Pass the root TreeNode of WorkingPattern
-            // and find its parent(if any). Make the parent the
-            // root of WorkingPattern's TreeView.
             if (LevelUpWorkingPattern != null)
             {
                 var node = WorkingPatternTreeView.Nodes[0];
                 LevelUpWorkingPattern(node);
+            }
+        }
+
+        private void LevelDownButton_Click(object sender, EventArgs e)
+        {
+            if (LevelDownWorkingPattern != null)
+            {
+                var node = WorkingPatternTreeView.Nodes[0];
+                LevelDownWorkingPattern(node);
             }
         }
     }

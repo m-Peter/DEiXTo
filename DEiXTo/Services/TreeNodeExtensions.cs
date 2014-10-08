@@ -11,6 +11,18 @@ namespace DEiXTo.Services
 {
     public static class TreeNodeExtensions
     {
+        public static bool IsRoot(this TreeNode node)
+        {
+            PointerInfo pInfo = GetPointerInfo(node);
+
+            if (pInfo != null)
+            {
+                return pInfo.IsRoot;
+            }
+
+            return false;
+        }
+
         public static bool IsTextNode(this TreeNode node)
         {
             return node.Text == "TEXT";
