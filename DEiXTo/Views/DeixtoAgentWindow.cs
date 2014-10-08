@@ -43,6 +43,7 @@ namespace DEiXTo.Views
         public event Action<int> ClearTreeViews;
         public event Action RebuildDOM;
         public event Action ExecuteRule;
+        public event Action<TreeNode> LevelUpWorkingPattern;
         
         private HtmlElement _currentElement;
 
@@ -338,8 +339,16 @@ namespace DEiXTo.Views
         /// <param name="node"></param>
         public void FillPatternTree(TreeNode node)
         {
-            node.NodeFont = new Font(WorkingPatternTreeView.Font, FontStyle.Bold);
             WorkingPatternTreeView.Nodes.Add(node);
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="node"></param>
+        public void SetNodeFont(TreeNode node)
+        {
+            node.NodeFont = new Font(WorkingPatternTreeView.Font, FontStyle.Bold);
         }
 
         /// <summary>
@@ -685,6 +694,19 @@ namespace DEiXTo.Views
             if (ExecuteRule != null)
             {
                 ExecuteRule();
+            }
+        }
+
+        private void LevelUpButton_Click(object sender, EventArgs e)
+        {
+            // I want to insert the parent of the WorkingPattern's
+            // TreeNode. Pass the root TreeNode of WorkingPattern
+            // and find its parent(if any). Make the parent the
+            // root of WorkingPattern's TreeView.
+            if (LevelUpWorkingPattern != null)
+            {
+                var node = WorkingPatternTreeView.Nodes[0];
+                LevelUpWorkingPattern(node);
             }
         }
     }

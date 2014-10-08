@@ -537,6 +537,7 @@
             this.LevelUpButton.TabIndex = 4;
             this.LevelUpButton.Text = "btn";
             this.LevelUpButton.UseVisualStyleBackColor = true;
+            this.LevelUpButton.Click += new System.EventHandler(this.LevelUpButton_Click);
             // 
             // SavePatternButton
             // 

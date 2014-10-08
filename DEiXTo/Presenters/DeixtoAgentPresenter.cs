@@ -9,6 +9,8 @@ using mshtml;
 using DEiXTo.Services;
 using System.Net;
 using System.Diagnostics;
+using DEiXTo.Models;
+using System.Drawing;
 
 namespace DEiXTo.Presenters
 {
@@ -50,10 +52,39 @@ namespace DEiXTo.Presenters
             _view.ClearTreeViews += clearTreeViews;
             _view.RebuildDOM += rebuildDOM;
             _view.ExecuteRule += executeRule;
+            _view.LevelUpWorkingPattern += levelUpWorkingPattern;
 
             var imagesList = _imageLoader.LoadImages();
 
             _view.AddWorkingPatterImages(imagesList);
+        }
+
+        void levelUpWorkingPattern(TreeNode node)
+        {
+            int indx = node.SourceIndex();
+            var tmpElem = _document.GetElementByIndex(indx);
+            var tmpNode = _builder.GetNodeFor(tmpElem);
+            var parentNode = tmpNode.Parent;
+
+            if (parentNode != null && parentNode.Tag != null)
+            {
+                int index = parentNode.SourceIndex();
+                var element = _document.GetElementByIndex(index);
+                var newNode = new TreeNode(element.TagName);
+                var domElem = (IHTMLElement)element.DomElement;
+
+                PointerInfo pInfo = new PointerInfo();
+                pInfo.ElementSourceIndex = domElem.sourceIndex;
+
+                newNode.Tag = pInfo;
+                newNode.SelectedImageIndex = 3;
+                newNode.ImageIndex = 3;
+                newNode.AddNode((TreeNode)node.Clone());
+
+                _view.ClearPatternTree();
+                _view.FillPatternTree(newNode);
+                _view.ExpandPatternTree();
+            }
         }
 
         void executeRule()
@@ -198,8 +229,10 @@ namespace DEiXTo.Presenters
             _view.ClearPatternTree();
 
             var node = _builder.GetNodeFor(element);
+            var newNode = (TreeNode)node.Clone();
 
-            _view.FillPatternTree((TreeNode)node.Clone());
+            _view.SetNodeFont(newNode);
+            _view.FillPatternTree(newNode);
 
             _view.ExpandPatternTree();
         }
@@ -250,8 +283,10 @@ namespace DEiXTo.Presenters
 
             int index = node.SourceIndex();
             var element = _document.GetElementByIndex(index);
+            var newNode = (TreeNode)node.Clone();
 
-            _view.FillPatternTree((TreeNode)node.Clone());
+            _view.SetNodeFont(newNode);
+            _view.FillPatternTree(newNode);
 
             _view.ExpandPatternTree();
         }
