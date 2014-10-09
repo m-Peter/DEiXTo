@@ -136,7 +136,7 @@ namespace DEiXTo.Views
         }
 
         /// <summary>
-        /// 
+        /// Shows a warning message when no tag is selected from the ListBox.
         /// </summary>
         public void ShowNoTagSelectedMessage()
         {
@@ -436,9 +436,9 @@ namespace DEiXTo.Views
         }
 
         /// <summary>
-        /// 
+        /// Collects all the tags from the ListBox that are checked.
         /// </summary>
-        /// <returns></returns>
+        /// <returns>An string array with the checked tags.</returns>
         public string[] IgnoredTags()
         {
             var items = HTMLTagsListBox.CheckedItems;

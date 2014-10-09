@@ -16,6 +16,9 @@ namespace DEiXTo.Models
         private IDictionary<IHTMLDOMNode, TreeNode> _DOMTree = new Dictionary<IHTMLDOMNode, TreeNode>();
         private TreeNode _rootNode;
 
+        /// <summary>
+        /// The root TreeNode of the DOM tree representation.
+        /// </summary>
         public TreeNode RootNode
         {
             get { return _rootNode; }

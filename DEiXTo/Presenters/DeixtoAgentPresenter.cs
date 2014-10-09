@@ -161,6 +161,12 @@ namespace DEiXTo.Presenters
             _view.FillSnapshotTree(root);
         }
 
+        /// <summary>
+        /// Simplifies the DOM tree structure by ignoring the user-specified tags.
+        /// 
+        /// PRECONDITIONS: At least one tag is selected.
+        /// POSTCONDITIONS: Clears all the TreeViews and the TargetURLs list.
+        /// </summary>
         void simplifyDOMTree()
         {
             var ignoredTags = _view.IgnoredTags();
@@ -170,18 +176,17 @@ namespace DEiXTo.Presenters
                 _view.ShowNoTagSelectedMessage();
                 return;
             }
-            
+
+            _view.ClearPatternTree();
+            _view.ClearSnapshotTree();
+            _view.ClearAuxiliaryTree();
             _view.ClearDOMTree();
+
             _document = new DocumentQuery(_view.GetHtmlDocument());
             var elem = _document.GetHtmlElement();
-
-            // Build the DOM tree structure from the HTML element of the page
-            //var rootNode = _builder.BuildSimplifiedDom(elem, ignoredTags);
             _domTree = _builder.BuildSimplifiedDOMTree(elem, ignoredTags);
-            
-            // Assign the DOM tree structure to the DOM TreeView
             _view.FillDomTree(_domTree.RootNode);
-            // Append the URL of the current page to the TargetURLs container
+            _view.ClearTargetURLs();
             _view.AppendTargetUrl(_view.Url);
         }
 

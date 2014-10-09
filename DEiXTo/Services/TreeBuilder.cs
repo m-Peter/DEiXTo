@@ -13,6 +13,11 @@ namespace DEiXTo.Services
     /// </summary>
     public class TreeBuilder
     {
+        /// <summary>
+        /// Build the DOMTreeStructure for the given HtmlElement.
+        /// </summary>
+        /// <param name="element">The root HtmlElement</param>
+        /// <returns>The DOMTreeStructure representation</returns>
         public DOMTreeStructure BuildDOMTree(HtmlElement element)
         {
             var domNode = element.DomElement as IHTMLDOMNode;
