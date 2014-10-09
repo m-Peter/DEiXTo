@@ -5,6 +5,7 @@ using System.Windows.Forms;
 using mshtml;
 using DEiXTo.Services;
 using DEiXTo.Models;
+using System.Threading.Tasks;
 
 namespace DEiXTo.Presenters
 {
@@ -15,6 +16,7 @@ namespace DEiXTo.Presenters
         private DOMBuilder _builder;
         private DocumentQuery _document;
         private StatesImageLoader _imageLoader;
+        private DOMTreeStructure _domTree;
 
         public DeixtoAgentPresenter(IDeixtoAgentView view)
         {
@@ -73,7 +75,7 @@ namespace DEiXTo.Presenters
         {
             int indx = node.SourceIndex();
             var tmpElem = _document.GetElementByIndex(indx);
-            var tmpNode = _builder.GetNodeFor(tmpElem);
+            var tmpNode = _domTree.GetNodeFor(tmpElem);
             var parentNode = tmpNode.Parent;
 
             if (parentNode != null && parentNode.Tag != null)
@@ -120,7 +122,7 @@ namespace DEiXTo.Presenters
 
         void rebuildDOM()
         {
-            _builder.ClearDOM();
+            _domTree = null;
             browserCompleted();
         }
 
@@ -196,7 +198,7 @@ namespace DEiXTo.Presenters
             var path = node.GetPath();
 
             _view.FillElementInfo(node, element.OuterHtml);
-            _view.SelectDOMNode(_builder.GetNodeFor(element));
+            _view.SelectDOMNode(_domTree.GetNodeFor(element));
 
             if (_view.CanAutoScroll())
             {
@@ -208,7 +210,7 @@ namespace DEiXTo.Presenters
         {
             _view.ClearAuxiliaryTree();
 
-            var node = _builder.GetNodeFor(element);
+            var node = _domTree.GetNodeFor(element);
 
             _view.FillAuxiliaryTree((TreeNode)node.Clone());
 
@@ -238,7 +240,7 @@ namespace DEiXTo.Presenters
         {
             _view.ClearPatternTree();
 
-            var node = _builder.GetNodeFor(element);
+            var node = _domTree.GetNodeFor(element);
             var newNode = _builder.BuildDom(element);
 
             _view.SetNodeFont(newNode);
@@ -267,7 +269,7 @@ namespace DEiXTo.Presenters
             var path = node.GetPath();
 
             _view.FillElementInfo(node, element.OuterHtml);
-            _view.SelectDOMNode(_builder.GetNodeFor(element));
+            _view.SelectDOMNode(_domTree.GetNodeFor(element));
 
             if (_view.CanAutoScroll())
             {
@@ -349,7 +351,8 @@ namespace DEiXTo.Presenters
                 _styling.Style(element);
 
                 // Retrieve the TreeNode that corresponds to the given HTML element
-                var node = _builder.GetNodeFor(element);
+                var node = _domTree.GetNodeFor(element);
+
                 if (node == null)
                 {
                     return;
@@ -438,19 +441,29 @@ namespace DEiXTo.Presenters
             }
         }
 
+        /// <summary>
+        /// Builds the DOM tree structure for the WebBrowser's current HtmlDocument.
+        /// PRECONDITIONS: The HtmlDocument has been builted.
+        /// POSTCONDITIONS: The document's URL is inserted to the TargetURLs list. Clears
+        /// all the TreeViews.
+        /// </summary>
         void browserCompleted()
         {
+            _view.ClearSnapshotTree();
+            _view.ClearPatternTree();
+            _view.ClearAuxiliaryTree();
             _view.ClearDOMTree();
+
             _document = new DocumentQuery(_view.GetHtmlDocument());
             var elem = _document.GetHtmlElement();
-            // Build the DOM tree structure from the HTML element of the page
-            var rootNode = _builder.BuildDom(elem);
-            // Assign the DOM tree structure to the DOM TreeView
-            _view.FillDomTree(rootNode);
-            // Append the URL of the current page to the TargetURLs container
-            _view.AppendTargetUrl(_view.Url);
-            _view.AttachDocumentEvents();
+
+            _view.ClearTargetURLs();
+            _view.AppendTargetUrl(_view.GetDocumentUrl());
             _view.UpdateDocumentUrl();
+            
+            _domTree = _builder.BuildDOMTree(elem);
+            _view.FillDomTree(_domTree.RootNode);
+            _view.AttachDocumentEvents();
         }
     }
 }

@@ -94,7 +94,16 @@ namespace DEiXTo.Views
         }
 
         /// <summary>
-        /// 
+        /// Return the URL of the WebBrowser's HtmlDocument.
+        /// </summary>
+        /// <returns></returns>
+        public String GetDocumentUrl()
+        {
+            return WebBrowser.Document.Url.ToString();
+        }
+
+        /// <summary>
+        /// Set the WebBrowser's document Url as the URLComboBox text.
         /// </summary>
         public void UpdateDocumentUrl()
         {
@@ -259,7 +268,7 @@ namespace DEiXTo.Views
         }
 
         /// <summary>
-        /// Gets the HtmlDocument of the current page
+        /// Retrieve the HtmlDocument of the current page.
         /// </summary>
         /// <returns></returns>
         public HtmlDocument GetHtmlDocument()
@@ -268,7 +277,7 @@ namespace DEiXTo.Views
         }
 
         /// <summary>
-        /// Fill the DOM TreeView with the given node
+        /// Fill the Html TreeView with the given node.
         /// </summary>
         /// <param name="node"></param>
         public void FillDomTree(TreeNode node)
@@ -280,13 +289,20 @@ namespace DEiXTo.Views
         }
 
         /// <summary>
-        /// Append the given URL to the collection of TargetURLs
+        /// Append the given URL to the collection of TargetURLs.
         /// </summary>
         /// <param name="url"></param>
         public void AppendTargetUrl(string url)
         {
-            TargetURLsListBox.Items.Clear();
             TargetURLsListBox.Items.Add(url);
+        }
+
+        /// <summary>
+        /// Clear all the URLs from the TargetURLs collection.
+        /// </summary>
+        public void ClearTargetURLs()
+        {
+            TargetURLsListBox.Items.Clear();
         }
 
         /// <summary>
@@ -327,7 +343,7 @@ namespace DEiXTo.Views
         }
 
         /// <summary>
-        /// 
+        /// Clear the TreeNodes of the Html TreeView.
         /// </summary>
         public void ClearDOMTree()
         {
@@ -439,7 +455,7 @@ namespace DEiXTo.Views
         }
 
         /// <summary>
-        /// 
+        /// Attach the necessary events to the WebBrowser's document.
         /// </summary>
         public void AttachDocumentEvents()
         {

@@ -15,6 +15,79 @@ namespace DEiXTo.Services
     {
         private IDictionary<IHTMLDOMNode, TreeNode> _DOMTree = new Dictionary<IHTMLDOMNode, TreeNode>();
 
+        public int CountElements()
+        {
+            return _DOMTree.Count;
+        }
+
+        public DOMTreeStructure BuildDOMTree(HtmlElement element)
+        {
+            var domNode = element.DomElement as IHTMLDOMNode;
+            var rootNode = new TreeNode();
+            DOMTreeStructure domTree = new DOMTreeStructure();
+            BuildDOMTreeRec(domNode, rootNode, domTree);
+            domTree.RootNode = rootNode.FirstNode;
+            return domTree;
+        }
+
+        public void BuildDOMTreeRec(IHTMLDOMNode element, TreeNode node, DOMTreeStructure domTree)
+        {
+            if (element.nodeName == "#text" || element.nodeName == "#comment")
+            {
+                return;
+            }
+
+            var newNode = node.Nodes.Add(element.nodeName);
+
+            if (!domTree.ContainsKey(element))
+            {
+                domTree.Add(element, newNode);
+            }
+
+            PointerInfo pInfo = new PointerInfo();
+
+            // By default it's node is required, so add the Match Node image
+            newNode.ImageIndex = 3;
+            newNode.SelectedImageIndex = 3;
+            var tmpElem = (IHTMLElement)element;
+
+            pInfo.ElementSourceIndex = tmpElem.sourceIndex;
+            pInfo.Path = ComputePath(node, tmpElem);
+            pInfo.Content = GetContentFor(tmpElem);
+            newNode.Tag = pInfo;
+            newNode.ToolTipText = GetTooltipFor(tmpElem);
+
+            IHTMLDOMChildrenCollection childrenElements = element.childNodes as IHTMLDOMChildrenCollection;
+            int len = childrenElements.length;
+            IHTMLDOMNode curElement;
+            string value;
+
+            for (int i = 0; i < len; i++)
+            {
+                curElement = childrenElements.item(i);
+                value = curElement.nodeValue as string;
+                if (curElement.nodeName == "#text" && !String.IsNullOrWhiteSpace(value))
+                {
+                    var txtNode = new TreeNode("TEXT");
+                    txtNode.ToolTipText = curElement.nodeValue;
+                    PointerInfo pointer = new PointerInfo();
+                    pointer.Path = pInfo.Path + ".TEXT";
+                    pointer.Content = curElement.nodeValue;
+                    // By default, each TEXT node is in match and extract content state.
+                    txtNode.ImageIndex = 0;
+                    txtNode.SelectedImageIndex = 0;
+                    txtNode.Tag = pointer;
+                    newNode.Nodes.Add(txtNode);
+                }
+                BuildDOMTreeRec(curElement, newNode, domTree);
+            }
+        }
+
+        /// <summary>
+        /// Build a tree structure for the given HtmlElement.
+        /// </summary>
+        /// <param name="element">the root HtmlElement.</param>
+        /// <returns>The root TreeNode of the tree structure.</returns>
         public TreeNode BuildDom(HtmlElement element)
         {
             var curElem = element.DomElement as IHTMLDOMNode;
@@ -31,17 +104,6 @@ namespace DEiXTo.Services
             BuildSimplifiedDomTree(curElem, rootNode, ignoredTags, true);
 
             return rootNode.FirstNode;
-        }
-
-        public TreeNode GetNodeFor(HtmlElement element)
-        {
-            var curElem = element.DomElement as IHTMLDOMNode;
-            if (containsKey(curElem))
-            {
-                return _DOMTree[curElem];
-            }
-
-            return null;
         }
 
         public void ClearDOM()

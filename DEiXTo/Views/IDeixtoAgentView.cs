@@ -33,6 +33,8 @@ namespace DEiXTo.Views
         string Url { get; }
         HtmlElement CurrentElement { get; set; }
 
+        string GetDocumentUrl();
+        void ClearTargetURLs();
         void FillTextNodeElementInfo(TreeNode node);
         void ShowSpecifyURLMessage();
         void ShowRequestNotFoundMessage();

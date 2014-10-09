@@ -21,6 +21,10 @@ namespace DEiXTo.Services
             return _htmlDocument.All[index];
         }
 
+        /// <summary>
+        /// Retrieve the HTML HtmlElement of the underlying HtmlDocument.
+        /// </summary>
+        /// <returns></returns>
         public HtmlElement GetHtmlElement()
         {
             return _htmlDocument.GetElementsByTagName("HTML")[0];
