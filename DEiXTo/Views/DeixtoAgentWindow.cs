@@ -220,7 +220,7 @@ namespace DEiXTo.Views
         }
 
         /// <summary>
-        /// Navigates the WebBrowser to the next URL
+        /// Navigates forward the WebBrowser's document.
         /// </summary>
         public void NavigateForward()
         {
@@ -228,7 +228,7 @@ namespace DEiXTo.Views
         }
 
         /// <summary>
-        /// Navigates the WebBrowser to the previous URL
+        /// Navigates back the WebBrowser's document.
         /// </summary>
         public void NavigateBack()
         {

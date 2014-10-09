@@ -373,6 +373,14 @@ namespace DEiXTo.Presenters
             _view.ApplyVisibilityStateInAutoFill(state);
         }
 
+        /// <summary>
+        /// Analyzes the keys pressed by the user. If the combination of
+        /// Alt+Right Arrow is detected, the WebBrowser's document is navigated
+        /// forward. If the detected combination is Alt+Left Arrow, the document
+        /// is navigated back. If the user simply pressed Enter, the WebBrowser
+        /// navigates to the specified URL.
+        /// </summary>
+        /// <param name="e">Information arguments from the KeyDown event.</param>
         void keyDownPress(KeyEventArgs e)
         {
             if (e.Alt)
