@@ -7,6 +7,16 @@ namespace DEiXTo.Services
     {
         private IDictionary<HtmlElement, string> _elementStyles = new Dictionary<HtmlElement, string>();
 
+        public int Count()
+        {
+            return _elementStyles.Count;
+        }
+
+        public void Clear()
+        {
+            _elementStyles.Clear();
+        }
+
         public void Style(HtmlElement element)
         {
             if (!containsKey(element))

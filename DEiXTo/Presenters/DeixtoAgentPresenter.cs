@@ -343,6 +343,14 @@ namespace DEiXTo.Presenters
             }
         }
 
+        /// <summary>
+        /// Removes the styling of the HtmlDocument's element, when the mouse
+        /// moves away from it.
+        /// 
+        /// PRECONDITION: Highlight mode is enabled.
+        /// POSTCONDITION: The ElementInfo TabPage is cleared.
+        /// </summary>
+        /// <param name="element">The HtmlElement the mouse is leaving from.</param>
         void documentMouseLeave(HtmlElement element)
         {
             if (_view.HighlightModeEnabled())
@@ -353,6 +361,14 @@ namespace DEiXTo.Presenters
             _view.ClearElementInfo();
         }
 
+        /// <summary>
+        /// Highlights the HtmlDocument's element, when the mouse is over it.
+        /// 
+        /// PRECONDITION: Highlight mode is enabled.
+        /// POSTCONDITION: The ElementInfo TabPage is populated and corresponding
+        /// DOM TreeNode is selected.
+        /// </summary>
+        /// <param name="element"></param>
         void documentMouseOver(HtmlElement element)
         {
             if (_view.HighlightModeEnabled())
@@ -360,7 +376,6 @@ namespace DEiXTo.Presenters
                 _styling.UnstyleElements();
                 _styling.Style(element);
 
-                // Retrieve the TreeNode that corresponds to the given HTML element
                 var node = _domTree.GetNodeFor(element);
 
                 if (node == null)
@@ -368,7 +383,6 @@ namespace DEiXTo.Presenters
                     return;
                 }
 
-                // Scroll the TreeView to the specified TreeNode
                 _view.SelectDOMNode(node);
 
                 var path = node.GetPath();
@@ -460,6 +474,7 @@ namespace DEiXTo.Presenters
         /// </summary>
         void browserCompleted()
         {
+            _styling.Clear();
             _view.ClearSnapshotTree();
             _view.ClearPatternTree();
             _view.ClearAuxiliaryTree();
