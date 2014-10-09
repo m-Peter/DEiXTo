@@ -4,6 +4,11 @@ namespace DEiXTo.Services
 {
     public class DocumentValidatorFactory
     {
+        /// <summary>
+        /// Create the corresponding document validator for the address.
+        /// </summary>
+        /// <param name="address">An address that specifies a HTML resource.</param>
+        /// <returns>The corresponding document validator for the address</returns>
         public IDocumentValidator CreateValidator(string address)
         {
             try

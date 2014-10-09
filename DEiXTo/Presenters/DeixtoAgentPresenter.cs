@@ -249,7 +249,6 @@ namespace DEiXTo.Presenters
 
         void workingPatternNodeClick(TreeNode node, MouseButtons button)
         {
-            MessageBox.Show("Is Root of Pattern: " + node.IsRoot());
             if (node.IsTextNode())
             {
                 _view.FillTextNodeElementInfo(node);
@@ -397,9 +396,13 @@ namespace DEiXTo.Presenters
 
         /// <summary>
         /// Navigates the WebBrowser to the user specified URL. The URL can also
-        /// refer to a local HTML document. If the download of a page fails for
-        /// some reason, a message describing the error is shown. It clears all
-        /// the trees and the target URLs.
+        /// refer to a local HTML document. If the navigation to document fails for
+        /// some reason, a message describing the error is shown.
+        /// 
+        /// PRECONDITIONS: The URL cannot be null or whitespace and it has to refer
+        /// to a resource that exists.
+        /// POSTCONDITIONS: All the TreeViews and TargetURLs are cleared and the WebBrowser is
+        /// navigated to the HTML document.
         /// </summary>
         void browseToUrl()
         {
@@ -407,12 +410,13 @@ namespace DEiXTo.Presenters
 
             if (String.IsNullOrWhiteSpace(url))
             {
-                _view.ShowWarningMessage();
+                _view.ShowSpecifyURLMessage();
                 return;
             }
 
             var documentValidator = new DocumentValidatorFactory().CreateValidator(url);
 
+            // If the resource described by the URL exists, then proceed with the navigation
             if (documentValidator.IsValid())
             {
                 _view.ClearAuxiliaryTree();
@@ -420,7 +424,7 @@ namespace DEiXTo.Presenters
                 _view.ClearSnapshotTree();
                 _view.NavigateTo(documentValidator.Url());
             }
-            else
+            else // Otherwise show the error message
             {
                 _view.ShowRequestNotFoundMessage();
             }

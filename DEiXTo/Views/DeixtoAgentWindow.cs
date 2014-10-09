@@ -111,15 +111,15 @@ namespace DEiXTo.Views
         }
 
         /// <summary>
-        /// Shows a warning message when the URL is empty
+        /// Shows a warning message when the URL is empty.
         /// </summary>
-        public void ShowWarningMessage()
+        public void ShowSpecifyURLMessage()
         {
-            MessageBox.Show("Please specify URL!");
+            MessageBox.Show("Please specify URL!", "DEiXTo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
         }
 
         /// <summary>
-        /// 
+        /// Shows an error message when the URL is not found.
         /// </summary>
         public void ShowRequestNotFoundMessage()
         {
@@ -203,7 +203,7 @@ namespace DEiXTo.Views
         }
 
         /// <summary>
-        /// 
+        /// Clear the TreeNodes of the Snapshot TreeView.
         /// </summary>
         public void ClearSnapshotTree()
         {
@@ -211,7 +211,7 @@ namespace DEiXTo.Views
         }
 
         /// <summary>
-        /// Navigates the WebBrowser to the given URL
+        /// Navigates the WebBrowser to the given URL.
         /// </summary>
         /// <param name="url"></param>
         public void NavigateTo(string url)
@@ -307,7 +307,7 @@ namespace DEiXTo.Views
         }
 
         /// <summary>
-        /// 
+        /// Clear the TreeNodes of the WorkingPattern TreeView.
         /// </summary>
         public void ClearPatternTree()
         {
@@ -317,7 +317,7 @@ namespace DEiXTo.Views
         }
 
         /// <summary>
-        /// 
+        /// Clear the TreeNodes of the Auxiliary TreeView.
         /// </summary>
         public void ClearAuxiliaryTree()
         {
