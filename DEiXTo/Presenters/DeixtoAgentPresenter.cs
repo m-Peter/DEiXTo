@@ -120,9 +120,11 @@ namespace DEiXTo.Presenters
             _view.SetExtractedResults(results.Count);
         }
 
+        /// <summary>
+        /// Reconstructs the DOM tree structure.
+        /// </summary>
         void rebuildDOM()
         {
-            _domTree = null;
             browserCompleted();
         }
 
