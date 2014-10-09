@@ -11,7 +11,7 @@ namespace DEiXTo.Services
     /// This class builds the DOM tree structure from a page and maps HtmlElements
     /// to TreeNodes.
     /// </summary>
-    public class DOMBuilder
+    public class TreeBuilder
     {
         private IDictionary<IHTMLDOMNode, TreeNode> _DOMTree = new Dictionary<IHTMLDOMNode, TreeNode>();
 
@@ -53,7 +53,8 @@ namespace DEiXTo.Services
 
             pInfo.ElementSourceIndex = tmpElem.sourceIndex;
             pInfo.Path = ComputePath(node, tmpElem);
-            pInfo.Content = GetContentFor(tmpElem);
+            //pInfo.Content = GetContentFor(tmpElem);
+            pInfo.Content = ContentExtractionFactory.GetExtractorFor(tmpElem).ExtractContent();
             newNode.Tag = pInfo;
             newNode.ToolTipText = GetTooltipFor(tmpElem);
 

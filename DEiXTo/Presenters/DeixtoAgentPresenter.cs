@@ -13,7 +13,7 @@ namespace DEiXTo.Presenters
     {
         private readonly IDeixtoAgentView _view;
         private ElementStyling _styling;
-        private DOMBuilder _builder;
+        private TreeBuilder _builder;
         private DocumentQuery _document;
         private StatesImageLoader _imageLoader;
         private DOMTreeStructure _domTree;
@@ -22,7 +22,7 @@ namespace DEiXTo.Presenters
         {
             _view = view;
             _styling = new ElementStyling();
-            _builder = new DOMBuilder();
+            _builder = new TreeBuilder();
             _imageLoader = new StatesImageLoader();
 
             // ATTACH THE EVENTS OF THE VIEW TO LOCAL METHODS
@@ -443,6 +443,7 @@ namespace DEiXTo.Presenters
 
         /// <summary>
         /// Builds the DOM tree structure for the WebBrowser's current HtmlDocument.
+        /// 
         /// PRECONDITIONS: The HtmlDocument has been builted.
         /// POSTCONDITIONS: The document's URL is inserted to the TargetURLs list. Clears
         /// all the TreeViews.
