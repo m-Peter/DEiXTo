@@ -32,5 +32,10 @@ namespace DEiXTo.Services
             }
             
         }
+
+        public string Url()
+        {
+            return _uri.ToString();
+        }
     }
 }

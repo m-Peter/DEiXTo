@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using System.Net;
 
 namespace DEiXTo.Services
@@ -16,7 +17,7 @@ namespace DEiXTo.Services
         {
             try
             {
-                FileWebRequest request = FileWebRequest.Create(_uri) as FileWebRequest;
+                FileWebRequest request = FileWebRequest.Create(_uri.ToString()) as FileWebRequest;
                 request.Method = "HEAD";
                 FileWebResponse response = request.GetResponse() as FileWebResponse;
 
@@ -26,6 +27,11 @@ namespace DEiXTo.Services
             {
                 return false;
             }
+        }
+
+        public string Url()
+        {
+            return _uri.OriginalString;
         }
     }
 }

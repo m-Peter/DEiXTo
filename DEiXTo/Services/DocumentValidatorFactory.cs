@@ -4,25 +4,42 @@ namespace DEiXTo.Services
 {
     public class DocumentValidatorFactory
     {
-        public IDocumentValidator createValidator(string address)
+        public IDocumentValidator CreateValidator(string address)
         {
-            Uri uri;
+            try
+            {
+                Uri uri = new Uri(address);
 
-            if (address.StartsWith("http"))
-            {
-                uri = new Uri(address);
-            }
-            else
-            {
-                uri = new Uri("http://" + address);
-            }
+                if (uri.IsFile)
+                {
+                    if (address.StartsWith("file:///"))
+                    {
+                        return new LocalDocumentValidator(uri);
 
-            if (uri.IsFile)
-            {
-                return new LocalDocumentValidator(uri);
+                    }
+                    else
+                    {
+                        return new LocalDocumentValidator(new Uri("file:///" + address));
+                    }
+                }
+                else
+                {
+                    return new WebDocumentValidator(uri);
+                }
             }
-            else
+            catch (UriFormatException)
             {
+                Uri uri;
+
+                if (address.StartsWith("www"))
+                {
+                    uri = new Uri("http://" + address);
+                }
+                else
+                {
+                    uri = new Uri("http://www." + address);
+                }
+
                 return new WebDocumentValidator(uri);
             }
 

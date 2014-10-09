@@ -411,14 +411,14 @@ namespace DEiXTo.Presenters
                 return;
             }
 
-            var documentValidator = new DocumentValidatorFactory().createValidator(url);
+            var documentValidator = new DocumentValidatorFactory().CreateValidator(url);
 
             if (documentValidator.IsValid())
             {
                 _view.ClearAuxiliaryTree();
                 _view.ClearPatternTree();
                 _view.ClearSnapshotTree();
-                _view.NavigateTo(url);
+                _view.NavigateTo(documentValidator.Url());
             }
             else
             {
