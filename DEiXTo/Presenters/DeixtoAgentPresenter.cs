@@ -164,20 +164,23 @@ namespace DEiXTo.Presenters
         void simplifyDOMTree()
         {
             var ignoredTags = _view.IgnoredTags();
+
             if (ignoredTags.Count() == 0)
             {
                 _view.ShowNoTagSelectedMessage();
                 return;
             }
             
-            _builder.ClearDOM();
             _view.ClearDOMTree();
             _document = new DocumentQuery(_view.GetHtmlDocument());
             var elem = _document.GetHtmlElement();
+
             // Build the DOM tree structure from the HTML element of the page
-            var rootNode = _builder.BuildSimplifiedDom(elem, ignoredTags);
+            //var rootNode = _builder.BuildSimplifiedDom(elem, ignoredTags);
+            _domTree = _builder.BuildSimplifiedDOMTree(elem, ignoredTags);
+            
             // Assign the DOM tree structure to the DOM TreeView
-            _view.FillDomTree(rootNode);
+            _view.FillDomTree(_domTree.RootNode);
             // Append the URL of the current page to the TargetURLs container
             _view.AppendTargetUrl(_view.Url);
         }
@@ -241,7 +244,7 @@ namespace DEiXTo.Presenters
             _view.ClearPatternTree();
 
             var node = _domTree.GetNodeFor(element);
-            var newNode = _builder.BuildDom(element);
+            var newNode = (TreeNode)_domTree.GetNodeFor(element).Clone();
 
             _view.SetNodeFont(newNode);
             _view.FillPatternTree(newNode);
@@ -295,7 +298,7 @@ namespace DEiXTo.Presenters
 
             int index = node.SourceIndex();
             var element = _document.GetElementByIndex(index);
-            var newNode = _builder.BuildDom(element);
+            var newNode = (TreeNode)_domTree.GetNodeFor(element).Clone();
 
             _view.SetNodeFont(newNode);
             _view.FillPatternTree(newNode);
