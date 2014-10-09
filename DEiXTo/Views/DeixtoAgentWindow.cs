@@ -39,6 +39,7 @@ namespace DEiXTo.Views
         public event Action ExecuteRule;
         public event Action<TreeNode> LevelUpWorkingPattern;
         public event Action<TreeNode> LevelDownWorkingPattern;
+        public event Action<TreeNode, NodeState> NodeStateChanged;
         
         private HtmlElement _currentElement;
 
@@ -108,6 +109,17 @@ namespace DEiXTo.Views
         public void UpdateDocumentUrl()
         {
             URLComboBox.Text = WebBrowser.Document.Url.ToString();
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="node"></param>
+        /// <param name="imageIndex"></param>
+        public void ApplyStateToNode(TreeNode node, int imageIndex)
+        {
+            node.ImageIndex = imageIndex;
+            node.SelectedImageIndex = imageIndex;
         }
 
         /// <summary>
@@ -416,6 +428,15 @@ namespace DEiXTo.Views
         public void SetContextMenuFor(TreeNode node)
         {
             node.ContextMenuStrip = CreatePatternsMenuStrip;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="node"></param>
+        public void SetAdjustContextMenuFor(TreeNode node)
+        {
+            node.ContextMenuStrip = AdjustpatternMenuStrip;
         }
 
         /// <summary>
@@ -731,6 +752,60 @@ namespace DEiXTo.Views
             {
                 var node = WorkingPatternTreeView.Nodes[0];
                 LevelDownWorkingPattern(node);
+            }
+        }
+
+        private void matchAndExtractContentToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (NodeStateChanged != null)
+            {
+                var node = WorkingPatternTreeView.SelectedNode;
+                NodeStateChanged(node, NodeState.Checked);
+            }
+        }
+
+        private void matchAndExtractSourceToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (NodeStateChanged != null)
+            {
+                var node = WorkingPatternTreeView.SelectedNode;
+                NodeStateChanged(node, NodeState.CheckedSource);
+            }
+        }
+
+        private void matchNodeToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (NodeStateChanged != null)
+            {
+                var node = WorkingPatternTreeView.SelectedNode;
+                NodeStateChanged(node, NodeState.Grayed);
+            }
+        }
+
+        private void dontCareAboutThisNodeToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (NodeStateChanged != null)
+            {
+                var node = WorkingPatternTreeView.SelectedNode;
+                NodeStateChanged(node, NodeState.Unchecked);
+            }
+        }
+
+        private void matchNodeOPTIONALToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (NodeStateChanged != null)
+            {
+                var node = WorkingPatternTreeView.SelectedNode;
+                NodeStateChanged(node, NodeState.GrayedImplied);
+            }
+        }
+
+        private void matchAndExtractOPTIONALToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (NodeStateChanged != null)
+            {
+                var node = WorkingPatternTreeView.SelectedNode;
+                NodeStateChanged(node, NodeState.CheckedImplied);
             }
         }
     }

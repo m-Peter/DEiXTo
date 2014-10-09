@@ -29,6 +29,7 @@ namespace DEiXTo.Views
         event Action ExecuteRule;
         event Action<TreeNode> LevelUpWorkingPattern;
         event Action<TreeNode> LevelDownWorkingPattern;
+        event Action<TreeNode, NodeState> NodeStateChanged;
         
         string Url { get; }
         HtmlElement CurrentElement { get; set; }
@@ -61,6 +62,7 @@ namespace DEiXTo.Views
         void ClearAuxiliaryTree();
         void ExpandAuxiliaryTree();
         void SetContextMenuFor(TreeNode node);
+        void SetAdjustContextMenuFor(TreeNode node);
         void ShowBrowserMenu();
         bool BrowserContextMenuEnabled();
         string[] IgnoredTags();
@@ -77,5 +79,6 @@ namespace DEiXTo.Views
         void AddWorkingPatterImages(ImageList imageList);
         void SetNodeFont(TreeNode node);
         void ShowCannotDeleteRootMessage();
+        void ApplyStateToNode(TreeNode node, int imageIndex);
     }
 }

@@ -49,6 +49,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Models\DOMTreeStructure.cs" />
+    <Compile Include="Models\NodeState.cs" />
     <Compile Include="Models\PointerInfo.cs" />
     <Compile Include="Models\Result.cs" />
     <Compile Include="Presenters\DeixtoAgentPresenter.cs" />

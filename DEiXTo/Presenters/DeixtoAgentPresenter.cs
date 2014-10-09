@@ -50,10 +50,44 @@ namespace DEiXTo.Presenters
             _view.ExecuteRule += executeRule;
             _view.LevelUpWorkingPattern += levelUpWorkingPattern;
             _view.LevelDownWorkingPattern += levelDownWorkingPattern;
+            _view.NodeStateChanged += nodeStateChanged;
 
             var imagesList = _imageLoader.LoadImages();
 
             _view.AddWorkingPatterImages(imagesList);
+        }
+
+        void nodeStateChanged(TreeNode node, NodeState state)
+        {
+            int imageIndex = -1;
+            
+
+            switch (state)
+            {
+                case NodeState.Checked:
+                    imageIndex = 0;
+                    break;
+                case NodeState.CheckedSource:
+                    imageIndex = 2;
+                    break;
+                case NodeState.Grayed:
+                    imageIndex = 3;
+                    break;
+                case NodeState.Unchecked:
+                    imageIndex = 5;
+                    break;
+                case NodeState.GrayedImplied:
+                    imageIndex = 4;
+                    break;
+                case NodeState.CheckedImplied:
+                    imageIndex = 1;
+                    break;
+                default:
+                    imageIndex = -1;
+                    break;
+            }
+
+            _view.ApplyStateToNode(node, imageIndex);
         }
 
         void levelDownWorkingPattern(TreeNode node)
@@ -261,6 +295,11 @@ namespace DEiXTo.Presenters
 
         void workingPatternNodeClick(TreeNode node, MouseButtons button)
         {
+            if (button == MouseButtons.Right)
+            {
+                _view.SetAdjustContextMenuFor(node);
+            }
+
             if (node.IsTextNode())
             {
                 _view.FillTextNodeElementInfo(node);
