@@ -5,6 +5,21 @@ namespace DEiXTo.Services
 {
     public static class TreeNodeExtensions
     {
+        public static TreeNode GetClone(this TreeNode node)
+        {
+            return (TreeNode)node.Clone();
+        }
+
+        public static void SetAsRoot(this TreeNode node)
+        {
+            PointerInfo pInfo = GetPointerInfo(node);
+
+            if (pInfo != null)
+            {
+                pInfo.IsRoot = true;
+            }
+        }
+
         public static bool IsRoot(this TreeNode node)
         {
             PointerInfo pInfo = GetPointerInfo(node);

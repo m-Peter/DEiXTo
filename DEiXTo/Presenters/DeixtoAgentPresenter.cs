@@ -98,7 +98,7 @@ namespace DEiXTo.Presenters
                 return;
             }
 
-            var newNode = (TreeNode)node.FirstNode.Clone();
+            var newNode = node.FirstNode.GetClone();
 
             _view.ClearPatternTree();
             _view.FillPatternTree(newNode);
@@ -125,8 +125,7 @@ namespace DEiXTo.Presenters
                 newNode.Tag = pInfo;
                 newNode.SelectedImageIndex = 3;
                 newNode.ImageIndex = 3;
-                newNode.AddNode((TreeNode)node.Clone());
-
+                newNode.AddNode(node.GetClone());
                 _view.ClearPatternTree();
                 _view.FillPatternTree(newNode);
                 _view.ExpandPatternTree();
@@ -181,7 +180,7 @@ namespace DEiXTo.Presenters
         void makeWorkingPatternFromSnapshot(TreeNode node)
         {
             _view.ClearPatternTree();
-            _view.FillPatternTree((TreeNode)node.Clone());
+            _view.FillPatternTree(node.GetClone());
             _view.ExpandPatternTree();
         }
 
@@ -193,7 +192,7 @@ namespace DEiXTo.Presenters
         void createSnapshot(TreeNode node)
         {
             TreeNode root = new TreeNode("SNAP " + string.Format("{0:hh:mm:ss tt}", DateTime.Now));
-            root.AddNode((TreeNode)node.Clone());
+            root.AddNode(node.GetClone());
             _view.FillSnapshotTree(root);
         }
 
@@ -256,7 +255,7 @@ namespace DEiXTo.Presenters
 
             var node = _domTree.GetNodeFor(element);
 
-            _view.FillAuxiliaryTree((TreeNode)node.Clone());
+            _view.FillAuxiliaryTree(node.GetClone());
 
             _view.ExpandAuxiliaryTree();
         }
@@ -285,7 +284,8 @@ namespace DEiXTo.Presenters
             _view.ClearPatternTree();
 
             var node = _domTree.GetNodeFor(element);
-            var newNode = (TreeNode)_domTree.GetNodeFor(element).Clone();
+            var newNode = _domTree.GetNodeFor(element).GetClone();
+            newNode.SetAsRoot();
 
             _view.SetNodeFont(newNode);
             _view.FillPatternTree(newNode);
@@ -333,7 +333,7 @@ namespace DEiXTo.Presenters
             int index = node.SourceIndex();
             var element = _document.GetElementByIndex(index);
 
-            _view.FillAuxiliaryTree((TreeNode)node.Clone());
+            _view.FillAuxiliaryTree(node.GetClone());
 
             _view.ExpandAuxiliaryTree();
         }
@@ -344,7 +344,8 @@ namespace DEiXTo.Presenters
 
             int index = node.SourceIndex();
             var element = _document.GetElementByIndex(index);
-            var newNode = (TreeNode)_domTree.GetNodeFor(element).Clone();
+            var newNode = _domTree.GetNodeFor(element).GetClone();
+            newNode.SetAsRoot();
 
             _view.SetNodeFont(newNode);
             _view.FillPatternTree(newNode);
