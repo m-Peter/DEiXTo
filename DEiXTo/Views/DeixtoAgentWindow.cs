@@ -437,6 +437,46 @@ namespace DEiXTo.Views
         public void SetAdjustContextMenuFor(TreeNode node)
         {
             node.ContextMenuStrip = AdjustpatternMenuStrip;
+
+            AdjustpatternMenuStrip.Items[8].Enabled = false;
+            AdjustpatternMenuStrip.Items[12].Enabled = false;
+            AdjustpatternMenuStrip.Items[17].Enabled = false;
+            AdjustpatternMenuStrip.Items[18].Enabled = false;
+            AdjustpatternMenuStrip.Items[20].Enabled = false;
+
+            if (node.IsRoot())
+            {
+                AdjustpatternMenuStrip.Items[3].Enabled = false;
+                AdjustpatternMenuStrip.Items[4].Enabled = false;
+                AdjustpatternMenuStrip.Items[5].Enabled = false;
+                AdjustpatternMenuStrip.Items[22].Enabled = false;
+                return;
+            }
+            else
+            {
+                AdjustpatternMenuStrip.Items[0].Enabled = true;
+                AdjustpatternMenuStrip.Items[1].Enabled = true;
+                AdjustpatternMenuStrip.Items[2].Enabled = true;
+                AdjustpatternMenuStrip.Items[3].Enabled = true;
+                AdjustpatternMenuStrip.Items[4].Enabled = true;
+                AdjustpatternMenuStrip.Items[5].Enabled = true;
+                AdjustpatternMenuStrip.Items[22].Enabled = true;
+            }
+
+            if (node.CanBeVRoot())
+            {
+                AdjustpatternMenuStrip.Items[20].Enabled = true;
+            }
+
+            if (node.IsTextNode())
+            {
+                AdjustpatternMenuStrip.Items[1].Enabled = false;
+                AdjustpatternMenuStrip.Items[22].Enabled = true;
+                if (node.CanBeVRoot())
+                {
+                    AdjustpatternMenuStrip.Items[20].Enabled = true;
+                }
+            }
         }
 
         /// <summary>

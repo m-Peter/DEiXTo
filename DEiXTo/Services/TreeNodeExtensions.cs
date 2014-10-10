@@ -5,6 +5,16 @@ namespace DEiXTo.Services
 {
     public static class TreeNodeExtensions
     {
+        public static bool HasSiblings(this TreeNode node)
+        {
+            return (node.PrevNode != null || node.NextNode != null);
+        }
+
+        public static bool CanBeVRoot(this TreeNode node)
+        {
+            return !HasSiblings(node);
+        }
+
         public static TreeNode GetClone(this TreeNode node)
         {
             return (TreeNode)node.Clone();
