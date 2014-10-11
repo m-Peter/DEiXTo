@@ -115,7 +115,7 @@ namespace DEiXTo.Services
 
             PointerInfo pInfo = new PointerInfo();
 
-            // By default it's node is required, so add the Match Node image
+            // By default each node is required, so add the Match Node image
             newNode.ImageIndex = 3;
             newNode.SelectedImageIndex = 3;
             var tmpElem = (IHTMLElement)element;
@@ -123,6 +123,7 @@ namespace DEiXTo.Services
             pInfo.ElementSourceIndex = tmpElem.sourceIndex;
             pInfo.Path = ComputePath(node, tmpElem);
             pInfo.Content = ContentExtractionFactory.GetExtractorFor(tmpElem).ExtractContent();
+            pInfo.State = NodeState.Grayed;
             newNode.Tag = pInfo;
             newNode.ToolTipText = GetTooltipFor(tmpElem);
 
@@ -142,6 +143,7 @@ namespace DEiXTo.Services
                     PointerInfo pointer = new PointerInfo();
                     pointer.Path = pInfo.Path + ".TEXT";
                     pointer.Content = curElement.nodeValue;
+                    pointer.State = NodeState.Checked;
                     // By default, each TEXT node is in match and extract content state.
                     txtNode.ImageIndex = 0;
                     txtNode.SelectedImageIndex = 0;

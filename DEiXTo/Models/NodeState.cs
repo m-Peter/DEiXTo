@@ -6,4 +6,5 @@
     Unchecked, // Don't care
     GrayedImplied, // Match - OPTIONAL
     CheckedImplied, // Match and Extract Content - OPTIONAL
+    Undefined
 }

@@ -5,6 +5,28 @@ namespace DEiXTo.Services
 {
     public static class TreeNodeExtensions
     {
+        public static NodeState GetState(this TreeNode node)
+        {
+            PointerInfo pInfo = GetPointerInfo(node);
+
+            if (pInfo != null)
+            {
+                return pInfo.State;
+            }
+
+            return NodeState.Undefined;
+        }
+
+        public static void SetState(this TreeNode node, NodeState state)
+        {
+            PointerInfo pInfo = GetPointerInfo(node); ;
+
+            if (pInfo != null)
+            {
+                pInfo.State = state;
+            }
+        }
+
         public static bool HasSiblings(this TreeNode node)
         {
             return (node.PrevNode != null || node.NextNode != null);
