@@ -129,7 +129,7 @@ namespace DEiXTo.Presenters
             var results = extraction.ExtractedResults();
             var columnFormat = "VAR";
 
-            for (int i = 0; i < results[0].Count; i++)
+            for (int i = 0; i < extraction.CountOutputVariables(); i++)
             {
                 _view.AddOutputColumn(columnFormat + i);
             }

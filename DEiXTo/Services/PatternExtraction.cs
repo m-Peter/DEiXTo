@@ -19,6 +19,44 @@ namespace DEiXTo.Services
             _results = new List<Result>();
         }
 
+        public int CountOutputVariables()
+        {
+            int outputVariables = 0;
+
+            if (IsOutputVariable(_pattern))
+            {
+                outputVariables += 1;
+            }
+
+            countVariables(_pattern.Nodes, ref outputVariables);
+
+            return outputVariables;
+        }
+
+        private void countVariables(TreeNodeCollection nodes, ref int counter)
+        {
+            foreach (TreeNode node in nodes)
+            {
+                if (IsOutputVariable(node))
+                {
+                    counter += 1;
+                }
+                countVariables(node.Nodes, ref counter);
+            }
+        }
+
+        public bool IsOutputVariable(TreeNode node)
+        {
+            var state = node.GetState();
+            
+            if (state == NodeState.Checked || state == NodeState.CheckedSource || state == NodeState.CheckedImplied)
+            {
+                return true;
+            }
+
+            return false;
+        }
+
         public void FindMatches()
         {
             _counter = 0;
@@ -72,6 +110,7 @@ namespace DEiXTo.Services
                 return false;
             }
 
+            // if the two nodes match
             if ((left.Text != right.Text) || (left.Nodes.Count != right.Nodes.Count))
             {
                 return false;
