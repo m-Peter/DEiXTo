@@ -65,6 +65,7 @@
     <Compile Include="Services\ImageContentExtractor.cs" />
     <Compile Include="Services\InputContentExtractor.cs" />
     <Compile Include="Services\LinkContentExtractor.cs" />
+    <Compile Include="Services\StateToImageMapper.cs" />
     <Compile Include="Services\TagContentExtractor.cs" />
     <Compile Include="Services\TreeBuilder.cs" />
     <Compile Include="Services\ElementStyling.cs" />
