@@ -558,6 +558,15 @@ namespace DEiXTo.Views
         /// 
         /// </summary>
         /// <returns></returns>
+        public TreeNode GetAuxiliaryInstance()
+        {
+            return AuxiliaryTreeView.Nodes[0];
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
         public TreeNodeCollection GetDOMTreeNodes()
         {
             return HtmlTreeView.Nodes;

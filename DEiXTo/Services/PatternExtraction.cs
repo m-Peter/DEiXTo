@@ -103,26 +103,71 @@ namespace DEiXTo.Services
             }
         }
 
+        private bool isRequired(TreeNode node)
+        {
+            if (node.GetState() == NodeState.Grayed || node.GetState() == NodeState.Checked || node.GetState() == NodeState.CheckedSource)
+            {
+                return true;
+            }
+
+            return false;
+        }
+
+        private bool isOptional(TreeNode node)
+        {
+            if (node.GetState() == NodeState.CheckedImplied || node.GetState() == NodeState.GrayedImplied)
+            {
+                return true;
+            }
+
+            return false;
+        }
+
         private bool CompareRecursiveTree(TreeNode left, TreeNode right)
         {
-            if (left == null || right == null)
+            // if the two nodes don't match
+            if (left.Text != right.Text)
             {
                 return false;
             }
 
-            // if the two nodes match
-            if ((left.Text != right.Text) || (left.Nodes.Count != right.Nodes.Count))
+            // if left.state == (Grayed || CheckedSource || Checked)
+            //   move both trees by selecting the next childs from each
+            //   tree node.
+            if (isRequired(left))
             {
-                return false;
-            }
-
-            for (int i = 0; i < left.Nodes.Count; i++)
-            {
-                if (!CompareRecursiveTree(left.Nodes[i], right.Nodes[i]))
+                for (int i = 0; i < left.Nodes.Count; i++)
                 {
-                    return false;
+                    var nextLeft = left.Nodes[i];
+
+                    if (isOptional(nextLeft))
+                    {
+                        return true;
+                    }
+                    else
+                    {
+                        if (left.Nodes.Count != right.Nodes.Count)
+                        {
+                            return false;
+                        }
+                        var nextRight = right.Nodes[i];
+
+                        if (!CompareRecursiveTree(nextLeft, nextRight))
+                        {
+                            return false;
+                        }
+                    }
                 }
             }
+            
+
+            // if left.state == (CheckedImplied || GrayedImplied || Unchecked)
+            //   if left.Text == right.Text
+            //     move both trees by selecting the next childs from each
+            //     tree node.
+            //   else
+            //     move only the node of the left tree by picking its first
+            //     child node.
 
             return true;
         }

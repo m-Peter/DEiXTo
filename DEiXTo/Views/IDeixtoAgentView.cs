@@ -71,6 +71,7 @@ namespace DEiXTo.Views
         bool AskUserToClearTreeViews();
         void ShowNoTagSelectedMessage();
         TreeNode GetWorkingPattern();
+        TreeNode GetAuxiliaryInstance();
         TreeNodeCollection GetDOMTreeNodes();
         void AddOutputColumn(string columnHeader);
         void AddOutputItem(string[] contents);
