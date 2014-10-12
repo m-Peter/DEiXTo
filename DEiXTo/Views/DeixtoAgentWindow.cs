@@ -587,7 +587,7 @@ namespace DEiXTo.Views
         /// <returns></returns>
         public TreeNodeCollection GetBodyTreeNodes()
         {
-            return HtmlTreeView.Nodes[1].Nodes;
+            return HtmlTreeView.Nodes[0].Nodes[1].Nodes;
         }
 
         /// <summary>

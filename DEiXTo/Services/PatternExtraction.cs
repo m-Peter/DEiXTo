@@ -149,7 +149,19 @@ namespace DEiXTo.Services
             return false;
         }
 
-        private bool CompareRecursiveTree(TreeNode left, TreeNode right)
+        private bool isSkipped(TreeNode node)
+        {
+            var state = node.GetState();
+
+            if (state == NodeState.Unchecked)
+            {
+                return true;
+            }
+
+            return false;
+        }
+
+        public bool CompareRecursiveTree(TreeNode left, TreeNode right)
         {
             // if the two nodes don't match
             if (left.Text != right.Text)
@@ -172,12 +184,16 @@ namespace DEiXTo.Services
                     {
                         return true;
                     }
+                    else if (isSkipped(nextLeft))
+                    {
+                        return true;
+                    }
                     else
                     {
-                        if (left.Nodes.Count != right.Nodes.Count)
+                        /*if (left.Nodes.Count != right.Nodes.Count)
                         {
                             return false;
-                        }
+                        }*/
 
                         var nextRight = right.Nodes[i];
 
