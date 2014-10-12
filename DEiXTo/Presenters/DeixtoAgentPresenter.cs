@@ -123,10 +123,13 @@ namespace DEiXTo.Presenters
         void executeRule()
         {
             _view.ClearExtractedOutputs();
+
             var pattern = _view.GetWorkingPattern();
             var domNodes = _view.GetDOMTreeNodes();
             PatternExtraction extraction = new PatternExtraction(pattern, domNodes);
+            
             extraction.FindMatches();
+            
             var results = extraction.ExtractedResults();
             var columnFormat = "VAR";
 
@@ -139,6 +142,7 @@ namespace DEiXTo.Presenters
             {
                 _view.AddOutputItem(item.ToStringArray());
             }
+            
             _view.SetExtractedResults(results.Count);
         }
 

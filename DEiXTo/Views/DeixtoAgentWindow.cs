@@ -584,6 +584,15 @@ namespace DEiXTo.Views
         /// <summary>
         /// 
         /// </summary>
+        /// <returns></returns>
+        public TreeNodeCollection GetBodyTreeNodes()
+        {
+            return HtmlTreeView.Nodes[1].Nodes;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
         /// <param name="columnHeader"></param>
         public void AddOutputColumn(string columnHeader)
         {

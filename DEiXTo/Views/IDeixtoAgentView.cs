@@ -74,6 +74,7 @@ namespace DEiXTo.Views
         TreeNode GetWorkingPattern();
         TreeNode GetAuxiliaryInstance();
         TreeNodeCollection GetDOMTreeNodes();
+        TreeNodeCollection GetBodyTreeNodes();
         void AddOutputColumn(string columnHeader);
         void AddOutputItem(string[] contents);
         void SetExtractedResults(int count);

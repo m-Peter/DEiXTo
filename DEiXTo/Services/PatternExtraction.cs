@@ -139,7 +139,9 @@ namespace DEiXTo.Services
 
         private bool isOptional(TreeNode node)
         {
-            if (node.GetState() == NodeState.CheckedImplied || node.GetState() == NodeState.GrayedImplied)
+            var state = node.GetState();
+
+            if (state == NodeState.CheckedImplied || state == NodeState.GrayedImplied)
             {
                 return true;
             }
@@ -176,6 +178,7 @@ namespace DEiXTo.Services
                         {
                             return false;
                         }
+
                         var nextRight = right.Nodes[i];
 
                         if (!CompareRecursiveTree(nextLeft, nextRight))
