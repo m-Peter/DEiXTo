@@ -8,6 +8,7 @@
         private int _elementSourceIndex;
         private string _path;
         private string _content;
+        private string _source;
         private bool _isRoot;
         private NodeState _state;
 
@@ -27,6 +28,12 @@
         {
             get { return _content; }
             set { _content = value; }
+        }
+
+        public string Source
+        {
+            get { return _source; }
+            set { _source = value; }
         }
 
         public bool IsRoot

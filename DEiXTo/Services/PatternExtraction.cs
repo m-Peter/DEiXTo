@@ -97,6 +97,10 @@ namespace DEiXTo.Services
             {
                 result.AddContent(node.GetContent());
             }
+            else if (hasSource(node))
+            {
+                result.AddContent(node.GetSource());
+            }
             foreach (TreeNode n in node.Nodes)
             {
                 GetResultFromInstance(n, result);
@@ -113,9 +117,6 @@ namespace DEiXTo.Services
                 case NodeState.Checked:
                     result = true;
                     break;
-                case NodeState.CheckedSource:
-                    result = true;
-                    break;
                 case NodeState.CheckedImplied:
                     result = true;
                     break;
@@ -125,6 +126,18 @@ namespace DEiXTo.Services
             }
 
             return result;
+        }
+
+        private bool hasSource(TreeNode node)
+        {
+            var state = node.GetState();
+
+            if (state == NodeState.CheckedSource)
+            {
+                return true;
+            }
+
+            return false;
         }
 
         private bool isRequired(TreeNode node)
@@ -163,7 +176,7 @@ namespace DEiXTo.Services
 
         public bool CompareRecursiveTree(TreeNode left, TreeNode right)
         {
-            // if the two nodes don't match
+            // if the two nodes don't match, then cancel the current instance
             if (left.Text != right.Text)
             {
                 return false;
@@ -174,6 +187,13 @@ namespace DEiXTo.Services
             // if left.state == (Grayed || CheckedSource || Checked)
             //   move both trees by selecting the next childs from each
             //   tree node.
+            // if left.state == (CheckedImplied || GrayedImplied || Unchecked)
+            //   if left.Text == right.Text
+            //     move both trees by selecting the next childs from each
+            //     tree node.
+            //   else
+            //     move only the node of the left tree by picking its first
+            //     child node.
             if (isRequired(left))
             {
                 for (int i = 0; i < left.Nodes.Count; i++)
@@ -190,11 +210,6 @@ namespace DEiXTo.Services
                     }
                     else
                     {
-                        /*if (left.Nodes.Count != right.Nodes.Count)
-                        {
-                            return false;
-                        }*/
-
                         var nextRight = right.Nodes[i];
 
                         if (!CompareRecursiveTree(nextLeft, nextRight))
@@ -204,15 +219,6 @@ namespace DEiXTo.Services
                     }
                 }
             }
-            
-
-            // if left.state == (CheckedImplied || GrayedImplied || Unchecked)
-            //   if left.Text == right.Text
-            //     move both trees by selecting the next childs from each
-            //     tree node.
-            //   else
-            //     move only the node of the left tree by picking its first
-            //     child node.
 
             return true;
         }

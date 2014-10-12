@@ -124,6 +124,7 @@ namespace DEiXTo.Services
             pInfo.Path = ComputePath(node, tmpElem);
             pInfo.Content = ContentExtractionFactory.GetExtractorFor(tmpElem).ExtractContent();
             pInfo.State = NodeState.Grayed;
+            pInfo.Source = tmpElem.outerHTML;
             newNode.Tag = pInfo;
             newNode.ToolTipText = GetTooltipFor(tmpElem);
 

@@ -5,6 +5,18 @@ namespace DEiXTo.Services
 {
     public static class TreeNodeExtensions
     {
+        public static string GetSource(this TreeNode node)
+        {
+            PointerInfo pInfo = GetPointerInfo(node);
+
+            if (pInfo != null)
+            {
+                return pInfo.Source;
+            }
+
+            return "";
+        }
+
         public static NodeState GetState(this TreeNode node)
         {
             PointerInfo pInfo = GetPointerInfo(node);
