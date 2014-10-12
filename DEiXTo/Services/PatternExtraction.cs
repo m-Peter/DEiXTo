@@ -93,7 +93,7 @@ namespace DEiXTo.Services
 
         private void GetResultFromInstance(TreeNode node, Result result)
         {
-            if (node.Text == "TEXT")
+            if (hasContent(node))
             {
                 result.AddContent(node.GetContent());
             }
@@ -101,6 +101,30 @@ namespace DEiXTo.Services
             {
                 GetResultFromInstance(n, result);
             }
+        }
+
+        private bool hasContent(TreeNode node)
+        {
+            var state = node.GetState();
+            bool result;
+
+            switch (state)
+            {
+                case NodeState.Checked:
+                    result = true;
+                    break;
+                case NodeState.CheckedSource:
+                    result = true;
+                    break;
+                case NodeState.CheckedImplied:
+                    result = true;
+                    break;
+                default:
+                    result = false;
+                    break;
+            }
+
+            return result;
         }
 
         private bool isRequired(TreeNode node)
@@ -130,6 +154,8 @@ namespace DEiXTo.Services
             {
                 return false;
             }
+
+            right.SetState(left.GetState());
 
             // if left.state == (Grayed || CheckedSource || Checked)
             //   move both trees by selecting the next childs from each

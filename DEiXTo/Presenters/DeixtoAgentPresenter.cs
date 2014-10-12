@@ -122,6 +122,7 @@ namespace DEiXTo.Presenters
 
         void executeRule()
         {
+            _view.ClearExtractedOutputs();
             var pattern = _view.GetWorkingPattern();
             var domNodes = _view.GetDOMTreeNodes();
             PatternExtraction extraction = new PatternExtraction(pattern, domNodes);

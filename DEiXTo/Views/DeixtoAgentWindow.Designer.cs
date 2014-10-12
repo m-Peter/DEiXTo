@@ -172,6 +172,7 @@
             this.setAsVirtualRootToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator8 = new System.Windows.Forms.ToolStripSeparator();
             this.deleteNodeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.ExtractedResultsCountLabel = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
@@ -1116,6 +1117,7 @@
             // 
             // tabPage4
             // 
+            this.tabPage4.Controls.Add(this.ExtractedResultsCountLabel);
             this.tabPage4.Controls.Add(this.ExtractionResultsLabel);
             this.tabPage4.Controls.Add(this.OutputListView);
             this.tabPage4.Location = new System.Drawing.Point(4, 22);
@@ -1501,7 +1503,7 @@
             this.toolStripSeparator8,
             this.deleteNodeToolStripMenuItem});
             this.AdjustpatternMenuStrip.Name = "AdjustpatternMenuStrip";
-            this.AdjustpatternMenuStrip.Size = new System.Drawing.Size(239, 420);
+            this.AdjustpatternMenuStrip.Size = new System.Drawing.Size(239, 398);
             // 
             // matchAndExtractContentToolStripMenuItem
             // 
@@ -1643,6 +1645,16 @@
             this.deleteNodeToolStripMenuItem.Name = "deleteNodeToolStripMenuItem";
             this.deleteNodeToolStripMenuItem.Size = new System.Drawing.Size(238, 22);
             this.deleteNodeToolStripMenuItem.Text = "Delete Node";
+            // 
+            // ExtractedResultsCountLabel
+            // 
+            this.ExtractedResultsCountLabel.AutoSize = true;
+            this.ExtractedResultsCountLabel.Enabled = false;
+            this.ExtractedResultsCountLabel.Location = new System.Drawing.Point(107, 344);
+            this.ExtractedResultsCountLabel.Name = "ExtractedResultsCountLabel";
+            this.ExtractedResultsCountLabel.Size = new System.Drawing.Size(35, 13);
+            this.ExtractedResultsCountLabel.TabIndex = 2;
+            this.ExtractedResultsCountLabel.Text = "label1";
             // 
             // DeixtoAgentWindow
             // 
@@ -1858,5 +1870,6 @@
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator6;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator7;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator8;
+        private System.Windows.Forms.Label ExtractedResultsCountLabel;
     }
 }

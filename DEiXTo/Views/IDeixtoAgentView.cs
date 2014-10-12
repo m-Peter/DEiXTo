@@ -36,6 +36,7 @@ namespace DEiXTo.Views
 
         string GetDocumentUrl();
         void ClearTargetURLs();
+        void ClearExtractedOutputs();
         void FillTextNodeElementInfo(TreeNode node);
         void ShowSpecifyURLMessage();
         void ShowRequestNotFoundMessage();

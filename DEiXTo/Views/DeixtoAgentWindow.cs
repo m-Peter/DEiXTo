@@ -114,6 +114,15 @@ namespace DEiXTo.Views
         /// <summary>
         /// 
         /// </summary>
+        public void ClearExtractedOutputs()
+        {
+            OutputListView.Clear();
+            ExtractedResultsCountLabel.Enabled = false;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
         /// <param name="node"></param>
         /// <param name="imageIndex"></param>
         public void ApplyStateToNode(TreeNode node, int imageIndex)
@@ -591,9 +600,14 @@ namespace DEiXTo.Views
             OutputListView.Items.Add(item);
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="count"></param>
         public void SetExtractedResults(int count)
         {
-            ExtractionResultsLabel.Text += count;
+            ExtractedResultsCountLabel.Text = count.ToString();
+            ExtractedResultsCountLabel.Enabled = true;
         }
 
         private void BrowseToURLButton_Click(object sender, EventArgs e)
