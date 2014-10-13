@@ -61,20 +61,24 @@ namespace DEiXTo.Services
         {
             _counter = 0;
             _results = new List<Result>();
-            FindDOMMatches(_pattern, _domNodes);
+
+            if (_pattern.IsRoot())
+            {
+                Match(_pattern, _domNodes);
+            }
+            else
+            {
+                var upper = new TreeNode(_pattern.Text);
+                BuiltT1Tree(_pattern.Nodes, upper);
+
+                TreeNode vRoot = null;
+                FindRoot(_pattern.Nodes, ref vRoot);
+
+                MatchSplit(vRoot, _domNodes, upper);
+            }
         }
 
-        public int Results
-        {
-            get { return _counter; }
-        }
-
-        public List<Result> ExtractedResults()
-        {
-            return _results;
-        }
-
-        private void FindDOMMatches(TreeNode pattern, TreeNodeCollection nodes)
+        private void Match(TreeNode pattern, TreeNodeCollection nodes)
         {
             foreach (TreeNode node in nodes)
             {
@@ -87,7 +91,87 @@ namespace DEiXTo.Services
                     GetResultFromInstance(node, result);
                     _results.Add(result);
                 }
-                FindDOMMatches(pattern, node.Nodes);
+                Match(pattern, node.Nodes);
+            }
+        }
+
+        private void MatchSplit(TreeNode pattern, TreeNodeCollection nodes, TreeNode upper)
+        {
+            foreach (TreeNode node in nodes)
+            {
+                if (CompareRecursiveTree(pattern, node))
+                {
+                    string fw = "";
+                    traverse(upper, ref fw);
+                    string bw = "";
+                    backward(node.Parent, ref bw);
+                    if (fw != bw)
+                    {
+                        return;
+                    }
+                    _counter += 1;
+                    var result = new Result();
+                    GetResultFromInstance(node, result);
+                    _results.Add(result);
+                }
+                MatchSplit(pattern, node.Nodes, upper);
+            }
+        }
+
+        private void traverse(TreeNode t, ref string format)
+        {
+            for (int i = t.Nodes.Count - 1; i >= 0; i--)
+            {
+                traverse(t.Nodes[i], ref format);
+            }
+            format += (t.Text);
+        }
+
+        private void backward(TreeNode t, ref string format)
+        {
+            if (t.Parent != null)
+            {
+                backward(t.Parent, ref format);
+            }
+        }
+
+        public int Results
+        {
+            get { return _counter; }
+        }
+
+        public List<Result> ExtractedResults()
+        {
+            return _results;
+        }
+
+        private void FindRoot(TreeNodeCollection nodes, ref TreeNode root)
+        {
+            foreach (TreeNode node in nodes)
+            {
+                if (node.IsRoot())
+                {
+                    root = node.GetClone();
+                    return;
+                }
+                FindRoot(node.Nodes, ref root);
+            }
+        }
+
+        private void BuiltT1Tree(TreeNodeCollection nodes, TreeNode root)
+        {
+            foreach (TreeNode node in nodes)
+            {
+                if (!node.IsRoot())
+                {
+                    var newNode = new TreeNode(node.Text);
+                    root.Nodes.Add(newNode);
+                    BuiltT1Tree(node.Nodes, newNode);
+                }
+                else
+                {
+                    return;
+                }
             }
         }
 
@@ -210,6 +294,11 @@ namespace DEiXTo.Services
                     }
                     else
                     {
+                        if (left.Nodes.Count != right.Nodes.Count)
+                        {
+                            return false;
+                        }
+
                         var nextRight = right.Nodes[i];
 
                         if (!CompareRecursiveTree(nextLeft, nextRight))
