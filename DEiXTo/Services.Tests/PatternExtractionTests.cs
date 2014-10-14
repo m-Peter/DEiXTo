@@ -44,16 +44,14 @@ namespace DEiXTo.Services.Tests
 
         private TreeNode getInstanceTree()
         {
-            // div
-            //    section
+            // section
+            //    a
+            //       img
+            //    h2
             //       a
-            //          img
-            //       h2
-            //          a
-            //              text
-            //       p
             //          text
-            var div = new TreeNode("DIV");
+            //    p
+            //       text
             var section = new TreeNode("section");
             var a = new TreeNode("A");
             var img = new TreeNode("IMG");
@@ -61,7 +59,6 @@ namespace DEiXTo.Services.Tests
             var text = new TreeNode("TEXT");
             var p = new TreeNode("P");
 
-            div.AddNode(section);
             section.AddNode(a);
             a.AddNode(img);
             section.AddNode(h2);
@@ -70,18 +67,54 @@ namespace DEiXTo.Services.Tests
             section.AddNode(p);
             p.AddNode(text);
 
-            return div;
+            return section;
+        }
+
+        private TreeNodeCollection getDOMNodes(int instances)
+        {
+            var body = new TreeNode("body");
+            var div = new TreeNode("div");
+            body.AddNode(div);
+            
+            for (int i = 0; i < instances; i++)
+            {
+                div.AddNode(getInstanceTree());
+            }
+
+            return body.Nodes;
         }
 
         [TestMethod]
         public void TestFindSingleMatch()
         {
             var root = getRootTree();
-            var instance = getInstanceTree();
+            var domNodes = getDOMNodes(1);
 
-            PatternExtraction pattern = new PatternExtraction(root, instance.Nodes);
+            PatternExtraction pattern = new PatternExtraction(root, domNodes);
             pattern.FindMatches();
             Assert.AreEqual(1, pattern.Results);
+        }
+
+        [TestMethod]
+        public void TestTwoMatches()
+        {
+            var root = getRootTree();
+            var domNodes = getDOMNodes(2);
+
+            PatternExtraction pattern = new PatternExtraction(root, domNodes);
+            pattern.FindMatches();
+            Assert.AreEqual(2, pattern.Results);
+        }
+
+        [TestMethod]
+        public void TestManyMatches()
+        {
+            var root = getRootTree();
+            var domNodes = getDOMNodes(11);
+
+            PatternExtraction pattern = new PatternExtraction(root, domNodes);
+            pattern.FindMatches();
+            Assert.AreEqual(11, pattern.Results);
         }
     }
 }
