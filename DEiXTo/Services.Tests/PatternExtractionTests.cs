@@ -23,11 +23,29 @@ namespace DEiXTo.Services.Tests
             //    p
             //       text
             var section = new TreeNode("section");
+            section.Tag = new PointerInfo();
+            section.SetAsRoot();
+            section.SetState(NodeState.Grayed);
+            
             var a = new TreeNode("A");
+            a.Tag = new PointerInfo();
+            a.SetState(NodeState.Grayed);
+
             var img = new TreeNode("IMG");
+            img.Tag = new PointerInfo();
+            img.SetState(NodeState.Grayed);
+            
             var h2 = new TreeNode("H2");
+            h2.Tag = new PointerInfo();
+            h2.SetState(NodeState.Grayed);
+            
             var text = new TreeNode("TEXT");
+            text.Tag = new PointerInfo();
+            text.SetState(NodeState.Checked);
+            
             var p = new TreeNode("P");
+            p.Tag = new PointerInfo();
+            p.SetState(NodeState.Grayed);
             
             section.AddNode(a);
             a.AddNode(img);
@@ -36,8 +54,6 @@ namespace DEiXTo.Services.Tests
             a.AddNode(text);
             section.AddNode(p);
             p.AddNode(text);
-            section.Tag = new PointerInfo();
-            section.SetAsRoot();
 
             return section;
         }
@@ -53,11 +69,28 @@ namespace DEiXTo.Services.Tests
             //    p
             //       text
             var section = new TreeNode("section");
+            section.Tag = new PointerInfo();
+            section.SetState(NodeState.Grayed);
+            
             var a = new TreeNode("A");
+            a.Tag = new PointerInfo();
+            a.SetState(NodeState.Grayed);
+            
             var img = new TreeNode("IMG");
+            img.Tag = new PointerInfo();
+            img.SetState(NodeState.Grayed);
+            
             var h2 = new TreeNode("H2");
+            h2.Tag = new PointerInfo();
+            h2.SetState(NodeState.Grayed);
+            
             var text = new TreeNode("TEXT");
+            text.Tag = new PointerInfo();
+            text.SetState(NodeState.Checked);
+            
             var p = new TreeNode("P");
+            p.Tag = new PointerInfo();
+            p.SetState(NodeState.Grayed);
 
             section.AddNode(a);
             a.AddNode(img);
@@ -70,7 +103,52 @@ namespace DEiXTo.Services.Tests
             return section;
         }
 
-        private TreeNodeCollection getDOMNodes(int instances)
+        private TreeNode getTreeWithOptional()
+        {
+            // section
+            //    a
+            //       img
+            //    h2
+            //       a
+            //          text
+            //    p
+            //       text
+            var section = new TreeNode("section");
+            section.Tag = new PointerInfo();
+            section.SetState(NodeState.Grayed);
+
+            var a = new TreeNode("A");
+            a.Tag = new PointerInfo();
+            a.SetState(NodeState.Grayed);
+
+            var img = new TreeNode("IMG");
+            img.Tag = new PointerInfo();
+            img.SetState(NodeState.Grayed);
+
+            var h2 = new TreeNode("H2");
+            h2.Tag = new PointerInfo();
+            h2.SetState(NodeState.Grayed);
+
+            var text = new TreeNode("TEXT");
+            text.Tag = new PointerInfo();
+            text.SetState(NodeState.Grayed);
+
+            var p = new TreeNode("P");
+            p.Tag = new PointerInfo();
+            p.SetState(NodeState.CheckedImplied);
+
+            section.AddNode(a);
+            a.AddNode(img);
+            section.AddNode(h2);
+            h2.AddNode(a);
+            a.AddNode(text);
+            section.AddNode(p);
+            p.AddNode(text);
+
+            return section;
+        }
+
+        private TreeNodeCollection getDOMNodes(int instances, bool isOptional=false)
         {
             var body = new TreeNode("body");
             var div = new TreeNode("div");
@@ -79,6 +157,11 @@ namespace DEiXTo.Services.Tests
             for (int i = 0; i < instances; i++)
             {
                 div.AddNode(getInstanceTree());
+            }
+
+            if (isOptional)
+            {
+                div.AddNode(getTreeWithOptional());
             }
 
             return body.Nodes;
@@ -111,6 +194,17 @@ namespace DEiXTo.Services.Tests
         {
             var root = getRootTree();
             var domNodes = getDOMNodes(11);
+
+            PatternExtraction pattern = new PatternExtraction(root, domNodes);
+            pattern.FindMatches();
+            Assert.AreEqual(11, pattern.Results);
+        }
+
+        [TestMethod]
+        public void TestManyMatchesWithOneOptionalNode()
+        {
+            var root = getRootTree();
+            var domNodes = getDOMNodes(10, true);
 
             PatternExtraction pattern = new PatternExtraction(root, domNodes);
             pattern.FindMatches();
