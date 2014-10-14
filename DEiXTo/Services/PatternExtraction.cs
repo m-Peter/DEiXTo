@@ -77,10 +77,38 @@ namespace DEiXTo.Services
         /// <summary>
         /// 
         /// </summary>
+        /// <param name="nodes"></param>
+        /// <param name="filtered"></param>
+        public void FilterUncheckedNodes(TreeNodeCollection nodes, TreeNode filtered)
+        {
+            foreach (TreeNode node in nodes)
+            {
+                var state = node.GetState();
+
+                if (state != NodeState.Unchecked)
+                {
+                    var newNode = new TreeNode(node.Text);
+                    newNode.Tag = node.Tag;
+                    filtered.Nodes.Add(newNode);
+                    FilterUncheckedNodes(node.Nodes, newNode);
+                }
+                else
+                {
+                    FilterUncheckedNodes(node.Nodes, filtered);
+                }
+            }
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
         public void FindMatches()
         {
             _counter = 0;
             _results = new List<Result>();
+            var copiedPattern = new TreeNode(_pattern.Text);
+            copiedPattern.Tag = _pattern.Tag;
+            FilterUncheckedNodes(_pattern.Nodes, copiedPattern);
 
             if (_pattern.IsRoot())
             {

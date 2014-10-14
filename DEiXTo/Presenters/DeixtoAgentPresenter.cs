@@ -143,41 +143,13 @@ namespace DEiXTo.Presenters
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="nodes"></param>
-        /// <param name="filtered"></param>
-        private void FilterUncheckedNodes(TreeNodeCollection nodes, TreeNode filtered)
-        {
-            foreach (TreeNode node in nodes)
-            {
-                var state = node.GetState();
-
-                if (state != NodeState.Unchecked)
-                {
-                    var newNode = new TreeNode(node.Text);
-                    newNode.Tag = node.Tag;
-                    filtered.Nodes.Add(newNode);
-                    FilterUncheckedNodes(node.Nodes, newNode);
-                }
-                else
-                {
-                    FilterUncheckedNodes(node.Nodes, filtered);
-                }
-            }
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
         void executeRule()
         {
             _view.ClearExtractedOutputs();
 
             var pattern = _view.GetWorkingPattern();
             var bodyNodes = _view.GetBodyTreeNodes();
-            var copiedPattern = new TreeNode(pattern.Text);
-            copiedPattern.Tag = pattern.Tag;
-            FilterUncheckedNodes(pattern.Nodes, copiedPattern);
-            PatternExtraction extraction = new PatternExtraction(copiedPattern, bodyNodes);
+            PatternExtraction extraction = new PatternExtraction(pattern, bodyNodes);
             
             extraction.FindMatches();
             
