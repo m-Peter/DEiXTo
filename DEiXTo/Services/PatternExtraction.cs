@@ -103,7 +103,7 @@ namespace DEiXTo.Services
         /// </summary>
         /// <param name="pattern"></param>
         /// <param name="nodes"></param>
-        private void Match(TreeNode pattern, TreeNodeCollection nodes)
+        public void Match(TreeNode pattern, TreeNodeCollection nodes)
         {
             foreach (TreeNode node in nodes)
             {
@@ -126,7 +126,7 @@ namespace DEiXTo.Services
         /// <param name="pattern"></param>
         /// <param name="nodes"></param>
         /// <param name="upper"></param>
-        private void MatchSplit(TreeNode pattern, TreeNodeCollection nodes, TreeNode upper)
+        public void MatchSplit(TreeNode pattern, TreeNodeCollection nodes, TreeNode upper)
         {
             foreach (TreeNode node in nodes)
             {
@@ -157,7 +157,7 @@ namespace DEiXTo.Services
         /// <param name="t"></param>
         /// <param name="format"></param>
         /// <param name="count"></param>
-        private void traverse(TreeNode t, ref string format, ref int count)
+        public void traverse(TreeNode t, ref string format, ref int count)
         {
             for (int i = t.Nodes.Count - 1; i >= 0; i--)
             {
@@ -174,7 +174,7 @@ namespace DEiXTo.Services
         /// <param name="format"></param>
         /// <param name="limit"></param>
         /// <param name="count"></param>
-        private void backward(TreeNode t, ref string format, int limit, ref int count)
+        public void backward(TreeNode t, ref string format, int limit, ref int count)
         {
             if (limit == count)
             {
@@ -210,7 +210,7 @@ namespace DEiXTo.Services
         /// </summary>
         /// <param name="nodes"></param>
         /// <param name="root"></param>
-        private void FindRoot(TreeNodeCollection nodes, ref TreeNode root)
+        public void FindRoot(TreeNodeCollection nodes, ref TreeNode root)
         {
             foreach (TreeNode node in nodes)
             {
@@ -228,7 +228,7 @@ namespace DEiXTo.Services
         /// </summary>
         /// <param name="nodes"></param>
         /// <param name="root"></param>
-        private void BuiltT1Tree(TreeNodeCollection nodes, TreeNode root)
+        public void BuiltT1Tree(TreeNodeCollection nodes, TreeNode root)
         {
             foreach (TreeNode node in nodes)
             {
@@ -250,7 +250,7 @@ namespace DEiXTo.Services
         /// </summary>
         /// <param name="node"></param>
         /// <param name="result"></param>
-        private void GetResultFromInstance(TreeNode node, Result result)
+        public void GetResultFromInstance(TreeNode node, Result result)
         {
             if (hasContent(node))
             {
@@ -271,7 +271,7 @@ namespace DEiXTo.Services
         /// </summary>
         /// <param name="node"></param>
         /// <returns></returns>
-        private bool hasContent(TreeNode node)
+        public bool hasContent(TreeNode node)
         {
             var state = node.GetState();
             bool result;
@@ -297,7 +297,7 @@ namespace DEiXTo.Services
         /// </summary>
         /// <param name="node"></param>
         /// <returns></returns>
-        private bool hasSource(TreeNode node)
+        public bool hasSource(TreeNode node)
         {
             var state = node.GetState();
 
@@ -314,7 +314,7 @@ namespace DEiXTo.Services
         /// </summary>
         /// <param name="node"></param>
         /// <returns></returns>
-        private bool isRequired(TreeNode node)
+        public bool isRequired(TreeNode node)
         {
             if (node.GetState() == NodeState.Grayed || node.GetState() == NodeState.Checked || node.GetState() == NodeState.CheckedSource)
             {
@@ -329,7 +329,7 @@ namespace DEiXTo.Services
         /// </summary>
         /// <param name="node"></param>
         /// <returns></returns>
-        private bool isOptional(TreeNode node)
+        public bool isOptional(TreeNode node)
         {
             var state = node.GetState();
 
@@ -346,7 +346,7 @@ namespace DEiXTo.Services
         /// </summary>
         /// <param name="node"></param>
         /// <returns></returns>
-        private bool isSkipped(TreeNode node)
+        public bool isSkipped(TreeNode node)
         {
             var state = node.GetState();
 
