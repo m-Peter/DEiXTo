@@ -1,9 +1,5 @@
 ﻿using mshtml;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace DEiXTo.Models
@@ -44,6 +40,11 @@ namespace DEiXTo.Models
             return _DOMTree.ContainsKey(key);
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="element"></param>
+        /// <returns></returns>
         public TreeNode GetNodeFor(HtmlElement element)
         {
             var curElem = element.DomElement as IHTMLDOMNode;
@@ -55,6 +56,11 @@ namespace DEiXTo.Models
             return null;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="key"></param>
+        /// <param name="value"></param>
         public void Add(IHTMLDOMNode key, TreeNode value)
         {
             _DOMTree.Add(key, value);

@@ -2,6 +2,9 @@
 
 namespace DEiXTo.Services
 {
+    /// <summary>
+    /// 
+    /// </summary>
     public interface IViewLoader
     {
         void LoadMainView();

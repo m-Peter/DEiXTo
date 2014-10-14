@@ -1,14 +1,17 @@
 ﻿using mshtml;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace DEiXTo.Services
 {
+    /// <summary>
+    /// 
+    /// </summary>
     public class ContentExtractionFactory
     {
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="element"></param>
+        /// <returns></returns>
         public static TagContentExtractor GetExtractorFor(IHTMLElement element)
         {
             string tagName = element.tagName;

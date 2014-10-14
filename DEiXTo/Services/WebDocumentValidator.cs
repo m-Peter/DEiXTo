@@ -3,6 +3,9 @@ using System.Net;
 
 namespace DEiXTo.Services
 {
+    /// <summary>
+    /// 
+    /// </summary>
     public class WebDocumentValidator : IDocumentValidator
     {
         private Uri _uri;
@@ -37,6 +40,10 @@ namespace DEiXTo.Services
             
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
         public string Url()
         {
             return _uri.ToString();

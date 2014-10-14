@@ -1,14 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
-
-namespace DEiXTo.Services
+﻿namespace DEiXTo.Services
 {
+    /// <summary>
+    /// 
+    /// </summary>
     public class StateToImageMapper
     {
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="state"></param>
+        /// <returns></returns>
         public int GetImageFromState(NodeState state)
         {
             int imageIndex = -1;

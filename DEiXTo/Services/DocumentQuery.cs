@@ -16,6 +16,11 @@ namespace DEiXTo.Services
             _htmlDocument = document;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="index"></param>
+        /// <returns></returns>
         public HtmlElement GetElementByIndex(int index)
         {
             return _htmlDocument.All[index];
@@ -30,11 +35,20 @@ namespace DEiXTo.Services
             return _htmlDocument.GetElementsByTagName("HTML")[0];
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="point"></param>
+        /// <returns></returns>
         public HtmlElement GetElementFromPoint(Point point)
         {
             return _htmlDocument.GetElementFromPoint(point);
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
         public int CountElements()
         {
             return _htmlDocument.All.Count;

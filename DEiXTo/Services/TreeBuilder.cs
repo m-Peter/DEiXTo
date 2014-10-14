@@ -1,8 +1,7 @@
-﻿using DEiXTo.Models;
+﻿using System.Linq;
+using DEiXTo.Models;
 using mshtml;
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Windows.Forms;
 
 namespace DEiXTo.Services
@@ -28,6 +27,12 @@ namespace DEiXTo.Services
             return domTree;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="element"></param>
+        /// <param name="ignoredTags"></param>
+        /// <returns></returns>
         public DOMTreeStructure BuildSimplifiedDOMTree(HtmlElement element, string[] ignoredTags)
         {
             var domNode = element.DomElement as IHTMLDOMNode;
@@ -38,6 +43,13 @@ namespace DEiXTo.Services
             return domTree;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="element"></param>
+        /// <param name="node"></param>
+        /// <param name="domTree"></param>
+        /// <param name="ignoredTags"></param>
         private void BuildSimpliefiedDOMTreeRec(IHTMLDOMNode element, TreeNode node, DOMTreeStructure domTree, string[] ignoredTags)
         {
             if (element.nodeName == "#text" || element.nodeName == "#comment")
@@ -99,6 +111,12 @@ namespace DEiXTo.Services
             }
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="element"></param>
+        /// <param name="node"></param>
+        /// <param name="domTree"></param>
         private void BuildDOMTreeRec(IHTMLDOMNode element, TreeNode node, DOMTreeStructure domTree)
         {
             if (element.nodeName == "#text" || element.nodeName == "#comment")
@@ -155,6 +173,12 @@ namespace DEiXTo.Services
             }
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="node"></param>
+        /// <param name="element"></param>
+        /// <returns></returns>
         public string ComputePath(TreeNode node, IHTMLElement element)
         {
             TreeNode bro;
@@ -190,6 +214,11 @@ namespace DEiXTo.Services
             return path;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="element"></param>
+        /// <returns></returns>
         private string GetTooltipFor(IHTMLElement element)
         {
             var tagName = element.tagName;

@@ -1,12 +1,10 @@
 ﻿using mshtml;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace DEiXTo.Services
 {
+    /// <summary>
+    /// 
+    /// </summary>
     public class FormContentExtractor : TagContentExtractor
     {
         private IHTMLElement _element;
@@ -16,6 +14,10 @@ namespace DEiXTo.Services
             _element = element;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
         public override string ExtractContent()
         {
             return _element.getAttribute("name");

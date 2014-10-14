@@ -4,6 +4,9 @@ using System.Windows.Forms;
 
 namespace DEiXTo.Services
 {
+    /// <summary>
+    /// 
+    /// </summary>
     public class PatternExtraction
     {
         private TreeNode _pattern;
@@ -19,6 +22,10 @@ namespace DEiXTo.Services
             _results = new List<Result>();
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
         public int CountOutputVariables()
         {
             int outputVariables = 0;
@@ -33,6 +40,11 @@ namespace DEiXTo.Services
             return outputVariables;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="nodes"></param>
+        /// <param name="counter"></param>
         private void countVariables(TreeNodeCollection nodes, ref int counter)
         {
             foreach (TreeNode node in nodes)
@@ -45,6 +57,11 @@ namespace DEiXTo.Services
             }
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="node"></param>
+        /// <returns></returns>
         public bool IsOutputVariable(TreeNode node)
         {
             var state = node.GetState();
@@ -57,6 +74,9 @@ namespace DEiXTo.Services
             return false;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
         public void FindMatches()
         {
             _counter = 0;
@@ -78,6 +98,11 @@ namespace DEiXTo.Services
             }
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="pattern"></param>
+        /// <param name="nodes"></param>
         private void Match(TreeNode pattern, TreeNodeCollection nodes)
         {
             foreach (TreeNode node in nodes)
@@ -95,6 +120,12 @@ namespace DEiXTo.Services
             }
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="pattern"></param>
+        /// <param name="nodes"></param>
+        /// <param name="upper"></param>
         private void MatchSplit(TreeNode pattern, TreeNodeCollection nodes, TreeNode upper)
         {
             foreach (TreeNode node in nodes)
@@ -120,6 +151,12 @@ namespace DEiXTo.Services
             }
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="t"></param>
+        /// <param name="format"></param>
+        /// <param name="count"></param>
         private void traverse(TreeNode t, ref string format, ref int count)
         {
             for (int i = t.Nodes.Count - 1; i >= 0; i--)
@@ -130,6 +167,13 @@ namespace DEiXTo.Services
             format += (t.Text);
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="t"></param>
+        /// <param name="format"></param>
+        /// <param name="limit"></param>
+        /// <param name="count"></param>
         private void backward(TreeNode t, ref string format, int limit, ref int count)
         {
             if (limit == count)
@@ -144,16 +188,28 @@ namespace DEiXTo.Services
             }
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
         public int Results
         {
             get { return _counter; }
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
         public List<Result> ExtractedResults()
         {
             return _results;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="nodes"></param>
+        /// <param name="root"></param>
         private void FindRoot(TreeNodeCollection nodes, ref TreeNode root)
         {
             foreach (TreeNode node in nodes)
@@ -167,6 +223,11 @@ namespace DEiXTo.Services
             }
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="nodes"></param>
+        /// <param name="root"></param>
         private void BuiltT1Tree(TreeNodeCollection nodes, TreeNode root)
         {
             foreach (TreeNode node in nodes)
@@ -184,6 +245,11 @@ namespace DEiXTo.Services
             }
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="node"></param>
+        /// <param name="result"></param>
         private void GetResultFromInstance(TreeNode node, Result result)
         {
             if (hasContent(node))
@@ -200,6 +266,11 @@ namespace DEiXTo.Services
             }
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="node"></param>
+        /// <returns></returns>
         private bool hasContent(TreeNode node)
         {
             var state = node.GetState();
@@ -221,6 +292,11 @@ namespace DEiXTo.Services
             return result;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="node"></param>
+        /// <returns></returns>
         private bool hasSource(TreeNode node)
         {
             var state = node.GetState();
@@ -233,6 +309,11 @@ namespace DEiXTo.Services
             return false;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="node"></param>
+        /// <returns></returns>
         private bool isRequired(TreeNode node)
         {
             if (node.GetState() == NodeState.Grayed || node.GetState() == NodeState.Checked || node.GetState() == NodeState.CheckedSource)
@@ -243,6 +324,11 @@ namespace DEiXTo.Services
             return false;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="node"></param>
+        /// <returns></returns>
         private bool isOptional(TreeNode node)
         {
             var state = node.GetState();
@@ -255,6 +341,11 @@ namespace DEiXTo.Services
             return false;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="node"></param>
+        /// <returns></returns>
         private bool isSkipped(TreeNode node)
         {
             var state = node.GetState();
@@ -267,6 +358,12 @@ namespace DEiXTo.Services
             return false;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="left"></param>
+        /// <param name="right"></param>
+        /// <returns></returns>
         public bool CompareRecursiveTree(TreeNode left, TreeNode right)
         {
             // if the two nodes don't match, then cancel the current instance

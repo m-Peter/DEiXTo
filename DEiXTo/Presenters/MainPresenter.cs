@@ -3,6 +3,9 @@ using DEiXTo.Views;
 
 namespace DEiXTo.Presenters
 {
+    /// <summary>
+    /// 
+    /// </summary>
     public class MainPresenter
     {
         private readonly IMainView _view;
@@ -22,22 +25,34 @@ namespace DEiXTo.Presenters
             _view.FloatAgentWindows += floatAgentWindows;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
         void floatAgentWindows()
         {
             _view.FloatAgents();
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
         void closeAgentWindows()
         {
             _view.CloseAgents();
             _formCounter = 0;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
         void cascadeAgentWindows()
         {
             _view.CascadeAgents();
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
         void createNewAgent()
         {
             string title = string.Format("Agent {0}", _formCounter + 1);

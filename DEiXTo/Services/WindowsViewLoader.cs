@@ -4,10 +4,16 @@ using System.Windows.Forms;
 
 namespace DEiXTo.Services
 {
+    /// <summary>
+    /// 
+    /// </summary>
     public class WindowsViewLoader : IViewLoader
     {
         private Form _lastLoadedView;
 
+        /// <summary>
+        /// 
+        /// </summary>
         public void LoadMainView()
         {
             MainWindow window = new MainWindow();
@@ -16,6 +22,11 @@ namespace DEiXTo.Services
             LoadView(window);
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="title"></param>
+        /// <param name="parent"></param>
         public void LoadAgentView(string title, IMainView parent)
         {
             DeixtoAgentWindow window = new DeixtoAgentWindow();
@@ -27,11 +38,18 @@ namespace DEiXTo.Services
             LoadView(window);
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
         public Form LastLoadedView
         {
             get { return _lastLoadedView; }
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="view"></param>
         private void LoadView(Form view)
         {
             view.Show();

@@ -5,8 +5,15 @@ using System.Windows.Forms;
 
 namespace DEiXTo.Services
 {
+    /// <summary>
+    /// 
+    /// </summary>
     public class StatesImageLoader
     {
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
         public ImageList LoadImages()
         {
             var myAssembly = Assembly.GetExecutingAssembly();

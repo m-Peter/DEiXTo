@@ -2,6 +2,9 @@
 
 namespace DEiXTo.Services
 {
+    /// <summary>
+    /// 
+    /// </summary>
     public class DocumentValidatorFactory
     {
         /// <summary>

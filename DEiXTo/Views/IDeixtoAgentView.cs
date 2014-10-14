@@ -3,6 +3,9 @@ using System.Windows.Forms;
 
 namespace DEiXTo.Views
 {
+    /// <summary>
+    /// 
+    /// </summary>
     public interface IDeixtoAgentView
     {
         event Action BrowseToUrl;

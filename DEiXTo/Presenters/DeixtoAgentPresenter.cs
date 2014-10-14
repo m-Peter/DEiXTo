@@ -5,10 +5,12 @@ using System.Windows.Forms;
 using mshtml;
 using DEiXTo.Services;
 using DEiXTo.Models;
-using System.Threading.Tasks;
 
 namespace DEiXTo.Presenters
 {
+    /// <summary>
+    /// 
+    /// </summary>
     public class DeixtoAgentPresenter
     {
         private readonly IDeixtoAgentView _view;
@@ -57,6 +59,11 @@ namespace DEiXTo.Presenters
             _view.AddWorkingPatterImages(imagesList);
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="node"></param>
+        /// <param name="state"></param>
         void nodeStateChanged(TreeNode node, NodeState state)
         {
             int imageIndex = new StateToImageMapper().GetImageFromState(state);
@@ -69,6 +76,10 @@ namespace DEiXTo.Presenters
             }
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="nodes"></param>
         private void applyUncheckedToSubtree(TreeNodeCollection nodes)
         {
             foreach (TreeNode node in nodes)
@@ -79,6 +90,10 @@ namespace DEiXTo.Presenters
             }
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="node"></param>
         void levelDownWorkingPattern(TreeNode node)
         {
             if (node.IsRoot())
@@ -94,6 +109,10 @@ namespace DEiXTo.Presenters
             _view.ExpandPatternTree();
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="node"></param>
         void levelUpWorkingPattern(TreeNode node)
         {
             int indx = node.SourceIndex();
@@ -121,6 +140,11 @@ namespace DEiXTo.Presenters
             }
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="nodes"></param>
+        /// <param name="filtered"></param>
         private void FilterUncheckedNodes(TreeNodeCollection nodes, TreeNode filtered)
         {
             foreach (TreeNode node in nodes)
@@ -141,6 +165,9 @@ namespace DEiXTo.Presenters
             }
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
         void executeRule()
         {
             _view.ClearExtractedOutputs();
@@ -178,6 +205,10 @@ namespace DEiXTo.Presenters
             browserCompleted();
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="nodesCount"></param>
         void clearTreeViews(int nodesCount)
         {
             if (nodesCount == 0)
@@ -194,6 +225,10 @@ namespace DEiXTo.Presenters
             }
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="node"></param>
         void makeWorkingPatternFromSnapshot(TreeNode node)
         {
             _view.ClearPatternTree();
@@ -201,11 +236,19 @@ namespace DEiXTo.Presenters
             _view.ExpandPatternTree();
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="node"></param>
         void deleteSnapshot(TreeNode node)
         {
             _view.DeleteSnapshotInstance(node);
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="node"></param>
         void createSnapshot(TreeNode node)
         {
             TreeNode root = new TreeNode("SNAP " + string.Format("{0:hh:mm:ss tt}", DateTime.Now));
@@ -242,6 +285,10 @@ namespace DEiXTo.Presenters
             _view.AppendTargetUrl(_view.Url);
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="node"></param>
         void auxiliaryPatternNodeClick(TreeNode node)
         {
             if (node.IsTextNode())
@@ -266,6 +313,10 @@ namespace DEiXTo.Presenters
             }
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="element"></param>
         void createAuxiliaryPatternFromDocument(HtmlElement element)
         {
             _view.ClearAuxiliaryTree();
@@ -277,6 +328,11 @@ namespace DEiXTo.Presenters
             _view.ExpandAuxiliaryTree();
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         void showBrowserContextMenu(object sender, HtmlElementEventArgs e)
         {
             e.ReturnValue = e.CtrlKeyPressed;
@@ -296,6 +352,10 @@ namespace DEiXTo.Presenters
             }
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="element"></param>
         void createWorkingPatternFromDocument(HtmlElement element)
         {
             _view.ClearPatternTree();
@@ -310,6 +370,11 @@ namespace DEiXTo.Presenters
             _view.ExpandPatternTree();
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="node"></param>
+        /// <param name="button"></param>
         void workingPatternNodeClick(TreeNode node, MouseButtons button)
         {
             if (button == MouseButtons.Right)
@@ -343,6 +408,10 @@ namespace DEiXTo.Presenters
             }
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="node"></param>
         void createAuxiliaryPattern(TreeNode node)
         {
             _view.ClearAuxiliaryTree();
@@ -355,6 +424,10 @@ namespace DEiXTo.Presenters
             _view.ExpandAuxiliaryTree();
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="node"></param>
         void createWorkingPattern(TreeNode node)
         {
             _view.ClearPatternTree();
@@ -370,6 +443,11 @@ namespace DEiXTo.Presenters
             _view.ExpandPatternTree();
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="node"></param>
+        /// <param name="button"></param>
         void DOMNodeClick(TreeNode node, MouseButtons button)
         {
             if (button == MouseButtons.Right)
@@ -447,11 +525,19 @@ namespace DEiXTo.Presenters
             }
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="state"></param>
         void crawlingChanged(bool state)
         {
             _view.ApplyVisibilityStateInCrawling(state);
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="state"></param>
         void autoFillChanged(bool state)
         {
             _view.ApplyVisibilityStateInAutoFill(state);

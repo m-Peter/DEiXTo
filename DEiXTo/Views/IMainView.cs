@@ -2,6 +2,9 @@
 
 namespace DEiXTo.Views
 {
+    /// <summary>
+    /// 
+    /// </summary>
     public interface IMainView
     {
         event Action CreateNewAgent;
