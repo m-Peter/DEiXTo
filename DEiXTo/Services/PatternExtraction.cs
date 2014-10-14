@@ -102,9 +102,11 @@ namespace DEiXTo.Services
                 if (CompareRecursiveTree(pattern, node))
                 {
                     string fw = "";
-                    traverse(upper, ref fw);
+                    int count = 0;
+                    traverse(upper, ref fw, ref count);
                     string bw = "";
-                    backward(node.Parent, ref bw);
+                    int counter = 0;
+                    backward(node.Parent, ref bw, count, ref counter);
                     if (fw != bw)
                     {
                         return;
@@ -118,20 +120,27 @@ namespace DEiXTo.Services
             }
         }
 
-        private void traverse(TreeNode t, ref string format)
+        private void traverse(TreeNode t, ref string format, ref int count)
         {
             for (int i = t.Nodes.Count - 1; i >= 0; i--)
             {
-                traverse(t.Nodes[i], ref format);
+                traverse(t.Nodes[i], ref format, ref count);
             }
+            count += 1;
             format += (t.Text);
         }
 
-        private void backward(TreeNode t, ref string format)
+        private void backward(TreeNode t, ref string format, int limit, ref int count)
         {
+            if (limit == count)
+            {
+                return;
+            }
+            format += t.Text;
             if (t.Parent != null)
             {
-                backward(t.Parent, ref format);
+                count += 1;
+                backward(t.Parent, ref format, limit, ref count);
             }
         }
 
