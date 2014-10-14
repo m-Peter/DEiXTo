@@ -428,11 +428,6 @@ namespace DEiXTo.Services
                     }
                     else
                     {
-                        if (left.Nodes.Count != right.Nodes.Count)
-                        {
-                            return false;
-                        }
-
                         var nextRight = right.Nodes[i];
 
                         if (!CompareRecursiveTree(nextLeft, nextRight))

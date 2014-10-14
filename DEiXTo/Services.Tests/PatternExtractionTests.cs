@@ -148,6 +148,113 @@ namespace DEiXTo.Services.Tests
             return section;
         }
 
+        private TreeNode GetTreeWithUnchecked()
+        {
+            // section
+            //    header
+            //       h2
+            //          text
+            //    p
+            //       text
+            //    p
+            //       text
+            var section = new TreeNode("section");
+            section.Tag = new PointerInfo();
+            section.SetState(NodeState.Grayed);
+            
+            var header = new TreeNode("header");
+            header.Tag = new PointerInfo();
+            header.SetState(NodeState.Grayed);
+
+            var h2 = new TreeNode("h2");
+            h2.Tag = new PointerInfo();
+            h2.SetState(NodeState.Grayed);
+            
+            var text = new TreeNode("text");
+            text.Tag = new PointerInfo();
+            text.SetState(NodeState.Checked);
+
+            var p = new TreeNode("p");
+            p.Tag = new PointerInfo();
+            p.SetState(NodeState.Unchecked);
+
+            var text1 = new TreeNode("text");
+            text1.Tag = new PointerInfo();
+            text1.SetState(NodeState.Unchecked);
+            
+            var p1 = new TreeNode("p");
+            p1.Tag = new PointerInfo();
+            p1.SetState(NodeState.Unchecked);
+
+            var text2 = new TreeNode("text");
+            text2.Tag = new PointerInfo();
+            text2.SetState(NodeState.Unchecked);
+
+            section.AddNode(header);
+            header.AddNode(h2);
+            h2.AddNode(text);
+            section.AddNode(p);
+            p.AddNode(text1);
+            section.AddNode(p1);
+            p1.AddNode(text2);
+
+            return section;
+        }
+
+        private TreeNode GetRootWithChecked()
+        {
+            // section
+            //    header
+            //       h2
+            //          text
+            //    p
+            //       text
+            //    p
+            //       text
+            var section = new TreeNode("section");
+            section.Tag = new PointerInfo();
+            section.SetAsRoot();
+            section.SetState(NodeState.Grayed);
+
+            var header = new TreeNode("header");
+            header.Tag = new PointerInfo();
+            header.SetState(NodeState.Grayed);
+
+            var h2 = new TreeNode("h2");
+            h2.Tag = new PointerInfo();
+            h2.SetState(NodeState.Grayed);
+
+            var text = new TreeNode("text");
+            text.Tag = new PointerInfo();
+            text.SetState(NodeState.Checked);
+
+            var p = new TreeNode("p");
+            p.Tag = new PointerInfo();
+            p.SetState(NodeState.Grayed);
+
+            var text1 = new TreeNode("text");
+            text1.Tag = new PointerInfo();
+            text1.SetState(NodeState.Checked);
+
+            var p1 = new TreeNode("p");
+            p1.Tag = new PointerInfo();
+            p1.SetState(NodeState.Grayed);
+
+            var text2 = new TreeNode("text");
+            text2.Tag = new PointerInfo();
+            text2.SetState(NodeState.Checked);
+
+            section.AddNode(header);
+            header.AddNode(h2);
+            h2.AddNode(text);
+            section.AddNode(p);
+            p.AddNode(text1);
+            section.AddNode(p1);
+            p1.AddNode(text2);
+
+            return section;
+        }
+
         private TreeNodeCollection getDOMNodes(int instances, bool isOptional=false)
         {
             var body = new TreeNode("body");
@@ -209,6 +316,22 @@ namespace DEiXTo.Services.Tests
             PatternExtraction pattern = new PatternExtraction(root, domNodes);
             pattern.FindMatches();
             Assert.AreEqual(11, pattern.Results);
+        }
+
+        [TestMethod]
+        public void TestDOMWithUnchecked()
+        {
+            var root = GetRootWithChecked();
+            var body = new TreeNode("BODY");
+            var div = new TreeNode("DIV");
+            div.AddNode(root);
+            div.AddNode(GetTreeWithUnchecked());
+            div.AddNode(root);
+            body.AddNode(div);
+
+            PatternExtraction pattern = new PatternExtraction(root, body.Nodes);
+            pattern.FindMatches();
+            Assert.AreEqual(3, pattern.Results);
         }
     }
 }
