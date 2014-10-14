@@ -135,7 +135,7 @@ namespace DEiXTo.Services.Tests
 
             var p = new TreeNode("P");
             p.Tag = new PointerInfo();
-            p.SetState(NodeState.CheckedImplied);
+            p.SetState(NodeState.GrayedImplied);
 
             section.AddNode(a);
             a.AddNode(img);
