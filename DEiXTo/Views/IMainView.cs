@@ -3,7 +3,8 @@
 namespace DEiXTo.Views
 {
     /// <summary>
-    /// 
+    /// Defines the API which any concrete Form implementation
+    /// must conform to.
     /// </summary>
     public interface IMainView
     {

@@ -26,7 +26,7 @@ namespace DEiXTo.Presenters
         }
 
         /// <summary>
-        /// 
+        /// Floats all the DeixtoAgentWindows.
         /// </summary>
         void floatAgentWindows()
         {
@@ -34,7 +34,7 @@ namespace DEiXTo.Presenters
         }
 
         /// <summary>
-        /// 
+        /// Closes all the DeixtoAgentWindows.
         /// </summary>
         void closeAgentWindows()
         {
@@ -43,7 +43,7 @@ namespace DEiXTo.Presenters
         }
 
         /// <summary>
-        /// 
+        /// Cascades all the DeixtoAgentWindows.
         /// </summary>
         void cascadeAgentWindows()
         {
@@ -51,7 +51,8 @@ namespace DEiXTo.Presenters
         }
 
         /// <summary>
-        /// 
+        /// Creates a new DeixtoAgentWindow and gives it an
+        /// appropriate title.
         /// </summary>
         void createNewAgent()
         {
@@ -60,5 +61,12 @@ namespace DEiXTo.Presenters
             _formCounter++;
         }
 
+        /// <summary>
+        /// Returns the number of DeixtoAgentWindows.
+        /// </summary>
+        public int FormCounter
+        {
+            get { return _formCounter; }
+        }
     }
 }
