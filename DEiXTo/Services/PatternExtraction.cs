@@ -392,7 +392,6 @@ namespace DEiXTo.Services
                 return false;
             }
 
-            right.SetState(left.GetState());
             AddContentFromInstance(right, result);
 
             // if left.state == (Grayed || CheckedSource || Checked)
