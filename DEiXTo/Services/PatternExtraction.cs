@@ -366,16 +366,39 @@ namespace DEiXTo.Services
             return false;
         }
 
-        public void AddContentFromInstance(TreeNode node, Result result)
+        public void AddContentFromInstance(NodeState state, TreeNode node, Result result)
         {
-            if (hasContent(node))
+            /*if (hasContent(node))
             {
                 result.AddContent(node.GetContent());
             }
             else if (hasSource(node))
             {
                 result.AddContent(node.GetSource());
+            }*/
+            if (ContainsContent(state))
+            {
+                result.AddContent(node.GetContent());
             }
+            else if (ContainsSource(state))
+            {
+                result.AddContent(node.GetSource());
+            }
+        }
+
+        public bool ContainsContent(NodeState state)
+        {
+            if (state == NodeState.Checked || state == NodeState.CheckedImplied)
+            {
+                return true;
+            }
+
+            return false;
+        }
+
+        public bool ContainsSource(NodeState state)
+        {
+            return state == NodeState.CheckedSource;
         }
 
         /// <summary>
@@ -386,52 +409,188 @@ namespace DEiXTo.Services
         /// <returns></returns>
         public bool CompareRecursiveTree(TreeNode left, TreeNode right, Result result)
         {
-            // if the two nodes don't match, then cancel the current instance
+            //  LEFT                      RIGHT
+            //
+            // -section                  -section
+            //    -a                        -a
+            //        -img                      -img
+            //    -h2                       -h2
+            //        -a                        -a
+            //            -text                     -text
+            //    -p                        -p
+
+
+            // (1) if left.Tag != right.Tag
+            //      return false;
+
+            // (2) extractContentFrom(right)
+            
+            // (3) inspect the state of the left node
+            // it can be in Grayed || CheckedSource || Checked || CheckedImplied || GrayedImplied || Unchecked
+
+            // Case left.State == Grayed
+            // this node is required so the right node has to be present, if it's not return false.
+            
+            // Case left.state == CheckedSource
+            // this node is required so the right node has to be present, if it's not return false.
+            // We also want to extract the source of this node.
+
+            // Case left.state == Checked
+            // this node is required so the right node has to be present, if it's not return false.
+            // We also want to extract the content of this node. (innerText, href, src, name).
+
+            // Case left.state == CheckedImplied
+            // this node is optional, so we examine the right node. If it's present and it matches
+            // the left.Tag then we extract its content (innerText, href, src, name). If it's not
+            // present or does not match in terms of Tag, we return true.
+
+            // Case left.state == GrayedImplied
+            // this node is optional, so we examine the right node. If it's present and it matches
+            // the left.Tag then we return true. If it's not present or does not match in terms of
+            // Tag, we return true.
+
+            // Case left.state == Unchecked
+            // this node is not important, so we don't examine the right node. We just return true.
+
+
+            // (1)
             if (left.Text != right.Text)
             {
                 return false;
             }
 
-            AddContentFromInstance(right, result);
+            // (2)
+            AddContentFromInstance(left.GetState(), right, result);
+            
+            // (3)
 
-            // if left.state == (Grayed || CheckedSource || Checked)
-            //   move both trees by selecting the next childs from each
-            //   tree node.
-            // if left.state == (CheckedImplied || GrayedImplied || Unchecked)
-            //   if left.Text == right.Text
-            //     move both trees by selecting the next childs from each
-            //     tree node.
-            //   else
-            //     move only the node of the left tree by picking its first
-            //     child node.
-            if (isRequired(left))
+            if (left.GetState() == NodeState.Grayed)
             {
+                // the current left and right nodes match, so continue with the first child
+                // of both nodes.
+
+                for (int i = 0; i < left.Nodes.Count; i++)
+                {
+                    var nextLeft = left.Nodes[i];
+                    if (right.Nodes.Count <= i)
+                    {
+                        if (isRequired(nextLeft))
+                        {
+                            return false;
+                        }
+                        return true;
+                    }
+                    var nextRight = right.Nodes[i]; // what happens if the right has less childrens than left?
+
+                    if (!CompareRecursiveTree(nextLeft, nextRight, result))
+                    {
+                        return false;
+                    }
+                }
+            }
+
+            if (left.GetState() == NodeState.CheckedSource)
+            {
+                // the current left and right nodes match, so continue with the first child
+                // of both nodes.
+
+                for (int i = 0; i < left.Nodes.Count; i++)
+                {
+                    var nextLeft = left.Nodes[i];
+                    if (right.Nodes.Count <= i)
+                    {
+                        return false;
+                    }
+                    var nextRight = right.Nodes[i]; // what happens if the right has less childrens than left?
+
+                    if (!CompareRecursiveTree(nextLeft, nextRight, result))
+                    {
+                        return false;
+                    }
+                }
+            }
+
+            if (left.GetState() == NodeState.Checked)
+            {
+                // the current left and right nodes match, so continue with the first child
+                // of both nodes.
+
+                for (int i = 0; i < left.Nodes.Count; i++)
+                {
+                    var nextLeft = left.Nodes[i];
+                    if (right.Nodes.Count <= i)
+                    {
+                        return false;
+                    }
+                    var nextRight = right.Nodes[i]; // what happens if the right has less childrens than left?
+                    // this will happen very rare, since TEXT nodes do not have any children.
+
+                    if (!CompareRecursiveTree(nextLeft, nextRight, result))
+                    {
+                        return false;
+                    }
+                }
+            }
+
+            if (left.GetState() == NodeState.CheckedImplied)
+            {
+                // this node is optional, so we examine the right node. If it's present and it matches
+                // the left.Tag then we extract its content (innerText, href, src, name). If it's not
+                // present or does not match in terms of Tag, we return true.
+
+                // the left node is optional.
+
+                if (left.Nodes.Count == 0)
+                {
+                    return true;
+                }
+
                 for (int i = 0; i < left.Nodes.Count; i++)
                 {
                     var nextLeft = left.Nodes[i];
 
-                    if (isOptional(nextLeft))
+                    if (right.Nodes.Count <= i)
                     {
                         return true;
                     }
-                    else if (isSkipped(nextLeft))
-                    {
-                        return true;
-                    }
-                    else
-                    {
-                        if (left.Nodes.Count != right.Nodes.Count)
-                        {
-                            return false;
-                        }
-                        var nextRight = right.Nodes[i];
+                    var nextRight = right.Nodes[i]; // what happens if the right has less childrens than left?
 
-                        if (!CompareRecursiveTree(nextLeft, nextRight, result))
-                        {
-                            return false;
-                        }
+                    if (!CompareRecursiveTree(nextLeft, nextRight, result))
+                    {
+                        return false;
                     }
                 }
+            }
+
+            if (left.GetState() == NodeState.GrayedImplied)
+            {
+                // this node is optional, so we examine the right node. If it's present and it matches
+                // the left.Tag then we return true. If it's not present or does not match in terms of
+                // Tag, we return true.
+
+                for (int i = 0; i < left.Nodes.Count; i++)
+                {
+                    var nextLeft = left.Nodes[i];
+
+                    // we return true, since the left node is optional we don't care if
+                    // the right node is present.
+                    if (right.Nodes.Count <= i)
+                    {
+                        return true;
+                    }
+                    var nextRight = right.Nodes[i]; // what happens if the right has less childrens than left?
+
+                    if (!CompareRecursiveTree(nextLeft, nextRight, result))
+                    {
+                        return false;
+                    }
+                }
+            }
+
+            if (left.GetState() == NodeState.Unchecked)
+            {
+                // this node is not important, so we don't examine the right node. We just return true.
+                return true;
             }
 
             return true;
