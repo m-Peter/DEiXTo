@@ -123,6 +123,22 @@ namespace DEiXTo.Views
         /// <summary>
         /// 
         /// </summary>
+        public void FocusAuxiliaryTabPage()
+        {
+            AttributesTabControl.SelectedTab = Auxiliary;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public void FocusOutputTabPage()
+        {
+            SettingsTabControl.SelectedTab = Output;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
         /// <param name="node"></param>
         /// <param name="imageIndex"></param>
         public void ApplyStateToNode(TreeNode node, int imageIndex)
@@ -615,7 +631,7 @@ namespace DEiXTo.Views
         /// <param name="count"></param>
         public void SetExtractedResults(int count)
         {
-            ExtractedResultsCountLabel.Text = count.ToString();
+            ExtractedResultsCountLabel.Text = count.ToString() + " results!";
             ExtractedResultsCountLabel.Enabled = true;
         }
 

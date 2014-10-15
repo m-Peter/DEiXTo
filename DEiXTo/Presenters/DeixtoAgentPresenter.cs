@@ -145,6 +145,7 @@ namespace DEiXTo.Presenters
         /// </summary>
         void executeRule()
         {
+            _view.FocusOutputTabPage();
             _view.ClearExtractedOutputs();
 
             var pattern = _view.GetWorkingPattern();
@@ -291,6 +292,7 @@ namespace DEiXTo.Presenters
         /// <param name="element"></param>
         void createAuxiliaryPatternFromDocument(HtmlElement element)
         {
+            _view.FocusAuxiliaryTabPage();
             _view.ClearAuxiliaryTree();
 
             var node = _domTree.GetNodeFor(element);
@@ -386,6 +388,7 @@ namespace DEiXTo.Presenters
         /// <param name="node"></param>
         void createAuxiliaryPattern(TreeNode node)
         {
+            _view.FocusAuxiliaryTabPage();
             _view.ClearAuxiliaryTree();
 
             int index = node.SourceIndex();

@@ -48,6 +48,8 @@ namespace DEiXTo.Views
         void NavigateBack();
         void ApplyVisibilityStateInAutoFill(bool state);
         void ApplyVisibilityStateInCrawling(bool state);
+        void FocusAuxiliaryTabPage();
+        void FocusOutputTabPage();
         HtmlDocument GetHtmlDocument();
         void FillDomTree(TreeNode node);
         void FillSnapshotTree(TreeNode node);

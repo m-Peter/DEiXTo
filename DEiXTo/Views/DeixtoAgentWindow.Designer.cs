@@ -48,11 +48,11 @@
             this.splitContainer3 = new System.Windows.Forms.SplitContainer();
             this.WorkingPatternGroupBox = new System.Windows.Forms.GroupBox();
             this.AttributesTabControl = new System.Windows.Forms.TabControl();
-            this.tabPage1 = new System.Windows.Forms.TabPage();
+            this.Attributes = new System.Windows.Forms.TabPage();
             this.AttributesListView = new System.Windows.Forms.ListView();
             this.AttributeHeader = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.ValueHeader = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.tabPage2 = new System.Windows.Forms.TabPage();
+            this.Auxiliary = new System.Windows.Forms.TabPage();
             this.AuxiliaryTreeView = new System.Windows.Forms.TreeView();
             this.ExecuteButton = new System.Windows.Forms.Button();
             this.LevelDownButton = new System.Windows.Forms.Button();
@@ -62,7 +62,7 @@
             this.CreateSnapshotButton = new System.Windows.Forms.Button();
             this.WorkingPatternTreeView = new System.Windows.Forms.TreeView();
             this.SettingsTabControl = new System.Windows.Forms.TabControl();
-            this.tabPage3 = new System.Windows.Forms.TabPage();
+            this.ProjectInfo = new System.Windows.Forms.TabPage();
             this.SaveButton = new System.Windows.Forms.Button();
             this.OpenButton = new System.Windows.Forms.Button();
             this.GoButton = new System.Windows.Forms.Button();
@@ -106,10 +106,11 @@
             this.RemoveURLButton = new System.Windows.Forms.Button();
             this.AddURLButton = new System.Windows.Forms.Button();
             this.AddURLTextBox = new System.Windows.Forms.TextBox();
-            this.tabPage4 = new System.Windows.Forms.TabPage();
+            this.Output = new System.Windows.Forms.TabPage();
+            this.ExtractedResultsCountLabel = new System.Windows.Forms.Label();
             this.ExtractionResultsLabel = new System.Windows.Forms.Label();
             this.OutputListView = new System.Windows.Forms.ListView();
-            this.tabPage5 = new System.Windows.Forms.TabPage();
+            this.ElementInfo = new System.Windows.Forms.TabPage();
             this.HtmlPathTextBox = new System.Windows.Forms.TextBox();
             this.HtmlPathLabel = new System.Windows.Forms.Label();
             this.RegularExpressionTextBox = new System.Windows.Forms.TextBox();
@@ -118,24 +119,24 @@
             this.InnerTextLabel = new System.Windows.Forms.Label();
             this.OuterHtmlTextBox = new System.Windows.Forms.TextBox();
             this.OuterHtmlLabel = new System.Windows.Forms.Label();
-            this.tabPage6 = new System.Windows.Forms.TabPage();
+            this.RSS = new System.Windows.Forms.TabPage();
             this.RSSDataGridView = new System.Windows.Forms.DataGridView();
             this.ColumnLabel = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.ColumnValue = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.ColumnDescription = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.ColumnExample = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.tabPage7 = new System.Windows.Forms.TabPage();
+            this.Log = new System.Windows.Forms.TabPage();
             this.ClearLogButton = new System.Windows.Forms.Button();
             this.LogTextBox = new System.Windows.Forms.TextBox();
-            this.tabPage8 = new System.Windows.Forms.TabPage();
+            this.Statistics = new System.Windows.Forms.TabPage();
             this.StatisticsCheckBox = new System.Windows.Forms.CheckBox();
             this.StatisticsDataGridView = new System.Windows.Forms.DataGridView();
             this.ColumnMetric = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.tabPage9 = new System.Windows.Forms.TabPage();
+            this.Snapshots = new System.Windows.Forms.TabPage();
             this.SnapshotsGroupBox = new System.Windows.Forms.GroupBox();
             this.SnapshotsTreeView = new System.Windows.Forms.TreeView();
-            this.tabPage10 = new System.Windows.Forms.TabPage();
+            this.About = new System.Windows.Forms.TabPage();
             this.DeixtoAgentTooltip = new System.Windows.Forms.ToolTip(this.components);
             this.CreatePatternsMenuStrip = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.WorkingPatternMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -172,7 +173,6 @@
             this.setAsVirtualRootToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator8 = new System.Windows.Forms.ToolStripSeparator();
             this.deleteNodeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.ExtractedResultsCountLabel = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
@@ -189,10 +189,10 @@
             this.splitContainer3.SuspendLayout();
             this.WorkingPatternGroupBox.SuspendLayout();
             this.AttributesTabControl.SuspendLayout();
-            this.tabPage1.SuspendLayout();
-            this.tabPage2.SuspendLayout();
+            this.Attributes.SuspendLayout();
+            this.Auxiliary.SuspendLayout();
             this.SettingsTabControl.SuspendLayout();
-            this.tabPage3.SuspendLayout();
+            this.ProjectInfo.SuspendLayout();
             this.CrawlingGroupBox.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.CrawlingDepthNUD)).BeginInit();
             this.OptionsGroupBox.SuspendLayout();
@@ -204,14 +204,14 @@
             this.ExtractionPatternGroupBox.SuspendLayout();
             this.IgnoreHTMLTagsGroupBox.SuspendLayout();
             this.TargetURLSGroupBox.SuspendLayout();
-            this.tabPage4.SuspendLayout();
-            this.tabPage5.SuspendLayout();
-            this.tabPage6.SuspendLayout();
+            this.Output.SuspendLayout();
+            this.ElementInfo.SuspendLayout();
+            this.RSS.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.RSSDataGridView)).BeginInit();
-            this.tabPage7.SuspendLayout();
-            this.tabPage8.SuspendLayout();
+            this.Log.SuspendLayout();
+            this.Statistics.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.StatisticsDataGridView)).BeginInit();
-            this.tabPage9.SuspendLayout();
+            this.Snapshots.SuspendLayout();
             this.SnapshotsGroupBox.SuspendLayout();
             this.CreatePatternsMenuStrip.SuspendLayout();
             this.BrowserMenuStrip.SuspendLayout();
@@ -470,24 +470,24 @@
             // 
             this.AttributesTabControl.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.AttributesTabControl.Controls.Add(this.tabPage1);
-            this.AttributesTabControl.Controls.Add(this.tabPage2);
+            this.AttributesTabControl.Controls.Add(this.Attributes);
+            this.AttributesTabControl.Controls.Add(this.Auxiliary);
             this.AttributesTabControl.Location = new System.Drawing.Point(252, 11);
             this.AttributesTabControl.Name = "AttributesTabControl";
             this.AttributesTabControl.SelectedIndex = 0;
             this.AttributesTabControl.Size = new System.Drawing.Size(216, 377);
             this.AttributesTabControl.TabIndex = 7;
             // 
-            // tabPage1
+            // Attributes
             // 
-            this.tabPage1.Controls.Add(this.AttributesListView);
-            this.tabPage1.Location = new System.Drawing.Point(4, 22);
-            this.tabPage1.Name = "tabPage1";
-            this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage1.Size = new System.Drawing.Size(208, 351);
-            this.tabPage1.TabIndex = 0;
-            this.tabPage1.Text = "Attributes";
-            this.tabPage1.UseVisualStyleBackColor = true;
+            this.Attributes.Controls.Add(this.AttributesListView);
+            this.Attributes.Location = new System.Drawing.Point(4, 22);
+            this.Attributes.Name = "Attributes";
+            this.Attributes.Padding = new System.Windows.Forms.Padding(3);
+            this.Attributes.Size = new System.Drawing.Size(208, 351);
+            this.Attributes.TabIndex = 0;
+            this.Attributes.Text = "Attributes";
+            this.Attributes.UseVisualStyleBackColor = true;
             // 
             // AttributesListView
             // 
@@ -512,16 +512,16 @@
             this.ValueHeader.Text = "Value";
             this.ValueHeader.Width = 100;
             // 
-            // tabPage2
+            // Auxiliary
             // 
-            this.tabPage2.Controls.Add(this.AuxiliaryTreeView);
-            this.tabPage2.Location = new System.Drawing.Point(4, 22);
-            this.tabPage2.Name = "tabPage2";
-            this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage2.Size = new System.Drawing.Size(208, 351);
-            this.tabPage2.TabIndex = 1;
-            this.tabPage2.Text = "Auxiliary";
-            this.tabPage2.UseVisualStyleBackColor = true;
+            this.Auxiliary.Controls.Add(this.AuxiliaryTreeView);
+            this.Auxiliary.Location = new System.Drawing.Point(4, 22);
+            this.Auxiliary.Name = "Auxiliary";
+            this.Auxiliary.Padding = new System.Windows.Forms.Padding(3);
+            this.Auxiliary.Size = new System.Drawing.Size(208, 351);
+            this.Auxiliary.TabIndex = 1;
+            this.Auxiliary.Text = "Auxiliary";
+            this.Auxiliary.UseVisualStyleBackColor = true;
             // 
             // AuxiliaryTreeView
             // 
@@ -612,14 +612,14 @@
             // 
             // SettingsTabControl
             // 
-            this.SettingsTabControl.Controls.Add(this.tabPage3);
-            this.SettingsTabControl.Controls.Add(this.tabPage4);
-            this.SettingsTabControl.Controls.Add(this.tabPage5);
-            this.SettingsTabControl.Controls.Add(this.tabPage6);
-            this.SettingsTabControl.Controls.Add(this.tabPage7);
-            this.SettingsTabControl.Controls.Add(this.tabPage8);
-            this.SettingsTabControl.Controls.Add(this.tabPage9);
-            this.SettingsTabControl.Controls.Add(this.tabPage10);
+            this.SettingsTabControl.Controls.Add(this.ProjectInfo);
+            this.SettingsTabControl.Controls.Add(this.Output);
+            this.SettingsTabControl.Controls.Add(this.ElementInfo);
+            this.SettingsTabControl.Controls.Add(this.RSS);
+            this.SettingsTabControl.Controls.Add(this.Log);
+            this.SettingsTabControl.Controls.Add(this.Statistics);
+            this.SettingsTabControl.Controls.Add(this.Snapshots);
+            this.SettingsTabControl.Controls.Add(this.About);
             this.SettingsTabControl.Dock = System.Windows.Forms.DockStyle.Fill;
             this.SettingsTabControl.Location = new System.Drawing.Point(0, 0);
             this.SettingsTabControl.Name = "SettingsTabControl";
@@ -627,26 +627,26 @@
             this.SettingsTabControl.Size = new System.Drawing.Size(533, 392);
             this.SettingsTabControl.TabIndex = 0;
             // 
-            // tabPage3
+            // ProjectInfo
             // 
-            this.tabPage3.Controls.Add(this.SaveButton);
-            this.tabPage3.Controls.Add(this.OpenButton);
-            this.tabPage3.Controls.Add(this.GoButton);
-            this.tabPage3.Controls.Add(this.CrawlingGroupBox);
-            this.tabPage3.Controls.Add(this.OptionsGroupBox);
-            this.tabPage3.Controls.Add(this.OutputModeGroupBox);
-            this.tabPage3.Controls.Add(this.SubmitFormGroupBox);
-            this.tabPage3.Controls.Add(this.OutputFileGroupBox);
-            this.tabPage3.Controls.Add(this.ExtractionPatternGroupBox);
-            this.tabPage3.Controls.Add(this.IgnoreHTMLTagsGroupBox);
-            this.tabPage3.Controls.Add(this.TargetURLSGroupBox);
-            this.tabPage3.Location = new System.Drawing.Point(4, 22);
-            this.tabPage3.Name = "tabPage3";
-            this.tabPage3.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage3.Size = new System.Drawing.Size(525, 366);
-            this.tabPage3.TabIndex = 0;
-            this.tabPage3.Text = "Project Info";
-            this.tabPage3.UseVisualStyleBackColor = true;
+            this.ProjectInfo.Controls.Add(this.SaveButton);
+            this.ProjectInfo.Controls.Add(this.OpenButton);
+            this.ProjectInfo.Controls.Add(this.GoButton);
+            this.ProjectInfo.Controls.Add(this.CrawlingGroupBox);
+            this.ProjectInfo.Controls.Add(this.OptionsGroupBox);
+            this.ProjectInfo.Controls.Add(this.OutputModeGroupBox);
+            this.ProjectInfo.Controls.Add(this.SubmitFormGroupBox);
+            this.ProjectInfo.Controls.Add(this.OutputFileGroupBox);
+            this.ProjectInfo.Controls.Add(this.ExtractionPatternGroupBox);
+            this.ProjectInfo.Controls.Add(this.IgnoreHTMLTagsGroupBox);
+            this.ProjectInfo.Controls.Add(this.TargetURLSGroupBox);
+            this.ProjectInfo.Location = new System.Drawing.Point(4, 22);
+            this.ProjectInfo.Name = "ProjectInfo";
+            this.ProjectInfo.Padding = new System.Windows.Forms.Padding(3);
+            this.ProjectInfo.Size = new System.Drawing.Size(525, 366);
+            this.ProjectInfo.TabIndex = 0;
+            this.ProjectInfo.Text = "Project Info";
+            this.ProjectInfo.UseVisualStyleBackColor = true;
             // 
             // SaveButton
             // 
@@ -1115,27 +1115,36 @@
             this.AddURLTextBox.Size = new System.Drawing.Size(126, 20);
             this.AddURLTextBox.TabIndex = 1;
             // 
-            // tabPage4
+            // Output
             // 
-            this.tabPage4.Controls.Add(this.ExtractedResultsCountLabel);
-            this.tabPage4.Controls.Add(this.ExtractionResultsLabel);
-            this.tabPage4.Controls.Add(this.OutputListView);
-            this.tabPage4.Location = new System.Drawing.Point(4, 22);
-            this.tabPage4.Name = "tabPage4";
-            this.tabPage4.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage4.Size = new System.Drawing.Size(525, 366);
-            this.tabPage4.TabIndex = 1;
-            this.tabPage4.Text = "Output";
-            this.tabPage4.UseVisualStyleBackColor = true;
+            this.Output.Controls.Add(this.ExtractedResultsCountLabel);
+            this.Output.Controls.Add(this.ExtractionResultsLabel);
+            this.Output.Controls.Add(this.OutputListView);
+            this.Output.Location = new System.Drawing.Point(4, 22);
+            this.Output.Name = "Output";
+            this.Output.Padding = new System.Windows.Forms.Padding(3);
+            this.Output.Size = new System.Drawing.Size(525, 366);
+            this.Output.TabIndex = 1;
+            this.Output.Text = "Output";
+            this.Output.UseVisualStyleBackColor = true;
+            // 
+            // ExtractedResultsCountLabel
+            // 
+            this.ExtractedResultsCountLabel.AutoSize = true;
+            this.ExtractedResultsCountLabel.Enabled = false;
+            this.ExtractedResultsCountLabel.Location = new System.Drawing.Point(120, 344);
+            this.ExtractedResultsCountLabel.Name = "ExtractedResultsCountLabel";
+            this.ExtractedResultsCountLabel.Size = new System.Drawing.Size(0, 13);
+            this.ExtractedResultsCountLabel.TabIndex = 2;
             // 
             // ExtractionResultsLabel
             // 
             this.ExtractionResultsLabel.AutoSize = true;
             this.ExtractionResultsLabel.Location = new System.Drawing.Point(6, 344);
             this.ExtractionResultsLabel.Name = "ExtractionResultsLabel";
-            this.ExtractionResultsLabel.Size = new System.Drawing.Size(95, 13);
+            this.ExtractionResultsLabel.Size = new System.Drawing.Size(110, 13);
             this.ExtractionResultsLabel.TabIndex = 1;
-            this.ExtractionResultsLabel.Text = "Extraction Results:";
+            this.ExtractionResultsLabel.Text = "Extraction Completed:";
             // 
             // OutputListView
             // 
@@ -1148,22 +1157,22 @@
             this.OutputListView.UseCompatibleStateImageBehavior = false;
             this.OutputListView.View = System.Windows.Forms.View.Details;
             // 
-            // tabPage5
+            // ElementInfo
             // 
-            this.tabPage5.Controls.Add(this.HtmlPathTextBox);
-            this.tabPage5.Controls.Add(this.HtmlPathLabel);
-            this.tabPage5.Controls.Add(this.RegularExpressionTextBox);
-            this.tabPage5.Controls.Add(this.RegularExpressionLabel);
-            this.tabPage5.Controls.Add(this.InnerTextTextBox);
-            this.tabPage5.Controls.Add(this.InnerTextLabel);
-            this.tabPage5.Controls.Add(this.OuterHtmlTextBox);
-            this.tabPage5.Controls.Add(this.OuterHtmlLabel);
-            this.tabPage5.Location = new System.Drawing.Point(4, 22);
-            this.tabPage5.Name = "tabPage5";
-            this.tabPage5.Size = new System.Drawing.Size(525, 366);
-            this.tabPage5.TabIndex = 2;
-            this.tabPage5.Text = "Element Info";
-            this.tabPage5.UseVisualStyleBackColor = true;
+            this.ElementInfo.Controls.Add(this.HtmlPathTextBox);
+            this.ElementInfo.Controls.Add(this.HtmlPathLabel);
+            this.ElementInfo.Controls.Add(this.RegularExpressionTextBox);
+            this.ElementInfo.Controls.Add(this.RegularExpressionLabel);
+            this.ElementInfo.Controls.Add(this.InnerTextTextBox);
+            this.ElementInfo.Controls.Add(this.InnerTextLabel);
+            this.ElementInfo.Controls.Add(this.OuterHtmlTextBox);
+            this.ElementInfo.Controls.Add(this.OuterHtmlLabel);
+            this.ElementInfo.Location = new System.Drawing.Point(4, 22);
+            this.ElementInfo.Name = "ElementInfo";
+            this.ElementInfo.Size = new System.Drawing.Size(525, 366);
+            this.ElementInfo.TabIndex = 2;
+            this.ElementInfo.Text = "Element Info";
+            this.ElementInfo.UseVisualStyleBackColor = true;
             // 
             // HtmlPathTextBox
             // 
@@ -1235,15 +1244,15 @@
             this.OuterHtmlLabel.TabIndex = 0;
             this.OuterHtmlLabel.Text = "OuterHTML (the selected element and its subtree)";
             // 
-            // tabPage6
+            // RSS
             // 
-            this.tabPage6.Controls.Add(this.RSSDataGridView);
-            this.tabPage6.Location = new System.Drawing.Point(4, 22);
-            this.tabPage6.Name = "tabPage6";
-            this.tabPage6.Size = new System.Drawing.Size(525, 366);
-            this.tabPage6.TabIndex = 3;
-            this.tabPage6.Text = "RSS Channel";
-            this.tabPage6.UseVisualStyleBackColor = true;
+            this.RSS.Controls.Add(this.RSSDataGridView);
+            this.RSS.Location = new System.Drawing.Point(4, 22);
+            this.RSS.Name = "RSS";
+            this.RSS.Size = new System.Drawing.Size(525, 366);
+            this.RSS.TabIndex = 3;
+            this.RSS.Text = "RSS Channel";
+            this.RSS.UseVisualStyleBackColor = true;
             // 
             // RSSDataGridView
             // 
@@ -1284,16 +1293,16 @@
             this.ColumnExample.Name = "ColumnExample";
             this.ColumnExample.Width = 125;
             // 
-            // tabPage7
+            // Log
             // 
-            this.tabPage7.Controls.Add(this.ClearLogButton);
-            this.tabPage7.Controls.Add(this.LogTextBox);
-            this.tabPage7.Location = new System.Drawing.Point(4, 22);
-            this.tabPage7.Name = "tabPage7";
-            this.tabPage7.Size = new System.Drawing.Size(525, 366);
-            this.tabPage7.TabIndex = 4;
-            this.tabPage7.Text = "Log";
-            this.tabPage7.UseVisualStyleBackColor = true;
+            this.Log.Controls.Add(this.ClearLogButton);
+            this.Log.Controls.Add(this.LogTextBox);
+            this.Log.Location = new System.Drawing.Point(4, 22);
+            this.Log.Name = "Log";
+            this.Log.Size = new System.Drawing.Size(525, 366);
+            this.Log.TabIndex = 4;
+            this.Log.Text = "Log";
+            this.Log.UseVisualStyleBackColor = true;
             // 
             // ClearLogButton
             // 
@@ -1313,16 +1322,16 @@
             this.LogTextBox.Size = new System.Drawing.Size(514, 326);
             this.LogTextBox.TabIndex = 0;
             // 
-            // tabPage8
+            // Statistics
             // 
-            this.tabPage8.Controls.Add(this.StatisticsCheckBox);
-            this.tabPage8.Controls.Add(this.StatisticsDataGridView);
-            this.tabPage8.Location = new System.Drawing.Point(4, 22);
-            this.tabPage8.Name = "tabPage8";
-            this.tabPage8.Size = new System.Drawing.Size(525, 366);
-            this.tabPage8.TabIndex = 5;
-            this.tabPage8.Text = "Statistics";
-            this.tabPage8.UseVisualStyleBackColor = true;
+            this.Statistics.Controls.Add(this.StatisticsCheckBox);
+            this.Statistics.Controls.Add(this.StatisticsDataGridView);
+            this.Statistics.Location = new System.Drawing.Point(4, 22);
+            this.Statistics.Name = "Statistics";
+            this.Statistics.Size = new System.Drawing.Size(525, 366);
+            this.Statistics.TabIndex = 5;
+            this.Statistics.Text = "Statistics";
+            this.Statistics.UseVisualStyleBackColor = true;
             // 
             // StatisticsCheckBox
             // 
@@ -1361,15 +1370,15 @@
             this.dataGridViewTextBoxColumn1.Name = "dataGridViewTextBoxColumn1";
             this.dataGridViewTextBoxColumn1.Width = 255;
             // 
-            // tabPage9
+            // Snapshots
             // 
-            this.tabPage9.Controls.Add(this.SnapshotsGroupBox);
-            this.tabPage9.Location = new System.Drawing.Point(4, 22);
-            this.tabPage9.Name = "tabPage9";
-            this.tabPage9.Size = new System.Drawing.Size(525, 366);
-            this.tabPage9.TabIndex = 6;
-            this.tabPage9.Text = "Snapshots";
-            this.tabPage9.UseVisualStyleBackColor = true;
+            this.Snapshots.Controls.Add(this.SnapshotsGroupBox);
+            this.Snapshots.Location = new System.Drawing.Point(4, 22);
+            this.Snapshots.Name = "Snapshots";
+            this.Snapshots.Size = new System.Drawing.Size(525, 366);
+            this.Snapshots.TabIndex = 6;
+            this.Snapshots.Text = "Snapshots";
+            this.Snapshots.UseVisualStyleBackColor = true;
             // 
             // SnapshotsGroupBox
             // 
@@ -1388,14 +1397,14 @@
             this.SnapshotsTreeView.Size = new System.Drawing.Size(517, 336);
             this.SnapshotsTreeView.TabIndex = 0;
             // 
-            // tabPage10
+            // About
             // 
-            this.tabPage10.Location = new System.Drawing.Point(4, 22);
-            this.tabPage10.Name = "tabPage10";
-            this.tabPage10.Size = new System.Drawing.Size(525, 366);
-            this.tabPage10.TabIndex = 7;
-            this.tabPage10.Text = "About";
-            this.tabPage10.UseVisualStyleBackColor = true;
+            this.About.Location = new System.Drawing.Point(4, 22);
+            this.About.Name = "About";
+            this.About.Size = new System.Drawing.Size(525, 366);
+            this.About.TabIndex = 7;
+            this.About.Text = "About";
+            this.About.UseVisualStyleBackColor = true;
             // 
             // CreatePatternsMenuStrip
             // 
@@ -1646,16 +1655,6 @@
             this.deleteNodeToolStripMenuItem.Size = new System.Drawing.Size(238, 22);
             this.deleteNodeToolStripMenuItem.Text = "Delete Node";
             // 
-            // ExtractedResultsCountLabel
-            // 
-            this.ExtractedResultsCountLabel.AutoSize = true;
-            this.ExtractedResultsCountLabel.Enabled = false;
-            this.ExtractedResultsCountLabel.Location = new System.Drawing.Point(107, 344);
-            this.ExtractedResultsCountLabel.Name = "ExtractedResultsCountLabel";
-            this.ExtractedResultsCountLabel.Size = new System.Drawing.Size(35, 13);
-            this.ExtractedResultsCountLabel.TabIndex = 2;
-            this.ExtractedResultsCountLabel.Text = "label1";
-            // 
             // DeixtoAgentWindow
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -1683,10 +1682,10 @@
             this.splitContainer3.ResumeLayout(false);
             this.WorkingPatternGroupBox.ResumeLayout(false);
             this.AttributesTabControl.ResumeLayout(false);
-            this.tabPage1.ResumeLayout(false);
-            this.tabPage2.ResumeLayout(false);
+            this.Attributes.ResumeLayout(false);
+            this.Auxiliary.ResumeLayout(false);
             this.SettingsTabControl.ResumeLayout(false);
-            this.tabPage3.ResumeLayout(false);
+            this.ProjectInfo.ResumeLayout(false);
             this.CrawlingGroupBox.ResumeLayout(false);
             this.CrawlingGroupBox.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.CrawlingDepthNUD)).EndInit();
@@ -1704,18 +1703,18 @@
             this.IgnoreHTMLTagsGroupBox.ResumeLayout(false);
             this.TargetURLSGroupBox.ResumeLayout(false);
             this.TargetURLSGroupBox.PerformLayout();
-            this.tabPage4.ResumeLayout(false);
-            this.tabPage4.PerformLayout();
-            this.tabPage5.ResumeLayout(false);
-            this.tabPage5.PerformLayout();
-            this.tabPage6.ResumeLayout(false);
+            this.Output.ResumeLayout(false);
+            this.Output.PerformLayout();
+            this.ElementInfo.ResumeLayout(false);
+            this.ElementInfo.PerformLayout();
+            this.RSS.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.RSSDataGridView)).EndInit();
-            this.tabPage7.ResumeLayout(false);
-            this.tabPage7.PerformLayout();
-            this.tabPage8.ResumeLayout(false);
-            this.tabPage8.PerformLayout();
+            this.Log.ResumeLayout(false);
+            this.Log.PerformLayout();
+            this.Statistics.ResumeLayout(false);
+            this.Statistics.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.StatisticsDataGridView)).EndInit();
-            this.tabPage9.ResumeLayout(false);
+            this.Snapshots.ResumeLayout(false);
             this.SnapshotsGroupBox.ResumeLayout(false);
             this.CreatePatternsMenuStrip.ResumeLayout(false);
             this.BrowserMenuStrip.ResumeLayout(false);
@@ -1748,20 +1747,20 @@
         private System.Windows.Forms.Button ClearTreeViewsButton;
         private System.Windows.Forms.Button CreateSnapshotButton;
         private System.Windows.Forms.TabControl AttributesTabControl;
-        private System.Windows.Forms.TabPage tabPage1;
+        private System.Windows.Forms.TabPage Attributes;
         private System.Windows.Forms.ListView AttributesListView;
         private System.Windows.Forms.ColumnHeader AttributeHeader;
         private System.Windows.Forms.ColumnHeader ValueHeader;
-        private System.Windows.Forms.TabPage tabPage2;
+        private System.Windows.Forms.TabPage Auxiliary;
         private System.Windows.Forms.TreeView AuxiliaryTreeView;
         private System.Windows.Forms.TabControl SettingsTabControl;
-        private System.Windows.Forms.TabPage tabPage3;
-        private System.Windows.Forms.TabPage tabPage4;
-        private System.Windows.Forms.TabPage tabPage5;
-        private System.Windows.Forms.TabPage tabPage6;
-        private System.Windows.Forms.TabPage tabPage7;
-        private System.Windows.Forms.TabPage tabPage8;
-        private System.Windows.Forms.TabPage tabPage9;
+        private System.Windows.Forms.TabPage ProjectInfo;
+        private System.Windows.Forms.TabPage Output;
+        private System.Windows.Forms.TabPage ElementInfo;
+        private System.Windows.Forms.TabPage RSS;
+        private System.Windows.Forms.TabPage Log;
+        private System.Windows.Forms.TabPage Statistics;
+        private System.Windows.Forms.TabPage Snapshots;
         private System.Windows.Forms.GroupBox ExtractionPatternGroupBox;
         private System.Windows.Forms.GroupBox IgnoreHTMLTagsGroupBox;
         private System.Windows.Forms.GroupBox TargetURLSGroupBox;
@@ -1825,7 +1824,7 @@
         private System.Windows.Forms.CheckBox StatisticsCheckBox;
         private System.Windows.Forms.GroupBox SnapshotsGroupBox;
         private System.Windows.Forms.TreeView SnapshotsTreeView;
-        private System.Windows.Forms.TabPage tabPage10;
+        private System.Windows.Forms.TabPage About;
         private System.Windows.Forms.CheckBox SilentlyCheckBox;
         private System.Windows.Forms.CheckBox AutoScrollCheckBox;
         private System.Windows.Forms.CheckBox HighlightModeCheckBox;
