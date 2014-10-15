@@ -131,6 +131,7 @@ namespace DEiXTo.Presenters
                 pInfo.ElementSourceIndex = domElem.sourceIndex;
 
                 newNode.Tag = pInfo;
+                newNode.SetState(NodeState.Grayed);
                 newNode.SelectedImageIndex = 3;
                 newNode.ImageIndex = 3;
                 newNode.AddNode(node.GetClone());
@@ -157,7 +158,8 @@ namespace DEiXTo.Presenters
             var results = extraction.ExtractedResults();
             var columnFormat = "VAR";
 
-            for (int i = 0; i < extraction.CountOutputVariables(); i++)
+            int columns = extraction.CountOutputVariables();
+            for (int i = 0; i < columns; i++)
             {
                 _view.AddOutputColumn(columnFormat + i);
             }

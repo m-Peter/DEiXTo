@@ -133,15 +133,14 @@ namespace DEiXTo.Services
         /// <param name="nodes"></param>
         public void Match(TreeNode pattern, TreeNodeCollection nodes)
         {
+            var result = new Result();
             foreach (TreeNode node in nodes)
             {
-                if (CompareRecursiveTree(pattern, node))
+                if (CompareRecursiveTree(pattern, node, result))
                 {
                     _counter += 1;
                     // this is where the exact matching has succeeded and node
                     // is a tree that matched.
-                    var result = new Result();
-                    GetResultFromInstance(node, result);
                     _results.Add(result);
                 }
                 Match(pattern, node.Nodes);
@@ -156,9 +155,10 @@ namespace DEiXTo.Services
         /// <param name="upper"></param>
         public void MatchSplit(TreeNode pattern, TreeNodeCollection nodes, TreeNode upper)
         {
+            var result = new Result();
             foreach (TreeNode node in nodes)
             {
-                if (CompareRecursiveTree(pattern, node))
+                if (CompareRecursiveTree(pattern, node, result))
                 {
                     string fw = "";
                     int count = 0;
@@ -171,9 +171,8 @@ namespace DEiXTo.Services
                         return;
                     }
                     _counter += 1;
-                    var result = new Result();
-                    GetResultFromInstance(node, result);
                     _results.Add(result);
+                    result = new Result();
                 }
                 MatchSplit(pattern, node.Nodes, upper);
             }
@@ -277,27 +276,6 @@ namespace DEiXTo.Services
         /// 
         /// </summary>
         /// <param name="node"></param>
-        /// <param name="result"></param>
-        public void GetResultFromInstance(TreeNode node, Result result)
-        {
-            if (hasContent(node))
-            {
-                result.AddContent(node.GetContent());
-            }
-            else if (hasSource(node))
-            {
-                result.AddContent(node.GetSource());
-            }
-            foreach (TreeNode n in node.Nodes)
-            {
-                GetResultFromInstance(n, result);
-            }
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="node"></param>
         /// <returns></returns>
         public bool hasContent(TreeNode node)
         {
@@ -386,13 +364,25 @@ namespace DEiXTo.Services
             return false;
         }
 
+        public void AddContentFromInstance(TreeNode node, Result result)
+        {
+            if (hasContent(node))
+            {
+                result.AddContent(node.GetContent());
+            }
+            else if (hasSource(node))
+            {
+                result.AddContent(node.GetSource());
+            }
+        }
+
         /// <summary>
         /// 
         /// </summary>
         /// <param name="left"></param>
         /// <param name="right"></param>
         /// <returns></returns>
-        public bool CompareRecursiveTree(TreeNode left, TreeNode right)
+        public bool CompareRecursiveTree(TreeNode left, TreeNode right, Result result)
         {
             // if the two nodes don't match, then cancel the current instance
             if (left.Text != right.Text)
@@ -401,6 +391,7 @@ namespace DEiXTo.Services
             }
 
             right.SetState(left.GetState());
+            AddContentFromInstance(right, result);
 
             // if left.state == (Grayed || CheckedSource || Checked)
             //   move both trees by selecting the next childs from each
@@ -428,9 +419,13 @@ namespace DEiXTo.Services
                     }
                     else
                     {
+                        if (left.Nodes.Count != right.Nodes.Count)
+                        {
+                            return false;
+                        }
                         var nextRight = right.Nodes[i];
 
-                        if (!CompareRecursiveTree(nextLeft, nextRight))
+                        if (!CompareRecursiveTree(nextLeft, nextRight, result))
                         {
                             return false;
                         }
