@@ -427,6 +427,10 @@ namespace DEiXTo.Services
                         }
                         return true;
                     }
+                    if (isSkipped(nextLeft))
+                    {
+                        return true;
+                    }
                     var nextRight = right.Nodes[i]; // what happens if the right has less childrens than left?
 
                     if (!CompareRecursiveTree(nextLeft, nextRight, result))
