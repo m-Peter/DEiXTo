@@ -106,10 +106,6 @@ namespace DEiXTo.Services
         {
             _counter = 0;
             _results = new List<Result>();
-            // Remove the nodes in Unchecked state from the Pattern.
-            /*var copiedPattern = new TreeNode(_pattern.Text);
-            //copiedPattern.Tag = _pattern.Tag;
-            FilterUncheckedNodes(_pattern.Nodes, copiedPattern);*/
 
             if (_pattern.IsRoot())
             {
@@ -279,52 +275,11 @@ namespace DEiXTo.Services
         /// </summary>
         /// <param name="node"></param>
         /// <returns></returns>
-        public bool hasContent(TreeNode node)
-        {
-            var state = node.GetState();
-            bool result;
-
-            switch (state)
-            {
-                case NodeState.Checked:
-                    result = true;
-                    break;
-                case NodeState.CheckedImplied:
-                    result = true;
-                    break;
-                default:
-                    result = false;
-                    break;
-            }
-
-            return result;
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="node"></param>
-        /// <returns></returns>
-        public bool hasSource(TreeNode node)
-        {
-            var state = node.GetState();
-
-            if (state == NodeState.CheckedSource)
-            {
-                return true;
-            }
-
-            return false;
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="node"></param>
-        /// <returns></returns>
         public bool isRequired(TreeNode node)
         {
-            if (node.GetState() == NodeState.Grayed || node.GetState() == NodeState.Checked || node.GetState() == NodeState.CheckedSource)
+            var state = node.GetState();
+
+            if (state == NodeState.Grayed || state == NodeState.Checked || state == NodeState.CheckedSource)
             {
                 return true;
             }
@@ -368,14 +323,6 @@ namespace DEiXTo.Services
 
         public void AddContentFromInstance(NodeState state, TreeNode node, Result result)
         {
-            /*if (hasContent(node))
-            {
-                result.AddContent(node.GetContent());
-            }
-            else if (hasSource(node))
-            {
-                result.AddContent(node.GetSource());
-            }*/
             if (ContainsContent(state))
             {
                 result.AddContent(node.GetContent());
