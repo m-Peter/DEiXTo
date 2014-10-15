@@ -106,9 +106,10 @@ namespace DEiXTo.Services
         {
             _counter = 0;
             _results = new List<Result>();
-            var copiedPattern = new TreeNode(_pattern.Text);
-            copiedPattern.Tag = _pattern.Tag;
-            FilterUncheckedNodes(_pattern.Nodes, copiedPattern);
+            // Remove the nodes in Unchecked state from the Pattern.
+            /*var copiedPattern = new TreeNode(_pattern.Text);
+            //copiedPattern.Tag = _pattern.Tag;
+            FilterUncheckedNodes(_pattern.Nodes, copiedPattern);*/
 
             if (_pattern.IsRoot())
             {
@@ -116,13 +117,14 @@ namespace DEiXTo.Services
             }
             else
             {
-                var upper = new TreeNode(_pattern.Text);
-                BuiltT1Tree(_pattern.Nodes, upper);
+                // Extract the tree above the virtual root node.
+                var ancestors = new TreeNode(_pattern.Text);
+                BuiltAncestorsTree(_pattern.Nodes, ancestors);
 
                 TreeNode vRoot = null;
                 FindRoot(_pattern.Nodes, ref vRoot);
 
-                MatchSplit(vRoot, _domNodes, upper);
+                MatchSplit(vRoot, _domNodes, ancestors);
             }
         }
 
@@ -139,8 +141,8 @@ namespace DEiXTo.Services
                 if (CompareRecursiveTree(pattern, node, result))
                 {
                     _counter += 1;
-                    // this is where the exact matching has succeeded and node
-                    // is a tree that matched.
+                    // this is where the matching has succeeded and node
+                    // is a instance that matched.
                     _results.Add(result);
                 }
                 Match(pattern, node.Nodes);
@@ -255,7 +257,7 @@ namespace DEiXTo.Services
         /// </summary>
         /// <param name="nodes"></param>
         /// <param name="root"></param>
-        public void BuiltT1Tree(TreeNodeCollection nodes, TreeNode root)
+        public void BuiltAncestorsTree(TreeNodeCollection nodes, TreeNode root)
         {
             foreach (TreeNode node in nodes)
             {
@@ -263,7 +265,7 @@ namespace DEiXTo.Services
                 {
                     var newNode = new TreeNode(node.Text);
                     root.Nodes.Add(newNode);
-                    BuiltT1Tree(node.Nodes, newNode);
+                    BuiltAncestorsTree(node.Nodes, newNode);
                 }
                 else
                 {
