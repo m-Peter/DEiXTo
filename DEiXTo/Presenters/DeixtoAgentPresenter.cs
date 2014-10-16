@@ -57,10 +57,16 @@ namespace DEiXTo.Presenters
             _view.NodeStateChanged += nodeStateChanged;
             _view.OutputResultSelected += outputResultSelected;
             _view.AddNewLabel += addNewLabel;
+            _view.AddRegex += addRegex;
 
             var imagesList = _imageLoader.LoadImages();
 
             _view.AddWorkingPatterImages(imagesList);
+        }
+
+        void addRegex()
+        {
+            _loader.LoadRegexBuilderView();
         }
 
         void addNewLabel()

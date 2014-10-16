@@ -51,6 +51,16 @@ namespace DEiXTo.Services
         /// <summary>
         /// 
         /// </summary>
+        public void LoadRegexBuilderView()
+        {
+            RegexBuilderWindow window = new RegexBuilderWindow();
+
+            window.ShowDialog();
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
         public Form LastLoadedView
         {
             get { return _lastLoadedView; }

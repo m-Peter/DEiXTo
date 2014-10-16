@@ -43,6 +43,7 @@ namespace DEiXTo.Views
         public event Action<TreeNode, NodeState> NodeStateChanged;
         public event Action<bool, TreeNode> OutputResultSelected;
         public event Action AddNewLabel;
+        public event Action AddRegex;
         
         private HtmlElement _currentElement;
 
@@ -916,6 +917,14 @@ namespace DEiXTo.Views
             if (AddNewLabel != null)
             {
                 AddNewLabel();
+            }
+        }
+
+        private void AddRegexMenuItem_Click(object sender, EventArgs e)
+        {
+            if (AddRegex != null)
+            {
+                AddRegex();
             }
         }
     }
