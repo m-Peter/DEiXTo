@@ -82,6 +82,12 @@
     <Compile Include="Services\TreeNodeExtensions.cs" />
     <Compile Include="Services\WebDocumentValidator.cs" />
     <Compile Include="Services\WindowsViewLoader.cs" />
+    <Compile Include="Views\AddLabelWindow.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Views\AddLabelWindow.Designer.cs">
+      <DependentUpon>AddLabelWindow.cs</DependentUpon>
+    </Compile>
     <Compile Include="Views\DeixtoAgentWindow.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -105,6 +111,9 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <EmbeddedResource Include="Views\AddLabelWindow.resx">
+      <DependentUpon>AddLabelWindow.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Views\DeixtoAgentWindow.resx">
       <DependentUpon>DeixtoAgentWindow.cs</DependentUpon>
     </EmbeddedResource>
