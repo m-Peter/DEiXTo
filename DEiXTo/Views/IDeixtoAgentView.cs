@@ -33,6 +33,7 @@ namespace DEiXTo.Views
         event Action<TreeNode> LevelUpWorkingPattern;
         event Action<TreeNode> LevelDownWorkingPattern;
         event Action<TreeNode, NodeState> NodeStateChanged;
+        event Action<bool, TreeNode> OutputResultSelected;
         
         string Url { get; }
         HtmlElement CurrentElement { get; set; }
@@ -81,7 +82,7 @@ namespace DEiXTo.Views
         TreeNodeCollection GetDOMTreeNodes();
         TreeNodeCollection GetBodyTreeNodes();
         void AddOutputColumn(string columnHeader);
-        void AddOutputItem(string[] contents);
+        void AddOutputItem(string[] contents, TreeNode node);
         void SetExtractedResults(int count);
         void UpdateDocumentUrl();
         void AddWorkingPatterImages(ImageList imageList);

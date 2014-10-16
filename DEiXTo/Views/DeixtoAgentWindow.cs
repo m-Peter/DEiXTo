@@ -2,6 +2,7 @@
 using DEiXTo.Services;
 using System;
 using System.Windows.Forms;
+using DEiXTo.Models;
 
 namespace DEiXTo.Views
 {
@@ -40,6 +41,7 @@ namespace DEiXTo.Views
         public event Action<TreeNode> LevelUpWorkingPattern;
         public event Action<TreeNode> LevelDownWorkingPattern;
         public event Action<TreeNode, NodeState> NodeStateChanged;
+        public event Action<bool, TreeNode> OutputResultSelected;
         
         private HtmlElement _currentElement;
 
@@ -619,9 +621,10 @@ namespace DEiXTo.Views
         /// 
         /// </summary>
         /// <param name="contents"></param>
-        public void AddOutputItem(string[] contents)
+        public void AddOutputItem(string[] contents, TreeNode node)
         {
             ListViewItem item = new ListViewItem(contents);
+            item.Tag = node;
             OutputListView.Items.Add(item);
         }
 
@@ -894,6 +897,16 @@ namespace DEiXTo.Views
             {
                 var node = WorkingPatternTreeView.SelectedNode;
                 NodeStateChanged(node, NodeState.CheckedImplied);
+            }
+        }
+
+        private void OutputListView_ItemSelectionChanged(object sender, ListViewItemSelectionChangedEventArgs e)
+        {
+            if (OutputResultSelected != null)
+            {
+                var node = e.Item.Tag as TreeNode;
+                bool selected = e.IsSelected;
+                OutputResultSelected(selected, node);
             }
         }
     }

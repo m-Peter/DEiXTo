@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Windows.Forms;
 
 namespace DEiXTo.Models
 {
@@ -8,11 +9,14 @@ namespace DEiXTo.Models
     public class Result
     {
         private List<string> _extractedContents;
+        private TreeNode _node;
 
         public Result()
         {
             _extractedContents = new List<string>();
         }
+
+        public TreeNode Node { get; set; }
 
         /// <summary>
         /// 

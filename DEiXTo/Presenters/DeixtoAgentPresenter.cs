@@ -53,10 +53,38 @@ namespace DEiXTo.Presenters
             _view.LevelUpWorkingPattern += levelUpWorkingPattern;
             _view.LevelDownWorkingPattern += levelDownWorkingPattern;
             _view.NodeStateChanged += nodeStateChanged;
+            _view.OutputResultSelected += outputResultSelected;
 
             var imagesList = _imageLoader.LoadImages();
 
             _view.AddWorkingPatterImages(imagesList);
+        }
+
+        void outputResultSelected(bool selected, TreeNode node)
+        {
+            if (!selected)
+            {
+                return;
+            }
+
+            int index = node.SourceIndex();
+            var element = _document.GetElementByIndex(index);
+
+            if (_view.HighlightModeEnabled())
+            {
+                _styling.UnstyleElements();
+                _styling.Style(element);
+            }
+
+            var path = node.GetPath();
+
+            _view.FillElementInfo(node, element.OuterHtml);
+            _view.SelectDOMNode(_domTree.GetNodeFor(element));
+
+            if (_view.CanAutoScroll())
+            {
+                element.ScrollIntoView(false);
+            }
         }
 
         /// <summary>
@@ -166,7 +194,7 @@ namespace DEiXTo.Presenters
 
             foreach (var item in results)
             {
-                _view.AddOutputItem(item.ToStringArray());
+                _view.AddOutputItem(item.ToStringArray(), item.Node);
             }
             
             _view.SetExtractedResults(results.Count);

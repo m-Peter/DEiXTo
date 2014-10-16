@@ -1150,12 +1150,14 @@
             // 
             this.OutputListView.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.OutputListView.FullRowSelect = true;
             this.OutputListView.Location = new System.Drawing.Point(6, 6);
             this.OutputListView.Name = "OutputListView";
             this.OutputListView.Size = new System.Drawing.Size(513, 319);
             this.OutputListView.TabIndex = 0;
             this.OutputListView.UseCompatibleStateImageBehavior = false;
             this.OutputListView.View = System.Windows.Forms.View.Details;
+            this.OutputListView.ItemSelectionChanged += new System.Windows.Forms.ListViewItemSelectionChangedEventHandler(this.OutputListView_ItemSelectionChanged);
             // 
             // ElementInfo
             // 

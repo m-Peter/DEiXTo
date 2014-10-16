@@ -139,6 +139,7 @@ namespace DEiXTo.Services
                     _counter += 1;
                     // this is where the matching has succeeded and node
                     // is a instance that matched.
+                    result.Node = node;
                     _results.Add(result);
                 }
                 Match(pattern, node.Nodes);
