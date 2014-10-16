@@ -1,5 +1,6 @@
 ﻿using DEiXTo.Services;
 using DEiXTo.Views;
+using System.Windows.Forms;
 
 namespace DEiXTo.Presenters
 {
@@ -23,6 +24,24 @@ namespace DEiXTo.Presenters
             _view.CascadeAgentWindows += cascadeAgentWindows;
             _view.CloseAgentWindows += closeAgentWindows;
             _view.FloatAgentWindows += floatAgentWindows;
+            _view.WindowClosing += windowClosing;
+        }
+
+        /// <summary>
+        /// Attemps to close the view's Window, by asking the
+        /// user if that's what he wants.
+        /// </summary>
+        void windowClosing(FormClosingEventArgs args)
+        {
+            bool answer = _view.AskUserToConfirmClosing();
+
+            if (!answer)
+            {
+                args.Cancel = true;
+                return;
+            }
+
+            args.Cancel = false;
         }
 
         /// <summary>

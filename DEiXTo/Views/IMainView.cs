@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Windows.Forms;
 
 namespace DEiXTo.Views
 {
@@ -12,9 +13,11 @@ namespace DEiXTo.Views
         event Action CascadeAgentWindows;
         event Action CloseAgentWindows;
         event Action FloatAgentWindows;
+        event Action<FormClosingEventArgs> WindowClosing;
 
         void CascadeAgents();
         void CloseAgents();
         void FloatAgents();
+        bool AskUserToConfirmClosing();
     }
 }

@@ -20,6 +20,8 @@ namespace DEiXTo.Views
         public event Action CloseAgentWindows;
         // Fires when the FloatAgents menu item gets clicked
         public event Action FloatAgentWindows;
+        // Fires when the user attempts to close the window
+        public event Action<FormClosingEventArgs> WindowClosing;
         #endregion
 
         #region Constructors
@@ -62,6 +64,18 @@ namespace DEiXTo.Views
                 childForm.Close();
             }
         }
+
+        /// <summary>
+        /// Ask the user if he really wants to close this window. Returns true
+        /// if the answer is yes, false otherwise.
+        /// </summary>
+        /// <returns></returns>
+        public bool AskUserToConfirmClosing()
+        {
+            var result = MessageBox.Show("Are you sure you want to exit?", "DEiXTo", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+
+            return result == DialogResult.Yes;
+        }
         #endregion
 
         #region Private Events
@@ -94,6 +108,14 @@ namespace DEiXTo.Views
             if (FloatAgentWindows != null)
             {
                 FloatAgentWindows();
+            }
+        }
+
+        private void MainWindow_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            if (WindowClosing != null)
+            {
+                WindowClosing(e);
             }
         }
         #endregion
