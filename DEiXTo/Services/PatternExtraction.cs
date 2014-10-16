@@ -141,6 +141,7 @@ namespace DEiXTo.Services
                     // is a instance that matched.
                     result.Node = node;
                     _results.Add(result);
+                    result = new Result();
                 }
                 Match(pattern, node.Nodes);
             }

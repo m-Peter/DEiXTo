@@ -189,7 +189,7 @@ namespace DEiXTo.Presenters
             int columns = extraction.CountOutputVariables();
             for (int i = 0; i < columns; i++)
             {
-                _view.AddOutputColumn(columnFormat + i);
+                _view.AddOutputColumn(columnFormat + (i + 1));
             }
 
             foreach (var item in results)
