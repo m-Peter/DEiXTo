@@ -42,6 +42,7 @@ namespace DEiXTo.Views
         public event Action<TreeNode> LevelDownWorkingPattern;
         public event Action<TreeNode, NodeState> NodeStateChanged;
         public event Action<bool, TreeNode> OutputResultSelected;
+        public event Action AddNewLabel;
         
         private HtmlElement _currentElement;
 
@@ -907,6 +908,14 @@ namespace DEiXTo.Views
                 var node = e.Item.Tag as TreeNode;
                 bool selected = e.IsSelected;
                 OutputResultSelected(selected, node);
+            }
+        }
+
+        private void NewLabelMenuItem_Click(object sender, EventArgs e)
+        {
+            if (AddNewLabel != null)
+            {
+                AddNewLabel();
             }
         }
     }

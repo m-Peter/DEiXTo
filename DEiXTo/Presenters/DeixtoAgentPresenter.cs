@@ -19,6 +19,7 @@ namespace DEiXTo.Presenters
         private DocumentQuery _document;
         private StatesImageLoader _imageLoader;
         private DOMTreeStructure _domTree;
+        private IViewLoader _loader;
 
         public DeixtoAgentPresenter(IDeixtoAgentView view)
         {
@@ -26,6 +27,7 @@ namespace DEiXTo.Presenters
             _styling = new ElementStyling();
             _builder = new TreeBuilder();
             _imageLoader = new StatesImageLoader();
+            _loader = new WindowsViewLoader();
 
             // ATTACH THE EVENTS OF THE VIEW TO LOCAL METHODS
             _view.BrowseToUrl += browseToUrl;
@@ -54,10 +56,16 @@ namespace DEiXTo.Presenters
             _view.LevelDownWorkingPattern += levelDownWorkingPattern;
             _view.NodeStateChanged += nodeStateChanged;
             _view.OutputResultSelected += outputResultSelected;
+            _view.AddNewLabel += addNewLabel;
 
             var imagesList = _imageLoader.LoadImages();
 
             _view.AddWorkingPatterImages(imagesList);
+        }
+
+        void addNewLabel()
+        {
+            _loader.LoadAddLabelView();
         }
 
         void outputResultSelected(bool selected, TreeNode node)

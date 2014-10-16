@@ -41,6 +41,16 @@ namespace DEiXTo.Services
         /// <summary>
         /// 
         /// </summary>
+        public void LoadAddLabelView()
+        {
+            AddLabelWindow window = new AddLabelWindow();
+
+            window.ShowDialog();
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
         public Form LastLoadedView
         {
             get { return _lastLoadedView; }
