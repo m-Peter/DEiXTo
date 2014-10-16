@@ -173,6 +173,34 @@
             this.setAsVirtualRootToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator8 = new System.Windows.Forms.ToolStripSeparator();
             this.deleteNodeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.newToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.popularLabelsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.titleToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.descriptionToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.authorToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.linkToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.pubDateToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.removeLabelToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator9 = new System.Windows.Forms.ToolStripSeparator();
+            this.toolStripSeparator10 = new System.Windows.Forms.ToolStripSeparator();
+            this.titleToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
+            this.authorToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
+            this.publisherToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.sourceToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.dateToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.yearToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.subjectToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.isbnToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.issnToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.volumeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.issueToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.fulltexturlToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.descriptionToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
+            this.linkToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
+            this.tyoeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.priceToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.productToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.modelToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
@@ -1514,7 +1542,7 @@
             this.toolStripSeparator8,
             this.deleteNodeToolStripMenuItem});
             this.AdjustpatternMenuStrip.Name = "AdjustpatternMenuStrip";
-            this.AdjustpatternMenuStrip.Size = new System.Drawing.Size(239, 398);
+            this.AdjustpatternMenuStrip.Size = new System.Drawing.Size(239, 420);
             // 
             // matchAndExtractContentToolStripMenuItem
             // 
@@ -1583,6 +1611,17 @@
             // 
             // enterToolStripMenuItem
             // 
+            this.enterToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.newToolStripMenuItem,
+            this.popularLabelsToolStripMenuItem,
+            this.toolStripSeparator9,
+            this.titleToolStripMenuItem,
+            this.descriptionToolStripMenuItem,
+            this.authorToolStripMenuItem,
+            this.linkToolStripMenuItem,
+            this.pubDateToolStripMenuItem,
+            this.toolStripSeparator10,
+            this.removeLabelToolStripMenuItem});
             this.enterToolStripMenuItem.Name = "enterToolStripMenuItem";
             this.enterToolStripMenuItem.Size = new System.Drawing.Size(238, 22);
             this.enterToolStripMenuItem.Text = "Enter/Remove a label";
@@ -1656,6 +1695,191 @@
             this.deleteNodeToolStripMenuItem.Name = "deleteNodeToolStripMenuItem";
             this.deleteNodeToolStripMenuItem.Size = new System.Drawing.Size(238, 22);
             this.deleteNodeToolStripMenuItem.Text = "Delete Node";
+            // 
+            // newToolStripMenuItem
+            // 
+            this.newToolStripMenuItem.Name = "newToolStripMenuItem";
+            this.newToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.newToolStripMenuItem.Text = "New Label";
+            // 
+            // popularLabelsToolStripMenuItem
+            // 
+            this.popularLabelsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.titleToolStripMenuItem1,
+            this.authorToolStripMenuItem1,
+            this.publisherToolStripMenuItem,
+            this.sourceToolStripMenuItem,
+            this.dateToolStripMenuItem,
+            this.yearToolStripMenuItem,
+            this.subjectToolStripMenuItem,
+            this.isbnToolStripMenuItem,
+            this.issnToolStripMenuItem,
+            this.volumeToolStripMenuItem,
+            this.issueToolStripMenuItem,
+            this.fulltexturlToolStripMenuItem,
+            this.descriptionToolStripMenuItem1,
+            this.linkToolStripMenuItem1,
+            this.tyoeToolStripMenuItem,
+            this.priceToolStripMenuItem,
+            this.productToolStripMenuItem,
+            this.modelToolStripMenuItem});
+            this.popularLabelsToolStripMenuItem.Name = "popularLabelsToolStripMenuItem";
+            this.popularLabelsToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.popularLabelsToolStripMenuItem.Text = "Popular labels";
+            // 
+            // titleToolStripMenuItem
+            // 
+            this.titleToolStripMenuItem.Name = "titleToolStripMenuItem";
+            this.titleToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.titleToolStripMenuItem.Text = "title";
+            // 
+            // descriptionToolStripMenuItem
+            // 
+            this.descriptionToolStripMenuItem.Name = "descriptionToolStripMenuItem";
+            this.descriptionToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.descriptionToolStripMenuItem.Text = "description";
+            // 
+            // authorToolStripMenuItem
+            // 
+            this.authorToolStripMenuItem.Name = "authorToolStripMenuItem";
+            this.authorToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.authorToolStripMenuItem.Text = "author";
+            // 
+            // linkToolStripMenuItem
+            // 
+            this.linkToolStripMenuItem.Name = "linkToolStripMenuItem";
+            this.linkToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.linkToolStripMenuItem.Text = "link";
+            // 
+            // pubDateToolStripMenuItem
+            // 
+            this.pubDateToolStripMenuItem.Name = "pubDateToolStripMenuItem";
+            this.pubDateToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.pubDateToolStripMenuItem.Text = "pubDate";
+            // 
+            // removeLabelToolStripMenuItem
+            // 
+            this.removeLabelToolStripMenuItem.Name = "removeLabelToolStripMenuItem";
+            this.removeLabelToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.removeLabelToolStripMenuItem.Text = "Remove Label";
+            // 
+            // toolStripSeparator9
+            // 
+            this.toolStripSeparator9.Name = "toolStripSeparator9";
+            this.toolStripSeparator9.Size = new System.Drawing.Size(149, 6);
+            // 
+            // toolStripSeparator10
+            // 
+            this.toolStripSeparator10.Name = "toolStripSeparator10";
+            this.toolStripSeparator10.Size = new System.Drawing.Size(149, 6);
+            // 
+            // titleToolStripMenuItem1
+            // 
+            this.titleToolStripMenuItem1.Name = "titleToolStripMenuItem1";
+            this.titleToolStripMenuItem1.Size = new System.Drawing.Size(152, 22);
+            this.titleToolStripMenuItem1.Text = "title";
+            // 
+            // authorToolStripMenuItem1
+            // 
+            this.authorToolStripMenuItem1.Name = "authorToolStripMenuItem1";
+            this.authorToolStripMenuItem1.Size = new System.Drawing.Size(152, 22);
+            this.authorToolStripMenuItem1.Text = "author";
+            // 
+            // publisherToolStripMenuItem
+            // 
+            this.publisherToolStripMenuItem.Name = "publisherToolStripMenuItem";
+            this.publisherToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.publisherToolStripMenuItem.Text = "publisher";
+            // 
+            // sourceToolStripMenuItem
+            // 
+            this.sourceToolStripMenuItem.Name = "sourceToolStripMenuItem";
+            this.sourceToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.sourceToolStripMenuItem.Text = "source";
+            // 
+            // dateToolStripMenuItem
+            // 
+            this.dateToolStripMenuItem.Name = "dateToolStripMenuItem";
+            this.dateToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.dateToolStripMenuItem.Text = "date";
+            // 
+            // yearToolStripMenuItem
+            // 
+            this.yearToolStripMenuItem.Name = "yearToolStripMenuItem";
+            this.yearToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.yearToolStripMenuItem.Text = "year";
+            // 
+            // subjectToolStripMenuItem
+            // 
+            this.subjectToolStripMenuItem.Name = "subjectToolStripMenuItem";
+            this.subjectToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.subjectToolStripMenuItem.Text = "subject";
+            // 
+            // isbnToolStripMenuItem
+            // 
+            this.isbnToolStripMenuItem.Name = "isbnToolStripMenuItem";
+            this.isbnToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.isbnToolStripMenuItem.Text = "isbn";
+            // 
+            // issnToolStripMenuItem
+            // 
+            this.issnToolStripMenuItem.Name = "issnToolStripMenuItem";
+            this.issnToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.issnToolStripMenuItem.Text = "issn";
+            // 
+            // volumeToolStripMenuItem
+            // 
+            this.volumeToolStripMenuItem.Name = "volumeToolStripMenuItem";
+            this.volumeToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.volumeToolStripMenuItem.Text = "volume";
+            // 
+            // issueToolStripMenuItem
+            // 
+            this.issueToolStripMenuItem.Name = "issueToolStripMenuItem";
+            this.issueToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.issueToolStripMenuItem.Text = "issue";
+            // 
+            // fulltexturlToolStripMenuItem
+            // 
+            this.fulltexturlToolStripMenuItem.Name = "fulltexturlToolStripMenuItem";
+            this.fulltexturlToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.fulltexturlToolStripMenuItem.Text = "fulltext_url";
+            // 
+            // descriptionToolStripMenuItem1
+            // 
+            this.descriptionToolStripMenuItem1.Name = "descriptionToolStripMenuItem1";
+            this.descriptionToolStripMenuItem1.Size = new System.Drawing.Size(152, 22);
+            this.descriptionToolStripMenuItem1.Text = "description";
+            // 
+            // linkToolStripMenuItem1
+            // 
+            this.linkToolStripMenuItem1.Name = "linkToolStripMenuItem1";
+            this.linkToolStripMenuItem1.Size = new System.Drawing.Size(152, 22);
+            this.linkToolStripMenuItem1.Text = "link";
+            // 
+            // tyoeToolStripMenuItem
+            // 
+            this.tyoeToolStripMenuItem.Name = "tyoeToolStripMenuItem";
+            this.tyoeToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.tyoeToolStripMenuItem.Text = "type";
+            // 
+            // priceToolStripMenuItem
+            // 
+            this.priceToolStripMenuItem.Name = "priceToolStripMenuItem";
+            this.priceToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.priceToolStripMenuItem.Text = "price";
+            // 
+            // productToolStripMenuItem
+            // 
+            this.productToolStripMenuItem.Name = "productToolStripMenuItem";
+            this.productToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.productToolStripMenuItem.Text = "product";
+            // 
+            // modelToolStripMenuItem
+            // 
+            this.modelToolStripMenuItem.Name = "modelToolStripMenuItem";
+            this.modelToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.modelToolStripMenuItem.Text = "model";
             // 
             // DeixtoAgentWindow
             // 
@@ -1872,5 +2096,33 @@
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator7;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator8;
         private System.Windows.Forms.Label ExtractedResultsCountLabel;
+        private System.Windows.Forms.ToolStripMenuItem newToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem popularLabelsToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem titleToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem descriptionToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem authorToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem linkToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem pubDateToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem removeLabelToolStripMenuItem;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator9;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator10;
+        private System.Windows.Forms.ToolStripMenuItem titleToolStripMenuItem1;
+        private System.Windows.Forms.ToolStripMenuItem authorToolStripMenuItem1;
+        private System.Windows.Forms.ToolStripMenuItem publisherToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem sourceToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem dateToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem yearToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem subjectToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem isbnToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem issnToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem volumeToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem issueToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem fulltexturlToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem descriptionToolStripMenuItem1;
+        private System.Windows.Forms.ToolStripMenuItem linkToolStripMenuItem1;
+        private System.Windows.Forms.ToolStripMenuItem tyoeToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem priceToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem productToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem modelToolStripMenuItem;
     }
 }
