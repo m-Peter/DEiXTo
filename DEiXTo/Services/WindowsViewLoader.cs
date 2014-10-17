@@ -52,9 +52,10 @@ namespace DEiXTo.Services
         /// <summary>
         /// 
         /// </summary>
-        public void LoadRegexBuilderView()
+        public void LoadRegexBuilderView(TreeNode node)
         {
             RegexBuilderWindow window = new RegexBuilderWindow();
+            RegexBuilderPresenter presenter = new RegexBuilderPresenter(window, node);
 
             window.ShowDialog();
         }

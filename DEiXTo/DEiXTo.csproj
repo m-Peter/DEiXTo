@@ -59,6 +59,7 @@
     <Compile Include="Presenters\AddLabelPresenter.cs" />
     <Compile Include="Presenters\DeixtoAgentPresenter.cs" />
     <Compile Include="Presenters\MainPresenter.cs" />
+    <Compile Include="Presenters\RegexBuilderPresenter.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services.Tests\DocumentValidatorFactoryTests.cs" />
@@ -102,6 +103,7 @@
     <Compile Include="Views\IAddLabelView.cs" />
     <Compile Include="Views\IDeixtoAgentView.cs" />
     <Compile Include="Views\IMainView.cs" />
+    <Compile Include="Views\IRegexBuilderView.cs" />
     <Compile Include="Views\MainWindow.cs">
       <SubType>Form</SubType>
     </Compile>

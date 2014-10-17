@@ -28,35 +28,35 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.tabControl1 = new System.Windows.Forms.TabControl();
+            this.PatternsTabControl = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
-            this.listView1 = new System.Windows.Forms.ListView();
+            this.PatternsListView = new System.Windows.Forms.ListView();
             this.PatternColumn = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.DescriptionColumn = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.ExampleColumn = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.tabPage2 = new System.Windows.Forms.TabPage();
-            this.label1 = new System.Windows.Forms.Label();
-            this.textBox1 = new System.Windows.Forms.TextBox();
-            this.checkBox1 = new System.Windows.Forms.CheckBox();
-            this.button1 = new System.Windows.Forms.Button();
-            this.button2 = new System.Windows.Forms.Button();
-            this.tabControl1.SuspendLayout();
+            this.AddRegexLabel = new System.Windows.Forms.Label();
+            this.AddRegexTextBox = new System.Windows.Forms.TextBox();
+            this.InverseEvaluationCheckBox = new System.Windows.Forms.CheckBox();
+            this.OKButton = new System.Windows.Forms.Button();
+            this.CancelButton = new System.Windows.Forms.Button();
+            this.PatternsTabControl.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.SuspendLayout();
             // 
-            // tabControl1
+            // PatternsTabControl
             // 
-            this.tabControl1.Controls.Add(this.tabPage1);
-            this.tabControl1.Controls.Add(this.tabPage2);
-            this.tabControl1.Location = new System.Drawing.Point(12, 12);
-            this.tabControl1.Name = "tabControl1";
-            this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(453, 296);
-            this.tabControl1.TabIndex = 0;
+            this.PatternsTabControl.Controls.Add(this.tabPage1);
+            this.PatternsTabControl.Controls.Add(this.tabPage2);
+            this.PatternsTabControl.Location = new System.Drawing.Point(12, 12);
+            this.PatternsTabControl.Name = "PatternsTabControl";
+            this.PatternsTabControl.SelectedIndex = 0;
+            this.PatternsTabControl.Size = new System.Drawing.Size(453, 296);
+            this.PatternsTabControl.TabIndex = 0;
             // 
             // tabPage1
             // 
-            this.tabPage1.Controls.Add(this.listView1);
+            this.tabPage1.Controls.Add(this.PatternsListView);
             this.tabPage1.Location = new System.Drawing.Point(4, 22);
             this.tabPage1.Name = "tabPage1";
             this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
@@ -65,18 +65,18 @@
             this.tabPage1.Text = "Patterns";
             this.tabPage1.UseVisualStyleBackColor = true;
             // 
-            // listView1
+            // PatternsListView
             // 
-            this.listView1.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.PatternsListView.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
             this.PatternColumn,
             this.DescriptionColumn,
             this.ExampleColumn});
-            this.listView1.Location = new System.Drawing.Point(6, 15);
-            this.listView1.Name = "listView1";
-            this.listView1.Size = new System.Drawing.Size(433, 249);
-            this.listView1.TabIndex = 0;
-            this.listView1.UseCompatibleStateImageBehavior = false;
-            this.listView1.View = System.Windows.Forms.View.Details;
+            this.PatternsListView.Location = new System.Drawing.Point(6, 15);
+            this.PatternsListView.Name = "PatternsListView";
+            this.PatternsListView.Size = new System.Drawing.Size(433, 249);
+            this.PatternsListView.TabIndex = 0;
+            this.PatternsListView.UseCompatibleStateImageBehavior = false;
+            this.PatternsListView.View = System.Windows.Forms.View.Details;
             // 
             // PatternColumn
             // 
@@ -103,64 +103,65 @@
             this.tabPage2.Text = "Syntax";
             this.tabPage2.UseVisualStyleBackColor = true;
             // 
-            // label1
+            // AddRegexLabel
             // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(13, 325);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(153, 13);
-            this.label1.TabIndex = 1;
-            this.label1.Text = "Please give regular expression:";
+            this.AddRegexLabel.AutoSize = true;
+            this.AddRegexLabel.Location = new System.Drawing.Point(13, 325);
+            this.AddRegexLabel.Name = "AddRegexLabel";
+            this.AddRegexLabel.Size = new System.Drawing.Size(153, 13);
+            this.AddRegexLabel.TabIndex = 1;
+            this.AddRegexLabel.Text = "Please give regular expression:";
             // 
-            // textBox1
+            // AddRegexTextBox
             // 
-            this.textBox1.Location = new System.Drawing.Point(172, 322);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(289, 20);
-            this.textBox1.TabIndex = 2;
+            this.AddRegexTextBox.Location = new System.Drawing.Point(172, 322);
+            this.AddRegexTextBox.Name = "AddRegexTextBox";
+            this.AddRegexTextBox.Size = new System.Drawing.Size(289, 20);
+            this.AddRegexTextBox.TabIndex = 2;
             // 
-            // checkBox1
+            // InverseEvaluationCheckBox
             // 
-            this.checkBox1.AutoSize = true;
-            this.checkBox1.Location = new System.Drawing.Point(16, 352);
-            this.checkBox1.Name = "checkBox1";
-            this.checkBox1.Size = new System.Drawing.Size(151, 17);
-            this.checkBox1.TabIndex = 3;
-            this.checkBox1.Text = "Perform inverse evaluation";
-            this.checkBox1.UseVisualStyleBackColor = true;
+            this.InverseEvaluationCheckBox.AutoSize = true;
+            this.InverseEvaluationCheckBox.Location = new System.Drawing.Point(16, 352);
+            this.InverseEvaluationCheckBox.Name = "InverseEvaluationCheckBox";
+            this.InverseEvaluationCheckBox.Size = new System.Drawing.Size(151, 17);
+            this.InverseEvaluationCheckBox.TabIndex = 3;
+            this.InverseEvaluationCheckBox.Text = "Perform inverse evaluation";
+            this.InverseEvaluationCheckBox.UseVisualStyleBackColor = true;
             // 
-            // button1
+            // OKButton
             // 
-            this.button1.Location = new System.Drawing.Point(16, 378);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(75, 23);
-            this.button1.TabIndex = 4;
-            this.button1.Text = "OK";
-            this.button1.UseVisualStyleBackColor = true;
+            this.OKButton.Location = new System.Drawing.Point(16, 378);
+            this.OKButton.Name = "OKButton";
+            this.OKButton.Size = new System.Drawing.Size(75, 23);
+            this.OKButton.TabIndex = 4;
+            this.OKButton.Text = "OK";
+            this.OKButton.UseVisualStyleBackColor = true;
+            this.OKButton.Click += new System.EventHandler(this.OKButton_Click);
             // 
-            // button2
+            // CancelButton
             // 
-            this.button2.Location = new System.Drawing.Point(108, 378);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(75, 23);
-            this.button2.TabIndex = 5;
-            this.button2.Text = "Cancel";
-            this.button2.UseVisualStyleBackColor = true;
+            this.CancelButton.Location = new System.Drawing.Point(108, 378);
+            this.CancelButton.Name = "CancelButton";
+            this.CancelButton.Size = new System.Drawing.Size(75, 23);
+            this.CancelButton.TabIndex = 5;
+            this.CancelButton.Text = "Cancel";
+            this.CancelButton.UseVisualStyleBackColor = true;
             // 
             // RegexBuilderWindow
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(473, 413);
-            this.Controls.Add(this.button2);
-            this.Controls.Add(this.button1);
-            this.Controls.Add(this.checkBox1);
-            this.Controls.Add(this.textBox1);
-            this.Controls.Add(this.label1);
-            this.Controls.Add(this.tabControl1);
+            this.Controls.Add(this.CancelButton);
+            this.Controls.Add(this.OKButton);
+            this.Controls.Add(this.InverseEvaluationCheckBox);
+            this.Controls.Add(this.AddRegexTextBox);
+            this.Controls.Add(this.AddRegexLabel);
+            this.Controls.Add(this.PatternsTabControl);
             this.Name = "RegexBuilderWindow";
             this.Text = "RegexBuilderWindow";
-            this.tabControl1.ResumeLayout(false);
+            this.PatternsTabControl.ResumeLayout(false);
             this.tabPage1.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -169,15 +170,15 @@
 
         #endregion
 
-        private System.Windows.Forms.TabControl tabControl1;
+        private System.Windows.Forms.TabControl PatternsTabControl;
         private System.Windows.Forms.TabPage tabPage1;
-        private System.Windows.Forms.ListView listView1;
+        private System.Windows.Forms.ListView PatternsListView;
         private System.Windows.Forms.TabPage tabPage2;
-        private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.TextBox textBox1;
-        private System.Windows.Forms.CheckBox checkBox1;
-        private System.Windows.Forms.Button button1;
-        private System.Windows.Forms.Button button2;
+        private System.Windows.Forms.Label AddRegexLabel;
+        private System.Windows.Forms.TextBox AddRegexTextBox;
+        private System.Windows.Forms.CheckBox InverseEvaluationCheckBox;
+        private System.Windows.Forms.Button OKButton;
+        private System.Windows.Forms.Button CancelButton;
         private System.Windows.Forms.ColumnHeader PatternColumn;
         private System.Windows.Forms.ColumnHeader DescriptionColumn;
         private System.Windows.Forms.ColumnHeader ExampleColumn;

@@ -43,7 +43,7 @@ namespace DEiXTo.Views
         public event Action<TreeNode, NodeState> NodeStateChanged;
         public event Action<bool, TreeNode> OutputResultSelected;
         public event Action<TreeNode> AddNewLabel;
-        public event Action AddRegex;
+        public event Action<TreeNode> AddRegex;
         
         private HtmlElement _currentElement;
 
@@ -936,7 +936,8 @@ namespace DEiXTo.Views
         {
             if (AddRegex != null)
             {
-                AddRegex();
+                var node = WorkingPatternTreeView.SelectedNode;
+                AddRegex(node);
             }
         }
     }

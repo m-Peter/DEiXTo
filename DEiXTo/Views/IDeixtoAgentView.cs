@@ -35,7 +35,7 @@ namespace DEiXTo.Views
         event Action<TreeNode, NodeState> NodeStateChanged;
         event Action<bool, TreeNode> OutputResultSelected;
         event Action<TreeNode> AddNewLabel;
-        event Action AddRegex;
+        event Action<TreeNode> AddRegex;
         
         string Url { get; }
         HtmlElement CurrentElement { get; set; }

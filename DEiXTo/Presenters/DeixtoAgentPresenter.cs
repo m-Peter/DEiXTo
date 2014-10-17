@@ -74,9 +74,9 @@ namespace DEiXTo.Presenters
             _view.AddLabelToNode(label, node);
         }
 
-        void addRegex()
+        void addRegex(TreeNode node)
         {
-            _loader.LoadRegexBuilderView();
+            _loader.LoadRegexBuilderView(node);
         }
 
         void addNewLabel(TreeNode node)

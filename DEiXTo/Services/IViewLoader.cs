@@ -11,6 +11,6 @@ namespace DEiXTo.Services
         void LoadMainView();
         void LoadAgentView(string title, IMainView parent);
         void LoadAddLabelView(TreeNode node);
-        void LoadRegexBuilderView();
+        void LoadRegexBuilderView(TreeNode node);
     }
 }

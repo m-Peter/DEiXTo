@@ -10,8 +10,10 @@ using System.Windows.Forms;
 
 namespace DEiXTo.Views
 {
-    public partial class RegexBuilderWindow : Form
+    public partial class RegexBuilderWindow : Form , IRegexBuilderView
     {
+        public event Action AddRegex;
+
         public RegexBuilderWindow()
         {
             InitializeComponent();
@@ -24,15 +26,38 @@ namespace DEiXTo.Views
             ListViewItem item7 = new ListViewItem(new string[] { "€", "Price in euro", "some example use case" });
             ListViewItem item8 = new ListViewItem(new string[] { "\\$(\\d*,?\\d*\\.?\\d*)", "Extract just the price", "some example use case" });
             ListViewItem item9 = new ListViewItem(new string[] { ".*", "Matches everything", "some example use case" });
-            listView1.Items.Add(item1);
-            listView1.Items.Add(item2);
-            listView1.Items.Add(item3);
-            listView1.Items.Add(item4);
-            listView1.Items.Add(item5);
-            listView1.Items.Add(item6);
-            listView1.Items.Add(item7);
-            listView1.Items.Add(item8);
-            listView1.Items.Add(item9);
+            PatternsListView.Items.Add(item1);
+            PatternsListView.Items.Add(item2);
+            PatternsListView.Items.Add(item3);
+            PatternsListView.Items.Add(item4);
+            PatternsListView.Items.Add(item5);
+            PatternsListView.Items.Add(item6);
+            PatternsListView.Items.Add(item7);
+            PatternsListView.Items.Add(item8);
+            PatternsListView.Items.Add(item9);
+        }
+
+        public string GetRegexText()
+        {
+            return AddRegexTextBox.Text;
+        }
+
+        public void SetRegexText(string regex)
+        {
+            AddRegexTextBox.Text = regex;
+        }
+
+        public void ShowInvalidRegexMessage()
+        {
+            MessageBox.Show("Invalid EMPTY regular expression!", "DEiXTo", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+        }
+
+        private void OKButton_Click(object sender, EventArgs e)
+        {
+            if (AddRegex != null)
+            {
+                AddRegex();
+            }
         }
     }
 }
