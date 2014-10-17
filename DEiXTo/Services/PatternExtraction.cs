@@ -1,5 +1,6 @@
 ﻿using DEiXTo.Models;
 using System.Collections.Generic;
+using System.Text.RegularExpressions;
 using System.Windows.Forms;
 
 namespace DEiXTo.Services
@@ -404,6 +405,19 @@ namespace DEiXTo.Services
             if (left.Text != right.Text)
             {
                 return false;
+            }
+
+            if (left.HasRegex())
+            {
+                string content = right.GetContent();
+                string regex = left.GetRegex();
+
+                Match match = Regex.Match(content, regex);
+
+                if (!match.Success)
+                {
+                    return false;
+                }
             }
 
             AddContentFromInstance(left.GetState(), right, result);
