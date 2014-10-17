@@ -220,6 +220,7 @@ namespace DEiXTo.Views
             OuterHtmlTextBox.Text = outerHtml;
             InnerTextTextBox.Text = node.GetContent();
             HtmlPathTextBox.Text = node.GetPath();
+            RegularExpressionTextBox.Text = node.GetRegex();
         }
 
         /// <summary>

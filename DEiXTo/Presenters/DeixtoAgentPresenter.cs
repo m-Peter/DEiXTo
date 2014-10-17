@@ -81,6 +81,10 @@ namespace DEiXTo.Presenters
             TreeNode node = subject.Node;
             node.SetRegex(regex);
             _view.UnderlineNode(node);
+
+            int index = node.SourceIndex();
+            var element = _document.GetElementByIndex(index);
+            _view.FillElementInfo(node, element.OuterHtml);
         }
 
         void addRegex(TreeNode node)
