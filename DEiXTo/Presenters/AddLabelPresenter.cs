@@ -20,6 +20,15 @@ namespace DEiXTo.Presenters
             _node = node;
 
             _view.AddLabel += addLabel;
+            _view.KeyDownPress += keyDownPress;
+        }
+
+        void keyDownPress(KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+            {
+                addLabel();
+            }
         }
 
         void addLabel()
