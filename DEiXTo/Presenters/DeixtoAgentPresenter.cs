@@ -69,7 +69,15 @@ namespace DEiXTo.Presenters
         public void Receive(LabelAdded subject)
         {
             string label = subject.Label;
-            MessageBox.Show("The Label: " + label + " was added");
+            TreeNode node = subject.Node;
+            // this is where I got a valid label
+            // now set it to the appropriate TreeNode
+            // but where is the appropriate TreeNode
+            // let's start from the beginning
+            // there was a right click event on some TreeNode
+            // from the WorkingPattern, so this is the one we
+            // want to apply the label.
+            _view.AddLabelToNode(label, node);
         }
 
         void addRegex()
@@ -77,9 +85,9 @@ namespace DEiXTo.Presenters
             _loader.LoadRegexBuilderView();
         }
 
-        void addNewLabel()
+        void addNewLabel(TreeNode node)
         {
-            _loader.LoadAddLabelView();
+            _loader.LoadAddLabelView(node);
         }
 
         void outputResultSelected(bool selected, TreeNode node)

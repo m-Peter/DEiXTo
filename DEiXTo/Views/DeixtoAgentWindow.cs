@@ -42,7 +42,7 @@ namespace DEiXTo.Views
         public event Action<TreeNode> LevelDownWorkingPattern;
         public event Action<TreeNode, NodeState> NodeStateChanged;
         public event Action<bool, TreeNode> OutputResultSelected;
-        public event Action AddNewLabel;
+        public event Action<TreeNode> AddNewLabel;
         public event Action AddRegex;
         
         private HtmlElement _currentElement;
@@ -640,6 +640,16 @@ namespace DEiXTo.Views
             ExtractedResultsCountLabel.Enabled = true;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="label"></param>
+        /// <param name="node"></param>
+        public void AddLabelToNode(string label, TreeNode node)
+        {
+            node.Text += (":" + label);
+        }
+
         private void BrowseToURLButton_Click(object sender, EventArgs e)
         {
             if (BrowseToUrl != null)
@@ -916,7 +926,8 @@ namespace DEiXTo.Views
         {
             if (AddNewLabel != null)
             {
-                AddNewLabel();
+                var node = WorkingPatternTreeView.SelectedNode;
+                AddNewLabel(node);
             }
         }
 

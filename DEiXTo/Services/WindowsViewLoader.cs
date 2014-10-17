@@ -41,10 +41,10 @@ namespace DEiXTo.Services
         /// <summary>
         /// 
         /// </summary>
-        public void LoadAddLabelView()
+        public void LoadAddLabelView(TreeNode node)
         {
             AddLabelWindow window = new AddLabelWindow();
-            AddLabelPresenter presenter = new AddLabelPresenter(window);
+            AddLabelPresenter presenter = new AddLabelPresenter(window, node);
 
             window.ShowDialog();
         }

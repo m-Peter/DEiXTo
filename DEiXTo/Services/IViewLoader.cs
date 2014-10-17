@@ -1,4 +1,5 @@
 ﻿using DEiXTo.Views;
+using System.Windows.Forms;
 
 namespace DEiXTo.Services
 {
@@ -9,7 +10,7 @@ namespace DEiXTo.Services
     {
         void LoadMainView();
         void LoadAgentView(string title, IMainView parent);
-        void LoadAddLabelView();
+        void LoadAddLabelView(TreeNode node);
         void LoadRegexBuilderView();
     }
 }

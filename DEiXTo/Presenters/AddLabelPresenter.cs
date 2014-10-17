@@ -5,16 +5,19 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 
 namespace DEiXTo.Presenters
 {
     public class AddLabelPresenter
     {
         private IAddLabelView _view;
+        private TreeNode _node;
 
-        public AddLabelPresenter(IAddLabelView view)
+        public AddLabelPresenter(IAddLabelView view, TreeNode node)
         {
             _view = view;
+            _node = node;
 
             _view.AddLabel += addLabel;
         }
@@ -32,7 +35,8 @@ namespace DEiXTo.Presenters
 
             // If we got this far, we can publish our LabelAdded event subject
             EventHub eventHub = EventHub.Instance;
-            eventHub.Publish(new LabelAdded(label));
+            eventHub.Publish(new LabelAdded(label, _node));
+            _view.Exit();
         }
     }
 }

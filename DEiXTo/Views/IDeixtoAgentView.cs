@@ -34,7 +34,7 @@ namespace DEiXTo.Views
         event Action<TreeNode> LevelDownWorkingPattern;
         event Action<TreeNode, NodeState> NodeStateChanged;
         event Action<bool, TreeNode> OutputResultSelected;
-        event Action AddNewLabel;
+        event Action<TreeNode> AddNewLabel;
         event Action AddRegex;
         
         string Url { get; }
@@ -91,5 +91,6 @@ namespace DEiXTo.Views
         void SetNodeFont(TreeNode node);
         void ShowCannotDeleteRootMessage();
         void ApplyStateToNode(TreeNode node, int imageIndex);
+        void AddLabelToNode(string label, TreeNode node);
     }
 }
