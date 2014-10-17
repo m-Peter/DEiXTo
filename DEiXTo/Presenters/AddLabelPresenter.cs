@@ -1,10 +1,6 @@
 ﻿using DEiXTo.Services;
 using DEiXTo.Views;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace DEiXTo.Presenters
@@ -23,6 +19,10 @@ namespace DEiXTo.Presenters
             _view.KeyDownPress += keyDownPress;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="e"></param>
         void keyDownPress(KeyEventArgs e)
         {
             if (e.KeyCode == Keys.Enter)
@@ -31,6 +31,9 @@ namespace DEiXTo.Presenters
             }
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
         void addLabel()
         {
             string label = _view.GetLabelText();

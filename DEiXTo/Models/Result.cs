@@ -16,6 +16,9 @@ namespace DEiXTo.Models
             _extractedContents = new List<string>();
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
         public TreeNode Node { get; set; }
 
         /// <summary>
