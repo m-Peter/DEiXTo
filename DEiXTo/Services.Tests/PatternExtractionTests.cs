@@ -23,28 +23,28 @@ namespace DEiXTo.Services.Tests
             //    p
             //       text
             var section = new TreeNode("section");
-            section.Tag = new PointerInfo();
+            section.Tag = new NodeInfo();
             section.SetAsRoot();
             section.SetState(NodeState.Grayed);
             
             var a = new TreeNode("A");
-            a.Tag = new PointerInfo();
+            a.Tag = new NodeInfo();
             a.SetState(NodeState.Grayed);
 
             var img = new TreeNode("IMG");
-            img.Tag = new PointerInfo();
+            img.Tag = new NodeInfo();
             img.SetState(NodeState.Grayed);
             
             var h2 = new TreeNode("H2");
-            h2.Tag = new PointerInfo();
+            h2.Tag = new NodeInfo();
             h2.SetState(NodeState.Grayed);
             
             var text = new TreeNode("TEXT");
-            text.Tag = new PointerInfo();
+            text.Tag = new NodeInfo();
             text.SetState(NodeState.Checked);
             
             var p = new TreeNode("P");
-            p.Tag = new PointerInfo();
+            p.Tag = new NodeInfo();
             p.SetState(NodeState.Grayed);
             
             section.AddNode(a);
@@ -69,27 +69,27 @@ namespace DEiXTo.Services.Tests
             //    p
             //       text
             var section = new TreeNode("section");
-            section.Tag = new PointerInfo();
+            section.Tag = new NodeInfo();
             section.SetState(NodeState.Grayed);
             
             var a = new TreeNode("A");
-            a.Tag = new PointerInfo();
+            a.Tag = new NodeInfo();
             a.SetState(NodeState.Grayed);
             
             var img = new TreeNode("IMG");
-            img.Tag = new PointerInfo();
+            img.Tag = new NodeInfo();
             img.SetState(NodeState.Grayed);
             
             var h2 = new TreeNode("H2");
-            h2.Tag = new PointerInfo();
+            h2.Tag = new NodeInfo();
             h2.SetState(NodeState.Grayed);
             
             var text = new TreeNode("TEXT");
-            text.Tag = new PointerInfo();
+            text.Tag = new NodeInfo();
             text.SetState(NodeState.Checked);
             
             var p = new TreeNode("P");
-            p.Tag = new PointerInfo();
+            p.Tag = new NodeInfo();
             p.SetState(NodeState.Grayed);
 
             section.AddNode(a);
@@ -114,27 +114,27 @@ namespace DEiXTo.Services.Tests
             //    p
             //       text
             var section = new TreeNode("section");
-            section.Tag = new PointerInfo();
+            section.Tag = new NodeInfo();
             section.SetState(NodeState.Grayed);
 
             var a = new TreeNode("A");
-            a.Tag = new PointerInfo();
+            a.Tag = new NodeInfo();
             a.SetState(NodeState.Grayed);
 
             var img = new TreeNode("IMG");
-            img.Tag = new PointerInfo();
+            img.Tag = new NodeInfo();
             img.SetState(NodeState.Grayed);
 
             var h2 = new TreeNode("H2");
-            h2.Tag = new PointerInfo();
+            h2.Tag = new NodeInfo();
             h2.SetState(NodeState.Grayed);
 
             var text = new TreeNode("TEXT");
-            text.Tag = new PointerInfo();
+            text.Tag = new NodeInfo();
             text.SetState(NodeState.Grayed);
 
             var p = new TreeNode("P");
-            p.Tag = new PointerInfo();
+            p.Tag = new NodeInfo();
             p.SetState(NodeState.GrayedImplied);
 
             section.AddNode(a);
@@ -159,35 +159,35 @@ namespace DEiXTo.Services.Tests
             //    p
             //       text
             var section = new TreeNode("section");
-            section.Tag = new PointerInfo();
+            section.Tag = new NodeInfo();
             section.SetState(NodeState.Grayed);
             
             var header = new TreeNode("header");
-            header.Tag = new PointerInfo();
+            header.Tag = new NodeInfo();
             header.SetState(NodeState.Grayed);
 
             var h2 = new TreeNode("h2");
-            h2.Tag = new PointerInfo();
+            h2.Tag = new NodeInfo();
             h2.SetState(NodeState.Grayed);
             
             var text = new TreeNode("text");
-            text.Tag = new PointerInfo();
+            text.Tag = new NodeInfo();
             text.SetState(NodeState.Checked);
 
             var p = new TreeNode("p");
-            p.Tag = new PointerInfo();
+            p.Tag = new NodeInfo();
             p.SetState(NodeState.Unchecked);
 
             var text1 = new TreeNode("text");
-            text1.Tag = new PointerInfo();
+            text1.Tag = new NodeInfo();
             text1.SetState(NodeState.Unchecked);
             
             var p1 = new TreeNode("p");
-            p1.Tag = new PointerInfo();
+            p1.Tag = new NodeInfo();
             p1.SetState(NodeState.Unchecked);
 
             var text2 = new TreeNode("text");
-            text2.Tag = new PointerInfo();
+            text2.Tag = new NodeInfo();
             text2.SetState(NodeState.Unchecked);
 
             section.AddNode(header);
@@ -212,36 +212,36 @@ namespace DEiXTo.Services.Tests
             //    p
             //       text
             var section = new TreeNode("section");
-            section.Tag = new PointerInfo();
+            section.Tag = new NodeInfo();
             section.SetAsRoot();
             section.SetState(NodeState.Grayed);
 
             var header = new TreeNode("header");
-            header.Tag = new PointerInfo();
+            header.Tag = new NodeInfo();
             header.SetState(NodeState.Grayed);
 
             var h2 = new TreeNode("h2");
-            h2.Tag = new PointerInfo();
+            h2.Tag = new NodeInfo();
             h2.SetState(NodeState.Grayed);
 
             var text = new TreeNode("text");
-            text.Tag = new PointerInfo();
+            text.Tag = new NodeInfo();
             text.SetState(NodeState.Checked);
 
             var p = new TreeNode("p");
-            p.Tag = new PointerInfo();
+            p.Tag = new NodeInfo();
             p.SetState(NodeState.Grayed);
 
             var text1 = new TreeNode("text");
-            text1.Tag = new PointerInfo();
+            text1.Tag = new NodeInfo();
             text1.SetState(NodeState.Checked);
 
             var p1 = new TreeNode("p");
-            p1.Tag = new PointerInfo();
+            p1.Tag = new NodeInfo();
             p1.SetState(NodeState.Grayed);
 
             var text2 = new TreeNode("text");
-            text2.Tag = new PointerInfo();
+            text2.Tag = new NodeInfo();
             text2.SetState(NodeState.Checked);
 
             section.AddNode(header);

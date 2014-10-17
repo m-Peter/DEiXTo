@@ -70,13 +70,7 @@ namespace DEiXTo.Presenters
         {
             string label = subject.Label;
             TreeNode node = subject.Node;
-            // this is where I got a valid label
-            // now set it to the appropriate TreeNode
-            // but where is the appropriate TreeNode
-            // let's start from the beginning
-            // there was a right click event on some TreeNode
-            // from the WorkingPattern, so this is the one we
-            // want to apply the label.
+            node.SetLabel(label);
             _view.AddLabelToNode(label, node);
         }
 
@@ -185,7 +179,7 @@ namespace DEiXTo.Presenters
                 var newNode = new TreeNode(element.TagName);
                 var domElem = (IHTMLElement)element.DomElement;
 
-                PointerInfo pInfo = new PointerInfo();
+                NodeInfo pInfo = new NodeInfo();
                 pInfo.ElementSourceIndex = domElem.sourceIndex;
 
                 newNode.Tag = pInfo;

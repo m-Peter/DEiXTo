@@ -87,7 +87,7 @@ namespace DEiXTo.Services
                 domTree.Add(element, tmpNode);
             }
 
-            PointerInfo pInfo = new PointerInfo();
+            NodeInfo pInfo = new NodeInfo();
 
             var tmpElem = (IHTMLElement)element;
 
@@ -131,7 +131,7 @@ namespace DEiXTo.Services
                 domTree.Add(element, newNode);
             }
 
-            PointerInfo pInfo = new PointerInfo();
+            NodeInfo pInfo = new NodeInfo();
 
             // By default each node is required, so add the Match Node image
             newNode.ImageIndex = 3;
@@ -159,7 +159,7 @@ namespace DEiXTo.Services
                 {
                     var txtNode = new TreeNode("TEXT");
                     txtNode.ToolTipText = curElement.nodeValue;
-                    PointerInfo pointer = new PointerInfo();
+                    NodeInfo pointer = new NodeInfo();
                     pointer.Path = pInfo.Path + ".TEXT";
                     pointer.Content = curElement.nodeValue;
                     pointer.State = NodeState.Checked;

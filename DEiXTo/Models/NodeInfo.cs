@@ -3,12 +3,13 @@
     /// <summary>
     /// Maintains various necessary properties for a TreeNode of DOM Tree.
     /// </summary>
-    public class PointerInfo
+    public class NodeInfo
     {
         private int _elementSourceIndex;
         private string _path;
         private string _content;
         private string _source;
+        private string _label;
         private bool _isRoot;
         private NodeState _state;
 
@@ -46,6 +47,15 @@
         {
             get { return _source; }
             set { _source = value; }
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public string Label
+        {
+            get { return _label; }
+            set { _label = value; }
         }
 
         /// <summary>

@@ -188,7 +188,7 @@
             this.linkToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.pubDateToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator10 = new System.Windows.Forms.ToolStripSeparator();
-            this.removeLabelToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.RemoveLabelMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator4 = new System.Windows.Forms.ToolStripSeparator();
             this.enterOfFSONToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator5 = new System.Windows.Forms.ToolStripSeparator();
@@ -1622,7 +1622,7 @@
             this.linkToolStripMenuItem,
             this.pubDateToolStripMenuItem,
             this.toolStripSeparator10,
-            this.removeLabelToolStripMenuItem});
+            this.RemoveLabelMenuItem});
             this.enterToolStripMenuItem.Name = "enterToolStripMenuItem";
             this.enterToolStripMenuItem.Size = new System.Drawing.Size(238, 22);
             this.enterToolStripMenuItem.Text = "Enter/Remove a label";
@@ -1630,7 +1630,7 @@
             // NewLabelMenuItem
             // 
             this.NewLabelMenuItem.Name = "NewLabelMenuItem";
-            this.NewLabelMenuItem.Size = new System.Drawing.Size(148, 22);
+            this.NewLabelMenuItem.Size = new System.Drawing.Size(152, 22);
             this.NewLabelMenuItem.Text = "New Label";
             this.NewLabelMenuItem.Click += new System.EventHandler(this.NewLabelMenuItem_Click);
             // 
@@ -1656,7 +1656,7 @@
             this.productToolStripMenuItem,
             this.modelToolStripMenuItem});
             this.popularLabelsToolStripMenuItem.Name = "popularLabelsToolStripMenuItem";
-            this.popularLabelsToolStripMenuItem.Size = new System.Drawing.Size(148, 22);
+            this.popularLabelsToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.popularLabelsToolStripMenuItem.Text = "Popular labels";
             // 
             // titleToolStripMenuItem1
@@ -1770,48 +1770,49 @@
             // toolStripSeparator9
             // 
             this.toolStripSeparator9.Name = "toolStripSeparator9";
-            this.toolStripSeparator9.Size = new System.Drawing.Size(145, 6);
+            this.toolStripSeparator9.Size = new System.Drawing.Size(149, 6);
             // 
             // titleToolStripMenuItem
             // 
             this.titleToolStripMenuItem.Name = "titleToolStripMenuItem";
-            this.titleToolStripMenuItem.Size = new System.Drawing.Size(148, 22);
+            this.titleToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.titleToolStripMenuItem.Text = "title";
             // 
             // descriptionToolStripMenuItem
             // 
             this.descriptionToolStripMenuItem.Name = "descriptionToolStripMenuItem";
-            this.descriptionToolStripMenuItem.Size = new System.Drawing.Size(148, 22);
+            this.descriptionToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.descriptionToolStripMenuItem.Text = "description";
             // 
             // authorToolStripMenuItem
             // 
             this.authorToolStripMenuItem.Name = "authorToolStripMenuItem";
-            this.authorToolStripMenuItem.Size = new System.Drawing.Size(148, 22);
+            this.authorToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.authorToolStripMenuItem.Text = "author";
             // 
             // linkToolStripMenuItem
             // 
             this.linkToolStripMenuItem.Name = "linkToolStripMenuItem";
-            this.linkToolStripMenuItem.Size = new System.Drawing.Size(148, 22);
+            this.linkToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.linkToolStripMenuItem.Text = "link";
             // 
             // pubDateToolStripMenuItem
             // 
             this.pubDateToolStripMenuItem.Name = "pubDateToolStripMenuItem";
-            this.pubDateToolStripMenuItem.Size = new System.Drawing.Size(148, 22);
+            this.pubDateToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.pubDateToolStripMenuItem.Text = "pubDate";
             // 
             // toolStripSeparator10
             // 
             this.toolStripSeparator10.Name = "toolStripSeparator10";
-            this.toolStripSeparator10.Size = new System.Drawing.Size(145, 6);
+            this.toolStripSeparator10.Size = new System.Drawing.Size(149, 6);
             // 
-            // removeLabelToolStripMenuItem
+            // RemoveLabelMenuItem
             // 
-            this.removeLabelToolStripMenuItem.Name = "removeLabelToolStripMenuItem";
-            this.removeLabelToolStripMenuItem.Size = new System.Drawing.Size(148, 22);
-            this.removeLabelToolStripMenuItem.Text = "Remove Label";
+            this.RemoveLabelMenuItem.Enabled = false;
+            this.RemoveLabelMenuItem.Name = "RemoveLabelMenuItem";
+            this.RemoveLabelMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.RemoveLabelMenuItem.Text = "Remove Label";
             // 
             // toolStripSeparator4
             // 
@@ -2105,7 +2106,7 @@
         private System.Windows.Forms.ToolStripMenuItem authorToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem linkToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem pubDateToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem removeLabelToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem RemoveLabelMenuItem;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator9;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator10;
         private System.Windows.Forms.ToolStripMenuItem titleToolStripMenuItem1;

@@ -53,7 +53,7 @@
   <ItemGroup>
     <Compile Include="Models\DOMTreeStructure.cs" />
     <Compile Include="Models\NodeState.cs" />
-    <Compile Include="Models\PointerInfo.cs" />
+    <Compile Include="Models\NodeInfo.cs" />
     <Compile Include="Models\Result.cs" />
     <Compile Include="Presenters.Tests\MainPresenterTests.cs" />
     <Compile Include="Presenters\AddLabelPresenter.cs" />

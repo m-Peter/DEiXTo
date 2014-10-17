@@ -1,4 +1,5 @@
 ﻿using DEiXTo.Models;
+using System;
 using System.Windows.Forms;
 
 namespace DEiXTo.Services
@@ -15,7 +16,7 @@ namespace DEiXTo.Services
         /// <returns></returns>
         public static string GetSource(this TreeNode node)
         {
-            PointerInfo pInfo = GetPointerInfo(node);
+            NodeInfo pInfo = GetPointerInfo(node);
 
             if (pInfo != null)
             {
@@ -29,10 +30,56 @@ namespace DEiXTo.Services
         /// 
         /// </summary>
         /// <param name="node"></param>
+        /// <param name="label"></param>
+        public static void SetLabel(this TreeNode node, string label)
+        {
+            NodeInfo pInfo = GetPointerInfo(node);
+
+            if (pInfo != null)
+            {
+                pInfo.Label = label;
+            }
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="node"></param>
+        /// <returns></returns>
+        public static string GetLabel(this TreeNode node)
+        {
+            NodeInfo pInfo = GetPointerInfo(node);
+
+            if (pInfo != null)
+            {
+                return pInfo.Label;
+            }
+
+            return "";
+        }
+
+        public static bool HasLabel(this TreeNode node)
+        {
+            NodeInfo pInfo = GetPointerInfo(node);
+
+            string label = GetLabel(node);
+
+            if (String.IsNullOrWhiteSpace(label))
+            {
+                return false;
+            }
+
+            return true;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="node"></param>
         /// <returns></returns>
         public static NodeState GetState(this TreeNode node)
         {
-            PointerInfo pInfo = GetPointerInfo(node);
+            NodeInfo pInfo = GetPointerInfo(node);
 
             if (pInfo != null)
             {
@@ -49,7 +96,7 @@ namespace DEiXTo.Services
         /// <param name="state"></param>
         public static void SetState(this TreeNode node, NodeState state)
         {
-            PointerInfo pInfo = GetPointerInfo(node); ;
+            NodeInfo pInfo = GetPointerInfo(node); ;
 
             if (pInfo != null)
             {
@@ -93,7 +140,7 @@ namespace DEiXTo.Services
         /// <param name="node"></param>
         public static void SetAsRoot(this TreeNode node)
         {
-            PointerInfo pInfo = GetPointerInfo(node);
+            NodeInfo pInfo = GetPointerInfo(node);
 
             if (pInfo != null)
             {
@@ -108,7 +155,7 @@ namespace DEiXTo.Services
         /// <returns></returns>
         public static bool IsRoot(this TreeNode node)
         {
-            PointerInfo pInfo = GetPointerInfo(node);
+            NodeInfo pInfo = GetPointerInfo(node);
 
             if (pInfo != null)
             {
@@ -145,7 +192,7 @@ namespace DEiXTo.Services
         /// <returns></returns>
         public static int SourceIndex(this TreeNode node)
         {
-            PointerInfo pInfo = GetPointerInfo(node);
+            NodeInfo pInfo = GetPointerInfo(node);
 
             if (pInfo != null)
             {
@@ -162,7 +209,7 @@ namespace DEiXTo.Services
         /// <returns></returns>
         public static string GetPath(this TreeNode node)
         {
-            PointerInfo pInfo = GetPointerInfo(node);
+            NodeInfo pInfo = GetPointerInfo(node);
 
             if (pInfo != null)
             {
@@ -179,7 +226,7 @@ namespace DEiXTo.Services
         /// <returns></returns>
         public static string GetContent(this TreeNode node)
         {
-            PointerInfo pInfo = GetPointerInfo(node);
+            NodeInfo pInfo = GetPointerInfo(node);
 
             if (pInfo != null)
             {
@@ -194,9 +241,9 @@ namespace DEiXTo.Services
         /// </summary>
         /// <param name="node"></param>
         /// <returns></returns>
-        private static PointerInfo GetPointerInfo(this TreeNode node)
+        private static NodeInfo GetPointerInfo(this TreeNode node)
         {
-            return node.Tag as PointerInfo;
+            return node.Tag as NodeInfo;
         }
     }
 }
