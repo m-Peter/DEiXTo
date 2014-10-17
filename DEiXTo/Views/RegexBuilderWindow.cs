@@ -52,6 +52,11 @@ namespace DEiXTo.Views
             MessageBox.Show("Invalid EMPTY regular expression!", "DEiXTo", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
         }
 
+        public void Exit()
+        {
+            this.Close();
+        }
+
         private void OKButton_Click(object sender, EventArgs e)
         {
             if (AddRegex != null)

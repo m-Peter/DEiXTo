@@ -30,7 +30,11 @@ namespace DEiXTo.Presenters
             if (String.IsNullOrWhiteSpace(regex))
             {
                 _view.ShowInvalidRegexMessage();
+                _view.Exit();
+                return;
             }
+
+            _view.Exit();
         }
     }
 }

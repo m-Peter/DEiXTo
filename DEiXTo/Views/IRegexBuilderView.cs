@@ -13,5 +13,6 @@ namespace DEiXTo.Views
         string GetRegexText();
         void SetRegexText(string regex);
         void ShowInvalidRegexMessage();
+        void Exit();
     }
 }
