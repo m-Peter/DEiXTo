@@ -473,6 +473,7 @@ namespace DEiXTo.Views
             AdjustpatternMenuStrip.Items[18].Enabled = false;
             AdjustpatternMenuStrip.Items[20].Enabled = false;
             RemoveLabelMenuItem.Enabled = node.HasLabel();
+            RemoveRegExMenuItem.Enabled = node.HasRegex();
 
             if (node.IsRoot())
             {

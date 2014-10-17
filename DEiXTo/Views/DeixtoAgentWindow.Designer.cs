@@ -158,7 +158,7 @@
             this.matchAndExtractOPTIONALToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
             this.AddRegexMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.removeRegularExpressionToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.RemoveRegExMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
             this.enterToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.NewLabelMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -1526,7 +1526,7 @@
             this.matchAndExtractOPTIONALToolStripMenuItem,
             this.toolStripSeparator2,
             this.AddRegexMenuItem,
-            this.removeRegularExpressionToolStripMenuItem,
+            this.RemoveRegExMenuItem,
             this.toolStripSeparator3,
             this.enterToolStripMenuItem,
             this.toolStripSeparator4,
@@ -1598,12 +1598,12 @@
             this.AddRegexMenuItem.Text = "Enter a Regular Expression";
             this.AddRegexMenuItem.Click += new System.EventHandler(this.AddRegexMenuItem_Click);
             // 
-            // removeRegularExpressionToolStripMenuItem
+            // RemoveRegExMenuItem
             // 
-            this.removeRegularExpressionToolStripMenuItem.Enabled = false;
-            this.removeRegularExpressionToolStripMenuItem.Name = "removeRegularExpressionToolStripMenuItem";
-            this.removeRegularExpressionToolStripMenuItem.Size = new System.Drawing.Size(238, 22);
-            this.removeRegularExpressionToolStripMenuItem.Text = "Remove Regular Expression";
+            this.RemoveRegExMenuItem.Enabled = false;
+            this.RemoveRegExMenuItem.Name = "RemoveRegExMenuItem";
+            this.RemoveRegExMenuItem.Size = new System.Drawing.Size(238, 22);
+            this.RemoveRegExMenuItem.Text = "Remove Regular Expression";
             // 
             // toolStripSeparator3
             // 
@@ -1630,7 +1630,7 @@
             // NewLabelMenuItem
             // 
             this.NewLabelMenuItem.Name = "NewLabelMenuItem";
-            this.NewLabelMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.NewLabelMenuItem.Size = new System.Drawing.Size(148, 22);
             this.NewLabelMenuItem.Text = "New Label";
             this.NewLabelMenuItem.Click += new System.EventHandler(this.NewLabelMenuItem_Click);
             // 
@@ -1656,7 +1656,7 @@
             this.productToolStripMenuItem,
             this.modelToolStripMenuItem});
             this.popularLabelsToolStripMenuItem.Name = "popularLabelsToolStripMenuItem";
-            this.popularLabelsToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.popularLabelsToolStripMenuItem.Size = new System.Drawing.Size(148, 22);
             this.popularLabelsToolStripMenuItem.Text = "Popular labels";
             // 
             // titleToolStripMenuItem1
@@ -1770,48 +1770,48 @@
             // toolStripSeparator9
             // 
             this.toolStripSeparator9.Name = "toolStripSeparator9";
-            this.toolStripSeparator9.Size = new System.Drawing.Size(149, 6);
+            this.toolStripSeparator9.Size = new System.Drawing.Size(145, 6);
             // 
             // titleToolStripMenuItem
             // 
             this.titleToolStripMenuItem.Name = "titleToolStripMenuItem";
-            this.titleToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.titleToolStripMenuItem.Size = new System.Drawing.Size(148, 22);
             this.titleToolStripMenuItem.Text = "title";
             // 
             // descriptionToolStripMenuItem
             // 
             this.descriptionToolStripMenuItem.Name = "descriptionToolStripMenuItem";
-            this.descriptionToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.descriptionToolStripMenuItem.Size = new System.Drawing.Size(148, 22);
             this.descriptionToolStripMenuItem.Text = "description";
             // 
             // authorToolStripMenuItem
             // 
             this.authorToolStripMenuItem.Name = "authorToolStripMenuItem";
-            this.authorToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.authorToolStripMenuItem.Size = new System.Drawing.Size(148, 22);
             this.authorToolStripMenuItem.Text = "author";
             // 
             // linkToolStripMenuItem
             // 
             this.linkToolStripMenuItem.Name = "linkToolStripMenuItem";
-            this.linkToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.linkToolStripMenuItem.Size = new System.Drawing.Size(148, 22);
             this.linkToolStripMenuItem.Text = "link";
             // 
             // pubDateToolStripMenuItem
             // 
             this.pubDateToolStripMenuItem.Name = "pubDateToolStripMenuItem";
-            this.pubDateToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.pubDateToolStripMenuItem.Size = new System.Drawing.Size(148, 22);
             this.pubDateToolStripMenuItem.Text = "pubDate";
             // 
             // toolStripSeparator10
             // 
             this.toolStripSeparator10.Name = "toolStripSeparator10";
-            this.toolStripSeparator10.Size = new System.Drawing.Size(149, 6);
+            this.toolStripSeparator10.Size = new System.Drawing.Size(145, 6);
             // 
             // RemoveLabelMenuItem
             // 
             this.RemoveLabelMenuItem.Enabled = false;
             this.RemoveLabelMenuItem.Name = "RemoveLabelMenuItem";
-            this.RemoveLabelMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.RemoveLabelMenuItem.Size = new System.Drawing.Size(148, 22);
             this.RemoveLabelMenuItem.Text = "Remove Label";
             // 
             // toolStripSeparator4
@@ -2082,7 +2082,7 @@
         private System.Windows.Forms.ToolStripMenuItem matchNodeOPTIONALToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem matchAndExtractOPTIONALToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem AddRegexMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem removeRegularExpressionToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem RemoveRegExMenuItem;
         private System.Windows.Forms.ToolStripMenuItem enterToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem enterOfFSONToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem enterSiblingOrderToolStripMenuItem;

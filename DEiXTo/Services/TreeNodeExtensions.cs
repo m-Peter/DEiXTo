@@ -45,6 +45,23 @@ namespace DEiXTo.Services
         /// 
         /// </summary>
         /// <param name="node"></param>
+        /// <returns></returns>
+        public static string GetRegex(this TreeNode node)
+        {
+            NodeInfo pInfo = GetPointerInfo(node);
+
+            if (pInfo != null)
+            {
+                return pInfo.Regex;
+            }
+
+            return "";
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="node"></param>
         /// <param name="regex"></param>
         public static void SetRegex(this TreeNode node, string regex)
         {
@@ -73,6 +90,11 @@ namespace DEiXTo.Services
             return "";
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="node"></param>
+        /// <returns></returns>
         public static bool HasLabel(this TreeNode node)
         {
             NodeInfo pInfo = GetPointerInfo(node);
@@ -80,6 +102,25 @@ namespace DEiXTo.Services
             string label = GetLabel(node);
 
             if (String.IsNullOrWhiteSpace(label))
+            {
+                return false;
+            }
+
+            return true;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="node"></param>
+        /// <returns></returns>
+        public static bool HasRegex(this TreeNode node)
+        {
+            NodeInfo pInfo = GetPointerInfo(node);
+
+            string regex = GetRegex(node);
+
+            if (String.IsNullOrWhiteSpace(regex))
             {
                 return false;
             }
