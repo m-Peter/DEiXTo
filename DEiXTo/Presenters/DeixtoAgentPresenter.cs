@@ -342,8 +342,6 @@ namespace DEiXTo.Presenters
             _styling.UnstyleElements();
             _styling.Style(element);
 
-            var path = node.GetPath();
-
             _view.FillElementInfo(node, element.OuterHtml);
             _view.SelectDOMNode(_domTree.GetNodeFor(element));
 
@@ -438,8 +436,6 @@ namespace DEiXTo.Presenters
                 _styling.Style(element);
             }
 
-            var path = node.GetPath();
-
             _view.FillElementInfo(node, element.OuterHtml);
             _view.SelectDOMNode(_domTree.GetNodeFor(element));
 
@@ -510,8 +506,6 @@ namespace DEiXTo.Presenters
             // Style the HTML element in the WebBrowser
             _styling.Style(element);
             
-            var path = node.GetPath();
-
             _view.FillElementInfo(node, element.OuterHtml);
 
             if (_view.CanAutoScroll())
@@ -562,7 +556,6 @@ namespace DEiXTo.Presenters
 
                 _view.SelectDOMNode(node);
 
-                var path = node.GetPath();
                 _view.FillElementInfo(node, element.OuterHtml);
             }
         }
