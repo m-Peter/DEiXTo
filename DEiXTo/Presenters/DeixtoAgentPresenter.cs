@@ -11,7 +11,7 @@ namespace DEiXTo.Presenters
     /// <summary>
     /// 
     /// </summary>
-    public class DeixtoAgentPresenter
+    public class DeixtoAgentPresenter : ISubscriber<LabelAdded>
     {
         private readonly IDeixtoAgentView _view;
         private ElementStyling _styling;
@@ -58,10 +58,18 @@ namespace DEiXTo.Presenters
             _view.OutputResultSelected += outputResultSelected;
             _view.AddNewLabel += addNewLabel;
             _view.AddRegex += addRegex;
+            EventHub eventHub = EventHub.Instance;
+            eventHub.Subscribe<LabelAdded>(this);
 
             var imagesList = _imageLoader.LoadImages();
 
             _view.AddWorkingPatterImages(imagesList);
+        }
+
+        public void Receive(LabelAdded subject)
+        {
+            string label = subject.Label;
+            MessageBox.Show("The Label: " + label + " was added");
         }
 
         void addRegex()

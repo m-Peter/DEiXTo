@@ -66,10 +66,14 @@
     <Compile Include="Services\ContentExtractionFactory.cs" />
     <Compile Include="Services\DocumentQuery.cs" />
     <Compile Include="Services\DocumentValidatorFactory.cs" />
+    <Compile Include="Services\EventHub.cs" />
     <Compile Include="Services\FormContentExtractor.cs" />
     <Compile Include="Services\GenericContentExtractor.cs" />
+    <Compile Include="Services\IEventHub.cs" />
     <Compile Include="Services\ImageContentExtractor.cs" />
     <Compile Include="Services\InputContentExtractor.cs" />
+    <Compile Include="Services\ISubscriber.cs" />
+    <Compile Include="Services\LabelAdded.cs" />
     <Compile Include="Services\LinkContentExtractor.cs" />
     <Compile Include="Services\StateToImageMapper.cs" />
     <Compile Include="Services\TagContentExtractor.cs" />

@@ -1,4 +1,5 @@
-﻿using DEiXTo.Views;
+﻿using DEiXTo.Services;
+using DEiXTo.Views;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -26,7 +27,12 @@ namespace DEiXTo.Presenters
             {
                 _view.ShowInvalidLabelMessage();
                 _view.Exit();
+                return;
             }
+
+            // If we got this far, we can publish our LabelAdded event subject
+            EventHub eventHub = EventHub.Instance;
+            eventHub.Publish(new LabelAdded(label));
         }
     }
 }
