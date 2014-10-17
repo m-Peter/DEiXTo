@@ -10,6 +10,7 @@
         private string _content;
         private string _source;
         private string _label;
+        private string _regex;
         private bool _isRoot;
         private NodeState _state;
 
@@ -56,6 +57,15 @@
         {
             get { return _label; }
             set { _label = value; }
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public string Regex
+        {
+            get { return _regex; }
+            set { _regex = value; }
         }
 
         /// <summary>

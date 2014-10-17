@@ -34,6 +34,9 @@ namespace DEiXTo.Presenters
                 return;
             }
 
+            // If we got this far, we can publish our RegexAdded event subject
+            EventHub eventHub = EventHub.Instance;
+            eventHub.Publish(new RegexAdded(regex, _node));
             _view.Exit();
         }
     }

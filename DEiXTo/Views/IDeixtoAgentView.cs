@@ -92,5 +92,6 @@ namespace DEiXTo.Views
         void ShowCannotDeleteRootMessage();
         void ApplyStateToNode(TreeNode node, int imageIndex);
         void AddLabelToNode(string label, TreeNode node);
+        void UnderlineNode(TreeNode node);
     }
 }

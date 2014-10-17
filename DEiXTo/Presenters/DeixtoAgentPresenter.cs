@@ -11,7 +11,7 @@ namespace DEiXTo.Presenters
     /// <summary>
     /// 
     /// </summary>
-    public class DeixtoAgentPresenter : ISubscriber<LabelAdded>
+    public class DeixtoAgentPresenter : ISubscriber<LabelAdded>, ISubscriber<RegexAdded>
     {
         private readonly IDeixtoAgentView _view;
         private ElementStyling _styling;
@@ -60,6 +60,7 @@ namespace DEiXTo.Presenters
             _view.AddRegex += addRegex;
             EventHub eventHub = EventHub.Instance;
             eventHub.Subscribe<LabelAdded>(this);
+            eventHub.Subscribe<RegexAdded>(this);
 
             var imagesList = _imageLoader.LoadImages();
 
@@ -72,6 +73,14 @@ namespace DEiXTo.Presenters
             TreeNode node = subject.Node;
             node.SetLabel(label);
             _view.AddLabelToNode(label, node);
+        }
+
+        public void Receive(RegexAdded subject)
+        {
+            string regex = subject.Regex;
+            TreeNode node = subject.Node;
+            node.SetRegex(regex);
+            _view.UnderlineNode(node);
         }
 
         void addRegex(TreeNode node)

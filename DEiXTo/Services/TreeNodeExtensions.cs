@@ -45,6 +45,21 @@ namespace DEiXTo.Services
         /// 
         /// </summary>
         /// <param name="node"></param>
+        /// <param name="regex"></param>
+        public static void SetRegex(this TreeNode node, string regex)
+        {
+            NodeInfo pInfo = GetPointerInfo(node);
+
+            if (pInfo != null)
+            {
+                pInfo.Regex = regex;
+            }
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="node"></param>
         /// <returns></returns>
         public static string GetLabel(this TreeNode node)
         {

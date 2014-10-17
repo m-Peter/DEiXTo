@@ -76,6 +76,7 @@
     <Compile Include="Services\ISubscriber.cs" />
     <Compile Include="Services\LabelAdded.cs" />
     <Compile Include="Services\LinkContentExtractor.cs" />
+    <Compile Include="Services\RegexAdded.cs" />
     <Compile Include="Services\StateToImageMapper.cs" />
     <Compile Include="Services\TagContentExtractor.cs" />
     <Compile Include="Services\TreeBuilder.cs" />

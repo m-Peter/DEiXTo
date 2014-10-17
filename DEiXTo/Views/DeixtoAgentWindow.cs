@@ -651,6 +651,16 @@ namespace DEiXTo.Views
             node.Text += (":" + label);
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="node"></param>
+        public void UnderlineNode(TreeNode node)
+        {
+            var nodeFont = WorkingPatternTreeView.Font;
+            node.NodeFont = new Font(nodeFont, FontStyle.Underline);
+        }
+
         private void BrowseToURLButton_Click(object sender, EventArgs e)
         {
             if (BrowseToUrl != null)
