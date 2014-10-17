@@ -44,6 +44,7 @@ namespace DEiXTo.Services
         public void LoadAddLabelView()
         {
             AddLabelWindow window = new AddLabelWindow();
+            AddLabelPresenter presenter = new AddLabelPresenter(window);
 
             window.ShowDialog();
         }
