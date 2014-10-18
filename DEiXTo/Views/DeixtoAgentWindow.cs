@@ -662,8 +662,18 @@ namespace DEiXTo.Views
         /// <param name="node"></param>
         public void UnderlineNode(TreeNode node)
         {
-            var nodeFont = WorkingPatternTreeView.Font;
-            node.NodeFont = new Font(nodeFont, FontStyle.Underline);
+            Font nodeFont;
+            
+            if (node.NodeFont != null)
+            {
+                nodeFont = node.NodeFont;
+            }
+            else
+            {
+                nodeFont = WorkingPatternTreeView.Font;
+            }
+
+            node.NodeFont = new Font(nodeFont, FontStyle.Underline | FontStyle.Bold);
         }
 
         private void BrowseToURLButton_Click(object sender, EventArgs e)
