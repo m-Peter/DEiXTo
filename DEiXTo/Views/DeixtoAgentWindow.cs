@@ -191,6 +191,14 @@ namespace DEiXTo.Views
         }
 
         /// <summary>
+        /// 
+        /// </summary>
+        public void ShowSelectURLMessage()
+        {
+            MessageBox.Show("Please select URL entry to remove.", "DEiXTo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+        }
+
+        /// <summary>
         /// Shows a warning message when no tag is selected from the ListBox.
         /// </summary>
         public void ShowNoTagSelectedMessage()
@@ -622,6 +630,17 @@ namespace DEiXTo.Views
         public bool AskUserToClearTreeViews()
         {
             var result = MessageBox.Show("Are you sure you want to clear the treeviews?", "DEiXTo", MessageBoxButtons.YesNo);
+
+            return result == DialogResult.Yes;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        public bool AskUserToRemoveURL()
+        {
+            var result = MessageBox.Show("Are you sure you want to remove the selected URL(s)?", "Confirm", MessageBoxButtons.YesNo, MessageBoxIcon.Information);
 
             return result == DialogResult.Yes;
         }

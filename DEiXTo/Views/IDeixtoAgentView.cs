@@ -51,6 +51,7 @@ namespace DEiXTo.Views
         void ShowEnterURLToAddMessage();
         void SetURLInput(string url);
         void ClearAddURLInput();
+        void ShowSelectURLMessage();
         void ClearTargetURLs();
         void ClearExtractedOutputs();
         void FillTextNodeElementInfo(TreeNode node);
@@ -89,6 +90,7 @@ namespace DEiXTo.Views
         void AttachDocumentEvents();
         void DeleteSnapshotInstance(TreeNode node);
         bool AskUserToClearTreeViews();
+        bool AskUserToRemoveURL();
         void ShowNoTagSelectedMessage();
         TreeNode GetWorkingPattern();
         TreeNode GetAuxiliaryInstance();

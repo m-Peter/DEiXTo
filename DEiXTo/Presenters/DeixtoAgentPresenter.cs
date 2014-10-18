@@ -86,8 +86,19 @@ namespace DEiXTo.Presenters
             // retrieve the select URL from the TargetURLs list
             string url = _view.TargetURLToAdd();
 
-            _view.RemoveTargetURL(url);
-            _view.ClearAddURLInput();
+            if (String.IsNullOrWhiteSpace(url))
+            {
+                _view.ShowSelectURLMessage();
+                return;
+            }
+
+            bool answer = _view.AskUserToRemoveURL();
+
+            if (answer)
+            {
+                _view.RemoveTargetURL(url);
+                _view.ClearAddURLInput();
+            }
         }
 
         void addURLToTargetURLs()
