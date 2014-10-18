@@ -114,6 +114,7 @@
             // 
             // AddRegexTextBox
             // 
+            this.AddRegexTextBox.HideSelection = false;
             this.AddRegexTextBox.Location = new System.Drawing.Point(172, 322);
             this.AddRegexTextBox.Name = "AddRegexTextBox";
             this.AddRegexTextBox.Size = new System.Drawing.Size(289, 20);

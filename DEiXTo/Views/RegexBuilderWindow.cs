@@ -38,6 +38,8 @@ namespace DEiXTo.Views
         public void SetRegexText(string regex)
         {
             AddRegexTextBox.Text = regex;
+            AddRegexTextBox.SelectAll();
+            AddRegexTextBox.Focus();
         }
 
         public void ShowInvalidRegexMessage()
