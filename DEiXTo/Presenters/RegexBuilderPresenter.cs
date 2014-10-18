@@ -17,6 +17,15 @@ namespace DEiXTo.Presenters
 
             _view.AddRegex += addRegex;
             _view.SetRegexText(node.GetContent());
+            _view.KeyDownPress += keyDownPress;
+        }
+
+        void keyDownPress(KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+            {
+                addRegex();
+            }
         }
 
         void addRegex()
@@ -26,7 +35,6 @@ namespace DEiXTo.Presenters
             if (String.IsNullOrWhiteSpace(regex))
             {
                 _view.ShowInvalidRegexMessage();
-                _view.Exit();
                 return;
             }
 

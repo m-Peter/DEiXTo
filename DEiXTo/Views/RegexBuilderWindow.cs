@@ -6,6 +6,7 @@ namespace DEiXTo.Views
     public partial class RegexBuilderWindow : Form , IRegexBuilderView
     {
         public event Action AddRegex;
+        public event Action<KeyEventArgs> KeyDownPress;
 
         public RegexBuilderWindow()
         {
@@ -28,6 +29,17 @@ namespace DEiXTo.Views
             PatternsListView.Items.Add(item7);
             PatternsListView.Items.Add(item8);
             PatternsListView.Items.Add(item9);
+
+            this.KeyPreview = true;
+            this.KeyDown += RegexBuilderWindow_KeyDown;
+        }
+
+        void RegexBuilderWindow_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (KeyDownPress != null)
+            {
+                KeyDownPress(e);
+            }
         }
 
         public string GetRegexText()
@@ -58,6 +70,11 @@ namespace DEiXTo.Views
             {
                 AddRegex();
             }
+        }
+
+        private void CancelButton_Click(object sender, EventArgs e)
+        {
+            Close();
         }
     }
 }
