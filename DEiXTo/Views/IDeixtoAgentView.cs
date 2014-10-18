@@ -39,11 +39,15 @@ namespace DEiXTo.Views
         event Action<TreeNode> RemoveLabel;
         event Action<TreeNode> RemoveRegex;
         event Action<FormClosingEventArgs> WindowClosing;
+        event Action AddURLToTargetURLs;
         
         string Url { get; }
         HtmlElement CurrentElement { get; set; }
 
         string GetDocumentUrl();
+        string TargetURLToAdd();
+        void ShowEnterURLToAddMessage();
+        void ClearAddURLInput();
         void ClearTargetURLs();
         void ClearExtractedOutputs();
         void FillTextNodeElementInfo(TreeNode node);

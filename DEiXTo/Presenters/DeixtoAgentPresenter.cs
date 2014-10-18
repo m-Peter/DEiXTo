@@ -64,6 +64,7 @@ namespace DEiXTo.Presenters
             _view.RemoveLabel += removeLabel;
             _view.RemoveRegex += removeRegex;
             _view.WindowClosing += windowClosing;
+            _view.AddURLToTargetURLs += addURLToTargetURLs;
             
             _eventHub.Subscribe<LabelAdded>(this);
             _eventHub.Subscribe<RegexAdded>(this);
@@ -71,6 +72,24 @@ namespace DEiXTo.Presenters
             var imagesList = _imageLoader.LoadImages();
 
             _view.AddWorkingPatterImages(imagesList);
+        }
+
+        void addURLToTargetURLs()
+        {
+            // fetch the user-entered url
+            string url = _view.TargetURLToAdd();
+
+            // if nothing was entered show a warning message
+            if (String.IsNullOrWhiteSpace(url))
+            {
+                _view.ShowEnterURLToAddMessage();
+                return;
+            }
+
+            // at this point we can add the url
+            _view.AppendTargetUrl(url);
+            // clear the entered value from the input text box
+            _view.ClearAddURLInput();
         }
 
         void removeRegex(TreeNode node)

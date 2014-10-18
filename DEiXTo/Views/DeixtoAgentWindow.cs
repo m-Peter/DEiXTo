@@ -47,6 +47,7 @@ namespace DEiXTo.Views
         public event Action<TreeNode> RemoveLabel;
         public event Action<TreeNode> RemoveRegex;
         public event Action<FormClosingEventArgs> WindowClosing;
+        public event Action AddURLToTargetURLs;
         
         private HtmlElement _currentElement;
 
@@ -180,6 +181,14 @@ namespace DEiXTo.Views
         }
 
         /// <summary>
+        /// 
+        /// </summary>
+        public void ShowEnterURLToAddMessage()
+        {
+            MessageBox.Show("Please enter URL to add.", "DEiXTo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+        }
+
+        /// <summary>
         /// Shows a warning message when no tag is selected from the ListBox.
         /// </summary>
         public void ShowNoTagSelectedMessage()
@@ -202,6 +211,14 @@ namespace DEiXTo.Views
         public bool HighlightModeEnabled()
         {
             return HighlightModeCheckBox.Checked;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public void ClearAddURLInput()
+        {
+            AddURLTextBox.Clear();
         }
 
         /// <summary>
@@ -548,6 +565,15 @@ namespace DEiXTo.Views
             }
 
             return ignoredTags;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        public string TargetURLToAdd()
+        {
+            return AddURLTextBox.Text;
         }
 
         /// <summary>
@@ -989,6 +1015,14 @@ namespace DEiXTo.Views
             {
                 var node = WorkingPatternTreeView.SelectedNode;
                 RemoveRegex(node);
+            }
+        }
+
+        private void AddURLButton_Click(object sender, EventArgs e)
+        {
+            if (AddURLToTargetURLs != null)
+            {
+                AddURLToTargetURLs();
             }
         }
     }
