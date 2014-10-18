@@ -45,6 +45,7 @@ namespace DEiXTo.Views
         public event Action<TreeNode> AddNewLabel;
         public event Action<TreeNode> AddRegex;
         public event Action<TreeNode> RemoveLabel;
+        public event Action<TreeNode> RemoveRegex;
         public event Action<FormClosingEventArgs> WindowClosing;
         
         private HtmlElement _currentElement;
@@ -969,6 +970,15 @@ namespace DEiXTo.Views
             {
                 var node = WorkingPatternTreeView.SelectedNode;
                 RemoveLabel(node);
+            }
+        }
+
+        private void RemoveRegExMenuItem_Click(object sender, EventArgs e)
+        {
+            if (RemoveRegex != null)
+            {
+                var node = WorkingPatternTreeView.SelectedNode;
+                RemoveRegex(node);
             }
         }
     }

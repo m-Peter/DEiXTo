@@ -37,6 +37,7 @@ namespace DEiXTo.Views
         event Action<TreeNode> AddNewLabel;
         event Action<TreeNode> AddRegex;
         event Action<TreeNode> RemoveLabel;
+        event Action<TreeNode> RemoveRegex;
         event Action<FormClosingEventArgs> WindowClosing;
         
         string Url { get; }

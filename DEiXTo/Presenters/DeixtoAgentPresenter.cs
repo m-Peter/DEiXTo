@@ -5,6 +5,7 @@ using System.Windows.Forms;
 using mshtml;
 using DEiXTo.Services;
 using DEiXTo.Models;
+using System.Drawing;
 
 namespace DEiXTo.Presenters
 {
@@ -61,6 +62,7 @@ namespace DEiXTo.Presenters
             _view.AddNewLabel += addNewLabel;
             _view.AddRegex += addRegex;
             _view.RemoveLabel += removeLabel;
+            _view.RemoveRegex += removeRegex;
             _view.WindowClosing += windowClosing;
             
             _eventHub.Subscribe<LabelAdded>(this);
@@ -69,6 +71,13 @@ namespace DEiXTo.Presenters
             var imagesList = _imageLoader.LoadImages();
 
             _view.AddWorkingPatterImages(imagesList);
+        }
+
+        void removeRegex(TreeNode node)
+        {
+            var font = node.NodeFont;
+            node.NodeFont = new System.Drawing.Font(font, FontStyle.Regular);
+            node.SetRegex(null);
         }
 
         void removeLabel(TreeNode node)

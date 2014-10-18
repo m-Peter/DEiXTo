@@ -1604,6 +1604,7 @@
             this.RemoveRegExMenuItem.Name = "RemoveRegExMenuItem";
             this.RemoveRegExMenuItem.Size = new System.Drawing.Size(238, 22);
             this.RemoveRegExMenuItem.Text = "Remove Regular Expression";
+            this.RemoveRegExMenuItem.Click += new System.EventHandler(this.RemoveRegExMenuItem_Click);
             // 
             // toolStripSeparator3
             // 
