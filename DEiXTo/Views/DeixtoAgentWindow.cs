@@ -469,45 +469,45 @@ namespace DEiXTo.Views
         {
             node.ContextMenuStrip = AdjustpatternMenuStrip;
 
-            AdjustpatternMenuStrip.Items[8].Enabled = false;
-            AdjustpatternMenuStrip.Items[12].Enabled = false;
-            AdjustpatternMenuStrip.Items[17].Enabled = false;
-            AdjustpatternMenuStrip.Items[18].Enabled = false;
-            AdjustpatternMenuStrip.Items[20].Enabled = false;
+            EnterFSONMenuItem.Enabled = false;
+            AddPreviousSiblingMenuItem.Enabled = false;
+            AddNextSiblingMenuItem.Enabled = false;
+            SetAsRootMenuItem.Enabled = false;
             RemoveLabelMenuItem.Enabled = node.HasLabel();
             RemoveRegExMenuItem.Enabled = node.HasRegex();
 
             if (node.IsRoot())
             {
-                AdjustpatternMenuStrip.Items[3].Enabled = false;
-                AdjustpatternMenuStrip.Items[4].Enabled = false;
-                AdjustpatternMenuStrip.Items[5].Enabled = false;
-                AdjustpatternMenuStrip.Items[22].Enabled = false;
+                UncheckedMenuItem.Enabled = false;
+                GrayedImpliedMenuItem.Enabled = false;
+                CheckedImpliedMenuItem.Enabled = false;
+                DeleteNodeMenuItem.Enabled = false;
                 return;
             }
             else
             {
-                AdjustpatternMenuStrip.Items[0].Enabled = true;
-                AdjustpatternMenuStrip.Items[1].Enabled = true;
-                AdjustpatternMenuStrip.Items[2].Enabled = true;
-                AdjustpatternMenuStrip.Items[3].Enabled = true;
-                AdjustpatternMenuStrip.Items[4].Enabled = true;
-                AdjustpatternMenuStrip.Items[5].Enabled = true;
-                AdjustpatternMenuStrip.Items[22].Enabled = true;
+                CheckedMenuItem.Enabled = true;
+                CheckedSourceMenuItem.Enabled = true;
+                GrayedMenuItem.Enabled = true;
+                UncheckedMenuItem.Enabled = true;
+                GrayedImpliedMenuItem.Enabled = true;
+                CheckedImpliedMenuItem.Enabled = true;
+                DeleteNodeMenuItem.Enabled = true;
             }
 
             if (node.CanBeVRoot())
             {
-                AdjustpatternMenuStrip.Items[20].Enabled = true;
+                SetAsRootMenuItem.Enabled = true;
             }
 
             if (node.IsTextNode())
             {
-                AdjustpatternMenuStrip.Items[1].Enabled = false;
-                AdjustpatternMenuStrip.Items[22].Enabled = true;
+                CheckedSourceMenuItem.Enabled = false;
+                DeleteNodeMenuItem.Enabled = true;
+
                 if (node.CanBeVRoot())
                 {
-                    AdjustpatternMenuStrip.Items[20].Enabled = true;
+                    SetAsRootMenuItem.Enabled = true;
                 }
             }
         }

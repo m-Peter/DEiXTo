@@ -150,17 +150,17 @@
             this.MakeItWorkingPatternToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.DeleteSnapshotToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.AdjustpatternMenuStrip = new System.Windows.Forms.ContextMenuStrip(this.components);
-            this.matchAndExtractContentToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.matchAndExtractSourceToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.matchNodeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.dontCareAboutThisNodeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.matchNodeOPTIONALToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.matchAndExtractOPTIONALToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.CheckedMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.CheckedSourceMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.GrayedMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.UncheckedMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.GrayedImpliedMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.CheckedImpliedMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
             this.AddRegexMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.RemoveRegExMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
-            this.enterToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.EnterRemoveLabelMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.NewLabelMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.popularLabelsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.titleToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
@@ -190,17 +190,17 @@
             this.toolStripSeparator10 = new System.Windows.Forms.ToolStripSeparator();
             this.RemoveLabelMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator4 = new System.Windows.Forms.ToolStripSeparator();
-            this.enterOfFSONToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.EnterFSONMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator5 = new System.Windows.Forms.ToolStripSeparator();
-            this.enterSiblingOrderToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.removeSiblingOrderToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.EnterSiblingOrderMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.RemoveSiblingOrderMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator6 = new System.Windows.Forms.ToolStripSeparator();
-            this.addPreviousToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.addNextSiblingToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.AddPreviousSiblingMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.AddNextSiblingMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator7 = new System.Windows.Forms.ToolStripSeparator();
-            this.setAsVirtualRootToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.SetAsRootMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator8 = new System.Windows.Forms.ToolStripSeparator();
-            this.deleteNodeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.DeleteNodeMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
@@ -1518,73 +1518,73 @@
             // AdjustpatternMenuStrip
             // 
             this.AdjustpatternMenuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.matchAndExtractContentToolStripMenuItem,
-            this.matchAndExtractSourceToolStripMenuItem,
-            this.matchNodeToolStripMenuItem,
-            this.dontCareAboutThisNodeToolStripMenuItem,
-            this.matchNodeOPTIONALToolStripMenuItem,
-            this.matchAndExtractOPTIONALToolStripMenuItem,
+            this.CheckedMenuItem,
+            this.CheckedSourceMenuItem,
+            this.GrayedMenuItem,
+            this.UncheckedMenuItem,
+            this.GrayedImpliedMenuItem,
+            this.CheckedImpliedMenuItem,
             this.toolStripSeparator2,
             this.AddRegexMenuItem,
             this.RemoveRegExMenuItem,
             this.toolStripSeparator3,
-            this.enterToolStripMenuItem,
+            this.EnterRemoveLabelMenuItem,
             this.toolStripSeparator4,
-            this.enterOfFSONToolStripMenuItem,
+            this.EnterFSONMenuItem,
             this.toolStripSeparator5,
-            this.enterSiblingOrderToolStripMenuItem,
-            this.removeSiblingOrderToolStripMenuItem,
+            this.EnterSiblingOrderMenuItem,
+            this.RemoveSiblingOrderMenuItem,
             this.toolStripSeparator6,
-            this.addPreviousToolStripMenuItem,
-            this.addNextSiblingToolStripMenuItem,
+            this.AddPreviousSiblingMenuItem,
+            this.AddNextSiblingMenuItem,
             this.toolStripSeparator7,
-            this.setAsVirtualRootToolStripMenuItem,
+            this.SetAsRootMenuItem,
             this.toolStripSeparator8,
-            this.deleteNodeToolStripMenuItem});
+            this.DeleteNodeMenuItem});
             this.AdjustpatternMenuStrip.Name = "AdjustpatternMenuStrip";
-            this.AdjustpatternMenuStrip.Size = new System.Drawing.Size(239, 398);
+            this.AdjustpatternMenuStrip.Size = new System.Drawing.Size(239, 420);
             // 
-            // matchAndExtractContentToolStripMenuItem
+            // CheckedMenuItem
             // 
-            this.matchAndExtractContentToolStripMenuItem.Name = "matchAndExtractContentToolStripMenuItem";
-            this.matchAndExtractContentToolStripMenuItem.Size = new System.Drawing.Size(238, 22);
-            this.matchAndExtractContentToolStripMenuItem.Text = "Match and Extract Content";
-            this.matchAndExtractContentToolStripMenuItem.Click += new System.EventHandler(this.matchAndExtractContentToolStripMenuItem_Click);
+            this.CheckedMenuItem.Name = "CheckedMenuItem";
+            this.CheckedMenuItem.Size = new System.Drawing.Size(238, 22);
+            this.CheckedMenuItem.Text = "Match and Extract Content";
+            this.CheckedMenuItem.Click += new System.EventHandler(this.matchAndExtractContentToolStripMenuItem_Click);
             // 
-            // matchAndExtractSourceToolStripMenuItem
+            // CheckedSourceMenuItem
             // 
-            this.matchAndExtractSourceToolStripMenuItem.Name = "matchAndExtractSourceToolStripMenuItem";
-            this.matchAndExtractSourceToolStripMenuItem.Size = new System.Drawing.Size(238, 22);
-            this.matchAndExtractSourceToolStripMenuItem.Text = "Match and Extract Source";
-            this.matchAndExtractSourceToolStripMenuItem.Click += new System.EventHandler(this.matchAndExtractSourceToolStripMenuItem_Click);
+            this.CheckedSourceMenuItem.Name = "CheckedSourceMenuItem";
+            this.CheckedSourceMenuItem.Size = new System.Drawing.Size(238, 22);
+            this.CheckedSourceMenuItem.Text = "Match and Extract Source";
+            this.CheckedSourceMenuItem.Click += new System.EventHandler(this.matchAndExtractSourceToolStripMenuItem_Click);
             // 
-            // matchNodeToolStripMenuItem
+            // GrayedMenuItem
             // 
-            this.matchNodeToolStripMenuItem.Name = "matchNodeToolStripMenuItem";
-            this.matchNodeToolStripMenuItem.Size = new System.Drawing.Size(238, 22);
-            this.matchNodeToolStripMenuItem.Text = "Match Node";
-            this.matchNodeToolStripMenuItem.Click += new System.EventHandler(this.matchNodeToolStripMenuItem_Click);
+            this.GrayedMenuItem.Name = "GrayedMenuItem";
+            this.GrayedMenuItem.Size = new System.Drawing.Size(238, 22);
+            this.GrayedMenuItem.Text = "Match Node";
+            this.GrayedMenuItem.Click += new System.EventHandler(this.matchNodeToolStripMenuItem_Click);
             // 
-            // dontCareAboutThisNodeToolStripMenuItem
+            // UncheckedMenuItem
             // 
-            this.dontCareAboutThisNodeToolStripMenuItem.Name = "dontCareAboutThisNodeToolStripMenuItem";
-            this.dontCareAboutThisNodeToolStripMenuItem.Size = new System.Drawing.Size(238, 22);
-            this.dontCareAboutThisNodeToolStripMenuItem.Text = "Don\'t care about this node";
-            this.dontCareAboutThisNodeToolStripMenuItem.Click += new System.EventHandler(this.dontCareAboutThisNodeToolStripMenuItem_Click);
+            this.UncheckedMenuItem.Name = "UncheckedMenuItem";
+            this.UncheckedMenuItem.Size = new System.Drawing.Size(238, 22);
+            this.UncheckedMenuItem.Text = "Don\'t care about this node";
+            this.UncheckedMenuItem.Click += new System.EventHandler(this.dontCareAboutThisNodeToolStripMenuItem_Click);
             // 
-            // matchNodeOPTIONALToolStripMenuItem
+            // GrayedImpliedMenuItem
             // 
-            this.matchNodeOPTIONALToolStripMenuItem.Name = "matchNodeOPTIONALToolStripMenuItem";
-            this.matchNodeOPTIONALToolStripMenuItem.Size = new System.Drawing.Size(238, 22);
-            this.matchNodeOPTIONALToolStripMenuItem.Text = "Match node - OPTIONAL";
-            this.matchNodeOPTIONALToolStripMenuItem.Click += new System.EventHandler(this.matchNodeOPTIONALToolStripMenuItem_Click);
+            this.GrayedImpliedMenuItem.Name = "GrayedImpliedMenuItem";
+            this.GrayedImpliedMenuItem.Size = new System.Drawing.Size(238, 22);
+            this.GrayedImpliedMenuItem.Text = "Match node - OPTIONAL";
+            this.GrayedImpliedMenuItem.Click += new System.EventHandler(this.matchNodeOPTIONALToolStripMenuItem_Click);
             // 
-            // matchAndExtractOPTIONALToolStripMenuItem
+            // CheckedImpliedMenuItem
             // 
-            this.matchAndExtractOPTIONALToolStripMenuItem.Name = "matchAndExtractOPTIONALToolStripMenuItem";
-            this.matchAndExtractOPTIONALToolStripMenuItem.Size = new System.Drawing.Size(238, 22);
-            this.matchAndExtractOPTIONALToolStripMenuItem.Text = "Match and Extract - OPTIONAL";
-            this.matchAndExtractOPTIONALToolStripMenuItem.Click += new System.EventHandler(this.matchAndExtractOPTIONALToolStripMenuItem_Click);
+            this.CheckedImpliedMenuItem.Name = "CheckedImpliedMenuItem";
+            this.CheckedImpliedMenuItem.Size = new System.Drawing.Size(238, 22);
+            this.CheckedImpliedMenuItem.Text = "Match and Extract - OPTIONAL";
+            this.CheckedImpliedMenuItem.Click += new System.EventHandler(this.matchAndExtractOPTIONALToolStripMenuItem_Click);
             // 
             // toolStripSeparator2
             // 
@@ -1610,9 +1610,9 @@
             this.toolStripSeparator3.Name = "toolStripSeparator3";
             this.toolStripSeparator3.Size = new System.Drawing.Size(235, 6);
             // 
-            // enterToolStripMenuItem
+            // EnterRemoveLabelMenuItem
             // 
-            this.enterToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.EnterRemoveLabelMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.NewLabelMenuItem,
             this.popularLabelsToolStripMenuItem,
             this.toolStripSeparator9,
@@ -1623,14 +1623,14 @@
             this.pubDateToolStripMenuItem,
             this.toolStripSeparator10,
             this.RemoveLabelMenuItem});
-            this.enterToolStripMenuItem.Name = "enterToolStripMenuItem";
-            this.enterToolStripMenuItem.Size = new System.Drawing.Size(238, 22);
-            this.enterToolStripMenuItem.Text = "Enter/Remove a label";
+            this.EnterRemoveLabelMenuItem.Name = "EnterRemoveLabelMenuItem";
+            this.EnterRemoveLabelMenuItem.Size = new System.Drawing.Size(238, 22);
+            this.EnterRemoveLabelMenuItem.Text = "Enter/Remove a label";
             // 
             // NewLabelMenuItem
             // 
             this.NewLabelMenuItem.Name = "NewLabelMenuItem";
-            this.NewLabelMenuItem.Size = new System.Drawing.Size(148, 22);
+            this.NewLabelMenuItem.Size = new System.Drawing.Size(152, 22);
             this.NewLabelMenuItem.Text = "New Label";
             this.NewLabelMenuItem.Click += new System.EventHandler(this.NewLabelMenuItem_Click);
             // 
@@ -1656,7 +1656,7 @@
             this.productToolStripMenuItem,
             this.modelToolStripMenuItem});
             this.popularLabelsToolStripMenuItem.Name = "popularLabelsToolStripMenuItem";
-            this.popularLabelsToolStripMenuItem.Size = new System.Drawing.Size(148, 22);
+            this.popularLabelsToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.popularLabelsToolStripMenuItem.Text = "Popular labels";
             // 
             // titleToolStripMenuItem1
@@ -1770,48 +1770,48 @@
             // toolStripSeparator9
             // 
             this.toolStripSeparator9.Name = "toolStripSeparator9";
-            this.toolStripSeparator9.Size = new System.Drawing.Size(145, 6);
+            this.toolStripSeparator9.Size = new System.Drawing.Size(149, 6);
             // 
             // titleToolStripMenuItem
             // 
             this.titleToolStripMenuItem.Name = "titleToolStripMenuItem";
-            this.titleToolStripMenuItem.Size = new System.Drawing.Size(148, 22);
+            this.titleToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.titleToolStripMenuItem.Text = "title";
             // 
             // descriptionToolStripMenuItem
             // 
             this.descriptionToolStripMenuItem.Name = "descriptionToolStripMenuItem";
-            this.descriptionToolStripMenuItem.Size = new System.Drawing.Size(148, 22);
+            this.descriptionToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.descriptionToolStripMenuItem.Text = "description";
             // 
             // authorToolStripMenuItem
             // 
             this.authorToolStripMenuItem.Name = "authorToolStripMenuItem";
-            this.authorToolStripMenuItem.Size = new System.Drawing.Size(148, 22);
+            this.authorToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.authorToolStripMenuItem.Text = "author";
             // 
             // linkToolStripMenuItem
             // 
             this.linkToolStripMenuItem.Name = "linkToolStripMenuItem";
-            this.linkToolStripMenuItem.Size = new System.Drawing.Size(148, 22);
+            this.linkToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.linkToolStripMenuItem.Text = "link";
             // 
             // pubDateToolStripMenuItem
             // 
             this.pubDateToolStripMenuItem.Name = "pubDateToolStripMenuItem";
-            this.pubDateToolStripMenuItem.Size = new System.Drawing.Size(148, 22);
+            this.pubDateToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.pubDateToolStripMenuItem.Text = "pubDate";
             // 
             // toolStripSeparator10
             // 
             this.toolStripSeparator10.Name = "toolStripSeparator10";
-            this.toolStripSeparator10.Size = new System.Drawing.Size(145, 6);
+            this.toolStripSeparator10.Size = new System.Drawing.Size(149, 6);
             // 
             // RemoveLabelMenuItem
             // 
             this.RemoveLabelMenuItem.Enabled = false;
             this.RemoveLabelMenuItem.Name = "RemoveLabelMenuItem";
-            this.RemoveLabelMenuItem.Size = new System.Drawing.Size(148, 22);
+            this.RemoveLabelMenuItem.Size = new System.Drawing.Size(152, 22);
             this.RemoveLabelMenuItem.Text = "Remove Label";
             // 
             // toolStripSeparator4
@@ -1819,70 +1819,70 @@
             this.toolStripSeparator4.Name = "toolStripSeparator4";
             this.toolStripSeparator4.Size = new System.Drawing.Size(235, 6);
             // 
-            // enterOfFSONToolStripMenuItem
+            // EnterFSONMenuItem
             // 
-            this.enterOfFSONToolStripMenuItem.Enabled = false;
-            this.enterOfFSONToolStripMenuItem.Name = "enterOfFSONToolStripMenuItem";
-            this.enterOfFSONToolStripMenuItem.Size = new System.Drawing.Size(238, 22);
-            this.enterOfFSONToolStripMenuItem.Text = "Enter # of FSON";
+            this.EnterFSONMenuItem.Enabled = false;
+            this.EnterFSONMenuItem.Name = "EnterFSONMenuItem";
+            this.EnterFSONMenuItem.Size = new System.Drawing.Size(238, 22);
+            this.EnterFSONMenuItem.Text = "Enter # of FSON";
             // 
             // toolStripSeparator5
             // 
             this.toolStripSeparator5.Name = "toolStripSeparator5";
             this.toolStripSeparator5.Size = new System.Drawing.Size(235, 6);
             // 
-            // enterSiblingOrderToolStripMenuItem
+            // EnterSiblingOrderMenuItem
             // 
-            this.enterSiblingOrderToolStripMenuItem.Name = "enterSiblingOrderToolStripMenuItem";
-            this.enterSiblingOrderToolStripMenuItem.Size = new System.Drawing.Size(238, 22);
-            this.enterSiblingOrderToolStripMenuItem.Text = "Enter sibling order";
+            this.EnterSiblingOrderMenuItem.Name = "EnterSiblingOrderMenuItem";
+            this.EnterSiblingOrderMenuItem.Size = new System.Drawing.Size(238, 22);
+            this.EnterSiblingOrderMenuItem.Text = "Enter sibling order";
             // 
-            // removeSiblingOrderToolStripMenuItem
+            // RemoveSiblingOrderMenuItem
             // 
-            this.removeSiblingOrderToolStripMenuItem.Name = "removeSiblingOrderToolStripMenuItem";
-            this.removeSiblingOrderToolStripMenuItem.Size = new System.Drawing.Size(238, 22);
-            this.removeSiblingOrderToolStripMenuItem.Text = "Remove sibling order";
+            this.RemoveSiblingOrderMenuItem.Name = "RemoveSiblingOrderMenuItem";
+            this.RemoveSiblingOrderMenuItem.Size = new System.Drawing.Size(238, 22);
+            this.RemoveSiblingOrderMenuItem.Text = "Remove sibling order";
             // 
             // toolStripSeparator6
             // 
             this.toolStripSeparator6.Name = "toolStripSeparator6";
             this.toolStripSeparator6.Size = new System.Drawing.Size(235, 6);
             // 
-            // addPreviousToolStripMenuItem
+            // AddPreviousSiblingMenuItem
             // 
-            this.addPreviousToolStripMenuItem.Enabled = false;
-            this.addPreviousToolStripMenuItem.Name = "addPreviousToolStripMenuItem";
-            this.addPreviousToolStripMenuItem.Size = new System.Drawing.Size(238, 22);
-            this.addPreviousToolStripMenuItem.Text = "Add Previous Sibling";
+            this.AddPreviousSiblingMenuItem.Enabled = false;
+            this.AddPreviousSiblingMenuItem.Name = "AddPreviousSiblingMenuItem";
+            this.AddPreviousSiblingMenuItem.Size = new System.Drawing.Size(238, 22);
+            this.AddPreviousSiblingMenuItem.Text = "Add Previous Sibling";
             // 
-            // addNextSiblingToolStripMenuItem
+            // AddNextSiblingMenuItem
             // 
-            this.addNextSiblingToolStripMenuItem.Enabled = false;
-            this.addNextSiblingToolStripMenuItem.Name = "addNextSiblingToolStripMenuItem";
-            this.addNextSiblingToolStripMenuItem.Size = new System.Drawing.Size(238, 22);
-            this.addNextSiblingToolStripMenuItem.Text = "Add Next Sibling";
+            this.AddNextSiblingMenuItem.Enabled = false;
+            this.AddNextSiblingMenuItem.Name = "AddNextSiblingMenuItem";
+            this.AddNextSiblingMenuItem.Size = new System.Drawing.Size(238, 22);
+            this.AddNextSiblingMenuItem.Text = "Add Next Sibling";
             // 
             // toolStripSeparator7
             // 
             this.toolStripSeparator7.Name = "toolStripSeparator7";
             this.toolStripSeparator7.Size = new System.Drawing.Size(235, 6);
             // 
-            // setAsVirtualRootToolStripMenuItem
+            // SetAsRootMenuItem
             // 
-            this.setAsVirtualRootToolStripMenuItem.Name = "setAsVirtualRootToolStripMenuItem";
-            this.setAsVirtualRootToolStripMenuItem.Size = new System.Drawing.Size(238, 22);
-            this.setAsVirtualRootToolStripMenuItem.Text = "Set as Virtual Root";
+            this.SetAsRootMenuItem.Name = "SetAsRootMenuItem";
+            this.SetAsRootMenuItem.Size = new System.Drawing.Size(238, 22);
+            this.SetAsRootMenuItem.Text = "Set as Virtual Root";
             // 
             // toolStripSeparator8
             // 
             this.toolStripSeparator8.Name = "toolStripSeparator8";
             this.toolStripSeparator8.Size = new System.Drawing.Size(235, 6);
             // 
-            // deleteNodeToolStripMenuItem
+            // DeleteNodeMenuItem
             // 
-            this.deleteNodeToolStripMenuItem.Name = "deleteNodeToolStripMenuItem";
-            this.deleteNodeToolStripMenuItem.Size = new System.Drawing.Size(238, 22);
-            this.deleteNodeToolStripMenuItem.Text = "Delete Node";
+            this.DeleteNodeMenuItem.Name = "DeleteNodeMenuItem";
+            this.DeleteNodeMenuItem.Size = new System.Drawing.Size(238, 22);
+            this.DeleteNodeMenuItem.Text = "Delete Node";
             // 
             // DeixtoAgentWindow
             // 
@@ -2076,22 +2076,22 @@
         private System.Windows.Forms.Label ExtractionResultsLabel;
         private System.Windows.Forms.ListView OutputListView;
         private System.Windows.Forms.ContextMenuStrip AdjustpatternMenuStrip;
-        private System.Windows.Forms.ToolStripMenuItem matchAndExtractContentToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem matchAndExtractSourceToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem matchNodeToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem dontCareAboutThisNodeToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem matchNodeOPTIONALToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem matchAndExtractOPTIONALToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem CheckedMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem CheckedSourceMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem GrayedMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem UncheckedMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem GrayedImpliedMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem CheckedImpliedMenuItem;
         private System.Windows.Forms.ToolStripMenuItem AddRegexMenuItem;
         private System.Windows.Forms.ToolStripMenuItem RemoveRegExMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem enterToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem enterOfFSONToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem enterSiblingOrderToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem removeSiblingOrderToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem addPreviousToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem addNextSiblingToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem setAsVirtualRootToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem deleteNodeToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem EnterRemoveLabelMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem EnterFSONMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem EnterSiblingOrderMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem RemoveSiblingOrderMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem AddPreviousSiblingMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem AddNextSiblingMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem SetAsRootMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem DeleteNodeMenuItem;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator3;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator4;
