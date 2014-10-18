@@ -1084,6 +1084,7 @@
             this.TargetURLsListBox.Name = "TargetURLsListBox";
             this.TargetURLsListBox.Size = new System.Drawing.Size(187, 121);
             this.TargetURLsListBox.TabIndex = 7;
+            this.TargetURLsListBox.SelectedIndexChanged += new System.EventHandler(this.TargetURLsListBox_SelectedIndexChanged);
             // 
             // BrowseURLsFileButton
             // 
@@ -1123,6 +1124,7 @@
             this.RemoveURLButton.TabIndex = 3;
             this.RemoveURLButton.Text = "--";
             this.RemoveURLButton.UseVisualStyleBackColor = true;
+            this.RemoveURLButton.Click += new System.EventHandler(this.RemoveURLButton_Click);
             // 
             // AddURLButton
             // 

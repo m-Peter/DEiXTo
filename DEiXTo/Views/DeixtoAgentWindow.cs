@@ -48,6 +48,8 @@ namespace DEiXTo.Views
         public event Action<TreeNode> RemoveRegex;
         public event Action<FormClosingEventArgs> WindowClosing;
         public event Action AddURLToTargetURLs;
+        public event Action RemoveURLFromTargetURLs;
+        public event Action<String> TargetURLSelected;
         
         private HtmlElement _currentElement;
 
@@ -570,6 +572,24 @@ namespace DEiXTo.Views
         /// <summary>
         /// 
         /// </summary>
+        /// <param name="url"></param>
+        public void SetURLInput(string url)
+        {
+            AddURLTextBox.Text = url;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="url"></param>
+        public void RemoveTargetURL(string url)
+        {
+            TargetURLsListBox.Items.Remove(url);
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
         /// <returns></returns>
         public string TargetURLToAdd()
         {
@@ -1023,6 +1043,29 @@ namespace DEiXTo.Views
             if (AddURLToTargetURLs != null)
             {
                 AddURLToTargetURLs();
+            }
+        }
+
+        private void RemoveURLButton_Click(object sender, EventArgs e)
+        {
+            if (RemoveURLFromTargetURLs != null)
+            {
+                RemoveURLFromTargetURLs();
+            }
+        }
+
+        private void TargetURLsListBox_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (TargetURLSelected != null)
+            {
+                if (TargetURLsListBox.SelectedItem == null)
+                {
+                    return;
+                }
+
+                string selectedURL = TargetURLsListBox.SelectedItem.ToString();
+                
+                TargetURLSelected(selectedURL);
             }
         }
     }

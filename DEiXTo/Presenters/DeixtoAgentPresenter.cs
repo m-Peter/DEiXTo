@@ -65,6 +65,8 @@ namespace DEiXTo.Presenters
             _view.RemoveRegex += removeRegex;
             _view.WindowClosing += windowClosing;
             _view.AddURLToTargetURLs += addURLToTargetURLs;
+            _view.RemoveURLFromTargetURLs += removeURLFromTargetURLs;
+            _view.TargetURLSelected += targetURLSelected;
             
             _eventHub.Subscribe<LabelAdded>(this);
             _eventHub.Subscribe<RegexAdded>(this);
@@ -72,6 +74,20 @@ namespace DEiXTo.Presenters
             var imagesList = _imageLoader.LoadImages();
 
             _view.AddWorkingPatterImages(imagesList);
+        }
+
+        void targetURLSelected(string url)
+        {
+            _view.SetURLInput(url);
+        }
+
+        void removeURLFromTargetURLs()
+        {
+            // retrieve the select URL from the TargetURLs list
+            string url = _view.TargetURLToAdd();
+
+            _view.RemoveTargetURL(url);
+            _view.ClearAddURLInput();
         }
 
         void addURLToTargetURLs()

@@ -40,6 +40,8 @@ namespace DEiXTo.Views
         event Action<TreeNode> RemoveRegex;
         event Action<FormClosingEventArgs> WindowClosing;
         event Action AddURLToTargetURLs;
+        event Action RemoveURLFromTargetURLs;
+        event Action<String> TargetURLSelected;
         
         string Url { get; }
         HtmlElement CurrentElement { get; set; }
@@ -47,6 +49,7 @@ namespace DEiXTo.Views
         string GetDocumentUrl();
         string TargetURLToAdd();
         void ShowEnterURLToAddMessage();
+        void SetURLInput(string url);
         void ClearAddURLInput();
         void ClearTargetURLs();
         void ClearExtractedOutputs();
@@ -60,6 +63,7 @@ namespace DEiXTo.Views
         void ApplyVisibilityStateInCrawling(bool state);
         void FocusAuxiliaryTabPage();
         void FocusOutputTabPage();
+        void RemoveTargetURL(string url);
         HtmlDocument GetHtmlDocument();
         void FillDomTree(TreeNode node);
         void FillSnapshotTree(TreeNode node);
