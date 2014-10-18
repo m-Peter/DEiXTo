@@ -20,6 +20,7 @@ namespace DEiXTo.Presenters
         private StatesImageLoader _imageLoader;
         private DOMTreeStructure _domTree;
         private IViewLoader _loader;
+        private EventHub _eventHub;
 
         public DeixtoAgentPresenter(IDeixtoAgentView view)
         {
@@ -28,6 +29,7 @@ namespace DEiXTo.Presenters
             _builder = new TreeBuilder();
             _imageLoader = new StatesImageLoader();
             _loader = new WindowsViewLoader();
+            _eventHub = EventHub.Instance;
 
             // ATTACH THE EVENTS OF THE VIEW TO LOCAL METHODS
             _view.BrowseToUrl += browseToUrl;
@@ -58,13 +60,19 @@ namespace DEiXTo.Presenters
             _view.OutputResultSelected += outputResultSelected;
             _view.AddNewLabel += addNewLabel;
             _view.AddRegex += addRegex;
-            EventHub eventHub = EventHub.Instance;
-            eventHub.Subscribe<LabelAdded>(this);
-            eventHub.Subscribe<RegexAdded>(this);
+            _view.WindowClosing += windowClosing;
+            
+            _eventHub.Subscribe<LabelAdded>(this);
+            _eventHub.Subscribe<RegexAdded>(this);
 
             var imagesList = _imageLoader.LoadImages();
 
             _view.AddWorkingPatterImages(imagesList);
+        }
+
+        void windowClosing(FormClosingEventArgs e)
+        {
+            _eventHub.Publish(new EventArgs());
         }
 
         public void Receive(LabelAdded subject)

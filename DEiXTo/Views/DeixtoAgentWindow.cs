@@ -44,6 +44,7 @@ namespace DEiXTo.Views
         public event Action<bool, TreeNode> OutputResultSelected;
         public event Action<TreeNode> AddNewLabel;
         public event Action<TreeNode> AddRegex;
+        public event Action<FormClosingEventArgs> WindowClosing;
         
         private HtmlElement _currentElement;
 
@@ -950,6 +951,14 @@ namespace DEiXTo.Views
             {
                 var node = WorkingPatternTreeView.SelectedNode;
                 AddRegex(node);
+            }
+        }
+
+        private void DeixtoAgentWindow_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            if (WindowClosing != null)
+            {
+                WindowClosing(e);
             }
         }
     }

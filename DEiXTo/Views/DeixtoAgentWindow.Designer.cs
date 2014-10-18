@@ -1542,7 +1542,7 @@
             this.toolStripSeparator8,
             this.deleteNodeToolStripMenuItem});
             this.AdjustpatternMenuStrip.Name = "AdjustpatternMenuStrip";
-            this.AdjustpatternMenuStrip.Size = new System.Drawing.Size(239, 420);
+            this.AdjustpatternMenuStrip.Size = new System.Drawing.Size(239, 398);
             // 
             // matchAndExtractContentToolStripMenuItem
             // 
@@ -1892,6 +1892,7 @@
             this.Controls.Add(this.splitContainer1);
             this.Name = "DeixtoAgentWindow";
             this.Text = "DeixtoAgentWindow";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.DeixtoAgentWindow_FormClosing);
             this.ClientSizeChanged += new System.EventHandler(this.DeixtoAgentWindow_ClientSizeChanged);
             this.splitContainer1.Panel1.ResumeLayout(false);
             this.splitContainer1.Panel2.ResumeLayout(false);

@@ -1,5 +1,6 @@
 ﻿using DEiXTo.Services;
 using DEiXTo.Views;
+using System;
 using System.Windows.Forms;
 
 namespace DEiXTo.Presenters
@@ -7,7 +8,7 @@ namespace DEiXTo.Presenters
     /// <summary>
     /// 
     /// </summary>
-    public class MainPresenter
+    public class MainPresenter : ISubscriber<EventArgs>
     {
         private readonly IMainView _view;
         private readonly IViewLoader _viewLoader;
@@ -18,6 +19,7 @@ namespace DEiXTo.Presenters
         {
             _view = view;
             _viewLoader = viewLoader;
+            EventHub eventHub = EventHub.Instance;
 
             // ATTACH THE EVENTS OF THE VIEW TO LOCAL METHODS
             _view.CreateNewAgent += createNewAgent;
@@ -25,6 +27,8 @@ namespace DEiXTo.Presenters
             _view.CloseAgentWindows += closeAgentWindows;
             _view.FloatAgentWindows += floatAgentWindows;
             _view.WindowClosing += windowClosing;
+
+            eventHub.Subscribe<EventArgs>(this);
         }
 
         /// <summary>
@@ -86,6 +90,15 @@ namespace DEiXTo.Presenters
         public int FormCounter
         {
             get { return _formCounter; }
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="subject"></param>
+        public void Receive(EventArgs subject)
+        {
+            _formCounter--;
         }
     }
 }
