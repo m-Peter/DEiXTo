@@ -1813,6 +1813,7 @@
             this.RemoveLabelMenuItem.Name = "RemoveLabelMenuItem";
             this.RemoveLabelMenuItem.Size = new System.Drawing.Size(152, 22);
             this.RemoveLabelMenuItem.Text = "Remove Label";
+            this.RemoveLabelMenuItem.Click += new System.EventHandler(this.RemoveLabelMenuItem_Click);
             // 
             // toolStripSeparator4
             // 

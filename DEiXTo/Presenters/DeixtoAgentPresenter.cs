@@ -60,6 +60,7 @@ namespace DEiXTo.Presenters
             _view.OutputResultSelected += outputResultSelected;
             _view.AddNewLabel += addNewLabel;
             _view.AddRegex += addRegex;
+            _view.RemoveLabel += removeLabel;
             _view.WindowClosing += windowClosing;
             
             _eventHub.Subscribe<LabelAdded>(this);
@@ -68,6 +69,14 @@ namespace DEiXTo.Presenters
             var imagesList = _imageLoader.LoadImages();
 
             _view.AddWorkingPatterImages(imagesList);
+        }
+
+        void removeLabel(TreeNode node)
+        {
+            string text = node.Text;
+            int index = text.IndexOf(":");
+            node.Text = text.Substring(0, index);
+            node.SetLabel(null);
         }
 
         void windowClosing(FormClosingEventArgs e)
