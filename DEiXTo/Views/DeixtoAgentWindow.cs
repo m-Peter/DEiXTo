@@ -226,6 +226,34 @@ namespace DEiXTo.Views
         /// <summary>
         /// 
         /// </summary>
+        /// <returns></returns>
+        public bool CrawlingEnabled()
+        {
+            return CrawlingCheckBox.Checked;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        public int CrawlingDepth()
+        {
+            int depth = (int)CrawlingDepthNUD.Value;
+            return depth;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        public string HtmlLink()
+        {
+            return HTMLLinkTextBox.Text;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
         public void ClearAddURLInput()
         {
             AddURLTextBox.Clear();

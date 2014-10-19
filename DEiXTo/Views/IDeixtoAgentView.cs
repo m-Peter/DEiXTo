@@ -69,6 +69,9 @@ namespace DEiXTo.Views
         void FillDomTree(TreeNode node);
         void FillSnapshotTree(TreeNode node);
         bool HighlightModeEnabled();
+        bool CrawlingEnabled();
+        int CrawlingDepth();
+        string HtmlLink();
         void AppendTargetUrl(string url);
         void SelectDOMNode(TreeNode node);
         void FillElementInfo(TreeNode node, string outerHtml);

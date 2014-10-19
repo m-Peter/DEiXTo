@@ -748,6 +748,11 @@
             this.CrawlingDepthNUD.Name = "CrawlingDepthNUD";
             this.CrawlingDepthNUD.Size = new System.Drawing.Size(54, 20);
             this.CrawlingDepthNUD.TabIndex = 2;
+            this.CrawlingDepthNUD.Value = new decimal(new int[] {
+            5,
+            0,
+            0,
+            0});
             // 
             // CrawlingDepthLabel
             // 
