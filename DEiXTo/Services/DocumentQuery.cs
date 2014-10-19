@@ -48,6 +48,27 @@ namespace DEiXTo.Services
         /// <summary>
         /// 
         /// </summary>
+        /// <param name="link"></param>
+        /// <returns></returns>
+        public HtmlElement GetLinkToFollow(string mylink)
+        {
+            HtmlElementCollection links = _htmlDocument.GetElementsByTagName("A");
+            HtmlElement link = null;
+
+            foreach (HtmlElement l in links)
+            {
+                if (l.InnerText != null && l.InnerText.Equals(mylink))
+                {
+                    link = l;
+                }
+            }
+
+            return link;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
         /// <returns></returns>
         public int CountElements()
         {

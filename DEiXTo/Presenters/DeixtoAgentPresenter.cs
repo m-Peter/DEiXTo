@@ -282,6 +282,13 @@ namespace DEiXTo.Presenters
         /// </summary>
         void executeRule()
         {
+            if (_view.CrawlingEnabled())
+            {
+                string mylink = _view.HtmlLink();
+                var elem = _document.GetLinkToFollow(mylink);
+                elem.InvokeMember("Click");
+                return;
+            }
             _view.FocusOutputTabPage();
             _view.ClearExtractedOutputs();
 
