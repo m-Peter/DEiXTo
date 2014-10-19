@@ -100,7 +100,7 @@ namespace DEiXTo.Views
         void AddOutputItem(string[] contents, TreeNode node);
         void SetExtractedResults(int count);
         void UpdateDocumentUrl();
-        void AddWorkingPatterImages(ImageList imageList);
+        void AddWorkingPatternImages(ImageList imageList);
         void SetNodeFont(TreeNode node);
         void ShowCannotDeleteRootMessage();
         void ApplyStateToNode(TreeNode node, int imageIndex);

@@ -72,8 +72,7 @@ namespace DEiXTo.Presenters
             _eventHub.Subscribe<RegexAdded>(this);
 
             var imagesList = _imageLoader.LoadImages();
-
-            _view.AddWorkingPatterImages(imagesList);
+            _view.AddWorkingPatternImages(imagesList);
         }
 
         void targetURLSelected(string url)

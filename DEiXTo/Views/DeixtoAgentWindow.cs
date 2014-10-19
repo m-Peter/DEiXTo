@@ -278,7 +278,7 @@ namespace DEiXTo.Views
         /// 
         /// </summary>
         /// <param name="imageList"></param>
-        public void AddWorkingPatterImages(ImageList imageList)
+        public void AddWorkingPatternImages(ImageList imageList)
         {
             WorkingPatternTreeView.ImageList = imageList;
         }
