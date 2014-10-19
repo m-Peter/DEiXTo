@@ -67,7 +67,7 @@ namespace DEiXTo.Presenters
             _view.AddURLToTargetURLs += addURLToTargetURLs;
             _view.RemoveURLFromTargetURLs += removeURLFromTargetURLs;
             _view.TargetURLSelected += targetURLSelected;
-            
+
             _eventHub.Subscribe<LabelAdded>(this);
             _eventHub.Subscribe<RegexAdded>(this);
 
@@ -285,8 +285,15 @@ namespace DEiXTo.Presenters
             if (_view.CrawlingEnabled())
             {
                 string mylink = _view.HtmlLink();
-                var elem = _document.GetLinkToFollow(mylink);
-                elem.InvokeMember("Click");
+                int depth = _view.CrawlingDepth();
+
+                for (int i = 0; i < depth; i++)
+                {
+                    var elem = _document.GetLinkToFollow(mylink);
+                    string href = elem.GetAttribute("href");
+                    _view.NavigateTo(href);
+                }
+                
                 return;
             }
             _view.FocusOutputTabPage();
@@ -295,9 +302,9 @@ namespace DEiXTo.Presenters
             var pattern = _view.GetWorkingPattern();
             var bodyNodes = _view.GetBodyTreeNodes();
             PatternExtraction extraction = new PatternExtraction(pattern, bodyNodes);
-            
+
             extraction.FindMatches();
-            
+
             var results = extraction.ExtractedResults();
             var columnFormat = "VAR";
 
@@ -311,7 +318,7 @@ namespace DEiXTo.Presenters
             {
                 _view.AddOutputItem(item.ToStringArray(), item.Node);
             }
-            
+
             _view.SetExtractedResults(results.Count);
         }
 
@@ -583,7 +590,7 @@ namespace DEiXTo.Presenters
             var element = _document.GetElementByIndex(index);
             // Style the HTML element in the WebBrowser
             _styling.Style(element);
-            
+
             _view.FillElementInfo(node, element.OuterHtml);
 
             if (_view.CanAutoScroll())
@@ -742,7 +749,7 @@ namespace DEiXTo.Presenters
             _view.ClearTargetURLs();
             _view.AppendTargetUrl(_view.GetDocumentUrl());
             _view.UpdateDocumentUrl();
-            
+
             _domTree = _builder.BuildDOMTree(elem);
             _view.FillDomTree(_domTree.RootNode);
             _view.AttachDocumentEvents();

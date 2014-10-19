@@ -326,6 +326,10 @@ namespace DEiXTo.Views
         public void NavigateTo(string url)
         {
             WebBrowser.Navigate(url);
+            while (WebBrowser.ReadyState != WebBrowserReadyState.Complete)
+            {
+                Application.DoEvents();
+            }
         }
 
         /// <summary>
