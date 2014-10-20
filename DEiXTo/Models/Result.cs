@@ -27,7 +27,7 @@ namespace DEiXTo.Models
         /// <param name="content"></param>
         public void AddContent(string content)
         {
-            _extractedContents.Add(content);
+            _extractedContents.Add(content.Trim());
         }
 
         /// <summary>

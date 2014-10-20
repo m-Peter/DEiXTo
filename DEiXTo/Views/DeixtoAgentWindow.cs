@@ -766,16 +766,6 @@ namespace DEiXTo.Views
         /// 
         /// </summary>
         /// <param name="count"></param>
-        public void SetExtractedResults(int count)
-        {
-            ExtractedResultsCountLabel.Text = count.ToString() + " results!";
-            ExtractedResultsCountLabel.Enabled = true;
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="count"></param>
         public void WritePageResults(string message)
         {
             ExtractionResultsLabel.Enabled = true;

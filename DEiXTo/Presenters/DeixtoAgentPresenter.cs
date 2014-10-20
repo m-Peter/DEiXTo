@@ -369,7 +369,7 @@ namespace DEiXTo.Presenters
                     _view.AddOutputItem(item.ToStringArray(), item.Node);
                 }
 
-                _view.SetExtractedResults(results.Count);
+                _view.WritePageResults("Extraction Completed: " + results.Count.ToString() + " results!");
             }
         }
 
