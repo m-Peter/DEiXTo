@@ -300,6 +300,8 @@ namespace DEiXTo.Presenters
                     return;
                 }
 
+                _view.FocusOutputTabPage();
+
                 for (int i = 0; i < depth; i++)
                 {
                     var elem = _document.GetLinkToFollow(mylink);
