@@ -22,6 +22,7 @@ namespace DEiXTo.Presenters
         private DOMTreeStructure _domTree;
         private IViewLoader _loader;
         private EventHub _eventHub;
+        private ISaveFileDialog _saveFileDialog;
 
         public DeixtoAgentPresenter(IDeixtoAgentView view)
         {
@@ -31,6 +32,7 @@ namespace DEiXTo.Presenters
             _imageLoader = new StatesImageLoader();
             _loader = new WindowsViewLoader();
             _eventHub = EventHub.Instance;
+            _saveFileDialog = new SaveFileDialogWrapper();
 
             // ATTACH THE EVENTS OF THE VIEW TO LOCAL METHODS
             _view.BrowseToUrl += browseToUrl;
@@ -67,12 +69,31 @@ namespace DEiXTo.Presenters
             _view.AddURLToTargetURLs += addURLToTargetURLs;
             _view.RemoveURLFromTargetURLs += removeURLFromTargetURLs;
             _view.TargetURLSelected += targetURLSelected;
+            _view.SaveExtractionPattern += saveExtractionPattern;
 
             _eventHub.Subscribe<LabelAdded>(this);
             _eventHub.Subscribe<RegexAdded>(this);
 
             var imagesList = _imageLoader.LoadImages();
             _view.AddWorkingPatternImages(imagesList);
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        void saveExtractionPattern()
+        {
+            _saveFileDialog.Filter = "XML Files (*.xml)|";
+            _saveFileDialog.Extension = "xml";
+            var result = _saveFileDialog.ShowDialog();
+            string filename = string.Empty;
+            WriteExtractionPattern writer = new WriteExtractionPattern();
+
+            if (result == DialogResult.OK)
+            {
+                filename = _saveFileDialog.Filename;
+                writer.write(filename, _view.GetPatternTreeNodes());
+            }
         }
 
         /// <summary>

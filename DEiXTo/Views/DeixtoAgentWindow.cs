@@ -50,6 +50,7 @@ namespace DEiXTo.Views
         public event Action AddURLToTargetURLs;
         public event Action RemoveURLFromTargetURLs;
         public event Action<String> TargetURLSelected;
+        public event Action SaveExtractionPattern;
 
         private HtmlElement _currentElement;
 
@@ -813,6 +814,15 @@ namespace DEiXTo.Views
         /// <summary>
         /// 
         /// </summary>
+        /// <returns></returns>
+        public TreeNodeCollection GetPatternTreeNodes()
+        {
+            return WorkingPatternTreeView.Nodes;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
         /// <param name="node"></param>
         public void UnderlineNode(TreeNode node)
         {
@@ -1187,6 +1197,14 @@ namespace DEiXTo.Views
             }
 
             textBox1.Text = e.Item.SubItems[1].Text;
+        }
+
+        private void SavePatternButton_Click(object sender, EventArgs e)
+        {
+            if (SaveExtractionPattern != null)
+            {
+                SaveExtractionPattern();
+            }
         }
     }
 }

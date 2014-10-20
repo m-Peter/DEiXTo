@@ -73,10 +73,12 @@
     <Compile Include="Services\IEventHub.cs" />
     <Compile Include="Services\ImageContentExtractor.cs" />
     <Compile Include="Services\InputContentExtractor.cs" />
+    <Compile Include="Services\ISaveFileDialog.cs" />
     <Compile Include="Services\ISubscriber.cs" />
     <Compile Include="Services\LabelAdded.cs" />
     <Compile Include="Services\LinkContentExtractor.cs" />
     <Compile Include="Services\RegexAdded.cs" />
+    <Compile Include="Services\SaveFileDialogWrapper.cs" />
     <Compile Include="Services\StateToImageMapper.cs" />
     <Compile Include="Services\TagContentExtractor.cs" />
     <Compile Include="Services\TreeBuilder.cs" />
@@ -89,6 +91,7 @@
     <Compile Include="Services\TreeNodeExtensions.cs" />
     <Compile Include="Services\WebDocumentValidator.cs" />
     <Compile Include="Services\WindowsViewLoader.cs" />
+    <Compile Include="Services\WriteExtractionPattern.cs" />
     <Compile Include="Views\AddLabelWindow.cs">
       <SubType>Form</SubType>
     </Compile>

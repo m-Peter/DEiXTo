@@ -42,6 +42,7 @@ namespace DEiXTo.Views
         event Action AddURLToTargetURLs;
         event Action RemoveURLFromTargetURLs;
         event Action<String> TargetURLSelected;
+        event Action SaveExtractionPattern;
         
         string Url { get; }
         HtmlElement CurrentElement { get; set; }
@@ -102,6 +103,7 @@ namespace DEiXTo.Views
         TreeNode GetAuxiliaryInstance();
         TreeNodeCollection GetDOMTreeNodes();
         TreeNodeCollection GetBodyTreeNodes();
+        TreeNodeCollection GetPatternTreeNodes();
         void AddOutputColumn(string columnHeader);
         void AddOutputItem(string[] contents, TreeNode node);
         void WritePageResults(string message);

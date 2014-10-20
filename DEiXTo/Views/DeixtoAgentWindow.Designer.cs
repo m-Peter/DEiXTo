@@ -120,6 +120,13 @@
             this.OuterHtmlTextBox = new System.Windows.Forms.TextBox();
             this.OuterHtmlLabel = new System.Windows.Forms.Label();
             this.RSS = new System.Windows.Forms.TabPage();
+            this.RSSListView = new System.Windows.Forms.ListView();
+            this.LabelColumn = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.ValueColumn = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.DescriptionColumn = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.ExampleColumn = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.button1 = new System.Windows.Forms.Button();
             this.Log = new System.Windows.Forms.TabPage();
             this.ClearLogButton = new System.Windows.Forms.Button();
             this.LogTextBox = new System.Windows.Forms.TextBox();
@@ -196,13 +203,6 @@
             this.SetAsRootMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator8 = new System.Windows.Forms.ToolStripSeparator();
             this.DeleteNodeMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.button1 = new System.Windows.Forms.Button();
-            this.textBox1 = new System.Windows.Forms.TextBox();
-            this.RSSListView = new System.Windows.Forms.ListView();
-            this.LabelColumn = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.ValueColumn = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.DescriptionColumn = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.ExampleColumn = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
@@ -604,6 +604,7 @@
             this.SavePatternButton.TabIndex = 3;
             this.SavePatternButton.Text = "btn";
             this.SavePatternButton.UseVisualStyleBackColor = true;
+            this.SavePatternButton.Click += new System.EventHandler(this.SavePatternButton_Click);
             // 
             // ClearTreeViewsButton
             // 
@@ -1295,6 +1296,59 @@
             this.RSS.Text = "RSS Channel";
             this.RSS.UseVisualStyleBackColor = true;
             // 
+            // RSSListView
+            // 
+            this.RSSListView.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.LabelColumn,
+            this.ValueColumn,
+            this.DescriptionColumn,
+            this.ExampleColumn});
+            this.RSSListView.FullRowSelect = true;
+            this.RSSListView.GridLines = true;
+            this.RSSListView.Location = new System.Drawing.Point(3, 3);
+            this.RSSListView.Name = "RSSListView";
+            this.RSSListView.Size = new System.Drawing.Size(519, 327);
+            this.RSSListView.TabIndex = 3;
+            this.RSSListView.UseCompatibleStateImageBehavior = false;
+            this.RSSListView.View = System.Windows.Forms.View.Details;
+            this.RSSListView.ItemSelectionChanged += new System.Windows.Forms.ListViewItemSelectionChangedEventHandler(this.RSSListView_ItemSelectionChanged);
+            // 
+            // LabelColumn
+            // 
+            this.LabelColumn.Text = "Label";
+            this.LabelColumn.Width = 125;
+            // 
+            // ValueColumn
+            // 
+            this.ValueColumn.Text = "Value";
+            this.ValueColumn.Width = 125;
+            // 
+            // DescriptionColumn
+            // 
+            this.DescriptionColumn.Text = "Description";
+            this.DescriptionColumn.Width = 125;
+            // 
+            // ExampleColumn
+            // 
+            this.ExampleColumn.Text = "Example";
+            this.ExampleColumn.Width = 125;
+            // 
+            // textBox1
+            // 
+            this.textBox1.Location = new System.Drawing.Point(3, 338);
+            this.textBox1.Name = "textBox1";
+            this.textBox1.Size = new System.Drawing.Size(291, 20);
+            this.textBox1.TabIndex = 2;
+            // 
+            // button1
+            // 
+            this.button1.Location = new System.Drawing.Point(300, 336);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(75, 23);
+            this.button1.TabIndex = 1;
+            this.button1.Text = "Set Value";
+            this.button1.UseVisualStyleBackColor = true;
+            // 
             // Log
             // 
             this.Log.Controls.Add(this.ClearLogButton);
@@ -1857,59 +1911,6 @@
             this.DeleteNodeMenuItem.Name = "DeleteNodeMenuItem";
             this.DeleteNodeMenuItem.Size = new System.Drawing.Size(238, 22);
             this.DeleteNodeMenuItem.Text = "Delete Node";
-            // 
-            // button1
-            // 
-            this.button1.Location = new System.Drawing.Point(300, 336);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(75, 23);
-            this.button1.TabIndex = 1;
-            this.button1.Text = "Set Value";
-            this.button1.UseVisualStyleBackColor = true;
-            // 
-            // textBox1
-            // 
-            this.textBox1.Location = new System.Drawing.Point(3, 338);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(291, 20);
-            this.textBox1.TabIndex = 2;
-            // 
-            // RSSListView
-            // 
-            this.RSSListView.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
-            this.LabelColumn,
-            this.ValueColumn,
-            this.DescriptionColumn,
-            this.ExampleColumn});
-            this.RSSListView.FullRowSelect = true;
-            this.RSSListView.GridLines = true;
-            this.RSSListView.Location = new System.Drawing.Point(3, 3);
-            this.RSSListView.Name = "RSSListView";
-            this.RSSListView.Size = new System.Drawing.Size(519, 327);
-            this.RSSListView.TabIndex = 3;
-            this.RSSListView.UseCompatibleStateImageBehavior = false;
-            this.RSSListView.View = System.Windows.Forms.View.Details;
-            this.RSSListView.ItemSelectionChanged += new System.Windows.Forms.ListViewItemSelectionChangedEventHandler(this.RSSListView_ItemSelectionChanged);
-            // 
-            // LabelColumn
-            // 
-            this.LabelColumn.Text = "Label";
-            this.LabelColumn.Width = 125;
-            // 
-            // ValueColumn
-            // 
-            this.ValueColumn.Text = "Value";
-            this.ValueColumn.Width = 125;
-            // 
-            // DescriptionColumn
-            // 
-            this.DescriptionColumn.Text = "Description";
-            this.DescriptionColumn.Width = 125;
-            // 
-            // ExampleColumn
-            // 
-            this.ExampleColumn.Text = "Example";
-            this.ExampleColumn.Width = 125;
             // 
             // DeixtoAgentWindow
             // 
