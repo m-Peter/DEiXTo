@@ -286,6 +286,7 @@ namespace DEiXTo.Presenters
             {
                 string mylink = _view.HtmlLink();
                 int depth = _view.CrawlingDepth();
+                int count = 0;
 
                 if (String.IsNullOrWhiteSpace(mylink))
                 {
@@ -312,6 +313,7 @@ namespace DEiXTo.Presenters
                     extraction.FindMatches();
 
                     var results = extraction.ExtractedResults();
+                    count += results.Count;
                     var columnFormat = "VAR";
 
                     int columns = extraction.CountOutputVariables();
@@ -325,8 +327,10 @@ namespace DEiXTo.Presenters
                         _view.AddOutputItem(item.ToStringArray(), item.Node);
                     }
 
-                    _view.SetExtractedResults(results.Count);
+                    _view.WritePageResults(count.ToString() + " results!");
                 }
+
+                _view.WritePageResults("Extraction Completed: " + count.ToString() + " results!");
 
                 return;
             }

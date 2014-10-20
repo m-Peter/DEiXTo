@@ -775,6 +775,16 @@ namespace DEiXTo.Views
         /// <summary>
         /// 
         /// </summary>
+        /// <param name="count"></param>
+        public void WritePageResults(string message)
+        {
+            ExtractionResultsLabel.Enabled = true;
+            ExtractionResultsLabel.Text = message;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
         /// <param name="label"></param>
         /// <param name="node"></param>
         public void AddLabelToNode(string label, TreeNode node)

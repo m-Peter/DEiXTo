@@ -1176,11 +1176,11 @@
             // ExtractionResultsLabel
             // 
             this.ExtractionResultsLabel.AutoSize = true;
+            this.ExtractionResultsLabel.Enabled = false;
             this.ExtractionResultsLabel.Location = new System.Drawing.Point(6, 344);
             this.ExtractionResultsLabel.Name = "ExtractionResultsLabel";
-            this.ExtractionResultsLabel.Size = new System.Drawing.Size(110, 13);
+            this.ExtractionResultsLabel.Size = new System.Drawing.Size(0, 13);
             this.ExtractionResultsLabel.TabIndex = 1;
-            this.ExtractionResultsLabel.Text = "Extraction Completed:";
             // 
             // OutputListView
             // 

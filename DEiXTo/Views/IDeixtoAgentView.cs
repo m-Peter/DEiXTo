@@ -105,6 +105,7 @@ namespace DEiXTo.Views
         void AddOutputColumn(string columnHeader);
         void AddOutputItem(string[] contents, TreeNode node);
         void SetExtractedResults(int count);
+        void WritePageResults(string message);
         void UpdateDocumentUrl();
         void AddWorkingPatternImages(ImageList imageList);
         void SetNodeFont(TreeNode node);
