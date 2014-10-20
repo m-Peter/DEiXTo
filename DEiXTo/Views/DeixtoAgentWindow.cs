@@ -50,7 +50,7 @@ namespace DEiXTo.Views
         public event Action AddURLToTargetURLs;
         public event Action RemoveURLFromTargetURLs;
         public event Action<String> TargetURLSelected;
-        
+
         private HtmlElement _currentElement;
 
         public DeixtoAgentWindow()
@@ -89,6 +89,34 @@ namespace DEiXTo.Views
             DeixtoAgentTooltip.SetToolTip(this.GoButton, "Run in auto mode");
             DeixtoAgentTooltip.SetToolTip(this.OpenButton, "Open Project File");
             DeixtoAgentTooltip.SetToolTip(this.SaveButton, "Open Project File");
+            ListViewItem item1 = new ListViewItem(new string[] { "title", "Channel name", "The name of the channel. It's how people refer to your service. If you have an HTML website that contains the same information as your RSS file, the title of your channel should be the same as the title of your website.", "GoUpstate.com News Headlines" });
+            ListViewItem item2 = new ListViewItem(new string[] { "link", "http://mycomputer.mydomain.com", "The URL to the HTML website corresponding to the channel.", "http://goupstate.com" });
+            ListViewItem item3 = new ListViewItem(new string[] { "description", "ΔEiXTo generated RSS feed", "Phrase or sentence describing the channel.", "The latest news from GoUpstate.com, a Spartanburn Herald-Journal Web site." });
+            ListViewItem item4 = new ListViewItem(new string[] { "language", "en-us", "The language the channel is written in. This allows aggregators to group all Italian language sites, for example, on a single page. A list of allowable values for this element, as provided by Netscape, is here.  You may also use values defined by the W3C.", "en-us" });
+            ListViewItem item5 = new ListViewItem(new string[] { "copyright", "Copyright 2007-2008, ΔEiXTo", "Copyright notice for content in the channel.", "Copyright 2002, Spartanburg Herald-Journal" });
+            ListViewItem item6 = new ListViewItem(new string[] { "managingEditor", "myaddress@mydomain.com", "Email address for person responsible for editorial content.", "geo@herald.com (George Matesky)" });
+            ListViewItem item7 = new ListViewItem(new string[] { "webMaster", "myaddress@mydomain.com", "Email address for person responsible for technical issues relating to channel.", "betty@herald.com (Betty Guernsey" });
+            ListViewItem item8 = new ListViewItem(new string[] { "generator", "ΔEiXTo", "A string indicating the program used to generate the channel.", "MightyInHouse Content System v2.3" });
+            ListViewItem item9 = new ListViewItem(new string[] { "category", "", "Specify one or more categories that the channel belongs to. Follows the same rules as the <item>-level category element.", "<category>Newspapers</category>" });
+            ListViewItem item10 = new ListViewItem(new string[] { "docs", "", "A URL that points to the documentation for the format used in the RSS file. It's probably a pointer to this page. It's for people who might stumble across an RSS file on a Web server 25 years from now and wonder what it is.", "http://blogs.law.harvard.edu/tech/rss" });
+            ListViewItem item11 = new ListViewItem(new string[] { "ttl", "", "ttl stands for time to live. It's a number of minutes that indicates how long a channel can be cached before refreshing from the source.", "<ttl>60</ttl>" });
+            ListViewItem item12 = new ListViewItem(new string[] { "rating", "", "The PICS rating for the channel.", "<rating>(PICS-1.1 \"http://www.classify.org/safeurf/\" | r (SS~~0001))</rating>" });
+            ListViewItem item13 = new ListViewItem(new string[] { "skipHours", "", "A hint for aggregators telling them which hours they can skip.", "<skipHours>19</skipHours>" });
+            ListViewItem item14 = new ListViewItem(new string[] { "skipDays", "", "A hint for aggregators telling them which days they can skip.", "<skipDays>Saturday</skipDays>" });
+            RSSListView.Items.Add(item1);
+            RSSListView.Items.Add(item2);
+            RSSListView.Items.Add(item3);
+            RSSListView.Items.Add(item4);
+            RSSListView.Items.Add(item5);
+            RSSListView.Items.Add(item6);
+            RSSListView.Items.Add(item7);
+            RSSListView.Items.Add(item8);
+            RSSListView.Items.Add(item9);
+            RSSListView.Items.Add(item10);
+            RSSListView.Items.Add(item11);
+            RSSListView.Items.Add(item12);
+            RSSListView.Items.Add(item13);
+            RSSListView.Items.Add(item14);
 
             this.KeyPreview = true;
             this.KeyDown += DeixtoAgentWindow_KeyDown;
@@ -444,7 +472,7 @@ namespace DEiXTo.Views
             {
                 return;
             }
-            
+
             node.EnsureVisible();
             HtmlTreeView.SelectedNode = node;
             HtmlTreeView.Focus();
@@ -789,7 +817,7 @@ namespace DEiXTo.Views
         public void UnderlineNode(TreeNode node)
         {
             Font nodeFont;
-            
+
             if (node.NodeFont != null)
             {
                 nodeFont = node.NodeFont;
@@ -1144,9 +1172,21 @@ namespace DEiXTo.Views
                 }
 
                 string selectedURL = TargetURLsListBox.SelectedItem.ToString();
-                
+
                 TargetURLSelected(selectedURL);
             }
+        }
+
+        private void RSSListView_ItemSelectionChanged(object sender, ListViewItemSelectionChangedEventArgs e)
+        {
+            bool selected = e.IsSelected;
+            
+            if (!selected)
+            {
+                return;
+            }
+
+            textBox1.Text = e.Item.SubItems[1].Text;
         }
     }
 }

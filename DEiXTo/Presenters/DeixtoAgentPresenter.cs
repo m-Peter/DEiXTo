@@ -75,11 +75,18 @@ namespace DEiXTo.Presenters
             _view.AddWorkingPatternImages(imagesList);
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="url"></param>
         void targetURLSelected(string url)
         {
             _view.SetURLInput(url);
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
         void removeURLFromTargetURLs()
         {
             // retrieve the select URL from the TargetURLs list
@@ -100,6 +107,9 @@ namespace DEiXTo.Presenters
             }
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
         void addURLToTargetURLs()
         {
             // fetch the user-entered url
@@ -118,6 +128,10 @@ namespace DEiXTo.Presenters
             _view.ClearAddURLInput();
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="node"></param>
         void removeRegex(TreeNode node)
         {
             var font = node.NodeFont;
@@ -125,6 +139,10 @@ namespace DEiXTo.Presenters
             node.SetRegex(null);
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="node"></param>
         void removeLabel(TreeNode node)
         {
             string text = node.Text;
@@ -133,11 +151,19 @@ namespace DEiXTo.Presenters
             node.SetLabel(null);
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="e"></param>
         void windowClosing(FormClosingEventArgs e)
         {
             _eventHub.Publish(new EventArgs());
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="subject"></param>
         public void Receive(LabelAdded subject)
         {
             string label = subject.Label;
@@ -146,6 +172,10 @@ namespace DEiXTo.Presenters
             _view.AddLabelToNode(label, node);
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="subject"></param>
         public void Receive(RegexAdded subject)
         {
             string regex = subject.Regex;
@@ -158,16 +188,29 @@ namespace DEiXTo.Presenters
             _view.FillElementInfo(node, element.OuterHtml);
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="node"></param>
         void addRegex(TreeNode node)
         {
             _loader.LoadRegexBuilderView(node);
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="node"></param>
         void addNewLabel(TreeNode node)
         {
             _loader.LoadAddLabelView(node);
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="selected"></param>
+        /// <param name="node"></param>
         void outputResultSelected(bool selected, TreeNode node)
         {
             if (!selected)

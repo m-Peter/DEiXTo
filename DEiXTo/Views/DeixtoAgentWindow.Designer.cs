@@ -120,11 +120,6 @@
             this.OuterHtmlTextBox = new System.Windows.Forms.TextBox();
             this.OuterHtmlLabel = new System.Windows.Forms.Label();
             this.RSS = new System.Windows.Forms.TabPage();
-            this.RSSDataGridView = new System.Windows.Forms.DataGridView();
-            this.ColumnLabel = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.ColumnValue = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.ColumnDescription = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.ColumnExample = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Log = new System.Windows.Forms.TabPage();
             this.ClearLogButton = new System.Windows.Forms.Button();
             this.LogTextBox = new System.Windows.Forms.TextBox();
@@ -201,6 +196,13 @@
             this.SetAsRootMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator8 = new System.Windows.Forms.ToolStripSeparator();
             this.DeleteNodeMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.button1 = new System.Windows.Forms.Button();
+            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.RSSListView = new System.Windows.Forms.ListView();
+            this.LabelColumn = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.ValueColumn = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.DescriptionColumn = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.ExampleColumn = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
@@ -235,7 +237,6 @@
             this.Output.SuspendLayout();
             this.ElementInfo.SuspendLayout();
             this.RSS.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.RSSDataGridView)).BeginInit();
             this.Log.SuspendLayout();
             this.Statistics.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.StatisticsDataGridView)).BeginInit();
@@ -1284,52 +1285,15 @@
             // 
             // RSS
             // 
-            this.RSS.Controls.Add(this.RSSDataGridView);
+            this.RSS.Controls.Add(this.RSSListView);
+            this.RSS.Controls.Add(this.textBox1);
+            this.RSS.Controls.Add(this.button1);
             this.RSS.Location = new System.Drawing.Point(4, 22);
             this.RSS.Name = "RSS";
             this.RSS.Size = new System.Drawing.Size(525, 366);
             this.RSS.TabIndex = 3;
             this.RSS.Text = "RSS Channel";
             this.RSS.UseVisualStyleBackColor = true;
-            // 
-            // RSSDataGridView
-            // 
-            this.RSSDataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.RSSDataGridView.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.ColumnLabel,
-            this.ColumnValue,
-            this.ColumnDescription,
-            this.ColumnExample});
-            this.RSSDataGridView.Location = new System.Drawing.Point(3, 3);
-            this.RSSDataGridView.Name = "RSSDataGridView";
-            this.RSSDataGridView.RowHeadersVisible = false;
-            this.RSSDataGridView.RowHeadersWidth = 50;
-            this.RSSDataGridView.Size = new System.Drawing.Size(519, 330);
-            this.RSSDataGridView.TabIndex = 0;
-            // 
-            // ColumnLabel
-            // 
-            this.ColumnLabel.HeaderText = "Label";
-            this.ColumnLabel.Name = "ColumnLabel";
-            this.ColumnLabel.Width = 125;
-            // 
-            // ColumnValue
-            // 
-            this.ColumnValue.HeaderText = "Value";
-            this.ColumnValue.Name = "ColumnValue";
-            this.ColumnValue.Width = 125;
-            // 
-            // ColumnDescription
-            // 
-            this.ColumnDescription.HeaderText = "Description";
-            this.ColumnDescription.Name = "ColumnDescription";
-            this.ColumnDescription.Width = 125;
-            // 
-            // ColumnExample
-            // 
-            this.ColumnExample.HeaderText = "Example";
-            this.ColumnExample.Name = "ColumnExample";
-            this.ColumnExample.Width = 125;
             // 
             // Log
             // 
@@ -1894,6 +1858,59 @@
             this.DeleteNodeMenuItem.Size = new System.Drawing.Size(238, 22);
             this.DeleteNodeMenuItem.Text = "Delete Node";
             // 
+            // button1
+            // 
+            this.button1.Location = new System.Drawing.Point(300, 336);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(75, 23);
+            this.button1.TabIndex = 1;
+            this.button1.Text = "Set Value";
+            this.button1.UseVisualStyleBackColor = true;
+            // 
+            // textBox1
+            // 
+            this.textBox1.Location = new System.Drawing.Point(3, 338);
+            this.textBox1.Name = "textBox1";
+            this.textBox1.Size = new System.Drawing.Size(291, 20);
+            this.textBox1.TabIndex = 2;
+            // 
+            // RSSListView
+            // 
+            this.RSSListView.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.LabelColumn,
+            this.ValueColumn,
+            this.DescriptionColumn,
+            this.ExampleColumn});
+            this.RSSListView.FullRowSelect = true;
+            this.RSSListView.GridLines = true;
+            this.RSSListView.Location = new System.Drawing.Point(3, 3);
+            this.RSSListView.Name = "RSSListView";
+            this.RSSListView.Size = new System.Drawing.Size(519, 327);
+            this.RSSListView.TabIndex = 3;
+            this.RSSListView.UseCompatibleStateImageBehavior = false;
+            this.RSSListView.View = System.Windows.Forms.View.Details;
+            this.RSSListView.ItemSelectionChanged += new System.Windows.Forms.ListViewItemSelectionChangedEventHandler(this.RSSListView_ItemSelectionChanged);
+            // 
+            // LabelColumn
+            // 
+            this.LabelColumn.Text = "Label";
+            this.LabelColumn.Width = 125;
+            // 
+            // ValueColumn
+            // 
+            this.ValueColumn.Text = "Value";
+            this.ValueColumn.Width = 125;
+            // 
+            // DescriptionColumn
+            // 
+            this.DescriptionColumn.Text = "Description";
+            this.DescriptionColumn.Width = 125;
+            // 
+            // ExampleColumn
+            // 
+            this.ExampleColumn.Text = "Example";
+            this.ExampleColumn.Width = 125;
+            // 
             // DeixtoAgentWindow
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -1948,7 +1965,7 @@
             this.ElementInfo.ResumeLayout(false);
             this.ElementInfo.PerformLayout();
             this.RSS.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.RSSDataGridView)).EndInit();
+            this.RSS.PerformLayout();
             this.Log.ResumeLayout(false);
             this.Log.PerformLayout();
             this.Statistics.ResumeLayout(false);
@@ -2051,11 +2068,6 @@
         private System.Windows.Forms.Label HtmlPathLabel;
         private System.Windows.Forms.TextBox RegularExpressionTextBox;
         private System.Windows.Forms.Label RegularExpressionLabel;
-        private System.Windows.Forms.DataGridView RSSDataGridView;
-        private System.Windows.Forms.DataGridViewTextBoxColumn ColumnLabel;
-        private System.Windows.Forms.DataGridViewTextBoxColumn ColumnValue;
-        private System.Windows.Forms.DataGridViewTextBoxColumn ColumnDescription;
-        private System.Windows.Forms.DataGridViewTextBoxColumn ColumnExample;
         private System.Windows.Forms.TextBox LogTextBox;
         private System.Windows.Forms.Button ClearLogButton;
         private System.Windows.Forms.DataGridView StatisticsDataGridView;
@@ -2138,5 +2150,12 @@
         private System.Windows.Forms.ToolStripMenuItem priceToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem productToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem modelToolStripMenuItem;
+        private System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.ListView RSSListView;
+        private System.Windows.Forms.ColumnHeader LabelColumn;
+        private System.Windows.Forms.ColumnHeader ValueColumn;
+        private System.Windows.Forms.ColumnHeader DescriptionColumn;
+        private System.Windows.Forms.ColumnHeader ExampleColumn;
     }
 }
