@@ -287,6 +287,18 @@ namespace DEiXTo.Presenters
                 string mylink = _view.HtmlLink();
                 int depth = _view.CrawlingDepth();
 
+                if (String.IsNullOrWhiteSpace(mylink))
+                {
+                    _view.ShowEmptyLinkMessage();
+                    return;
+                }
+
+                if (depth <= 0)
+                {
+                    _view.ShowInvalidDepthMessage();
+                    return;
+                }
+
                 for (int i = 0; i < depth; i++)
                 {
                     var elem = _document.GetLinkToFollow(mylink);

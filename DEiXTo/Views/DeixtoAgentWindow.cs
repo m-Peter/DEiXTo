@@ -175,6 +175,22 @@ namespace DEiXTo.Views
         }
 
         /// <summary>
+        /// 
+        /// </summary>
+        public void ShowEmptyLinkMessage()
+        {
+            MessageBox.Show("Please specify text contained by link.", "DEiXTo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public void ShowInvalidDepthMessage()
+        {
+            MessageBox.Show("Max crawl depth is a positive integer!", "DEiXTo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+        }
+
+        /// <summary>
         /// Shows an error message when the URL is not found.
         /// </summary>
         public void ShowRequestNotFoundMessage()

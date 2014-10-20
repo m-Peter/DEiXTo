@@ -57,6 +57,8 @@ namespace DEiXTo.Views
         void FillTextNodeElementInfo(TreeNode node);
         void ShowSpecifyURLMessage();
         void ShowRequestNotFoundMessage();
+        void ShowEmptyLinkMessage();
+        void ShowInvalidDepthMessage();
         void NavigateTo(string url);
         void NavigateForward();
         void NavigateBack();
