@@ -1017,6 +1017,7 @@
             this.LoadPatternButton.TabIndex = 2;
             this.LoadPatternButton.Text = "Load";
             this.LoadPatternButton.UseVisualStyleBackColor = true;
+            this.LoadPatternButton.Click += new System.EventHandler(this.LoadPatternButton_Click);
             // 
             // TunePatternButton
             // 

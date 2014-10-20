@@ -51,6 +51,7 @@ namespace DEiXTo.Views
         public event Action RemoveURLFromTargetURLs;
         public event Action<String> TargetURLSelected;
         public event Action SaveExtractionPattern;
+        public event Action LoadExtractionPattern;
 
         private HtmlElement _currentElement;
 
@@ -362,6 +363,15 @@ namespace DEiXTo.Views
         public void AddWorkingPatternImages(ImageList imageList)
         {
             WorkingPatternTreeView.ImageList = imageList;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="imageList"></param>
+        public void AddExtractionTreeImages(ImageList imageList)
+        {
+            ExtractionPatternTreeView.ImageList = imageList;
         }
 
         /// <summary>
@@ -760,6 +770,25 @@ namespace DEiXTo.Views
         public TreeNodeCollection GetDOMTreeNodes()
         {
             return HtmlTreeView.Nodes;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="node"></param>
+        public void FillExtractionPattern(TreeNode node)
+        {
+            ExtractionPatternTreeView.Nodes.Add(node);
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public void ExpandExtractionTree()
+        {
+            ExtractionPatternTreeView.BeginUpdate();
+            ExtractionPatternTreeView.ExpandAll();
+            ExtractionPatternTreeView.EndUpdate();
         }
 
         /// <summary>
@@ -1204,6 +1233,14 @@ namespace DEiXTo.Views
             if (SaveExtractionPattern != null)
             {
                 SaveExtractionPattern();
+            }
+        }
+
+        private void LoadPatternButton_Click(object sender, EventArgs e)
+        {
+            if (LoadExtractionPattern != null)
+            {
+                LoadExtractionPattern();
             }
         }
     }

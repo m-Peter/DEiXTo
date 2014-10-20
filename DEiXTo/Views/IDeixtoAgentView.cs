@@ -43,6 +43,7 @@ namespace DEiXTo.Views
         event Action RemoveURLFromTargetURLs;
         event Action<String> TargetURLSelected;
         event Action SaveExtractionPattern;
+        event Action LoadExtractionPattern;
         
         string Url { get; }
         HtmlElement CurrentElement { get; set; }
@@ -72,6 +73,7 @@ namespace DEiXTo.Views
         HtmlDocument GetHtmlDocument();
         void FillDomTree(TreeNode node);
         void FillSnapshotTree(TreeNode node);
+        void FillExtractionPattern(TreeNode node);
         bool HighlightModeEnabled();
         bool CrawlingEnabled();
         int CrawlingDepth();
@@ -87,6 +89,7 @@ namespace DEiXTo.Views
         void FillPatternTree(TreeNode node);
         void FillAuxiliaryTree(TreeNode node);
         void ExpandPatternTree();
+        void ExpandExtractionTree();
         void ClearAuxiliaryTree();
         void ExpandAuxiliaryTree();
         void SetContextMenuFor(TreeNode node);
@@ -109,6 +112,7 @@ namespace DEiXTo.Views
         void WritePageResults(string message);
         void UpdateDocumentUrl();
         void AddWorkingPatternImages(ImageList imageList);
+        void AddExtractionTreeImages(ImageList imageList);
         void SetNodeFont(TreeNode node);
         void ShowCannotDeleteRootMessage();
         void ApplyStateToNode(TreeNode node, int imageIndex);

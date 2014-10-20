@@ -73,10 +73,13 @@
     <Compile Include="Services\IEventHub.cs" />
     <Compile Include="Services\ImageContentExtractor.cs" />
     <Compile Include="Services\InputContentExtractor.cs" />
+    <Compile Include="Services\IOpenFileDialog.cs" />
     <Compile Include="Services\ISaveFileDialog.cs" />
     <Compile Include="Services\ISubscriber.cs" />
     <Compile Include="Services\LabelAdded.cs" />
     <Compile Include="Services\LinkContentExtractor.cs" />
+    <Compile Include="Services\OpenFileDialogWrapper.cs" />
+    <Compile Include="Services\ReadExtractionPattern.cs" />
     <Compile Include="Services\RegexAdded.cs" />
     <Compile Include="Services\SaveFileDialogWrapper.cs" />
     <Compile Include="Services\StateToImageMapper.cs" />
