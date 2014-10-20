@@ -308,10 +308,18 @@ namespace DEiXTo.Presenters
                 
                 return;
             }
+
+            var pattern = _view.GetWorkingPattern();
+
+            if (pattern == null)
+            {
+                _view.ShowSpecifyPatternMessage();
+                return;
+            }
+
             _view.FocusOutputTabPage();
             _view.ClearExtractedOutputs();
 
-            var pattern = _view.GetWorkingPattern();
             var bodyNodes = _view.GetBodyTreeNodes();
             PatternExtraction extraction = new PatternExtraction(pattern, bodyNodes);
 

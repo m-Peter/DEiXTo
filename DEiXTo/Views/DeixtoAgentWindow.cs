@@ -177,6 +177,14 @@ namespace DEiXTo.Views
         /// <summary>
         /// 
         /// </summary>
+        public void ShowSpecifyPatternMessage()
+        {
+            MessageBox.Show("Please specify pattern to search for.", "DEiXTo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
         public void ShowEmptyLinkMessage()
         {
             MessageBox.Show("Please specify text contained by link.", "DEiXTo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
@@ -699,7 +707,12 @@ namespace DEiXTo.Views
         /// <returns></returns>
         public TreeNode GetWorkingPattern()
         {
-            return WorkingPatternTreeView.Nodes[0];
+            if (WorkingPatternTreeView.GetNodeCount(false) > 0)
+            {
+                return WorkingPatternTreeView.Nodes[0];
+            }
+
+            return null;
         }
 
         /// <summary>

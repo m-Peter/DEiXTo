@@ -59,6 +59,7 @@ namespace DEiXTo.Views
         void ShowRequestNotFoundMessage();
         void ShowEmptyLinkMessage();
         void ShowInvalidDepthMessage();
+        void ShowSpecifyPatternMessage();
         void NavigateTo(string url);
         void NavigateForward();
         void NavigateBack();
