@@ -304,42 +304,67 @@ namespace DEiXTo.Presenters
                     var elem = _document.GetLinkToFollow(mylink);
                     string href = elem.GetAttribute("href");
                     _view.NavigateTo(href);
+
+                    var pattern = _view.GetWorkingPattern();
+                    var bodyNodes = _view.GetBodyTreeNodes();
+                    PatternExtraction extraction = new PatternExtraction(pattern, bodyNodes);
+
+                    extraction.FindMatches();
+
+                    var results = extraction.ExtractedResults();
+                    var columnFormat = "VAR";
+
+                    int columns = extraction.CountOutputVariables();
+                    for (int j = 0; j < columns; j++)
+                    {
+                        _view.AddOutputColumn(columnFormat + (j + 1));
+                    }
+
+                    foreach (var item in results)
+                    {
+                        _view.AddOutputItem(item.ToStringArray(), item.Node);
+                    }
+
+                    _view.SetExtractedResults(results.Count);
                 }
-                
+
                 return;
             }
-
-            var pattern = _view.GetWorkingPattern();
-
-            if (pattern == null)
+            else
             {
-                _view.ShowSpecifyPatternMessage();
-                return;
+
+                var pattern = _view.GetWorkingPattern();
+
+                if (pattern == null)
+                {
+                    _view.ShowSpecifyPatternMessage();
+                    return;
+                }
+
+                _view.FocusOutputTabPage();
+                _view.ClearExtractedOutputs();
+
+                var bodyNodes = _view.GetBodyTreeNodes();
+                PatternExtraction extraction = new PatternExtraction(pattern, bodyNodes);
+
+                extraction.FindMatches();
+
+                var results = extraction.ExtractedResults();
+                var columnFormat = "VAR";
+
+                int columns = extraction.CountOutputVariables();
+                for (int i = 0; i < columns; i++)
+                {
+                    _view.AddOutputColumn(columnFormat + (i + 1));
+                }
+
+                foreach (var item in results)
+                {
+                    _view.AddOutputItem(item.ToStringArray(), item.Node);
+                }
+
+                _view.SetExtractedResults(results.Count);
             }
-
-            _view.FocusOutputTabPage();
-            _view.ClearExtractedOutputs();
-
-            var bodyNodes = _view.GetBodyTreeNodes();
-            PatternExtraction extraction = new PatternExtraction(pattern, bodyNodes);
-
-            extraction.FindMatches();
-
-            var results = extraction.ExtractedResults();
-            var columnFormat = "VAR";
-
-            int columns = extraction.CountOutputVariables();
-            for (int i = 0; i < columns; i++)
-            {
-                _view.AddOutputColumn(columnFormat + (i + 1));
-            }
-
-            foreach (var item in results)
-            {
-                _view.AddOutputItem(item.ToStringArray(), item.Node);
-            }
-
-            _view.SetExtractedResults(results.Count);
         }
 
         /// <summary>
