@@ -738,7 +738,12 @@ namespace DEiXTo.Presenters
             if (documentValidator.IsValid())
             {
                 _view.ClearAuxiliaryTree();
-                _view.ClearPatternTree();
+                
+                if (!_view.CrawlingEnabled())
+                {
+                    _view.ClearPatternTree();
+                }
+
                 _view.ClearSnapshotTree();
                 _view.NavigateTo(documentValidator.Url());
             }
@@ -759,7 +764,12 @@ namespace DEiXTo.Presenters
         {
             _styling.Clear();
             _view.ClearSnapshotTree();
-            _view.ClearPatternTree();
+
+            if (!_view.CrawlingEnabled())
+            {
+                _view.ClearPatternTree();
+            }
+            
             _view.ClearAuxiliaryTree();
             _view.ClearDOMTree();
 
