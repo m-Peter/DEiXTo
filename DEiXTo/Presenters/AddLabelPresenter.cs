@@ -25,7 +25,7 @@ namespace DEiXTo.Presenters
         /// <param name="e"></param>
         void keyDownPress(KeyEventArgs e)
         {
-            if (e.KeyCode == Keys.Enter)
+            if (EnterPressed(e.KeyCode))
             {
                 addLabel();
             }
@@ -49,6 +49,16 @@ namespace DEiXTo.Presenters
             EventHub eventHub = EventHub.Instance;
             eventHub.Publish(new LabelAdded(label, _node));
             _view.Exit();
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="key"></param>
+        /// <returns></returns>
+        private bool EnterPressed(Keys key)
+        {
+            return key == Keys.Enter;
         }
     }
 }

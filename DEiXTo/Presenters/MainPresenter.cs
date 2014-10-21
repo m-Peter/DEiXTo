@@ -37,9 +37,9 @@ namespace DEiXTo.Presenters
         /// </summary>
         void windowClosing(FormClosingEventArgs args)
         {
-            bool answer = _view.AskUserToConfirmClosing();
+            bool confirm = _view.AskUserToConfirmClosing();
 
-            if (!answer)
+            if (!confirm)
             {
                 args.Cancel = true;
                 return;

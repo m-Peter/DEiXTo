@@ -22,7 +22,7 @@ namespace DEiXTo.Presenters
 
         void keyDownPress(KeyEventArgs e)
         {
-            if (e.KeyCode == Keys.Enter)
+            if (EnterPressed(e.KeyCode))
             {
                 addRegex();
             }
@@ -42,6 +42,11 @@ namespace DEiXTo.Presenters
             EventHub eventHub = EventHub.Instance;
             eventHub.Publish(new RegexAdded(regex, _node));
             _view.Exit();
+        }
+
+        private bool EnterPressed(Keys key)
+        {
+            return key == Keys.Enter;
         }
     }
 }
