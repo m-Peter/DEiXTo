@@ -1,6 +1,7 @@
 ﻿using DEiXTo.Models;
 using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -49,6 +50,8 @@ namespace DEiXTo.Services
                         if (isRoot != null && isRoot.Value == "true")
                         {
                             pInfo.IsRoot = true;
+                            var font = new Font(FontFamily.GenericSansSerif, 8.25f);
+                            tNode.NodeFont = new Font(font, FontStyle.Bold);
                         }
 
                         tNode.Tag = pInfo;
@@ -67,6 +70,8 @@ namespace DEiXTo.Services
                         if (isRoot != null && isRoot.Value == "true")
                         {
                             pInfo.IsRoot = true;
+                            var font = new Font(FontFamily.GenericSansSerif, 8.25f);
+                            temp.NodeFont = new Font(font, FontStyle.Bold);
                         }
 
                         temp.Tag = pInfo;

@@ -29,7 +29,7 @@ namespace DEiXTo.Services
 
                 writer.WriteStartElement("Pattern"); // Write Pattern element
 
-                writeNodes(writer, nodes, true);
+                writeNodes(writer, nodes);
 
                 writer.WriteEndElement(); // Close Pattern element
             }
@@ -41,7 +41,7 @@ namespace DEiXTo.Services
         /// <param name="writer"></param>
         /// <param name="nodes"></param>
         /// <param name="isRoot"></param>
-        private void writeNodes(XmlWriter writer, TreeNodeCollection nodes, bool isRoot)
+        private void writeNodes(XmlWriter writer, TreeNodeCollection nodes)
         {
             foreach (TreeNode node in nodes)
             {
@@ -55,12 +55,12 @@ namespace DEiXTo.Services
                 string stateIndex = getStateIndex(node.SelectedImageIndex);
                 writer.WriteAttributeString("stateIndex", stateIndex); // Write stateIndex attribute
 
-                if (isRoot)
+                if (node.IsRoot())
                 {
                     writer.WriteAttributeString("IsRoot", "true");
                 }
 
-                writeNodes(writer, node.Nodes, false);
+                writeNodes(writer, node.Nodes);
                 writer.WriteEndElement(); // Close Node Element
             }
         }
