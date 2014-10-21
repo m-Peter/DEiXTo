@@ -44,7 +44,14 @@ namespace DEiXTo.Services
                     if (tNode.Text == String.Empty)
                     {
                         NodeInfo pInfo = new NodeInfo();
-                        tNode.Text = node.Attributes["tag"].Value;
+                        string tagValue = node.Attributes["tag"].Value;
+
+                        if (hasLabel(tagValue))
+                        {
+                            pInfo.Label = getLabel(tagValue);
+                        }
+
+                        tNode.Text = tagValue;
                         var isRoot = node.Attributes["IsRoot"];
 
                         if (isRoot != null && isRoot.Value == "true")
@@ -83,6 +90,17 @@ namespace DEiXTo.Services
                     }
                 }
             }
+        }
+
+        private bool hasLabel(string tagValue)
+        {
+            return tagValue.Contains(":");
+        }
+
+        private string getLabel(string tagValue)
+        {
+            var result = tagValue.Split(':');
+            return result[1];
         }
 
         private int getStateIndex(string state)
