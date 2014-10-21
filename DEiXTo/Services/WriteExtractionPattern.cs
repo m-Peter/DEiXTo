@@ -55,6 +55,11 @@ namespace DEiXTo.Services
                 string stateIndex = getStateIndex(node.SelectedImageIndex);
                 writer.WriteAttributeString("stateIndex", stateIndex); // Write stateIndex attribute
 
+                if (node.HasRegex())
+                {
+                    writer.WriteAttributeString("regexpr", node.GetRegex());
+                }
+
                 if (node.IsRoot())
                 {
                     writer.WriteAttributeString("IsRoot", "true");

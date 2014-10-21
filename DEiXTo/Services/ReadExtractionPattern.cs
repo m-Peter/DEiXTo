@@ -61,6 +61,14 @@ namespace DEiXTo.Services
                             tNode.NodeFont = new Font(font, FontStyle.Bold);
                         }
 
+                        var regexpr = node.Attributes["regexpr"];
+                        if (regexpr != null)
+                        {
+                            pInfo.Regex = regexpr.Value;
+                            var font = new Font(FontFamily.GenericSansSerif, 8.25f);
+                            tNode.NodeFont = new Font(font, FontStyle.Bold);
+                        }
+
                         tNode.Tag = pInfo;
                         var state = node.Attributes["stateIndex"].Value;
 
@@ -71,7 +79,14 @@ namespace DEiXTo.Services
                     else
                     {
                         NodeInfo pInfo = new NodeInfo();
-                        temp = tNode.Nodes.Add(node.Attributes["tag"].Value);
+                        string tagValue = node.Attributes["tag"].Value;
+
+                        if (hasLabel(tagValue))
+                        {
+                            pInfo.Label = getLabel(tagValue);
+                        }
+
+                        temp = tNode.Nodes.Add(tagValue);
                         var isRoot = node.Attributes["IsRoot"];
 
                         if (isRoot != null && isRoot.Value == "true")
@@ -81,11 +96,21 @@ namespace DEiXTo.Services
                             temp.NodeFont = new Font(font, FontStyle.Bold);
                         }
 
+                        var regexpr = node.Attributes["regexpr"];
+                        if (regexpr != null)
+                        {
+                            pInfo.Regex = regexpr.Value;
+                            var font = new Font(FontFamily.GenericSansSerif, 8.25f);
+                            temp.NodeFont = new Font(font, FontStyle.Underline);
+                        }
+
                         temp.Tag = pInfo;
+                        
                         var state = node.Attributes["stateIndex"].Value;
 
                         temp.SelectedImageIndex = getStateIndex(state);
                         temp.ImageIndex = getStateIndex(state);
+
                         createPattern(node.ChildNodes, temp);
                     }
                 }
