@@ -12,6 +12,11 @@ namespace DEiXTo.Services
 {
     public class ReadExtractionPattern
     {
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="filename"></param>
+        /// <returns></returns>
         public TreeNode read(string filename)
         {
             var rootNode = new TreeNode();
@@ -20,114 +25,188 @@ namespace DEiXTo.Services
             {
                 while (reader.Read())
                 {
-                    if (reader.NodeType == XmlNodeType.Element && reader.LocalName == "Pattern")
-                    {
-
-                        reader.ReadToFollowing("Node");
-                        XmlDocument doc = new XmlDocument();
-                        doc.Load(reader.ReadSubtree());
-                        createPattern(doc.ChildNodes, rootNode);
-                    }
+                    ReadPatternElement(reader, rootNode);
                 }
             }
 
             return rootNode;
         }
 
-        private void createPattern(XmlNodeList nodes, TreeNode tNode)
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="reader"></param>
+        /// <param name="rootNode"></param>
+        private void ReadPatternElement(XmlReader reader, TreeNode rootNode)
+        {
+            if (reader.NodeType == XmlNodeType.Element && reader.LocalName == "Pattern")
+            {
+                reader.ReadToFollowing("Node");
+                XmlDocument doc = new XmlDocument();
+                doc.Load(reader.ReadSubtree());
+                createPattern(doc.ChildNodes, rootNode);
+            }
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="reader"></param>
+        /// <returns></returns>
+        private bool IsPatternElement(XmlReader reader)
+        {
+            return reader.NodeType == XmlNodeType.Element && reader.LocalName == "Pattern";
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="node"></param>
+        /// <returns></returns>
+        private bool IsNodeElement(XmlNode node)
+        {
+            return node.NodeType == XmlNodeType.Element && node.Name == "Node";
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="node"></param>
+        /// <param name="pInfo"></param>
+        private string ReadTagAttribute(XmlNode node, NodeInfo pInfo, TreeNode treeNode)
+        {
+            string tagValue = node.Attributes["tag"].Value;
+
+            if (hasLabel(tagValue))
+            {
+                pInfo.Label = getLabel(tagValue);
+            }
+
+            return tagValue;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="node"></param>
+        /// <param name="pInfo"></param>
+        private void ReadIsRootAttribute(XmlNode node, NodeInfo pInfo, TreeNode treeNode)
+        {
+            var isRoot = node.Attributes["IsRoot"];
+
+            if (isRoot != null && isRoot.Value == "true")
+            {
+                pInfo.IsRoot = true;
+                var font = new Font(FontFamily.GenericSansSerif, 8.25f);
+                treeNode.NodeFont = new Font(font, FontStyle.Bold);
+            }
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        private void ReadRegexAttribute(XmlNode node, NodeInfo pInfo, TreeNode treeNode)
+        {
+            var regexpr = node.Attributes["regexpr"];
+
+            if (regexpr != null)
+            {
+                pInfo.Regex = regexpr.Value;
+                var font = new Font(FontFamily.GenericSansSerif, 8.25f);
+                treeNode.NodeFont = new Font(font, FontStyle.Underline);
+            }
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="node"></param>
+        /// <param name="treeNode"></param>
+        private void ReadStateAttribute(XmlNode node, TreeNode treeNode)
+        {
+            var state = node.Attributes["stateIndex"].Value;
+
+            treeNode.SelectedImageIndex = getStateIndex(state);
+            treeNode.ImageIndex = getStateIndex(state);
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="nodes"></param>
+        /// <param name="tNode"></param>
+        private void createPattern(XmlNodeList nodes, TreeNode treeNode)
         {
             foreach (XmlNode node in nodes)
             {
-                TreeNode temp;
-                if (node.NodeType == XmlNodeType.Element && node.Name == "Node")
+                TreeNode tempNode;
+
+                if (IsNodeElement(node))
                 {
-                    if (tNode.Text == String.Empty)
+                    if (treeNode.Text == String.Empty)
                     {
                         NodeInfo pInfo = new NodeInfo();
-                        string tagValue = node.Attributes["tag"].Value;
 
-                        if (hasLabel(tagValue))
-                        {
-                            pInfo.Label = getLabel(tagValue);
-                        }
+                        string tag = ReadTagAttribute(node, pInfo, treeNode);
+                        treeNode.Text = tag;
 
-                        tNode.Text = tagValue;
-                        var isRoot = node.Attributes["IsRoot"];
+                        ReadIsRootAttribute(node, pInfo, treeNode);
 
-                        if (isRoot != null && isRoot.Value == "true")
-                        {
-                            pInfo.IsRoot = true;
-                            var font = new Font(FontFamily.GenericSansSerif, 8.25f);
-                            tNode.NodeFont = new Font(font, FontStyle.Bold);
-                        }
+                        ReadRegexAttribute(node, pInfo, treeNode);
 
-                        var regexpr = node.Attributes["regexpr"];
-                        if (regexpr != null)
-                        {
-                            pInfo.Regex = regexpr.Value;
-                            var font = new Font(FontFamily.GenericSansSerif, 8.25f);
-                            tNode.NodeFont = new Font(font, FontStyle.Bold);
-                        }
+                        treeNode.Tag = pInfo;
 
-                        tNode.Tag = pInfo;
-                        var state = node.Attributes["stateIndex"].Value;
+                        ReadStateAttribute(node, treeNode);
 
-                        tNode.SelectedImageIndex = getStateIndex(state);
-                        tNode.ImageIndex = getStateIndex(state);
-                        createPattern(node.ChildNodes, tNode);
+                        createPattern(node.ChildNodes, treeNode);
                     }
                     else
                     {
                         NodeInfo pInfo = new NodeInfo();
-                        string tagValue = node.Attributes["tag"].Value;
 
-                        if (hasLabel(tagValue))
-                        {
-                            pInfo.Label = getLabel(tagValue);
-                        }
+                        string tag = ReadTagAttribute(node, pInfo, treeNode);
+                        tempNode = treeNode.Nodes.Add(tag);
 
-                        temp = tNode.Nodes.Add(tagValue);
-                        var isRoot = node.Attributes["IsRoot"];
+                        ReadIsRootAttribute(node, pInfo, tempNode);
 
-                        if (isRoot != null && isRoot.Value == "true")
-                        {
-                            pInfo.IsRoot = true;
-                            var font = new Font(FontFamily.GenericSansSerif, 8.25f);
-                            temp.NodeFont = new Font(font, FontStyle.Bold);
-                        }
+                        ReadRegexAttribute(node, pInfo, tempNode);
 
-                        var regexpr = node.Attributes["regexpr"];
-                        if (regexpr != null)
-                        {
-                            pInfo.Regex = regexpr.Value;
-                            var font = new Font(FontFamily.GenericSansSerif, 8.25f);
-                            temp.NodeFont = new Font(font, FontStyle.Underline);
-                        }
+                        tempNode.Tag = pInfo;
 
-                        temp.Tag = pInfo;
-                        
-                        var state = node.Attributes["stateIndex"].Value;
+                        ReadStateAttribute(node, tempNode);
 
-                        temp.SelectedImageIndex = getStateIndex(state);
-                        temp.ImageIndex = getStateIndex(state);
-
-                        createPattern(node.ChildNodes, temp);
+                        createPattern(node.ChildNodes, tempNode);
                     }
                 }
             }
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="tagValue"></param>
+        /// <returns></returns>
         private bool hasLabel(string tagValue)
         {
             return tagValue.Contains(":");
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="tagValue"></param>
+        /// <returns></returns>
         private string getLabel(string tagValue)
         {
             var result = tagValue.Split(':');
             return result[1];
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="state"></param>
+        /// <returns></returns>
         private int getStateIndex(string state)
         {
             int index = -1;
