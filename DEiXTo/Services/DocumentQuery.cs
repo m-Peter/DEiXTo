@@ -55,15 +55,31 @@ namespace DEiXTo.Services
             HtmlElementCollection links = _htmlDocument.GetElementsByTagName("A");
             HtmlElement link = null;
 
-            foreach (HtmlElement l in links)
+            foreach (HtmlElement element in links)
             {
-                if (l.InnerText != null && l.InnerText.Equals(mylink))
+                if (Matches(element, mylink))
                 {
-                    link = l;
+                    link = element;
                 }
             }
 
             return link;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="element"></param>
+        /// <param name="link"></param>
+        /// <returns></returns>
+        private bool Matches(HtmlElement element, string link)
+        {
+            if (element.InnerText != null && element.InnerText.Equals(link))
+            {
+                return true;
+            }
+
+            return false;
         }
 
         /// <summary>

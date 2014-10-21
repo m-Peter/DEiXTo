@@ -18,40 +18,53 @@ namespace DEiXTo.Services
             {
                 Uri uri = new Uri(address);
 
-                if (uri.IsFile)
-                {
-                    if (address.StartsWith("file:///"))
-                    {
-                        return new LocalDocumentValidator(uri);
-
-                    }
-                    else
-                    {
-                        return new LocalDocumentValidator(new Uri("file:///" + address));
-                    }
-                }
-                else
+                if (!uri.IsFile)
                 {
                     return new WebDocumentValidator(uri);
                 }
+
+                if (IsFileAddress(address))
+                {
+                    return new LocalDocumentValidator(uri);
+                }
+
+                return new LocalDocumentValidator(new Uri("file:///" + address));
             }
             catch (UriFormatException)
             {
                 Uri uri;
 
-                if (address.StartsWith("www"))
+                if (IsWebAddress(address))
                 {
                     uri = new Uri("http://" + address);
-                }
-                else
-                {
-                    uri = new Uri("http://www." + address);
+                    return new WebDocumentValidator(uri);
                 }
 
+                uri = new Uri("http://www." + address);
                 return new WebDocumentValidator(uri);
             }
 
             throw new ArgumentException("No Validator found for this URL");
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="address"></param>
+        /// <returns></returns>
+        private bool IsFileAddress(string address)
+        {
+            return address.StartsWith("file:///");
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="address"></param>
+        /// <returns></returns>
+        private bool IsWebAddress(string address)
+        {
+            return address.StartsWith("www");
         }
     }
 }
