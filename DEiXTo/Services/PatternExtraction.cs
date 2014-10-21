@@ -12,14 +12,12 @@ namespace DEiXTo.Services
     {
         private TreeNode _pattern;
         private TreeNodeCollection _domNodes;
-        private int _counter;
         private List<Result> _results;
 
         public PatternExtraction(TreeNode pattern, TreeNodeCollection domNodes)
         {
             _pattern = pattern;
             _domNodes = domNodes;
-            _counter = 0;
             _results = new List<Result>();
         }
 
@@ -105,7 +103,6 @@ namespace DEiXTo.Services
         /// </summary>
         public void FindMatches()
         {
-            _counter = 0;
             _results = new List<Result>();
 
             if (_pattern.IsRoot())
@@ -137,7 +134,6 @@ namespace DEiXTo.Services
             {
                 if (CompareRecursiveTree(pattern, node, result))
                 {
-                    _counter += 1;
                     // this is where the matching has succeeded and node
                     // is a instance that matched.
                     result.Node = node;
@@ -171,7 +167,6 @@ namespace DEiXTo.Services
                     {
                         return;
                     }
-                    _counter += 1;
                     _results.Add(result);
                     result = new Result();
                 }
@@ -219,18 +214,23 @@ namespace DEiXTo.Services
         /// <summary>
         /// 
         /// </summary>
-        public int Results
+        public int Count
         {
-            get { return _counter; }
+            get { return _results.Count; }
         }
 
         /// <summary>
         /// 
         /// </summary>
         /// <returns></returns>
-        public List<Result> ExtractedResults()
+        public IEnumerable<Result> ExtractedResults()
         {
-            return _results;
+            int count = _results.Count;
+
+            for (int i = 0; i < count; i++)
+            {
+                yield return _results[i];
+            }
         }
 
         /// <summary>

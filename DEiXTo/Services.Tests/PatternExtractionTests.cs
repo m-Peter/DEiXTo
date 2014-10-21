@@ -282,7 +282,7 @@ namespace DEiXTo.Services.Tests
 
             PatternExtraction pattern = new PatternExtraction(root, domNodes);
             pattern.FindMatches();
-            Assert.AreEqual(1, pattern.Results);
+            Assert.AreEqual(1, pattern.Count);
         }
 
         [TestMethod]
@@ -293,7 +293,7 @@ namespace DEiXTo.Services.Tests
 
             PatternExtraction pattern = new PatternExtraction(root, domNodes);
             pattern.FindMatches();
-            Assert.AreEqual(2, pattern.Results);
+            Assert.AreEqual(2, pattern.Count);
         }
 
         [TestMethod]
@@ -304,7 +304,7 @@ namespace DEiXTo.Services.Tests
 
             PatternExtraction pattern = new PatternExtraction(root, domNodes);
             pattern.FindMatches();
-            Assert.AreEqual(11, pattern.Results);
+            Assert.AreEqual(11, pattern.Count);
         }
 
         [TestMethod]
@@ -315,7 +315,7 @@ namespace DEiXTo.Services.Tests
 
             PatternExtraction pattern = new PatternExtraction(root, domNodes);
             pattern.FindMatches();
-            Assert.AreEqual(11, pattern.Results);
+            Assert.AreEqual(11, pattern.Count);
         }
 
         [TestMethod]
@@ -331,7 +331,7 @@ namespace DEiXTo.Services.Tests
 
             PatternExtraction pattern = new PatternExtraction(root, body.Nodes);
             pattern.FindMatches();
-            Assert.AreEqual(3, pattern.Results);
+            Assert.AreEqual(3, pattern.Count);
         }
     }
 }

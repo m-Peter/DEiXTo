@@ -19,7 +19,11 @@ namespace DEiXTo.Models
         /// <summary>
         /// 
         /// </summary>
-        public TreeNode Node { get; set; }
+        public TreeNode Node
+        {
+            get { return _node; }
+            set { _node = value; }
+        }
 
         /// <summary>
         /// 
@@ -28,15 +32,6 @@ namespace DEiXTo.Models
         public void AddContent(string content)
         {
             _extractedContents.Add(content.Trim());
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <returns></returns>
-        public List<string> GetContents()
-        {
-            return _extractedContents;
         }
 
         /// <summary>

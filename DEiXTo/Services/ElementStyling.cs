@@ -76,6 +76,11 @@ namespace DEiXTo.Services
         /// <param name="value"></param>
         private void add(HtmlElement key, string value)
         {
+            if (containsKey(key))
+            {
+                return;
+            }
+
             _elementStyles.Add(key, value);
         }
 

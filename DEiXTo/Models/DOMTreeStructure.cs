@@ -48,6 +48,7 @@ namespace DEiXTo.Models
         public TreeNode GetNodeFor(HtmlElement element)
         {
             var curElem = element.DomElement as IHTMLDOMNode;
+
             if (ContainsKey(curElem))
             {
                 return _DOMTree[curElem];
@@ -63,6 +64,11 @@ namespace DEiXTo.Models
         /// <param name="value"></param>
         public void Add(IHTMLDOMNode key, TreeNode value)
         {
+            if (ContainsKey(key))
+            {
+                return;
+            }
+
             _DOMTree.Add(key, value);
         }
 

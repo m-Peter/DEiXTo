@@ -401,8 +401,7 @@ namespace DEiXTo.Presenters
 
                     extraction.FindMatches();
 
-                    var results = extraction.ExtractedResults();
-                    count += results.Count;
+                    count += extraction.Count;
                     var columnFormat = "VAR";
 
                     int columns = extraction.CountOutputVariables();
@@ -411,9 +410,9 @@ namespace DEiXTo.Presenters
                         _view.AddOutputColumn(columnFormat + (j + 1));
                     }
 
-                    foreach (var item in results)
+                    foreach (var result in extraction.ExtractedResults())
                     {
-                        _view.AddOutputItem(item.ToStringArray(), item.Node);
+                        _view.AddOutputItem(result.ToStringArray(), result.Node);
                     }
 
                     _view.WritePageResults(count.ToString() + " results!");
@@ -442,7 +441,6 @@ namespace DEiXTo.Presenters
 
                 extraction.FindMatches();
 
-                var results = extraction.ExtractedResults();
                 var columnFormat = "VAR";
 
                 int columns = extraction.CountOutputVariables();
@@ -451,12 +449,12 @@ namespace DEiXTo.Presenters
                     _view.AddOutputColumn(columnFormat + (i + 1));
                 }
 
-                foreach (var item in results)
+                foreach (var item in extraction.ExtractedResults())
                 {
                     _view.AddOutputItem(item.ToStringArray(), item.Node);
                 }
 
-                _view.WritePageResults("Extraction Completed: " + results.Count.ToString() + " results!");
+                _view.WritePageResults("Extraction Completed: " + extraction.Count.ToString() + " results!");
             }
         }
 

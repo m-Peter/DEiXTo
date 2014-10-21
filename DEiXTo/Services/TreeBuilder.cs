@@ -82,10 +82,7 @@ namespace DEiXTo.Services
 
             var tmpNode = node.Nodes.Add(element.nodeName);
 
-            if (!domTree.ContainsKey(element))
-            {
-                domTree.Add(element, tmpNode);
-            }
+            domTree.Add(element, tmpNode);
 
             NodeInfo pInfo = new NodeInfo();
 
@@ -126,10 +123,7 @@ namespace DEiXTo.Services
 
             var newNode = node.Nodes.Add(element.nodeName);
 
-            if (!domTree.ContainsKey(element))
-            {
-                domTree.Add(element, newNode);
-            }
+            domTree.Add(element, newNode);
 
             NodeInfo pInfo = new NodeInfo();
 
