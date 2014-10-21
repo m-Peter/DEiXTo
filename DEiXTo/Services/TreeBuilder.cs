@@ -112,24 +112,40 @@ namespace DEiXTo.Services
         /// 
         /// </summary>
         /// <param name="element"></param>
+        /// <returns></returns>
+        private bool IgnoredElement(IHTMLDOMNode element)
+        {
+            return element.nodeName == "#text" || element.nodeName == "#comment";
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="element"></param>
         /// <param name="node"></param>
         /// <param name="domTree"></param>
-        private void BuildDOMTreeRec(IHTMLDOMNode element, TreeNode node, DOMTreeStructure domTree)
+        private TreeNode InsertNode(IHTMLDOMNode element, TreeNode node, DOMTreeStructure domTree)
         {
-            if (element.nodeName == "#text" || element.nodeName == "#comment")
-            {
-                return;
-            }
-
             var newNode = node.Nodes.Add(element.nodeName);
-
             domTree.Add(element, newNode);
 
-            NodeInfo pInfo = new NodeInfo();
+            return newNode;
+        }
 
-            // By default each node is required, so add the Match Node image
-            newNode.ImageIndex = 3;
-            newNode.SelectedImageIndex = 3;
+        /// <summary>
+        /// 
+        /// </summary>
+        private void ApplyGrayedState(TreeNode node)
+        {
+            node.ImageIndex = 3;
+            node.SelectedImageIndex = 3;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        private void SetNodeInfo(TreeNode newNode, IHTMLDOMNode element, NodeInfo pInfo, TreeNode node)
+        {
             var tmpElem = (IHTMLElement)element;
 
             pInfo.ElementSourceIndex = tmpElem.sourceIndex;
@@ -139,7 +155,13 @@ namespace DEiXTo.Services
             pInfo.Source = tmpElem.outerHTML;
             newNode.Tag = pInfo;
             newNode.ToolTipText = GetTooltipFor(tmpElem);
+        }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        private void InsertChildNodes(IHTMLDOMNode element, NodeInfo pInfo, TreeNode newNode, DOMTreeStructure domTree)
+        {
             IHTMLDOMChildrenCollection childrenElements = element.childNodes as IHTMLDOMChildrenCollection;
             int len = childrenElements.length;
             IHTMLDOMNode curElement;
@@ -149,22 +171,69 @@ namespace DEiXTo.Services
             {
                 curElement = childrenElements.item(i);
                 value = curElement.nodeValue as string;
-                if (curElement.nodeName == "#text" && !String.IsNullOrWhiteSpace(value))
+
+                if (IsTextNode(curElement, value))
                 {
-                    var txtNode = new TreeNode("TEXT");
-                    txtNode.ToolTipText = curElement.nodeValue;
-                    NodeInfo pointer = new NodeInfo();
-                    pointer.Path = pInfo.Path + ".TEXT";
-                    pointer.Content = curElement.nodeValue;
-                    pointer.State = NodeState.Checked;
-                    // By default, each TEXT node is in match and extract content state.
-                    txtNode.ImageIndex = 0;
-                    txtNode.SelectedImageIndex = 0;
-                    txtNode.Tag = pointer;
-                    newNode.Nodes.Add(txtNode);
+                    SetChildNodeInfo(curElement, pInfo, newNode);
                 }
+
                 BuildDOMTreeRec(curElement, newNode, domTree);
             }
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="curElement"></param>
+        /// <param name="pInfo"></param>
+        /// <param name="newNode"></param>
+        private void SetChildNodeInfo(IHTMLDOMNode curElement, NodeInfo pInfo, TreeNode newNode)
+        {
+            var txtNode = new TreeNode("TEXT");
+            txtNode.ToolTipText = curElement.nodeValue;
+            NodeInfo pointer = new NodeInfo();
+            pointer.Path = pInfo.Path + ".TEXT";
+            pointer.Content = curElement.nodeValue;
+            pointer.State = NodeState.Checked;
+            // By default, each TEXT node is in match and extract content state.
+            txtNode.ImageIndex = 0;
+            txtNode.SelectedImageIndex = 0;
+            txtNode.Tag = pointer;
+            newNode.Nodes.Add(txtNode);
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="element"></param>
+        /// <param name="value"></param>
+        /// <returns></returns>
+        private bool IsTextNode(IHTMLDOMNode element, string value)
+        {
+            return element.nodeName == "#text" && !String.IsNullOrWhiteSpace(value);
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="element"></param>
+        /// <param name="node"></param>
+        /// <param name="domTree"></param>
+        private void BuildDOMTreeRec(IHTMLDOMNode element, TreeNode node, DOMTreeStructure domTree)
+        {
+            if (IgnoredElement(element))
+            {
+                return;
+            }
+
+            var newNode = InsertNode(element, node, domTree);
+            NodeInfo pInfo = new NodeInfo();
+            // By default each node is required, so add the Match Node image
+            ApplyGrayedState(newNode);
+
+            SetNodeInfo(newNode, element, pInfo, node);
+            
+            InsertChildNodes(element, pInfo, newNode, domTree);
         }
 
         /// <summary>
@@ -179,31 +248,28 @@ namespace DEiXTo.Services
             int cnt = 0;
             string path = "";
 
-            if (node != null)
-            {
-                bro = node.FirstNode;
-                if (bro != null)
-                {
-                    while (bro != null)
-                    {
-                        if (bro.Text == element.tagName)
-                        {
-                            cnt += 1;
-                        }
-                        bro = bro.NextNode;
-                    }
-
-                    path = node.GetPath() + String.Format(".{0}[{1}]", element.tagName, cnt);
-                }
-                else
-                {
-                    path = node.GetPath() + String.Format(".{0}[1]", element.tagName);
-                }
-            }
-            else
+            if (node == null)
             {
                 path = "HTML[1]";
             }
+
+            bro = node.FirstNode;
+
+            if (bro == null)
+            {
+                path = node.GetPath() + String.Format(".{0}[1]", element.tagName);
+            }
+
+            while (bro != null)
+            {
+                if (bro.Text == element.tagName)
+                {
+                    cnt += 1;
+                }
+                bro = bro.NextNode;
+            }
+
+            path = node.GetPath() + String.Format(".{0}[{1}]", element.tagName, cnt);
 
             return path;
         }
