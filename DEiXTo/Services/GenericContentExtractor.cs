@@ -7,8 +7,6 @@ namespace DEiXTo.Services
     /// </summary>
     public class GenericContentExtractor : TagContentExtractor
     {
-        private IHTMLElement _element;
-
         public GenericContentExtractor(IHTMLElement element)
         {
             _element = element;

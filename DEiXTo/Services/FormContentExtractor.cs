@@ -7,8 +7,6 @@ namespace DEiXTo.Services
     /// </summary>
     public class FormContentExtractor : TagContentExtractor
     {
-        private IHTMLElement _element;
-
         public FormContentExtractor(IHTMLElement element)
         {
             _element = element;

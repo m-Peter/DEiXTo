@@ -7,8 +7,6 @@ namespace DEiXTo.Services
     /// </summary>
     public class LinkContentExtractor : TagContentExtractor
     {
-        private IHTMLElement _element;
-
         public LinkContentExtractor(IHTMLElement element)
         {
             _element = element;
