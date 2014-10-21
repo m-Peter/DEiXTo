@@ -88,17 +88,22 @@ namespace DEiXTo.Presenters
         void loadExtractionPattern()
         {
             _openFileDialog.Filter = "XML Files (*.xml)|";
-            var result = _openFileDialog.ShowDialog();
+            var answer = _openFileDialog.ShowDialog();
             string filename = string.Empty;
             ReadExtractionPattern reader = new ReadExtractionPattern();
 
-            if (result == DialogResult.OK)
+            if (Positive(answer))
             {
                 filename = _openFileDialog.Filename;
                 var node = reader.read(filename);
                 _view.FillExtractionPattern(node);
                 _view.ExpandExtractionTree();
             }
+        }
+
+        private bool Positive(DialogResult answer)
+        {
+            return answer == DialogResult.OK;
         }
 
         /// <summary>
@@ -108,11 +113,11 @@ namespace DEiXTo.Presenters
         {
             _saveFileDialog.Filter = "XML Files (*.xml)|";
             _saveFileDialog.Extension = "xml";
-            var result = _saveFileDialog.ShowDialog();
+            var answer = _saveFileDialog.ShowDialog();
             string filename = string.Empty;
             WriteExtractionPattern writer = new WriteExtractionPattern();
 
-            if (result == DialogResult.OK)
+            if (Positive(answer))
             {
                 filename = _saveFileDialog.Filename;
                 writer.write(filename, _view.GetPatternTreeNodes());
@@ -142,9 +147,9 @@ namespace DEiXTo.Presenters
                 return;
             }
 
-            bool answer = _view.AskUserToRemoveURL();
+            bool confirm = _view.AskUserToRemoveURL();
 
-            if (answer)
+            if (confirm)
             {
                 _view.RemoveTargetURL(url);
                 _view.ClearAddURLInput();
@@ -343,25 +348,27 @@ namespace DEiXTo.Presenters
             var tmpNode = _domTree.GetNodeFor(tmpElem);
             var parentNode = tmpNode.Parent;
 
-            if (parentNode != null && parentNode.Tag != null)
+            if (parentNode == null && parentNode.Tag == null)
             {
-                int index = parentNode.SourceIndex();
-                var element = _document.GetElementByIndex(index);
-                var newNode = new TreeNode(element.TagName);
-                var domElem = (IHTMLElement)element.DomElement;
-
-                NodeInfo pInfo = new NodeInfo();
-                pInfo.ElementSourceIndex = domElem.sourceIndex;
-
-                newNode.Tag = pInfo;
-                newNode.SetState(NodeState.Grayed);
-                newNode.SelectedImageIndex = 3;
-                newNode.ImageIndex = 3;
-                newNode.AddNode(node.GetClone());
-                _view.ClearPatternTree();
-                _view.FillPatternTree(newNode);
-                _view.ExpandPatternTree();
+                return;
             }
+
+            int index = parentNode.SourceIndex();
+            var element = _document.GetElementByIndex(index);
+            var newNode = new TreeNode(element.TagName);
+            var domElem = (IHTMLElement)element.DomElement;
+
+            NodeInfo pInfo = new NodeInfo();
+            pInfo.ElementSourceIndex = domElem.sourceIndex;
+
+            newNode.Tag = pInfo;
+            newNode.SetState(NodeState.Grayed);
+            newNode.SelectedImageIndex = 3;
+            newNode.ImageIndex = 3;
+            newNode.AddNode(node.GetClone());
+            _view.ClearPatternTree();
+            _view.FillPatternTree(newNode);
+            _view.ExpandPatternTree();
         }
 
         /// <summary>
@@ -369,6 +376,14 @@ namespace DEiXTo.Presenters
         /// </summary>
         void executeRule()
         {
+            var pattern = _view.GetWorkingPattern();
+
+            if (pattern == null)
+            {
+                _view.ShowSpecifyPatternMessage();
+                return;
+            }
+
             if (_view.CrawlingEnabled())
             {
                 string mylink = _view.HtmlLink();
@@ -389,73 +404,101 @@ namespace DEiXTo.Presenters
 
                 _view.FocusOutputTabPage();
 
-                for (int i = 0; i < depth; i++)
-                {
-                    var elem = _document.GetLinkToFollow(mylink);
-                    string href = elem.GetAttribute("href");
-                    _view.NavigateTo(href);
-
-                    var pattern = _view.GetWorkingPattern();
-                    var bodyNodes = _view.GetBodyTreeNodes();
-                    PatternExtraction extraction = new PatternExtraction(pattern, bodyNodes);
-
-                    extraction.FindMatches();
-
-                    count += extraction.Count;
-                    var columnFormat = "VAR";
-
-                    int columns = extraction.CountOutputVariables();
-                    for (int j = 0; j < columns; j++)
-                    {
-                        _view.AddOutputColumn(columnFormat + (j + 1));
-                    }
-
-                    foreach (var result in extraction.ExtractedResults())
-                    {
-                        _view.AddOutputItem(result.ToStringArray(), result.Node);
-                    }
-
-                    _view.WritePageResults(count.ToString() + " results!");
-                }
+                CrawlPages(depth, mylink, pattern, ref count);
 
                 _view.WritePageResults("Extraction Completed: " + count.ToString() + " results!");
-
-                return;
             }
             else
             {
-
-                var pattern = _view.GetWorkingPattern();
-
-                if (pattern == null)
-                {
-                    _view.ShowSpecifyPatternMessage();
-                    return;
-                }
-
                 _view.FocusOutputTabPage();
                 _view.ClearExtractedOutputs();
 
-                var bodyNodes = _view.GetBodyTreeNodes();
-                PatternExtraction extraction = new PatternExtraction(pattern, bodyNodes);
+                var executor = CreateExecutor(pattern);
 
-                extraction.FindMatches();
+                executor.FindMatches();
 
-                var columnFormat = "VAR";
+                AddOutputColumns(executor);
 
-                int columns = extraction.CountOutputVariables();
-                for (int i = 0; i < columns; i++)
-                {
-                    _view.AddOutputColumn(columnFormat + (i + 1));
-                }
+                AddOutputResults(executor);
 
-                foreach (var item in extraction.ExtractedResults())
-                {
-                    _view.AddOutputItem(item.ToStringArray(), item.Node);
-                }
-
-                _view.WritePageResults("Extraction Completed: " + extraction.Count.ToString() + " results!");
+                _view.WritePageResults("Extraction Completed: " + executor.Count.ToString() + " results!");
             }
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="depth"></param>
+        /// <param name="mylink"></param>
+        /// <param name="pattern"></param>
+        /// <param name="count"></param>
+        private void CrawlPages(int depth, string mylink, TreeNode pattern, ref int count)
+        {
+            for (int i = 0; i < depth; i++)
+            {
+                FollowNextLink(mylink);
+
+                var executor = CreateExecutor(pattern);
+
+                executor.FindMatches();
+
+                count += executor.Count;
+
+                AddOutputColumns(executor);
+
+                AddOutputResults(executor);
+
+                _view.WritePageResults(count.ToString() + " results!");
+            }
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="mylink"></param>
+        private void FollowNextLink(string mylink)
+        {
+            var elem = _document.GetLinkToFollow(mylink);
+            string href = elem.GetAttribute("href");
+            _view.NavigateTo(href);
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="executor"></param>
+        private void AddOutputResults(PatternExtraction executor)
+        {
+            foreach (var item in executor.ExtractedResults())
+            {
+                _view.AddOutputItem(item.ToStringArray(), item.Node);
+            }
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="executor"></param>
+        private void AddOutputColumns(PatternExtraction executor)
+        {
+            var columnFormat = "VAR";
+            int columns = executor.CountOutputVariables();
+
+            for (int i = 0; i < columns; i++)
+            {
+                _view.AddOutputColumn(columnFormat + (i + 1));
+            }
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="pattern"></param>
+        /// <returns></returns>
+        private PatternExtraction CreateExecutor(TreeNode pattern)
+        {
+            var domNodes = _view.GetBodyTreeNodes();
+            return new PatternExtraction(pattern, domNodes);
         }
 
         /// <summary>
@@ -477,8 +520,9 @@ namespace DEiXTo.Presenters
                 return;
             }
 
-            bool answer = _view.AskUserToClearTreeViews();
-            if (answer)
+            bool confirm = _view.AskUserToClearTreeViews();
+
+            if (confirm)
             {
                 _view.ClearAuxiliaryTree();
                 _view.ClearPatternTree();
@@ -595,21 +639,26 @@ namespace DEiXTo.Presenters
         /// <param name="e"></param>
         void showBrowserContextMenu(object sender, HtmlElementEventArgs e)
         {
+            // specify that the event was handled
             e.ReturnValue = e.CtrlKeyPressed;
 
-            if (e.CtrlKeyPressed)
+            if (CustomMenuCanBeShown(e))
             {
                 return;
             }
 
-            if (!e.ReturnValue)
-            {
-                if (_view.BrowserContextMenuEnabled())
-                {
-                    _view.CurrentElement = _document.GetElementFromPoint(e.ClientMousePosition);
-                    _view.ShowBrowserMenu();
-                }
-            }
+            _view.CurrentElement = _document.GetElementFromPoint(e.ClientMousePosition);
+            _view.ShowBrowserMenu();
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="e"></param>
+        /// <returns></returns>
+        private bool CustomMenuCanBeShown(HtmlElementEventArgs e)
+        {
+            return e.CtrlKeyPressed && _view.BrowserContextMenuEnabled();
         }
 
         /// <summary>
@@ -637,7 +686,7 @@ namespace DEiXTo.Presenters
         /// <param name="button"></param>
         void workingPatternNodeClick(TreeNode node, MouseButtons button)
         {
-            if (button == MouseButtons.Right)
+            if (RightButtonPressed(button))
             {
                 _view.SetAdjustContextMenuFor(node);
             }
@@ -664,6 +713,16 @@ namespace DEiXTo.Presenters
             {
                 element.ScrollIntoView(false);
             }
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="button"></param>
+        /// <returns></returns>
+        private bool RightButtonPressed(MouseButtons button)
+        {
+            return button == MouseButtons.Right;
         }
 
         /// <summary>
@@ -709,7 +768,7 @@ namespace DEiXTo.Presenters
         /// <param name="button"></param>
         void DOMNodeClick(TreeNode node, MouseButtons button)
         {
-            if (button == MouseButtons.Right)
+            if (RightButtonPressed(button))
             {
                 _view.SetContextMenuFor(node);
             }
@@ -763,22 +822,19 @@ namespace DEiXTo.Presenters
         /// <param name="element"></param>
         void documentMouseOver(HtmlElement element)
         {
-            if (_view.HighlightModeEnabled())
+            var node = _domTree.GetNodeFor(element);
+
+            if (node == null || !_view.HighlightModeEnabled())
             {
-                _styling.UnstyleElements();
-                _styling.Style(element);
-
-                var node = _domTree.GetNodeFor(element);
-
-                if (node == null)
-                {
-                    return;
-                }
-
-                _view.SelectDOMNode(node);
-
-                _view.FillElementInfo(node, element.OuterHtml);
+                return;
             }
+
+            _styling.UnstyleElements();
+            _styling.Style(element);
+
+            _view.SelectDOMNode(node);
+
+            _view.FillElementInfo(node, element.OuterHtml);
         }
 
         /// <summary>
@@ -809,7 +865,13 @@ namespace DEiXTo.Presenters
         /// <param name="e">Information arguments from the KeyDown event.</param>
         void keyDownPress(KeyEventArgs e)
         {
-            if (e.Alt)
+            if (EnterPressed(e))
+            {
+                browseToUrl();
+                return;
+            }
+
+            if (AltPressed(e))
             {
                 switch (e.KeyCode)
                 {
@@ -822,10 +884,26 @@ namespace DEiXTo.Presenters
                 }
                 e.Handled = true;
             }
-            else if (e.KeyCode == Keys.Enter)
-            {
-                browseToUrl();
-            }
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="e"></param>
+        /// <returns></returns>
+        private bool AltPressed(KeyEventArgs e)
+        {
+            return e.Alt;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="e"></param>
+        /// <returns></returns>
+        private bool EnterPressed(KeyEventArgs e)
+        {
+            return e.KeyCode == Keys.Enter;
         }
 
         /// <summary>
@@ -850,23 +928,22 @@ namespace DEiXTo.Presenters
 
             var documentValidator = new DocumentValidatorFactory().CreateValidator(url);
 
-            // If the resource described by the URL exists, then proceed with the navigation
-            if (documentValidator.IsValid())
-            {
-                _view.ClearAuxiliaryTree();
-                
-                if (!_view.CrawlingEnabled())
-                {
-                    _view.ClearPatternTree();
-                }
-
-                _view.ClearSnapshotTree();
-                _view.NavigateTo(documentValidator.Url());
-            }
-            else // Otherwise show the error message
+            if (!documentValidator.IsValid())
             {
                 _view.ShowRequestNotFoundMessage();
+                return;
             }
+
+            // If the resource described by the URL exists, then proceed with the navigation
+            _view.ClearAuxiliaryTree();
+
+            if (!_view.CrawlingEnabled())
+            {
+                _view.ClearPatternTree();
+            }
+
+            _view.ClearSnapshotTree();
+            _view.NavigateTo(documentValidator.Url());
         }
 
         /// <summary>
@@ -885,7 +962,7 @@ namespace DEiXTo.Presenters
             {
                 _view.ClearPatternTree();
             }
-            
+
             _view.ClearAuxiliaryTree();
             _view.ClearDOMTree();
 
