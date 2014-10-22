@@ -53,6 +53,8 @@ namespace DEiXTo.Views
         public event Action<String> TargetURLSelected;
         public event Action SaveExtractionPattern;
         public event Action LoadExtractionPattern;
+        public event Action<TreeNode> AddPreviousSibling;
+        public event Action<TreeNode> AddNextSibling;
 
         private HtmlElement _currentElement;
 
@@ -595,8 +597,8 @@ namespace DEiXTo.Views
             node.ContextMenuStrip = AdjustpatternMenuStrip;
 
             EnterFSONMenuItem.Enabled = false;
-            AddPreviousSiblingMenuItem.Enabled = false;
-            AddNextSiblingMenuItem.Enabled = false;
+            AddPreviousSiblingMenuItem.Enabled = true;
+            AddNextSiblingMenuItem.Enabled = true;
             SetAsRootMenuItem.Enabled = false;
             RemoveLabelMenuItem.Enabled = node.HasLabel();
             RemoveRegExMenuItem.Enabled = node.HasRegex();
@@ -1258,6 +1260,24 @@ namespace DEiXTo.Views
             {
                 var node = WorkingPatternTreeView.SelectedNode;
                 DeleteNode(node);
+            }
+        }
+
+        private void AddPreviousSiblingMenuItem_Click(object sender, EventArgs e)
+        {
+            if (AddPreviousSibling != null)
+            {
+                var node = WorkingPatternTreeView.SelectedNode;
+                AddPreviousSibling(node);
+            }
+        }
+
+        private void AddNextSiblingMenuItem_Click(object sender, EventArgs e)
+        {
+            if (AddNextSibling != null)
+            {
+                var node = WorkingPatternTreeView.SelectedNode;
+                AddNextSibling(node);
             }
         }
     }

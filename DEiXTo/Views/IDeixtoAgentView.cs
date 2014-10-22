@@ -45,6 +45,8 @@ namespace DEiXTo.Views
         event Action<String> TargetURLSelected;
         event Action SaveExtractionPattern;
         event Action LoadExtractionPattern;
+        event Action<TreeNode> AddPreviousSibling;
+        event Action<TreeNode> AddNextSibling;
         
         string Url { get; }
         HtmlElement CurrentElement { get; set; }

@@ -75,6 +75,8 @@ namespace DEiXTo.Presenters
             _view.SaveExtractionPattern += saveExtractionPattern;
             _view.LoadExtractionPattern += loadExtractionPattern;
             _view.DeleteNode += deleteNode;
+            _view.AddPreviousSibling += addPreviousSibling;
+            _view.AddNextSibling += addNextSibling;
 
             _eventHub.Subscribe<LabelAdded>(this);
             _eventHub.Subscribe<RegexAdded>(this);
@@ -82,6 +84,39 @@ namespace DEiXTo.Presenters
             var imagesList = _imageLoader.LoadImages();
             _view.AddWorkingPatternImages(imagesList);
             _view.AddExtractionTreeImages(imagesList);
+        }
+
+        void addNextSibling(TreeNode node)
+        {
+            var parent = node.Parent;
+            int index = node.SourceIndex();
+            var tmpElem = _document.GetElementByIndex(index);
+            var tmpNode = _domTree.GetNodeFor(tmpElem);
+            var nextNode = tmpNode.NextNode;
+
+            if (nextNode == null)
+            {
+                return;
+            }
+
+            int indx = node.Index;
+            parent.Nodes.Insert(index++, nextNode.GetClone());
+        }
+
+        void addPreviousSibling(TreeNode node)
+        {
+            var parent = node.Parent;
+            int index = node.SourceIndex();
+            var tmpElem = _document.GetElementByIndex(index);
+            var tmpNode = _domTree.GetNodeFor(tmpElem);
+            var prevNode = tmpNode.PrevNode;
+
+            if (prevNode == null)
+            {
+                return;
+            }
+
+            parent.Nodes.Insert(0, prevNode.GetClone());
         }
 
         /// <summary>

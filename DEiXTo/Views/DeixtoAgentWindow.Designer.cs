@@ -1883,6 +1883,7 @@
             this.AddPreviousSiblingMenuItem.Name = "AddPreviousSiblingMenuItem";
             this.AddPreviousSiblingMenuItem.Size = new System.Drawing.Size(238, 22);
             this.AddPreviousSiblingMenuItem.Text = "Add Previous Sibling";
+            this.AddPreviousSiblingMenuItem.Click += new System.EventHandler(this.AddPreviousSiblingMenuItem_Click);
             // 
             // AddNextSiblingMenuItem
             // 
@@ -1890,6 +1891,7 @@
             this.AddNextSiblingMenuItem.Name = "AddNextSiblingMenuItem";
             this.AddNextSiblingMenuItem.Size = new System.Drawing.Size(238, 22);
             this.AddNextSiblingMenuItem.Text = "Add Next Sibling";
+            this.AddNextSiblingMenuItem.Click += new System.EventHandler(this.AddNextSiblingMenuItem_Click);
             // 
             // toolStripSeparator7
             // 
