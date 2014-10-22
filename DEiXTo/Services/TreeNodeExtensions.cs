@@ -296,6 +296,21 @@ namespace DEiXTo.Services
         /// 
         /// </summary>
         /// <param name="node"></param>
+        /// <param name="content"></param>
+        public static void SetContent(this TreeNode node, string content)
+        {
+            NodeInfo pInfo = GetPointerInfo(node);
+
+            if (pInfo != null)
+            {
+                pInfo.Content = content;
+            }
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="node"></param>
         /// <returns></returns>
         private static NodeInfo GetPointerInfo(this TreeNode node)
         {

@@ -56,6 +56,11 @@ namespace DEiXTo.Services
             return ignoredTags.Contains(tag);
         }
 
+        private bool IsTextNode(TreeNode node)
+        {
+            return node != null && node.Text == "TEXT";
+        }
+
         /// <summary>
         /// 
         /// </summary>
@@ -70,6 +75,19 @@ namespace DEiXTo.Services
             int len = childrenElements.length;
             IHTMLDOMNode curElement;
             string value;
+
+            var first = node.FirstNode;
+
+            if (IsTextNode(first))
+            {
+                curElement = childrenElements.item(0);
+                value = curElement.nodeValue as string;
+                var content = first.GetContent();
+                first.SetContent(content + value);
+                first.ToolTipText += value;
+
+                return;
+            }
 
             for (int i = 0; i < len; i++)
             {
@@ -103,6 +121,22 @@ namespace DEiXTo.Services
         /// <param name="ignoredTags"></param>
         private void BuildSimpliefiedDOMTreeRec(IHTMLDOMNode element, TreeNode node, DOMTreeStructure domTree, string[] ignoredTags)
         {
+            // P
+            //    TEXT
+            //    EM (ignored)
+            //        TEXT
+            // 
+            // (1) First we encounter the P tag, it's not an IgnoredElement or IsIgnoredTag, so we continue and
+            // add its child nodes.
+            // (2) Next we encounter the TEXT child node of P. It is an IgnoredElement, so we return. TEXT nodes
+            // do not have any childrens, that's the reason we return.
+            // (3) Next we encounter the EM child node of P. It is an IgnoredTag, so we only add his TEXT child,
+            // if it has one. In this case there is a TEXT child node on EM. But, we're adding the TEXT node in
+            // the parent node of EM. This way, the P tag (parent of EM) will end up with two TEXT nodes. In any
+            // case we, a node should have only one TEXT child node. In order to achieve this invariant, we have
+            // to check whether the parent already has a TEXT child node. If yes, we should merge the TEXT child
+            // node of EM.
+
             if (IgnoredElement(element))
             {
                 return;
@@ -112,6 +146,7 @@ namespace DEiXTo.Services
 
             if (IsIgnoredTag(element, ignoredTags))
             {
+                // element is the EM tag, node is the P tag
                 AddTextNode(element, node, domTree, ignoredTags, pInfo);
 
                 return;
