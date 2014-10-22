@@ -33,17 +33,19 @@ namespace DEiXTo.Services
         /// <param name="element"></param>
         public void Style(HtmlElement element)
         {
-            if (!containsKey(element))
+            string style;
+
+            if (containsKey(element))
             {
-                string style = element.Style;
-                add(element, style);
+                style = element.Style;
                 element.Style = style + "; background-color: yellow; border: 2px solid red";
+                return;
             }
-            else
-            {
-                string style = element.Style;
-                element.Style = style + "; background-color: yellow; border: 2px solid red";
-            }
+
+            style = element.Style;
+            add(element, style);
+            element.Style = style + "; background-color: yellow; border: 2px solid red";
+
         }
 
         /// <summary>

@@ -135,21 +135,29 @@ namespace DEiXTo.Presenters
         {
             _openFileDialog.Filter = "XML Files (*.xml)|";
             var answer = _openFileDialog.ShowDialog();
+
+            if (Negative(answer))
+            {
+                return;
+            }
+
             string filename = string.Empty;
             ReadExtractionPattern reader = new ReadExtractionPattern();
 
-            if (Positive(answer))
-            {
-                filename = _openFileDialog.Filename;
-                var node = reader.read(filename);
-                _view.FillExtractionPattern(node);
-                _view.ExpandExtractionTree();
-            }
+            filename = _openFileDialog.Filename;
+            var node = reader.read(filename);
+            _view.FillExtractionPattern(node);
+            _view.ExpandExtractionTree();
         }
 
-        private bool Positive(DialogResult answer)
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="answer"></param>
+        /// <returns></returns>
+        private bool Negative(DialogResult answer)
         {
-            return answer == DialogResult.OK;
+            return answer != DialogResult.OK;
         }
 
         /// <summary>
@@ -160,14 +168,17 @@ namespace DEiXTo.Presenters
             _saveFileDialog.Filter = "XML Files (*.xml)|";
             _saveFileDialog.Extension = "xml";
             var answer = _saveFileDialog.ShowDialog();
+
+            if (Negative(answer))
+            {
+                return;
+            }
+
             string filename = string.Empty;
             WriteExtractionPattern writer = new WriteExtractionPattern();
 
-            if (Positive(answer))
-            {
-                filename = _saveFileDialog.Filename;
-                writer.write(filename, _view.GetPatternTreeNodes());
-            }
+            filename = _saveFileDialog.Filename;
+            writer.write(filename, _view.GetPatternTreeNodes());
         }
 
         /// <summary>
@@ -679,6 +690,7 @@ namespace DEiXTo.Presenters
                 _view.FillTextNodeElementInfo(node);
                 return;
             }
+
             int index = node.SourceIndex();
             var element = _document.GetElementByIndex(index);
 

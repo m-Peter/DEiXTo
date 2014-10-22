@@ -26,6 +26,7 @@ namespace DEiXTo.Services
                 HttpWebRequest request = WebRequest.Create(_uri) as HttpWebRequest;
                 request.Method = "HEAD";
                 HttpWebResponse response = request.GetResponse() as HttpWebResponse;
+
                 if (response.StatusCode == HttpStatusCode.OK)
                 {
                     return true;
@@ -34,7 +35,6 @@ namespace DEiXTo.Services
             }
             catch (Exception)
             {
-
                 return false;
             }
             

@@ -370,12 +370,10 @@ namespace DEiXTo.Services
             if (ContainsContent(state))
             {
                 result.AddContent(node.GetContent());
+                return;
             }
-
-            if (ContainsSource(state))
-            {
-                result.AddContent(node.GetSource());
-            }
+            
+            result.AddContent(node.GetSource());
         }
 
         /// <summary>

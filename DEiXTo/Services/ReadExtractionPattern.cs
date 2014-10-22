@@ -39,7 +39,7 @@ namespace DEiXTo.Services
         /// <param name="rootNode"></param>
         private void ReadPatternElement(XmlReader reader, TreeNode rootNode)
         {
-            if (reader.NodeType == XmlNodeType.Element && reader.LocalName == "Pattern")
+            if (IsPatternElement(reader))
             {
                 reader.ReadToFollowing("Node");
                 XmlDocument doc = new XmlDocument();
