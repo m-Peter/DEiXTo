@@ -55,6 +55,7 @@ namespace DEiXTo.Views
         public event Action LoadExtractionPattern;
         public event Action<TreeNode> AddPreviousSibling;
         public event Action<TreeNode> AddNextSibling;
+        public event Action AddSiblingOrder;
 
         private HtmlElement _currentElement;
 
@@ -1278,6 +1279,14 @@ namespace DEiXTo.Views
             {
                 var node = WorkingPatternTreeView.SelectedNode;
                 AddNextSibling(node);
+            }
+        }
+
+        private void EnterSiblingOrderMenuItem_Click(object sender, EventArgs e)
+        {
+            if (AddSiblingOrder != null)
+            {
+                AddSiblingOrder();
             }
         }
     }

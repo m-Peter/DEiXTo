@@ -47,6 +47,7 @@ namespace DEiXTo.Views
         event Action LoadExtractionPattern;
         event Action<TreeNode> AddPreviousSibling;
         event Action<TreeNode> AddNextSibling;
+        event Action AddSiblingOrder;
         
         string Url { get; }
         HtmlElement CurrentElement { get; set; }

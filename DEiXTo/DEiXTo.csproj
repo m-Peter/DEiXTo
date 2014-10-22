@@ -57,6 +57,7 @@
     <Compile Include="Models\Result.cs" />
     <Compile Include="Presenters.Tests\MainPresenterTests.cs" />
     <Compile Include="Presenters\AddLabelPresenter.cs" />
+    <Compile Include="Presenters\AddSiblingOrderPresenter.cs" />
     <Compile Include="Presenters\DeixtoAgentPresenter.cs" />
     <Compile Include="Presenters\MainPresenter.cs" />
     <Compile Include="Presenters\RegexBuilderPresenter.cs" />
@@ -101,6 +102,12 @@
     <Compile Include="Views\AddLabelWindow.Designer.cs">
       <DependentUpon>AddLabelWindow.cs</DependentUpon>
     </Compile>
+    <Compile Include="Views\AddSiblingOrderWindow.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Views\AddSiblingOrderWindow.Designer.cs">
+      <DependentUpon>AddSiblingOrderWindow.cs</DependentUpon>
+    </Compile>
     <Compile Include="Views\DeixtoAgentWindow.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -108,6 +115,7 @@
       <DependentUpon>DeixtoAgentWindow.cs</DependentUpon>
     </Compile>
     <Compile Include="Views\IAddLabelView.cs" />
+    <Compile Include="Views\IAddSiblingOrderView.cs" />
     <Compile Include="Views\IDeixtoAgentView.cs" />
     <Compile Include="Views\IMainView.cs" />
     <Compile Include="Views\IRegexBuilderView.cs" />
@@ -134,6 +142,9 @@
     </Compile>
     <EmbeddedResource Include="Views\AddLabelWindow.resx">
       <DependentUpon>AddLabelWindow.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\AddSiblingOrderWindow.resx">
+      <DependentUpon>AddSiblingOrderWindow.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Views\DeixtoAgentWindow.resx">
       <DependentUpon>DeixtoAgentWindow.cs</DependentUpon>

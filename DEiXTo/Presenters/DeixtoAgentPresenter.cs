@@ -77,6 +77,7 @@ namespace DEiXTo.Presenters
             _view.DeleteNode += deleteNode;
             _view.AddPreviousSibling += addPreviousSibling;
             _view.AddNextSibling += addNextSibling;
+            _view.AddSiblingOrder += addSiblingOrder;
 
             _eventHub.Subscribe<LabelAdded>(this);
             _eventHub.Subscribe<RegexAdded>(this);
@@ -84,6 +85,11 @@ namespace DEiXTo.Presenters
             var imagesList = _imageLoader.LoadImages();
             _view.AddWorkingPatternImages(imagesList);
             _view.AddExtractionTreeImages(imagesList);
+        }
+
+        void addSiblingOrder()
+        {
+            _loader.LoadAddSiblingOrderView();
         }
 
         void addNextSibling(TreeNode node)

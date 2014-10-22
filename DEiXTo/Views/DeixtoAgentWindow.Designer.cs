@@ -1865,6 +1865,7 @@
             this.EnterSiblingOrderMenuItem.Name = "EnterSiblingOrderMenuItem";
             this.EnterSiblingOrderMenuItem.Size = new System.Drawing.Size(238, 22);
             this.EnterSiblingOrderMenuItem.Text = "Enter sibling order";
+            this.EnterSiblingOrderMenuItem.Click += new System.EventHandler(this.EnterSiblingOrderMenuItem_Click);
             // 
             // RemoveSiblingOrderMenuItem
             // 

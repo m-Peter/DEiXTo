@@ -63,6 +63,17 @@ namespace DEiXTo.Services
         /// <summary>
         /// 
         /// </summary>
+        public void LoadAddSiblingOrderView()
+        {
+            AddSiblingOrderWindow window = new AddSiblingOrderWindow();
+            AddSiblingOrderPresenter presenter = new AddSiblingOrderPresenter(window);
+
+            window.ShowDialog();
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
         public Form LastLoadedView
         {
             get { return _lastLoadedView; }
