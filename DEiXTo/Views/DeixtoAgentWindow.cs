@@ -46,6 +46,7 @@ namespace DEiXTo.Views
         public event Action<TreeNode> AddRegex;
         public event Action<TreeNode> RemoveLabel;
         public event Action<TreeNode> RemoveRegex;
+        public event Action<TreeNode> DeleteNode;
         public event Action<FormClosingEventArgs> WindowClosing;
         public event Action AddURLToTargetURLs;
         public event Action RemoveURLFromTargetURLs;
@@ -803,6 +804,15 @@ namespace DEiXTo.Views
         /// <summary>
         /// 
         /// </summary>
+        /// <param name="node"></param>
+        public void DeletePatternNode(TreeNode node)
+        {
+            WorkingPatternTreeView.Nodes.Remove(node);
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
         /// <param name="columnHeader"></param>
         public void AddOutputColumn(string columnHeader)
         {
@@ -1239,6 +1249,15 @@ namespace DEiXTo.Views
             if (LoadExtractionPattern != null)
             {
                 LoadExtractionPattern();
+            }
+        }
+
+        private void DeleteNodeMenuItem_Click(object sender, EventArgs e)
+        {
+            if (DeleteNode != null)
+            {
+                var node = WorkingPatternTreeView.SelectedNode;
+                DeleteNode(node);
             }
         }
     }

@@ -1569,7 +1569,7 @@
             this.toolStripSeparator8,
             this.DeleteNodeMenuItem});
             this.AdjustpatternMenuStrip.Name = "AdjustpatternMenuStrip";
-            this.AdjustpatternMenuStrip.Size = new System.Drawing.Size(239, 398);
+            this.AdjustpatternMenuStrip.Size = new System.Drawing.Size(239, 420);
             // 
             // CheckedMenuItem
             // 
@@ -1912,6 +1912,7 @@
             this.DeleteNodeMenuItem.Name = "DeleteNodeMenuItem";
             this.DeleteNodeMenuItem.Size = new System.Drawing.Size(238, 22);
             this.DeleteNodeMenuItem.Text = "Delete Node";
+            this.DeleteNodeMenuItem.Click += new System.EventHandler(this.DeleteNodeMenuItem_Click);
             // 
             // DeixtoAgentWindow
             // 

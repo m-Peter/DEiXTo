@@ -38,6 +38,7 @@ namespace DEiXTo.Views
         event Action<TreeNode> AddRegex;
         event Action<TreeNode> RemoveLabel;
         event Action<TreeNode> RemoveRegex;
+        event Action<TreeNode> DeleteNode;
         event Action<FormClosingEventArgs> WindowClosing;
         event Action AddURLToTargetURLs;
         event Action RemoveURLFromTargetURLs;
@@ -78,6 +79,7 @@ namespace DEiXTo.Views
         void FillDomTree(TreeNode node);
         void FillSnapshotTree(TreeNode node);
         void FillExtractionPattern(TreeNode node);
+        void DeletePatternNode(TreeNode node);
         int CrawlingDepth();
         string HtmlLink();
         void AppendTargetUrl(string url);

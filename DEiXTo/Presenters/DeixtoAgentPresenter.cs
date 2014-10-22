@@ -74,6 +74,7 @@ namespace DEiXTo.Presenters
             _view.TargetURLSelected += targetURLSelected;
             _view.SaveExtractionPattern += saveExtractionPattern;
             _view.LoadExtractionPattern += loadExtractionPattern;
+            _view.DeleteNode += deleteNode;
 
             _eventHub.Subscribe<LabelAdded>(this);
             _eventHub.Subscribe<RegexAdded>(this);
@@ -81,6 +82,15 @@ namespace DEiXTo.Presenters
             var imagesList = _imageLoader.LoadImages();
             _view.AddWorkingPatternImages(imagesList);
             _view.AddExtractionTreeImages(imagesList);
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="node"></param>
+        void deleteNode(TreeNode node)
+        {
+            _view.DeletePatternNode(node);
         }
 
         /// <summary>
