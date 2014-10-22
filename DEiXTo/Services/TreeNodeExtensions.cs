@@ -326,6 +326,23 @@ namespace DEiXTo.Services
         /// 
         /// </summary>
         /// <param name="node"></param>
+        /// <returns></returns>
+        public static bool GetCareAboutSiblingOrder(this TreeNode node)
+        {
+            NodeInfo pInfo = GetPointerInfo(node);
+
+            if (pInfo != null)
+            {
+                return pInfo.CareAboutSiblingOrder;
+            }
+
+            return false;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="node"></param>
         /// <param name="startIndex"></param>
         public static void SetStartIndex(this TreeNode node, int startIndex)
         {
@@ -350,6 +367,22 @@ namespace DEiXTo.Services
             {
                 pInfo.SiblingOrderStep = stepValue;
             }
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="node"></param>
+        public static int GetStepValue(this TreeNode node)
+        {
+            NodeInfo pInfo = GetPointerInfo(node);
+
+            if (pInfo != null)
+            {
+                return pInfo.SiblingOrderStep;
+            }
+
+            return -1;
         }
 
         /// <summary>

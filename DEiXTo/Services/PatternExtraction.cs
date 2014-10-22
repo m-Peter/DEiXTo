@@ -135,7 +135,8 @@ namespace DEiXTo.Services
 
             if (_pattern.IsRoot())
             {
-                Match(_pattern, _domNodes);
+                int counter = 0;
+                Match(_pattern, _domNodes, ref counter);
                 return;
             }
 
@@ -154,7 +155,7 @@ namespace DEiXTo.Services
         /// </summary>
         /// <param name="pattern"></param>
         /// <param name="nodes"></param>
-        private void Match(TreeNode pattern, TreeNodeCollection nodes)
+        private void Match(TreeNode pattern, TreeNodeCollection nodes, ref int counter)
         {
             var result = new Result();
 
@@ -164,12 +165,23 @@ namespace DEiXTo.Services
                 {
                     // this is where the matching has succeeded and node
                     // is a instance that matched.
+                    int step = pattern.GetStepValue();
+
+                    if (step != 0 && (counter % step != 0))
+                    {
+                        counter++;
+                        result = new Result();
+                        continue;
+                    }
+
+                    counter++;
+                    
                     result.Node = node;
                     _results.Add(result);
                     result = new Result();
                 }
 
-                Match(pattern, node.Nodes);
+                Match(pattern, node.Nodes, ref counter);
             }
         }
 
@@ -370,10 +382,12 @@ namespace DEiXTo.Services
             if (ContainsContent(state))
             {
                 result.AddContent(node.GetContent());
-                return;
             }
-            
-            result.AddContent(node.GetSource());
+
+            if (ContainsSource(state))
+            {
+                result.AddContent(node.GetSource());
+            }
         }
 
         /// <summary>
