@@ -47,63 +47,119 @@ namespace DEiXTo.Services
         /// 
         /// </summary>
         /// <param name="element"></param>
+        /// <param name="ignoredTags"></param>
+        /// <returns></returns>
+        private bool IsIgnoredTag(IHTMLDOMNode element, string[] ignoredTags)
+        {
+            string tag = "<" + element.nodeName.ToUpper() + ">";
+
+            return ignoredTags.Contains(tag);
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="element"></param>
         /// <param name="node"></param>
         /// <param name="domTree"></param>
         /// <param name="ignoredTags"></param>
-        private void BuildSimpliefiedDOMTreeRec(IHTMLDOMNode element, TreeNode node, DOMTreeStructure domTree, string[] ignoredTags)
+        /// <param name="pInfo"></param>
+        private void AddTextNode(IHTMLDOMNode element, TreeNode node, DOMTreeStructure domTree, string[] ignoredTags, NodeInfo pInfo)
         {
-            if (element.nodeName == "#text" || element.nodeName == "#comment")
-            {
-                return;
-            }
-
             IHTMLDOMChildrenCollection childrenElements = element.childNodes as IHTMLDOMChildrenCollection;
             int len = childrenElements.length;
             IHTMLDOMNode curElement;
             string value;
 
-            string tag = "<" + element.nodeName.ToUpper() + ">";
-            if (ignoredTags.Contains(tag))
+            for (int i = 0; i < len; i++)
             {
-                for (int i = 0; i < len; i++)
+                curElement = childrenElements.item(i);
+                value = curElement.nodeValue as string;
+
+                if (curElement.nodeName == "#text" && !String.IsNullOrWhiteSpace(value))
                 {
-                    curElement = childrenElements.item(i);
-                    value = curElement.nodeValue as string;
-                    if (curElement.nodeName == "#text" && !String.IsNullOrWhiteSpace(value))
-                    {
-                        var txtNode = new TreeNode("TEXT");
-                        txtNode.ToolTipText = curElement.nodeValue;
-                        node.Nodes.Add(txtNode);
-                    }
-                    BuildSimpliefiedDOMTreeRec(curElement, node, domTree, ignoredTags);
+                    var txtNode = new TreeNode("TEXT");
+                    txtNode.ToolTipText = curElement.nodeValue;
+                    NodeInfo pointer = new NodeInfo();
+                    pointer.Path = pInfo.Path + ".TEXT";
+                    pointer.Content = curElement.nodeValue;
+                    pointer.State = NodeState.Checked;
+                    txtNode.ImageIndex = 0;
+                    txtNode.SelectedImageIndex = 0;
+                    txtNode.Tag = pointer;
+                    node.Nodes.Add(txtNode);
                 }
+
+                BuildSimpliefiedDOMTreeRec(curElement, node, domTree, ignoredTags);
+            }
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="element"></param>
+        /// <param name="node"></param>
+        /// <param name="domTree"></param>
+        /// <param name="ignoredTags"></param>
+        private void BuildSimpliefiedDOMTreeRec(IHTMLDOMNode element, TreeNode node, DOMTreeStructure domTree, string[] ignoredTags)
+        {
+            if (IgnoredElement(element))
+            {
                 return;
             }
 
-            var tmpNode = node.Nodes.Add(element.nodeName);
-
-            domTree.Add(element, tmpNode);
-
             NodeInfo pInfo = new NodeInfo();
 
-            var tmpElem = (IHTMLElement)element;
+            if (IsIgnoredTag(element, ignoredTags))
+            {
+                AddTextNode(element, node, domTree, ignoredTags, pInfo);
 
-            pInfo.ElementSourceIndex = tmpElem.sourceIndex;
-            pInfo.Path = ComputePath(node, tmpElem);
-            pInfo.Content = ContentExtractionFactory.GetExtractorFor(tmpElem).ExtractContent();
-            tmpNode.Tag = pInfo;
-            tmpNode.ToolTipText = GetTooltipFor(tmpElem);
+                return;
+            }
+
+            var tmpNode = InsertNode(element, node, domTree);
+
+            ApplyGrayedState(tmpNode);
+            
+            SetNodeInfo(tmpNode, element, pInfo, node);
+
+            InsertChildNodesIgnored(element, pInfo, tmpNode, domTree, ignoredTags);
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="element"></param>
+        /// <param name="pInfo"></param>
+        /// <param name="tmpNode"></param>
+        /// <param name="domTree"></param>
+        /// <param name="ignoredTags"></param>
+        private void InsertChildNodesIgnored(IHTMLDOMNode element, NodeInfo pInfo, TreeNode tmpNode, DOMTreeStructure domTree, string[] ignoredTags)
+        {
+            IHTMLDOMChildrenCollection childrenElements = element.childNodes as IHTMLDOMChildrenCollection;
+            int len = childrenElements.length;
+            IHTMLDOMNode curElement;
+            string value;
 
             for (int i = 0; i < len; i++)
             {
                 curElement = childrenElements.item(i);
                 value = curElement.nodeValue as string;
-                if (curElement.nodeName == "#text" && !String.IsNullOrWhiteSpace(value))
+
+                if (IsTextNode(curElement, value))
                 {
                     var txtNode = new TreeNode("TEXT");
                     txtNode.ToolTipText = curElement.nodeValue;
+                    NodeInfo pointer = new NodeInfo();
+                    pointer.Path = pInfo.Path + ".TEXT";
+                    pointer.Content = curElement.nodeValue;
+                    pointer.State = NodeState.Checked;
+                    txtNode.ImageIndex = 0;
+                    txtNode.SelectedImageIndex = 0;
+                    txtNode.Tag = pointer;
                     tmpNode.Nodes.Add(txtNode);
                 }
+
                 BuildSimpliefiedDOMTreeRec(curElement, tmpNode, domTree, ignoredTags);
             }
         }
