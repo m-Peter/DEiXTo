@@ -83,6 +83,7 @@
     <Compile Include="Services\ReadExtractionPattern.cs" />
     <Compile Include="Services\RegexAdded.cs" />
     <Compile Include="Services\SaveFileDialogWrapper.cs" />
+    <Compile Include="Services\SiblingOrderAdded.cs" />
     <Compile Include="Services\StateToImageMapper.cs" />
     <Compile Include="Services\TagContentExtractor.cs" />
     <Compile Include="Services\TreeBuilder.cs" />

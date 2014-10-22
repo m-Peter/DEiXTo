@@ -13,7 +13,7 @@ namespace DEiXTo.Presenters
     /// <summary>
     /// 
     /// </summary>
-    public class DeixtoAgentPresenter : ISubscriber<LabelAdded>, ISubscriber<RegexAdded>
+    public class DeixtoAgentPresenter : ISubscriber<LabelAdded>, ISubscriber<RegexAdded>, ISubscriber<SiblingOrderAdded>
     {
         private readonly IDeixtoAgentView _view;
         private ElementStyling _styling;
@@ -81,15 +81,16 @@ namespace DEiXTo.Presenters
 
             _eventHub.Subscribe<LabelAdded>(this);
             _eventHub.Subscribe<RegexAdded>(this);
+            _eventHub.Subscribe<SiblingOrderAdded>(this);
 
             var imagesList = _imageLoader.LoadImages();
             _view.AddWorkingPatternImages(imagesList);
             _view.AddExtractionTreeImages(imagesList);
         }
 
-        void addSiblingOrder()
+        void addSiblingOrder(TreeNode node)
         {
-            _loader.LoadAddSiblingOrderView();
+            _loader.LoadAddSiblingOrderView(node);
         }
 
         void addNextSibling(TreeNode node)
@@ -298,6 +299,23 @@ namespace DEiXTo.Presenters
             int index = node.SourceIndex();
             var element = _document.GetElementByIndex(index);
             _view.FillElementInfo(node, element.OuterHtml);
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="subject"></param>
+        public void Receive(SiblingOrderAdded subject)
+        {
+            int startIndex = subject.StartIndex;
+            int stepValue = subject.StepValue;
+            TreeNode node = subject.Node;
+
+            node.SetCareAboutSiblingOrder(true);
+            node.SetStartIndex(startIndex);
+            node.SetStepValue(stepValue);
+
+            node.ForeColor = Color.CadetBlue;
         }
 
         /// <summary>

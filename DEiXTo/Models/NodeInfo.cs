@@ -13,6 +13,9 @@
         private string _regex;
         private bool _isRoot;
         private NodeState _state;
+        private bool _careAboutSiblingOrder;
+        private int _siblingOrderStart;
+        private int _siblingOrderStep;
 
         /// <summary>
         /// 
@@ -84,6 +87,33 @@
         {
             get { return _state; }
             set { _state = value; }
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public bool CareAboutSiblingOrder
+        {
+            get { return _careAboutSiblingOrder; }
+            set { _careAboutSiblingOrder = value; }
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public int SiblingOrderStart
+        {
+            get { return _siblingOrderStart; }
+            set { _siblingOrderStart = value; }
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public int SiblingOrderStep
+        {
+            get { return _siblingOrderStep; }
+            set { _siblingOrderStep = value; }
         }
     }
 }

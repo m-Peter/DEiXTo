@@ -311,6 +311,51 @@ namespace DEiXTo.Services
         /// 
         /// </summary>
         /// <param name="node"></param>
+        /// <param name="value"></param>
+        public static void SetCareAboutSiblingOrder(this TreeNode node, bool value)
+        {
+            NodeInfo pInfo = GetPointerInfo(node);
+
+            if (pInfo != null)
+            {
+                pInfo.CareAboutSiblingOrder = value;
+            }
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="node"></param>
+        /// <param name="startIndex"></param>
+        public static void SetStartIndex(this TreeNode node, int startIndex)
+        {
+            NodeInfo pInfo = GetPointerInfo(node);
+
+            if (pInfo != null)
+            {
+                pInfo.SiblingOrderStart = startIndex;
+            }
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="node"></param>
+        /// <param name="stepValue"></param>
+        public static void SetStepValue(this TreeNode node, int stepValue)
+        {
+            NodeInfo pInfo = GetPointerInfo(node);
+
+            if (pInfo != null)
+            {
+                pInfo.SiblingOrderStep = stepValue;
+            }
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="node"></param>
         /// <returns></returns>
         private static NodeInfo GetPointerInfo(this TreeNode node)
         {

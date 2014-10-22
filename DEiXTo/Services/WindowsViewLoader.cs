@@ -63,10 +63,10 @@ namespace DEiXTo.Services
         /// <summary>
         /// 
         /// </summary>
-        public void LoadAddSiblingOrderView()
+        public void LoadAddSiblingOrderView(TreeNode node)
         {
             AddSiblingOrderWindow window = new AddSiblingOrderWindow();
-            AddSiblingOrderPresenter presenter = new AddSiblingOrderPresenter(window);
+            AddSiblingOrderPresenter presenter = new AddSiblingOrderPresenter(window, node);
 
             window.ShowDialog();
         }
