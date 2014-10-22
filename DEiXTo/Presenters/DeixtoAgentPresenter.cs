@@ -6,6 +6,7 @@ using mshtml;
 using DEiXTo.Services;
 using DEiXTo.Models;
 using System.Drawing;
+using System.Collections.Generic;
 
 namespace DEiXTo.Presenters
 {
@@ -481,12 +482,44 @@ namespace DEiXTo.Presenters
         /// <param name="executor"></param>
         private void AddOutputColumns(PatternExtraction executor)
         {
+            var labels = executor.OutputVariableLabels();
+
+            if (labels.Count == 0)
+            {
+                int columns = executor.CountOutputVariables();
+                AddDefaultColumns(columns);
+
+                return;
+            }
+
+            AddLabeledColumns(labels);
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="columns"></param>
+        private void AddDefaultColumns(int columns)
+        {
             var columnFormat = "VAR";
-            int columns = executor.CountOutputVariables();
 
             for (int i = 0; i < columns; i++)
             {
                 _view.AddOutputColumn(columnFormat + (i + 1));
+            }
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="labels"></param>
+        private void AddLabeledColumns(List<string> labels)
+        {
+            int columns = labels.Count;
+
+            for (int i = 0; i < columns; i++)
+            {
+                _view.AddOutputColumn(labels[i]);
             }
         }
 

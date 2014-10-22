@@ -39,6 +39,33 @@ namespace DEiXTo.Services
             return outputVariables;
         }
 
+        public List<string> OutputVariableLabels()
+        {
+            List<string> labels = new List<string>();
+
+            if (_pattern.HasLabel())
+            {
+                labels.Add(_pattern.GetLabel());
+            }
+            
+            CollectVariableLabels(_pattern.Nodes, labels);
+
+            return labels;
+        }
+
+        private void CollectVariableLabels(TreeNodeCollection nodes, List<string> labels)
+        {
+            foreach (TreeNode node in nodes)
+            {
+                if (node.HasLabel())
+                {
+                    labels.Add(node.GetLabel());
+                }
+
+                CollectVariableLabels(node.Nodes, labels);
+            }
+        }
+
         /// <summary>
         /// 
         /// </summary>
@@ -504,7 +531,25 @@ namespace DEiXTo.Services
         /// <returns></returns>
         private bool TagMatching(TreeNode left, TreeNode right)
         {
+            if (left.HasLabel())
+            {
+                string tag = getTag(left.Text);
+
+                return tag == right.Text;
+            }
+
             return left.Text == right.Text;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="tagValue"></param>
+        /// <returns></returns>
+        private string getTag(string tagValue)
+        {
+            var result = tagValue.Split(':');
+            return result[0];
         }
     }
 }
