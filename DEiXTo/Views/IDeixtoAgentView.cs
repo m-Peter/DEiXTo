@@ -47,6 +47,10 @@ namespace DEiXTo.Views
         
         string Url { get; }
         HtmlElement CurrentElement { get; set; }
+        bool HighlightModeEnabled { get; }
+        bool CrawlingEnabled { get; }
+        bool CanAutoScroll { get; }
+        bool BrowserContextMenuEnabled { get; }
 
         string GetDocumentUrl();
         string TargetURLToAdd();
@@ -74,15 +78,12 @@ namespace DEiXTo.Views
         void FillDomTree(TreeNode node);
         void FillSnapshotTree(TreeNode node);
         void FillExtractionPattern(TreeNode node);
-        bool HighlightModeEnabled();
-        bool CrawlingEnabled();
         int CrawlingDepth();
         string HtmlLink();
         void AppendTargetUrl(string url);
         void SelectDOMNode(TreeNode node);
         void FillElementInfo(TreeNode node, string outerHtml);
         void ClearElementInfo();
-        bool CanAutoScroll();
         void ClearPatternTree();
         void ClearDOMTree();
         void ClearSnapshotTree();
@@ -95,7 +96,6 @@ namespace DEiXTo.Views
         void SetContextMenuFor(TreeNode node);
         void SetAdjustContextMenuFor(TreeNode node);
         void ShowBrowserMenu();
-        bool BrowserContextMenuEnabled();
         string[] IgnoredTags();
         void AttachDocumentEvents();
         void DeleteSnapshotInstance(TreeNode node);

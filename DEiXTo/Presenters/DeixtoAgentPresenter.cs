@@ -270,7 +270,7 @@ namespace DEiXTo.Presenters
             int index = node.SourceIndex();
             var element = _document.GetElementByIndex(index);
 
-            if (_view.HighlightModeEnabled())
+            if (_view.HighlightModeEnabled)
             {
                 _styling.UnstyleElements();
                 _styling.Style(element);
@@ -281,7 +281,7 @@ namespace DEiXTo.Presenters
             _view.FillElementInfo(node, element.OuterHtml);
             _view.SelectDOMNode(_domTree.GetNodeFor(element));
 
-            if (_view.CanAutoScroll())
+            if (_view.CanAutoScroll)
             {
                 element.ScrollIntoView(false);
             }
@@ -384,7 +384,7 @@ namespace DEiXTo.Presenters
                 return;
             }
 
-            if (_view.CrawlingEnabled())
+            if (_view.CrawlingEnabled)
             {
                 string mylink = _view.HtmlLink();
                 int depth = _view.CrawlingDepth();
@@ -610,7 +610,7 @@ namespace DEiXTo.Presenters
             _view.FillElementInfo(node, element.OuterHtml);
             _view.SelectDOMNode(_domTree.GetNodeFor(element));
 
-            if (_view.CanAutoScroll())
+            if (_view.CanAutoScroll)
             {
                 element.ScrollIntoView(false);
             }
@@ -658,7 +658,7 @@ namespace DEiXTo.Presenters
         /// <returns></returns>
         private bool CustomMenuCanBeShown(HtmlElementEventArgs e)
         {
-            return e.CtrlKeyPressed && _view.BrowserContextMenuEnabled();
+            return e.CtrlKeyPressed && _view.BrowserContextMenuEnabled;
         }
 
         /// <summary>
@@ -700,7 +700,7 @@ namespace DEiXTo.Presenters
             int index = node.SourceIndex();
             var element = _document.GetElementByIndex(index);
 
-            if (_view.HighlightModeEnabled())
+            if (_view.HighlightModeEnabled)
             {
                 _styling.UnstyleElements();
                 _styling.Style(element);
@@ -709,7 +709,7 @@ namespace DEiXTo.Presenters
             _view.FillElementInfo(node, element.OuterHtml);
             _view.SelectDOMNode(_domTree.GetNodeFor(element));
 
-            if (_view.CanAutoScroll())
+            if (_view.CanAutoScroll)
             {
                 element.ScrollIntoView(false);
             }
@@ -788,7 +788,7 @@ namespace DEiXTo.Presenters
 
             _view.FillElementInfo(node, element.OuterHtml);
 
-            if (_view.CanAutoScroll())
+            if (_view.CanAutoScroll)
             {
                 element.ScrollIntoView(false);
             }
@@ -804,7 +804,7 @@ namespace DEiXTo.Presenters
         /// <param name="element">The HtmlElement the mouse is leaving from.</param>
         void documentMouseLeave(HtmlElement element)
         {
-            if (_view.HighlightModeEnabled())
+            if (_view.HighlightModeEnabled)
             {
                 _styling.Unstyle(element);
             }
@@ -824,7 +824,7 @@ namespace DEiXTo.Presenters
         {
             var node = _domTree.GetNodeFor(element);
 
-            if (node == null || !_view.HighlightModeEnabled())
+            if (node == null || !_view.HighlightModeEnabled)
             {
                 return;
             }
@@ -937,7 +937,7 @@ namespace DEiXTo.Presenters
             // If the resource described by the URL exists, then proceed with the navigation
             _view.ClearAuxiliaryTree();
 
-            if (!_view.CrawlingEnabled())
+            if (!_view.CrawlingEnabled)
             {
                 _view.ClearPatternTree();
             }
@@ -958,7 +958,7 @@ namespace DEiXTo.Presenters
             _styling.Clear();
             _view.ClearSnapshotTree();
 
-            if (!_view.CrawlingEnabled())
+            if (!_view.CrawlingEnabled)
             {
                 _view.ClearPatternTree();
             }

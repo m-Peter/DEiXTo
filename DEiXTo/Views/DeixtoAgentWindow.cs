@@ -272,18 +272,18 @@ namespace DEiXTo.Views
         /// Returns whether the Highlight Mode checkbox is enabled.
         /// </summary>
         /// <returns></returns>
-        public bool HighlightModeEnabled()
+        public bool HighlightModeEnabled
         {
-            return HighlightModeCheckBox.Checked;
+            get { return HighlightModeCheckBox.Checked; }
         }
 
         /// <summary>
         /// 
         /// </summary>
         /// <returns></returns>
-        public bool CrawlingEnabled()
+        public bool CrawlingEnabled
         {
-            return CrawlingCheckBox.Checked;
+            get { return CrawlingCheckBox.Checked; }
         }
 
         /// <summary>
@@ -317,9 +317,9 @@ namespace DEiXTo.Views
         /// Returns whether the AutoScroll option is enabled.
         /// </summary>
         /// <returns></returns>
-        public bool CanAutoScroll()
+        public bool CanAutoScroll
         {
-            return AutoScrollCheckBox.Checked;
+            get { return AutoScrollCheckBox.Checked; }
         }
 
         /// <summary>
@@ -648,9 +648,9 @@ namespace DEiXTo.Views
         /// 
         /// </summary>
         /// <returns></returns>
-        public bool BrowserContextMenuEnabled()
+        public bool BrowserContextMenuEnabled
         {
-            return BrowserMenuStrip.Enabled;
+            get { return BrowserMenuStrip.Enabled; }
         }
 
         /// <summary>
