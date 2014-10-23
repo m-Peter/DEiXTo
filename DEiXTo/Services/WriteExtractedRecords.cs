@@ -11,6 +11,7 @@ namespace DEiXTo.Services
     public class WriteExtractedRecords
     {
         private string _filename;
+        private StreamWriter _file;
 
         public WriteExtractedRecords(string filename)
         {
@@ -23,18 +24,36 @@ namespace DEiXTo.Services
         /// <param name="results"></param>
         public void Write(IEnumerable<Result> results)
         {
-            using (StreamWriter file = new StreamWriter(@_filename))
+            using (_file = new StreamWriter(@_filename))
             {
-                foreach (Result record in results)
-                {
-                    foreach (string content in record.Contents())
-                    {
-                        file.Write(content);
-                        file.Write("\t");
-                    }
+                WriteResults(results);
+            }
+        }
 
-                    file.WriteLine();
-                }
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="results"></param>
+        private void WriteResults(IEnumerable<Result> results)
+        {
+            foreach (Result record in results)
+            {
+                WriteContent(record);
+
+                _file.WriteLine();
+            }
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="record"></param>
+        private void WriteContent(Result record)
+        {
+            foreach (string content in record.Contents())
+            {
+                _file.Write(content);
+                _file.Write("\t");
             }
         }
     }
