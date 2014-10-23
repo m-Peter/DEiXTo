@@ -546,7 +546,9 @@ namespace DEiXTo.Presenters
                 if (_view.OutputFileSpecified)
                 {
                     string filename = _view.OutputFileName;
-                    
+                    WriteExtractedRecords writer = new WriteExtractedRecords(filename);
+                    var records = _executor.ExtractedResults();
+                    writer.Write(records);
                 }
             }
         }
