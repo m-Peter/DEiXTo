@@ -565,6 +565,10 @@ namespace DEiXTo.Presenters
                     var records = _executor.ExtractedResults();
                     writer.Write(records);
                 }
+
+                var rootNode = executor.TrimUncheckedNodes(pattern);
+                _view.FillExtractionPattern(rootNode);
+                _view.ExpandExtractionTree();
             }
         }
 

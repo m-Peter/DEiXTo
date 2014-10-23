@@ -831,7 +831,11 @@ namespace DEiXTo.Views
         /// </summary>
         public bool OutputFileSpecified
         {
-            get { return OutputFileNameTextBox.Text != null; }
+            get
+            {
+                string outputFile = OutputFileNameTextBox.Text;
+                return !String.IsNullOrWhiteSpace(outputFile);
+            }
         }
         
         /// <summary>

@@ -104,9 +104,27 @@ namespace DEiXTo.Services
         /// <summary>
         /// 
         /// </summary>
+        /// <param name="pattern"></param>
+        /// <param name="filtered"></param>
+        public TreeNode TrimUncheckedNodes(TreeNode pattern)
+        {
+            var rootNode = new TreeNode(pattern.Text);
+            rootNode.Tag = pattern.Tag;
+            rootNode.ImageIndex = pattern.ImageIndex;
+            rootNode.SelectedImageIndex = pattern.SelectedImageIndex;
+            rootNode.NodeFont = pattern.NodeFont;
+
+            FilterUncheckedNodes(pattern.Nodes, rootNode);
+
+            return rootNode;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
         /// <param name="nodes"></param>
         /// <param name="filtered"></param>
-        public void FilterUncheckedNodes(TreeNodeCollection nodes, TreeNode filtered)
+        private void FilterUncheckedNodes(TreeNodeCollection nodes, TreeNode filtered)
         {
             foreach (TreeNode node in nodes)
             {
@@ -116,6 +134,8 @@ namespace DEiXTo.Services
                 {
                     var newNode = new TreeNode(node.Text);
                     newNode.Tag = node.Tag;
+                    newNode.ImageIndex = node.ImageIndex;
+                    newNode.SelectedImageIndex = node.SelectedImageIndex;
                     filtered.Nodes.Add(newNode);
                     FilterUncheckedNodes(node.Nodes, newNode);
                 }
