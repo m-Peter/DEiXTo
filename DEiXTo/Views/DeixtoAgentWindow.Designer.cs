@@ -951,10 +951,6 @@
             // 
             this.OutputFileFormatComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.OutputFileFormatComboBox.FormattingEnabled = true;
-            this.OutputFileFormatComboBox.Items.AddRange(new object[] {
-            "Text (*.txt)",
-            "XML (*.xml)",
-            "RSS (*.rss)"});
             this.OutputFileFormatComboBox.Location = new System.Drawing.Point(52, 46);
             this.OutputFileFormatComboBox.Name = "OutputFileFormatComboBox";
             this.OutputFileFormatComboBox.Size = new System.Drawing.Size(80, 21);

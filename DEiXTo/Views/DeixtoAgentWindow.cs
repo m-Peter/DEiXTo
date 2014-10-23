@@ -129,7 +129,18 @@ namespace DEiXTo.Views
             this.KeyPreview = true;
             this.KeyDown += DeixtoAgentWindow_KeyDown;
 
+            OutputFileFormatComboBox.Items.AddRange(GetOutputFormats());
             OutputFileFormatComboBox.SelectedIndex = 0;
+        }
+
+        private object[] GetOutputFormats()
+        {
+            return new object[]
+            {
+                new OutputFormat(Format.Text, "Text (*.txt)"),
+                new OutputFormat(Format.XML, "XML (*.xml)"),
+                new OutputFormat(Format.RSS, "RSS (*.rss)")
+            };
         }
 
         /// <summary>
