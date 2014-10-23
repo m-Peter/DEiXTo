@@ -23,10 +23,8 @@ namespace DEiXTo.Presenters
         private DOMTreeStructure _domTree;
         private IViewLoader _loader;
         private EventHub _eventHub;
-        private ISaveFileDialog _savePatternDialog;
-        private IOpenFileDialog _openPatternDialog;
-        private ISaveFileDialog _saveRecordsDialog;
-        private ISaveFileDialog _saveToDiskDialog;
+        private ISaveFileDialog _saveFileDialog;
+        private IOpenFileDialog _openFileDialog;
         private PatternExtraction _executor;
 
         public DeixtoAgentPresenter(IDeixtoAgentView view)
@@ -36,6 +34,8 @@ namespace DEiXTo.Presenters
             _builder = new TreeBuilder();
             _imageLoader = new StatesImageLoader();
             _loader = new WindowsViewLoader();
+            _saveFileDialog = new SaveFileDialogWrapper();
+            _openFileDialog = new OpenFileDialogWrapper();
             _eventHub = EventHub.Instance;
 
             // ATTACH THE EVENTS OF THE VIEW TO LOCAL METHODS
@@ -93,33 +93,31 @@ namespace DEiXTo.Presenters
 
         void selectOutputFile()
         {
-            _saveRecordsDialog = new SaveFileDialogWrapper();
-            _saveRecordsDialog.Filter = "Text Files (*.txt)|";
-            _saveRecordsDialog.Extension = "txt";
-            var answer = _saveRecordsDialog.ShowDialog();
+            _saveFileDialog.Filter = "Text Files (*.txt)|";
+            _saveFileDialog.Extension = "txt";
+            var answer = _saveFileDialog.ShowDialog();
 
             if (Negative(answer))
             {
                 return;
             }
 
-            string filename = _saveRecordsDialog.Filename;
+            string filename = _saveFileDialog.Filename;
             _view.OutputFileName = filename;
         }
 
         void saveToDisk()
         {
-            _saveToDiskDialog = new SaveFileDialogWrapper();
-            _saveToDiskDialog.Filter = "Text Files (*.txt)|";
-            _saveToDiskDialog.Extension = "txt";
-            var answer = _saveToDiskDialog.ShowDialog();
+            _saveFileDialog.Filter = "Text Files (*.txt)|";
+            _saveFileDialog.Extension = "txt";
+            var answer = _saveFileDialog.ShowDialog();
 
             if (Negative(answer))
             {
                 return;
             }
 
-            string filename = _saveToDiskDialog.Filename;
+            string filename = _saveFileDialog.Filename;
             WriteExtractedRecords writer = new WriteExtractedRecords(filename);
             var records = _executor.ExtractedResults();
             writer.Write(records);
@@ -177,9 +175,8 @@ namespace DEiXTo.Presenters
         /// </summary>
         void loadExtractionPattern()
         {
-            _openPatternDialog = new OpenFileDialogWrapper();
-            _openPatternDialog.Filter = "XML Files (*.xml)|";
-            var answer = _openPatternDialog.ShowDialog();
+            _openFileDialog.Filter = "XML Files (*.xml)|";
+            var answer = _openFileDialog.ShowDialog();
 
             if (Negative(answer))
             {
@@ -189,7 +186,7 @@ namespace DEiXTo.Presenters
             string filename = string.Empty;
             ReadExtractionPattern reader = new ReadExtractionPattern();
 
-            filename = _openPatternDialog.Filename;
+            filename = _openFileDialog.Filename;
             var node = reader.read(filename);
             _view.FillExtractionPattern(node);
             _view.ExpandExtractionTree();
@@ -210,10 +207,9 @@ namespace DEiXTo.Presenters
         /// </summary>
         void saveExtractionPattern()
         {
-            _savePatternDialog = new SaveFileDialogWrapper();
-            _savePatternDialog.Filter = "XML Files (*.xml)|";
-            _savePatternDialog.Extension = "xml";
-            var answer = _savePatternDialog.ShowDialog();
+            _saveFileDialog.Filter = "XML Files (*.xml)|";
+            _saveFileDialog.Extension = "xml";
+            var answer = _saveFileDialog.ShowDialog();
 
             if (Negative(answer))
             {
@@ -223,7 +219,7 @@ namespace DEiXTo.Presenters
             string filename = string.Empty;
             WriteExtractionPattern writer = new WriteExtractionPattern();
 
-            filename = _savePatternDialog.Filename;
+            filename = _saveFileDialog.Filename;
             writer.write(filename, _view.GetPatternTreeNodes());
         }
 
