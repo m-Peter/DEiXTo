@@ -31,6 +31,11 @@ namespace DEiXTo.Models
         /// <param name="content"></param>
         public void AddContent(string content)
         {
+            if (string.IsNullOrWhiteSpace(content))
+            {
+                return;
+            }
+
             _extractedContents.Add(content.Trim());
         }
 

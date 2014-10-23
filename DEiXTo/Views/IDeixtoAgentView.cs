@@ -50,13 +50,15 @@ namespace DEiXTo.Views
         event Action<TreeNode> AddSiblingOrder;
         event Action SaveToDisk;
         event Action SelectOutputFile;
-        
+        event Action TunePattern;
+
         string Url { get; }
         HtmlElement CurrentElement { get; set; }
         bool HighlightModeEnabled { get; }
         bool CrawlingEnabled { get; }
         bool CanAutoScroll { get; }
         bool BrowserContextMenuEnabled { get; }
+        string FirstTargetURL { get; }
 
         string GetDocumentUrl();
         string TargetURLToAdd();
@@ -111,6 +113,7 @@ namespace DEiXTo.Views
         void ShowNoTagSelectedMessage();
         TreeNode GetWorkingPattern();
         TreeNode GetAuxiliaryInstance();
+        TreeNode GetExtractionPattern();
         TreeNodeCollection GetDOMTreeNodes();
         TreeNodeCollection GetBodyTreeNodes();
         TreeNodeCollection GetPatternTreeNodes();

@@ -53,6 +53,26 @@ namespace DEiXTo.Services
             return labels;
         }
 
+        public TreeNode ScanTree(TreeNodeCollection nodes, TreeNode pattern)
+        {
+            foreach (TreeNode node in nodes)
+            {
+                if (CompareRecursiveTree(node, pattern, new Result()))
+                {
+                    return node;
+                }
+
+                TreeNode candidate = ScanTree(node.Nodes, pattern);
+
+                if (candidate != null)
+                {
+                    return candidate;
+                }
+            }
+
+            return null;
+        }
+
         private void CollectVariableLabels(TreeNodeCollection nodes, List<string> labels)
         {
             foreach (TreeNode node in nodes)

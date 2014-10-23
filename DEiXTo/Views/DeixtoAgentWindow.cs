@@ -58,6 +58,7 @@ namespace DEiXTo.Views
         public event Action<TreeNode> AddSiblingOrder;
         public event Action SaveToDisk;
         public event Action SelectOutputFile;
+        public event Action TunePattern;
 
         private HtmlElement _currentElement;
 
@@ -892,6 +893,18 @@ namespace DEiXTo.Views
         /// <summary>
         /// 
         /// </summary>
+        public string FirstTargetURL
+        {
+            get
+            {
+                var url = (string)TargetURLsListBox.Items[0];
+                return url;
+            }
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
         /// <param name="label"></param>
         /// <param name="node"></param>
         public void AddLabelToNode(string label, TreeNode node)
@@ -906,6 +919,15 @@ namespace DEiXTo.Views
         public TreeNodeCollection GetPatternTreeNodes()
         {
             return WorkingPatternTreeView.Nodes;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        public TreeNode GetExtractionPattern()
+        {
+            return ExtractionPatternTreeView.Nodes[0];
         }
 
         /// <summary>
@@ -1350,6 +1372,14 @@ namespace DEiXTo.Views
             if (SelectOutputFile != null)
             {
                 SelectOutputFile();
+            }
+        }
+
+        private void TunePatternButton_Click(object sender, EventArgs e)
+        {
+            if (TunePattern != null)
+            {
+                TunePattern();
             }
         }
     }

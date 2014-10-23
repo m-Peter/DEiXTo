@@ -1026,6 +1026,7 @@
             this.TunePatternButton.TabIndex = 1;
             this.TunePatternButton.Text = "Tune";
             this.TunePatternButton.UseVisualStyleBackColor = true;
+            this.TunePatternButton.Click += new System.EventHandler(this.TunePatternButton_Click);
             // 
             // IgnoreHTMLTagsGroupBox
             // 

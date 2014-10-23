@@ -10,6 +10,9 @@ using System.Collections.Generic;
 
 namespace DEiXTo.Presenters
 {
+
+    public delegate void DOMBuilted();
+
     /// <summary>
     /// 
     /// </summary>
@@ -26,6 +29,8 @@ namespace DEiXTo.Presenters
         private ISaveFileDialog _saveFileDialog;
         private IOpenFileDialog _openFileDialog;
         private PatternExtraction _executor;
+
+        public event DOMBuilted DomBuilted;
 
         public DeixtoAgentPresenter(IDeixtoAgentView view)
         {
@@ -81,6 +86,7 @@ namespace DEiXTo.Presenters
             _view.AddSiblingOrder += addSiblingOrder;
             _view.SaveToDisk += saveToDisk;
             _view.SelectOutputFile += selectOutputFile;
+            _view.TunePattern += tunePattern;
 
             _eventHub.Subscribe<LabelAdded>(this);
             _eventHub.Subscribe<RegexAdded>(this);
@@ -89,6 +95,30 @@ namespace DEiXTo.Presenters
             var imagesList = _imageLoader.LoadImages();
             _view.AddWorkingPatternImages(imagesList);
             _view.AddExtractionTreeImages(imagesList);
+        }
+
+        void tunePattern()
+        {
+            // Grab the first URL in the target URLs
+            string url = _view.FirstTargetURL;
+
+            DomBuilted += DeixtoAgentPresenter_DomBuilted;
+            
+            // Navigate to that URL
+            _view.NavigateTo(url);
+        }
+
+        void DeixtoAgentPresenter_DomBuilted()
+        {
+            // Grab the Extraction Pattern
+            var pattern = _view.GetExtractionPattern();
+
+            // Search for the tree structure in the Extraction Pattern
+            _executor = new PatternExtraction(pattern, _view.GetDOMTreeNodes());
+            var matchedNode = _executor.ScanTree(_view.GetDOMTreeNodes(), pattern);
+
+            // If you find one, make it Working Pattern
+            _view.FillPatternTree(matchedNode.GetClone());
         }
 
         void selectOutputFile()
@@ -1157,6 +1187,11 @@ namespace DEiXTo.Presenters
             _domTree = _builder.BuildDOMTree(elem);
             _view.FillDomTree(_domTree.RootNode);
             _view.AttachDocumentEvents();
+
+            if (DomBuilted != null)
+            {
+                DomBuilted();
+            }
         }
     }
 }
