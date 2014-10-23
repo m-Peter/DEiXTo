@@ -127,5 +127,6 @@ namespace DEiXTo.Views
         void UnderlineNode(TreeNode node);
         bool OutputFileSpecified { get; }
         string OutputFileName { get; set; }
+        Format OutputFileFormat { get; }
     }
 }

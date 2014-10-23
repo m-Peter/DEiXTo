@@ -118,7 +118,7 @@ namespace DEiXTo.Presenters
             }
 
             string filename = _saveFileDialog.Filename;
-            WriteExtractedRecords writer = new WriteExtractedRecords(filename);
+            TextRecordsWriter writer = new TextRecordsWriter(filename);
             var records = _executor.ExtractedResults();
             writer.Write(records);
         }
@@ -541,8 +541,9 @@ namespace DEiXTo.Presenters
 
                 if (_view.OutputFileSpecified)
                 {
+                    var format = _view.OutputFileFormat;
                     string filename = _view.OutputFileName;
-                    WriteExtractedRecords writer = new WriteExtractedRecords(filename);
+                    var writer = RecordsWriterFactory.GetWriterFor(format, filename);
                     var records = _executor.ExtractedResults();
                     writer.Write(records);
                 }

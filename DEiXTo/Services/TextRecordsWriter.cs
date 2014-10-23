@@ -8,12 +8,11 @@ using DEiXTo.Models;
 
 namespace DEiXTo.Services
 {
-    public class WriteExtractedRecords
+    public class TextRecordsWriter : ExtractedRecordsWriter
     {
-        private string _filename;
         private StreamWriter _file;
 
-        public WriteExtractedRecords(string filename)
+        public TextRecordsWriter(string filename)
         {
             _filename = filename;
         }
@@ -22,7 +21,7 @@ namespace DEiXTo.Services
         /// 
         /// </summary>
         /// <param name="results"></param>
-        public void Write(IEnumerable<Result> results)
+        public override void Write(IEnumerable<Result> results)
         {
             using (_file = new StreamWriter(@_filename))
             {

@@ -70,6 +70,7 @@
     <Compile Include="Services\DocumentQuery.cs" />
     <Compile Include="Services\DocumentValidatorFactory.cs" />
     <Compile Include="Services\EventHub.cs" />
+    <Compile Include="Services\ExtractedRecordsWriter.cs" />
     <Compile Include="Services\FormContentExtractor.cs" />
     <Compile Include="Services\GenericContentExtractor.cs" />
     <Compile Include="Services\IEventHub.cs" />
@@ -82,6 +83,7 @@
     <Compile Include="Services\LinkContentExtractor.cs" />
     <Compile Include="Services\OpenFileDialogWrapper.cs" />
     <Compile Include="Services\ReadExtractionPattern.cs" />
+    <Compile Include="Services\RecordsWriterFactory.cs" />
     <Compile Include="Services\RegexAdded.cs" />
     <Compile Include="Services\SaveFileDialogWrapper.cs" />
     <Compile Include="Services\SiblingOrderAdded.cs" />
@@ -97,8 +99,9 @@
     <Compile Include="Services\TreeNodeExtensions.cs" />
     <Compile Include="Services\WebDocumentValidator.cs" />
     <Compile Include="Services\WindowsViewLoader.cs" />
-    <Compile Include="Services\WriteExtractedRecords.cs" />
+    <Compile Include="Services\TextRecordsWriter.cs" />
     <Compile Include="Services\WriteExtractionPattern.cs" />
+    <Compile Include="Services\XmlRecordsWriter.cs" />
     <Compile Include="Views\AddLabelWindow.cs">
       <SubType>Form</SubType>
     </Compile>

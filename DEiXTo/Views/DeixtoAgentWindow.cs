@@ -846,6 +846,18 @@ namespace DEiXTo.Views
         /// <summary>
         /// 
         /// </summary>
+        public Format OutputFileFormat
+        {
+            get
+            {
+                OutputFormat type = (OutputFormat)OutputFileFormatComboBox.SelectedItem;
+                return type.Format;
+            }
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
         /// <param name="columnHeader"></param>
         public void AddOutputColumn(string columnHeader)
         {
