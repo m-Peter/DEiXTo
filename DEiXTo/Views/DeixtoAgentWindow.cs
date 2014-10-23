@@ -59,6 +59,7 @@ namespace DEiXTo.Views
         public event Action SaveToDisk;
         public event Action SelectOutputFile;
         public event Action TunePattern;
+        public event Action LoadURLsFromFile;
 
         private HtmlElement _currentElement;
 
@@ -150,6 +151,15 @@ namespace DEiXTo.Views
         public string Url
         {
             get { return URLComboBox.Text; }
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public string TargetURLsFile
+        {
+            get { return URLsFileTextBox.Text; }
+            set { URLsFileTextBox.Text = value; }
         }
 
         /// <summary>
@@ -480,6 +490,11 @@ namespace DEiXTo.Views
         public void AppendTargetUrl(string url)
         {
             TargetURLsListBox.Items.Add(url);
+        }
+
+        public void AppendTargetUrls(string[] urls)
+        {
+            TargetURLsListBox.Items.AddRange(urls);
         }
 
         /// <summary>
@@ -838,7 +853,7 @@ namespace DEiXTo.Views
                 return !String.IsNullOrWhiteSpace(outputFile);
             }
         }
-        
+
         /// <summary>
         /// 
         /// </summary>
@@ -1298,7 +1313,7 @@ namespace DEiXTo.Views
         private void RSSListView_ItemSelectionChanged(object sender, ListViewItemSelectionChangedEventArgs e)
         {
             bool selected = e.IsSelected;
-            
+
             if (!selected)
             {
                 return;
@@ -1380,6 +1395,14 @@ namespace DEiXTo.Views
             if (TunePattern != null)
             {
                 TunePattern();
+            }
+        }
+
+        private void BrowseURLsFileButton_Click(object sender, EventArgs e)
+        {
+            if (LoadURLsFromFile != null)
+            {
+                LoadURLsFromFile();
             }
         }
     }

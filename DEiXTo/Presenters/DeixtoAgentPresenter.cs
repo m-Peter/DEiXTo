@@ -87,6 +87,7 @@ namespace DEiXTo.Presenters
             _view.SaveToDisk += saveToDisk;
             _view.SelectOutputFile += selectOutputFile;
             _view.TunePattern += tunePattern;
+            _view.LoadURLsFromFile += loadURLsFromFile;
 
             _eventHub.Subscribe<LabelAdded>(this);
             _eventHub.Subscribe<RegexAdded>(this);
@@ -95,6 +96,23 @@ namespace DEiXTo.Presenters
             var imagesList = _imageLoader.LoadImages();
             _view.AddWorkingPatternImages(imagesList);
             _view.AddExtractionTreeImages(imagesList);
+        }
+
+        void loadURLsFromFile()
+        {
+            _openFileDialog.Filter = "Text Files (*.txt)|";
+            var answer = _openFileDialog.ShowDialog();
+
+            if (Negative(answer))
+            {
+                return;
+            }
+            
+            ReadTargetUrls reader = new ReadTargetUrls();
+            string filename = _openFileDialog.Filename;
+            var urls = reader.Read(filename);
+            _view.AppendTargetUrls(urls);
+            _view.TargetURLsFile = filename;
         }
 
         void tunePattern()

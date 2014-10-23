@@ -1102,6 +1102,7 @@
             this.BrowseURLsFileButton.TabIndex = 6;
             this.BrowseURLsFileButton.Text = "browse";
             this.BrowseURLsFileButton.UseVisualStyleBackColor = true;
+            this.BrowseURLsFileButton.Click += new System.EventHandler(this.BrowseURLsFileButton_Click);
             // 
             // URLsFileTextBox
             // 

@@ -83,6 +83,7 @@
     <Compile Include="Services\LinkContentExtractor.cs" />
     <Compile Include="Services\OpenFileDialogWrapper.cs" />
     <Compile Include="Services\ReadExtractionPattern.cs" />
+    <Compile Include="Services\ReadTargetUrls.cs" />
     <Compile Include="Services\RecordsWriterFactory.cs" />
     <Compile Include="Services\RegexAdded.cs" />
     <Compile Include="Services\SaveFileDialogWrapper.cs" />

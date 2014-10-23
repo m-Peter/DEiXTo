@@ -51,6 +51,7 @@ namespace DEiXTo.Views
         event Action SaveToDisk;
         event Action SelectOutputFile;
         event Action TunePattern;
+        event Action LoadURLsFromFile;
 
         string Url { get; }
         HtmlElement CurrentElement { get; set; }
@@ -59,6 +60,7 @@ namespace DEiXTo.Views
         bool CanAutoScroll { get; }
         bool BrowserContextMenuEnabled { get; }
         string FirstTargetURL { get; }
+        string TargetURLsFile { get; set; }
 
         string GetDocumentUrl();
         string TargetURLToAdd();
@@ -90,6 +92,7 @@ namespace DEiXTo.Views
         int CrawlingDepth();
         string HtmlLink();
         void AppendTargetUrl(string url);
+        void AppendTargetUrls(string[] urls);
         void SelectDOMNode(TreeNode node);
         void FillElementInfo(TreeNode node, string outerHtml);
         void ClearElementInfo();
