@@ -48,6 +48,7 @@ namespace DEiXTo.Views
         event Action<TreeNode> AddPreviousSibling;
         event Action<TreeNode> AddNextSibling;
         event Action<TreeNode> AddSiblingOrder;
+        event Action SaveToDisk;
         
         string Url { get; }
         HtmlElement CurrentElement { get; set; }

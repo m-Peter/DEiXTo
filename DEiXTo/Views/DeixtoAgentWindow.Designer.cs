@@ -203,6 +203,7 @@
             this.SetAsRootMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator8 = new System.Windows.Forms.ToolStripSeparator();
             this.DeleteNodeMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.SaveToDiskButton = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
@@ -1156,6 +1157,7 @@
             // 
             // Output
             // 
+            this.Output.Controls.Add(this.SaveToDiskButton);
             this.Output.Controls.Add(this.ExtractedResultsCountLabel);
             this.Output.Controls.Add(this.ExtractionResultsLabel);
             this.Output.Controls.Add(this.OutputListView);
@@ -1569,7 +1571,7 @@
             this.toolStripSeparator8,
             this.DeleteNodeMenuItem});
             this.AdjustpatternMenuStrip.Name = "AdjustpatternMenuStrip";
-            this.AdjustpatternMenuStrip.Size = new System.Drawing.Size(239, 420);
+            this.AdjustpatternMenuStrip.Size = new System.Drawing.Size(239, 398);
             // 
             // CheckedMenuItem
             // 
@@ -1917,6 +1919,16 @@
             this.DeleteNodeMenuItem.Text = "Delete Node";
             this.DeleteNodeMenuItem.Click += new System.EventHandler(this.DeleteNodeMenuItem_Click);
             // 
+            // SaveToDiskButton
+            // 
+            this.SaveToDiskButton.Location = new System.Drawing.Point(432, 335);
+            this.SaveToDiskButton.Name = "SaveToDiskButton";
+            this.SaveToDiskButton.Size = new System.Drawing.Size(87, 23);
+            this.SaveToDiskButton.TabIndex = 3;
+            this.SaveToDiskButton.Text = "Save to Disk";
+            this.SaveToDiskButton.UseVisualStyleBackColor = true;
+            this.SaveToDiskButton.Click += new System.EventHandler(this.SaveToDiskButton_Click);
+            // 
             // DeixtoAgentWindow
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -2163,5 +2175,6 @@
         private System.Windows.Forms.ColumnHeader ValueColumn;
         private System.Windows.Forms.ColumnHeader DescriptionColumn;
         private System.Windows.Forms.ColumnHeader ExampleColumn;
+        private System.Windows.Forms.Button SaveToDiskButton;
     }
 }

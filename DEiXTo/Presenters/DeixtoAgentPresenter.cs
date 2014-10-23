@@ -25,6 +25,7 @@ namespace DEiXTo.Presenters
         private EventHub _eventHub;
         private ISaveFileDialog _saveFileDialog;
         private IOpenFileDialog _openFileDialog;
+        private PatternExtraction _executor;
 
         public DeixtoAgentPresenter(IDeixtoAgentView view)
         {
@@ -78,6 +79,7 @@ namespace DEiXTo.Presenters
             _view.AddPreviousSibling += addPreviousSibling;
             _view.AddNextSibling += addNextSibling;
             _view.AddSiblingOrder += addSiblingOrder;
+            _view.SaveToDisk += saveToDisk;
 
             _eventHub.Subscribe<LabelAdded>(this);
             _eventHub.Subscribe<RegexAdded>(this);
@@ -86,6 +88,23 @@ namespace DEiXTo.Presenters
             var imagesList = _imageLoader.LoadImages();
             _view.AddWorkingPatternImages(imagesList);
             _view.AddExtractionTreeImages(imagesList);
+        }
+
+        void saveToDisk()
+        {
+            _saveFileDialog.Filter = "Text Files (*.txt)|";
+            _saveFileDialog.Extension = "txt";
+            var answer = _saveFileDialog.ShowDialog();
+
+            if (Negative(answer))
+            {
+                return;
+            }
+
+            string filename = _saveFileDialog.Filename;
+            WriteExtractedRecords writer = new WriteExtractedRecords(filename);
+            var records = _executor.ExtractedResults();
+            writer.Write(records);
         }
 
         void addSiblingOrder(TreeNode node)
@@ -611,7 +630,8 @@ namespace DEiXTo.Presenters
         private PatternExtraction CreateExecutor(TreeNode pattern)
         {
             var domNodes = _view.GetBodyTreeNodes();
-            return new PatternExtraction(pattern, domNodes);
+            _executor = new PatternExtraction(pattern, domNodes);
+            return _executor;
         }
 
         /// <summary>

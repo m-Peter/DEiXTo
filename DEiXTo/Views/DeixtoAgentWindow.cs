@@ -56,6 +56,7 @@ namespace DEiXTo.Views
         public event Action<TreeNode> AddPreviousSibling;
         public event Action<TreeNode> AddNextSibling;
         public event Action<TreeNode> AddSiblingOrder;
+        public event Action SaveToDisk;
 
         private HtmlElement _currentElement;
 
@@ -1288,6 +1289,14 @@ namespace DEiXTo.Views
             {
                 var node = WorkingPatternTreeView.SelectedNode;
                 AddSiblingOrder(node);
+            }
+        }
+
+        private void SaveToDiskButton_Click(object sender, EventArgs e)
+        {
+            if (SaveToDisk != null)
+            {
+                SaveToDisk();
             }
         }
     }

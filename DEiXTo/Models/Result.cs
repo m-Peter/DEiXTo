@@ -46,6 +46,20 @@ namespace DEiXTo.Models
         /// <summary>
         /// 
         /// </summary>
+        /// <returns></returns>
+        public IEnumerable<string> Contents()
+        {
+            int count = Count;
+
+            for (int i = 0; i < count; i++)
+            {
+                yield return _extractedContents[i];
+            }
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
         public int Count
         {
             get { return _extractedContents.Count; }
