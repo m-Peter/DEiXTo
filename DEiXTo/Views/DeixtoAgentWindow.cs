@@ -57,6 +57,7 @@ namespace DEiXTo.Views
         public event Action<TreeNode> AddNextSibling;
         public event Action<TreeNode> AddSiblingOrder;
         public event Action SaveToDisk;
+        public event Action SelectOutputFile;
 
         private HtmlElement _currentElement;
 
@@ -817,6 +818,23 @@ namespace DEiXTo.Views
         /// <summary>
         /// 
         /// </summary>
+        public bool OutputFileSpecified
+        {
+            get { return OutputFileNameTextBox.Text != null; }
+        }
+        
+        /// <summary>
+        /// 
+        /// </summary>
+        public string OutputFileName
+        {
+            get { return OutputFileNameTextBox.Text; }
+            set { OutputFileNameTextBox.Text = value; }
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
         /// <param name="columnHeader"></param>
         public void AddOutputColumn(string columnHeader)
         {
@@ -1297,6 +1315,14 @@ namespace DEiXTo.Views
             if (SaveToDisk != null)
             {
                 SaveToDisk();
+            }
+        }
+
+        private void SelectOutputFileButton_Click(object sender, EventArgs e)
+        {
+            if (SelectOutputFile != null)
+            {
+                SelectOutputFile();
             }
         }
     }

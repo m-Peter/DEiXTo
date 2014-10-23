@@ -107,6 +107,7 @@
             this.AddURLButton = new System.Windows.Forms.Button();
             this.AddURLTextBox = new System.Windows.Forms.TextBox();
             this.Output = new System.Windows.Forms.TabPage();
+            this.SaveToDiskButton = new System.Windows.Forms.Button();
             this.ExtractedResultsCountLabel = new System.Windows.Forms.Label();
             this.ExtractionResultsLabel = new System.Windows.Forms.Label();
             this.OutputListView = new System.Windows.Forms.ListView();
@@ -203,7 +204,6 @@
             this.SetAsRootMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator8 = new System.Windows.Forms.ToolStripSeparator();
             this.DeleteNodeMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.SaveToDiskButton = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
@@ -945,6 +945,7 @@
             this.SelectOutputFileButton.TabIndex = 4;
             this.SelectOutputFileButton.Text = "Select";
             this.SelectOutputFileButton.UseVisualStyleBackColor = true;
+            this.SelectOutputFileButton.Click += new System.EventHandler(this.SelectOutputFileButton_Click);
             // 
             // OutputFileFormatComboBox
             // 
@@ -1168,6 +1169,16 @@
             this.Output.TabIndex = 1;
             this.Output.Text = "Output";
             this.Output.UseVisualStyleBackColor = true;
+            // 
+            // SaveToDiskButton
+            // 
+            this.SaveToDiskButton.Location = new System.Drawing.Point(432, 335);
+            this.SaveToDiskButton.Name = "SaveToDiskButton";
+            this.SaveToDiskButton.Size = new System.Drawing.Size(87, 23);
+            this.SaveToDiskButton.TabIndex = 3;
+            this.SaveToDiskButton.Text = "Save to Disk";
+            this.SaveToDiskButton.UseVisualStyleBackColor = true;
+            this.SaveToDiskButton.Click += new System.EventHandler(this.SaveToDiskButton_Click);
             // 
             // ExtractedResultsCountLabel
             // 
@@ -1918,16 +1929,6 @@
             this.DeleteNodeMenuItem.Size = new System.Drawing.Size(238, 22);
             this.DeleteNodeMenuItem.Text = "Delete Node";
             this.DeleteNodeMenuItem.Click += new System.EventHandler(this.DeleteNodeMenuItem_Click);
-            // 
-            // SaveToDiskButton
-            // 
-            this.SaveToDiskButton.Location = new System.Drawing.Point(432, 335);
-            this.SaveToDiskButton.Name = "SaveToDiskButton";
-            this.SaveToDiskButton.Size = new System.Drawing.Size(87, 23);
-            this.SaveToDiskButton.TabIndex = 3;
-            this.SaveToDiskButton.Text = "Save to Disk";
-            this.SaveToDiskButton.UseVisualStyleBackColor = true;
-            this.SaveToDiskButton.Click += new System.EventHandler(this.SaveToDiskButton_Click);
             // 
             // DeixtoAgentWindow
             // 

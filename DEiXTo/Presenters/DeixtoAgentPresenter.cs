@@ -23,8 +23,10 @@ namespace DEiXTo.Presenters
         private DOMTreeStructure _domTree;
         private IViewLoader _loader;
         private EventHub _eventHub;
-        private ISaveFileDialog _saveFileDialog;
-        private IOpenFileDialog _openFileDialog;
+        private ISaveFileDialog _savePatternDialog;
+        private IOpenFileDialog _openPatternDialog;
+        private ISaveFileDialog _saveRecordsDialog;
+        private ISaveFileDialog _saveToDiskDialog;
         private PatternExtraction _executor;
 
         public DeixtoAgentPresenter(IDeixtoAgentView view)
@@ -35,8 +37,6 @@ namespace DEiXTo.Presenters
             _imageLoader = new StatesImageLoader();
             _loader = new WindowsViewLoader();
             _eventHub = EventHub.Instance;
-            _saveFileDialog = new SaveFileDialogWrapper();
-            _openFileDialog = new OpenFileDialogWrapper();
 
             // ATTACH THE EVENTS OF THE VIEW TO LOCAL METHODS
             _view.BrowseToUrl += browseToUrl;
@@ -80,6 +80,7 @@ namespace DEiXTo.Presenters
             _view.AddNextSibling += addNextSibling;
             _view.AddSiblingOrder += addSiblingOrder;
             _view.SaveToDisk += saveToDisk;
+            _view.SelectOutputFile += selectOutputFile;
 
             _eventHub.Subscribe<LabelAdded>(this);
             _eventHub.Subscribe<RegexAdded>(this);
@@ -90,18 +91,35 @@ namespace DEiXTo.Presenters
             _view.AddExtractionTreeImages(imagesList);
         }
 
-        void saveToDisk()
+        void selectOutputFile()
         {
-            _saveFileDialog.Filter = "Text Files (*.txt)|";
-            _saveFileDialog.Extension = "txt";
-            var answer = _saveFileDialog.ShowDialog();
+            _saveRecordsDialog = new SaveFileDialogWrapper();
+            _saveRecordsDialog.Filter = "Text Files (*.txt)|";
+            _saveRecordsDialog.Extension = "txt";
+            var answer = _saveRecordsDialog.ShowDialog();
 
             if (Negative(answer))
             {
                 return;
             }
 
-            string filename = _saveFileDialog.Filename;
+            string filename = _saveRecordsDialog.Filename;
+            _view.OutputFileName = filename;
+        }
+
+        void saveToDisk()
+        {
+            _saveToDiskDialog = new SaveFileDialogWrapper();
+            _saveToDiskDialog.Filter = "Text Files (*.txt)|";
+            _saveToDiskDialog.Extension = "txt";
+            var answer = _saveToDiskDialog.ShowDialog();
+
+            if (Negative(answer))
+            {
+                return;
+            }
+
+            string filename = _saveToDiskDialog.Filename;
             WriteExtractedRecords writer = new WriteExtractedRecords(filename);
             var records = _executor.ExtractedResults();
             writer.Write(records);
@@ -159,8 +177,9 @@ namespace DEiXTo.Presenters
         /// </summary>
         void loadExtractionPattern()
         {
-            _openFileDialog.Filter = "XML Files (*.xml)|";
-            var answer = _openFileDialog.ShowDialog();
+            _openPatternDialog = new OpenFileDialogWrapper();
+            _openPatternDialog.Filter = "XML Files (*.xml)|";
+            var answer = _openPatternDialog.ShowDialog();
 
             if (Negative(answer))
             {
@@ -170,7 +189,7 @@ namespace DEiXTo.Presenters
             string filename = string.Empty;
             ReadExtractionPattern reader = new ReadExtractionPattern();
 
-            filename = _openFileDialog.Filename;
+            filename = _openPatternDialog.Filename;
             var node = reader.read(filename);
             _view.FillExtractionPattern(node);
             _view.ExpandExtractionTree();
@@ -191,9 +210,10 @@ namespace DEiXTo.Presenters
         /// </summary>
         void saveExtractionPattern()
         {
-            _saveFileDialog.Filter = "XML Files (*.xml)|";
-            _saveFileDialog.Extension = "xml";
-            var answer = _saveFileDialog.ShowDialog();
+            _savePatternDialog = new SaveFileDialogWrapper();
+            _savePatternDialog.Filter = "XML Files (*.xml)|";
+            _savePatternDialog.Extension = "xml";
+            var answer = _savePatternDialog.ShowDialog();
 
             if (Negative(answer))
             {
@@ -203,7 +223,7 @@ namespace DEiXTo.Presenters
             string filename = string.Empty;
             WriteExtractionPattern writer = new WriteExtractionPattern();
 
-            filename = _saveFileDialog.Filename;
+            filename = _savePatternDialog.Filename;
             writer.write(filename, _view.GetPatternTreeNodes());
         }
 
@@ -522,6 +542,12 @@ namespace DEiXTo.Presenters
                 AddOutputResults(executor);
 
                 _view.WritePageResults("Extraction Completed: " + executor.Count.ToString() + " results!");
+
+                if (_view.OutputFileSpecified)
+                {
+                    string filename = _view.OutputFileName;
+                    
+                }
             }
         }
 

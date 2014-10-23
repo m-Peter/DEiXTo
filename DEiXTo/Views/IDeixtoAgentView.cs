@@ -49,6 +49,7 @@ namespace DEiXTo.Views
         event Action<TreeNode> AddNextSibling;
         event Action<TreeNode> AddSiblingOrder;
         event Action SaveToDisk;
+        event Action SelectOutputFile;
         
         string Url { get; }
         HtmlElement CurrentElement { get; set; }
@@ -124,5 +125,7 @@ namespace DEiXTo.Views
         void ApplyStateToNode(TreeNode node, int imageIndex);
         void AddLabelToNode(string label, TreeNode node);
         void UnderlineNode(TreeNode node);
+        bool OutputFileSpecified { get; }
+        string OutputFileName { get; set; }
     }
 }
