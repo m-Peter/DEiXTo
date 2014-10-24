@@ -117,6 +117,20 @@ namespace DEiXTo.Presenters
 
         void tunePattern()
         {
+            // Check if the Extraction Pattern is specified
+            if (!_view.ExtractionPatternSpecified)
+            {
+                _view.ShowSpecifyExtractionPatternMessage();
+                return;
+            }
+
+            // Check if the Target URL is specified
+            if (!_view.TargetURLSpecified)
+            {
+                _view.ShowSpecifyTargetURLMessage();
+                return;
+            }
+
             // Grab the first URL in the target URLs
             string url = _view.FirstTargetURL;
 
@@ -134,9 +148,12 @@ namespace DEiXTo.Presenters
             // Search for the tree structure in the Extraction Pattern
             _executor = new PatternExtraction(pattern, _view.GetDOMTreeNodes());
             var matchedNode = _executor.ScanTree(_view.GetDOMTreeNodes(), pattern);
+            var font = new Font(FontFamily.GenericSansSerif, 8.25f);
+            matchedNode.NodeFont = new Font(font, FontStyle.Bold);
 
             // If you find one, make it Working Pattern
             _view.FillPatternTree(matchedNode.GetClone());
+            _view.ExpandPatternTree();
         }
 
         void selectOutputFile()

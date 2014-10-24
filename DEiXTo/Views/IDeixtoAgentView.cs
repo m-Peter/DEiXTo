@@ -61,6 +61,8 @@ namespace DEiXTo.Views
         bool BrowserContextMenuEnabled { get; }
         string FirstTargetURL { get; }
         string TargetURLsFile { get; set; }
+        bool ExtractionPatternSpecified { get; }
+        bool TargetURLSpecified { get; }
 
         string GetDocumentUrl();
         string TargetURLToAdd();
@@ -91,6 +93,8 @@ namespace DEiXTo.Views
         void DeletePatternNode(TreeNode node);
         int CrawlingDepth();
         string HtmlLink();
+        void ShowSpecifyExtractionPatternMessage();
+        void ShowSpecifyTargetURLMessage();
         void AppendTargetUrl(string url);
         void AppendTargetUrls(string[] urls);
         void SelectDOMNode(TreeNode node);

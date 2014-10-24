@@ -163,6 +163,22 @@ namespace DEiXTo.Views
         }
 
         /// <summary>
+        /// 
+        /// </summary>
+        public bool ExtractionPatternSpecified
+        {
+            get { return ExtractionPatternTreeView.Nodes.Count > 0; }
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public bool TargetURLSpecified
+        {
+            get { return TargetURLsListBox.Items.Count > 0; }
+        }
+
+        /// <summary>
         /// Return the URL of the WebBrowser's HtmlDocument.
         /// </summary>
         /// <returns></returns>
@@ -230,6 +246,22 @@ namespace DEiXTo.Views
         public void ShowSpecifyURLMessage()
         {
             MessageBox.Show("Please specify URL!", "DEiXTo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public void ShowSpecifyExtractionPatternMessage()
+        {
+            MessageBox.Show("Please specify extraction pattern.", "DEiXTo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public void ShowSpecifyTargetURLMessage()
+        {
+            MessageBox.Show("Please specify a URL", "DEiXTo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
         }
 
         /// <summary>

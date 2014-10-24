@@ -59,7 +59,7 @@ namespace DEiXTo.Services
             {
                 if (CompareRecursiveTree(node, pattern, new Result()))
                 {
-                    return node;
+                    return node.GetClone();
                 }
 
                 TreeNode candidate = ScanTree(node.Nodes, pattern);
