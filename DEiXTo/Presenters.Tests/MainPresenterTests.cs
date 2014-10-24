@@ -3,6 +3,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 using DEiXTo.Views;
 using DEiXTo.Services;
+using System.Windows.Forms;
 
 namespace DEiXTo.Presenters.Tests
 {
@@ -50,6 +51,20 @@ namespace DEiXTo.Presenters.Tests
             _view.Raise(m => m.CloseAgentWindows += null);
 
             Assert.AreEqual(0, _presenter.FormCounter);
+        }
+
+        [TestMethod]
+        public void TestFormCounterIsReducedByOneWhenSingleAgentIsClose()
+        {
+            _view.Raise(m => m.CreateNewAgent += null);
+            _view.Raise(m => m.CreateNewAgent += null);
+
+            _loader.Verify(m => m.LoadAgentView("Agent 2", _view.Object));
+            Assert.AreEqual(2, _presenter.FormCounter);
+
+            _presenter.Receive(null);
+
+            Assert.AreEqual(1, _presenter.FormCounter);
         }
 
         [TestMethod]
