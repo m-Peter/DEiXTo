@@ -8,6 +8,7 @@ namespace DEiXTo.Views
 {
     public partial class DeixtoAgentWindow : Form, IDeixtoAgentView
     {
+        #region Public Events
         // Fires when the user clicks the Browse button
         public event Action BrowseToUrl;
         // Fires when the user enters a keyboard key
@@ -60,9 +61,13 @@ namespace DEiXTo.Views
         public event Action SelectOutputFile;
         public event Action TunePattern;
         public event Action LoadURLsFromFile;
+        #endregion
 
+        #region Instance Variables
         private HtmlElement _currentElement;
+        #endregion
 
+        #region Constructors
         public DeixtoAgentWindow()
         {
             InitializeComponent();
@@ -134,17 +139,9 @@ namespace DEiXTo.Views
             OutputFileFormatComboBox.Items.AddRange(GetOutputFormats());
             OutputFileFormatComboBox.SelectedIndex = 0;
         }
+        #endregion
 
-        private object[] GetOutputFormats()
-        {
-            return new object[]
-            {
-                new OutputFormat(Format.Text, "Text (*.txt)"),
-                new OutputFormat(Format.XML, "XML (*.xml)"),
-                new OutputFormat(Format.RSS, "RSS (*.rss)")
-            };
-        }
-
+        #region Public Methods
         /// <summary>
         /// Get the URL specified by the user
         /// </summary>
@@ -966,7 +963,21 @@ namespace DEiXTo.Views
         {
             return ExtractionPatternTreeView.Nodes[0];
         }
+        #endregion
 
+        #region Private Methods
+        private object[] GetOutputFormats()
+        {
+            return new object[]
+            {
+                new OutputFormat(Format.Text, "Text (*.txt)"),
+                new OutputFormat(Format.XML, "XML (*.xml)"),
+                new OutputFormat(Format.RSS, "RSS (*.rss)")
+            };
+        }
+        #endregion
+
+        #region Private Events
         private void BrowseToURLButton_Click(object sender, EventArgs e)
         {
             if (BrowseToUrl != null)
@@ -1409,5 +1420,6 @@ namespace DEiXTo.Views
                 LoadURLsFromFile();
             }
         }
+        #endregion
     }
 }

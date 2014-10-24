@@ -8,14 +8,19 @@ namespace DEiXTo.Models
     /// </summary>
     public class Result
     {
+        #region Instance Variables
         private List<string> _extractedContents;
         private TreeNode _node;
+        #endregion
 
+        #region Constructors
         public Result()
         {
             _extractedContents = new List<string>();
         }
+        #endregion
 
+        #region Properties
         /// <summary>
         /// 
         /// </summary>
@@ -25,6 +30,16 @@ namespace DEiXTo.Models
             set { _node = value; }
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        public int Count
+        {
+            get { return _extractedContents.Count; }
+        }
+        #endregion
+
+        #region Public Methods
         /// <summary>
         /// 
         /// </summary>
@@ -61,13 +76,6 @@ namespace DEiXTo.Models
                 yield return _extractedContents[i];
             }
         }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        public int Count
-        {
-            get { return _extractedContents.Count; }
-        }
+        #endregion
     }
 }

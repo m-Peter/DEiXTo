@@ -10,11 +10,14 @@ namespace DEiXTo.Presenters
     /// </summary>
     public class MainPresenter : ISubscriber<EventArgs>
     {
+        #region Instance Variables
         private readonly IMainView _view;
         private readonly IViewLoader _viewLoader;
         // count the number of childs contained in the associated View
         private int _formCounter = 0;
+        #endregion
 
+        #region Constructors
         public MainPresenter(IMainView view, IViewLoader viewLoader)
         {
             _view = view;
@@ -30,7 +33,28 @@ namespace DEiXTo.Presenters
 
             eventHub.Subscribe<EventArgs>(this);
         }
+        #endregion
 
+        #region Public Methods
+        /// <summary>
+        /// Returns the number of DeixtoAgentWindows.
+        /// </summary>
+        public int FormCounter
+        {
+            get { return _formCounter; }
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="subject"></param>
+        public void Receive(EventArgs subject)
+        {
+            _formCounter--;
+        }
+        #endregion
+
+        #region Private Events
         /// <summary>
         /// Attemps to close the view's Window, by asking the
         /// user if that's what he wants.
@@ -83,22 +107,6 @@ namespace DEiXTo.Presenters
             _viewLoader.LoadAgentView(title, _view);
             _formCounter++;
         }
-
-        /// <summary>
-        /// Returns the number of DeixtoAgentWindows.
-        /// </summary>
-        public int FormCounter
-        {
-            get { return _formCounter; }
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="subject"></param>
-        public void Receive(EventArgs subject)
-        {
-            _formCounter--;
-        }
+        #endregion
     }
 }

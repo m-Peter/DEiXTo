@@ -8,9 +8,12 @@ namespace DEiXTo.Presenters
 {
     public class RegexBuilderPresenter
     {
+        #region Instance Variables
         private IRegexBuilderView _view;
         private TreeNode _node;
+        #endregion
 
+        #region Constructors
         public RegexBuilderPresenter(IRegexBuilderView view, TreeNode node)
         {
             _view = view;
@@ -20,7 +23,21 @@ namespace DEiXTo.Presenters
             _view.SetRegexText(node.GetContent());
             _view.KeyDownPress += keyDownPress;
         }
+        #endregion
 
+        #region Private Methods
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="key"></param>
+        /// <returns></returns>
+        private bool EnterPressed(Keys key)
+        {
+            return key == Keys.Enter;
+        }
+        #endregion
+
+        #region Private Events
         void keyDownPress(KeyEventArgs e)
         {
             if (EnterPressed(e.KeyCode))
@@ -56,10 +73,6 @@ namespace DEiXTo.Presenters
 
             _view.Exit();
         }
-
-        private bool EnterPressed(Keys key)
-        {
-            return key == Keys.Enter;
-        }
+        #endregion
     }
 }

@@ -5,6 +5,7 @@
     /// </summary>
     public class NodeInfo
     {
+        #region Properties
         /// <summary>
         /// 
         /// </summary>
@@ -59,5 +60,6 @@
         /// 
         /// </summary>
         public int SiblingOrderStep { get; set; }
+        #endregion
     }
 }

@@ -12,40 +12,65 @@ namespace DEiXTo.Views
 {
     public partial class AddSiblingOrderWindow : Form, IAddSiblingOrderView
     {
+        #region Public Events
+        // Fires when the user changes the checked state of CareAboutSiblingOrder checkbox's
         public event Action<Boolean> SiblingOrderCheckboxChanged;
+        // Fires when the user presses the OK button
         public event Action AddSiblingOrder;
+        #endregion
 
+        #region Constructors
         public AddSiblingOrderWindow()
         {
             InitializeComponent();
         }
+        #endregion
 
+        #region Public Methods
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="checkedState"></param>
         public void ApplyVisibilityStateInOrdering(bool checkedState)
         {
             StartIndexNUD.Enabled = checkedState;
             StepValueNUD.Enabled = checkedState;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
         public int GetStartIndex
         {
             get { return (int)StartIndexNUD.Value; }
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
         public int GetStepValue
         {
             get { return (int)StepValueNUD.Value; }
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
         public bool CareAboutSiblingOrder
         {
             get { return SiblingOrderCheckBox.Checked; }
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
         public void Exit()
         {
             this.Close();
         }
+        #endregion
 
+        #region Private Events
         private void CancelButton_Click(object sender, EventArgs e)
         {
             Close();
@@ -68,5 +93,6 @@ namespace DEiXTo.Views
                 SiblingOrderCheckboxChanged(state);
             }
         }
+        #endregion
     }
 }

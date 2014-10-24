@@ -12,9 +12,12 @@ namespace DEiXTo.Presenters
 {
     public class AddSiblingOrderPresenter
     {
+        #region Instance Variables
         private IAddSiblingOrderView _view;
         private TreeNode _node;
+        #endregion
 
+        #region Constructors
         public AddSiblingOrderPresenter(IAddSiblingOrderView view, TreeNode node)
         {
             _view = view;
@@ -23,7 +26,9 @@ namespace DEiXTo.Presenters
             _view.SiblingOrderCheckboxChanged += siblingOrderCheckboxChanged;
             _view.AddSiblingOrder += addSiblingOrder;
         }
+        #endregion
 
+        #region Private Events
         void addSiblingOrder()
         {
             if (!_view.CareAboutSiblingOrder)
@@ -49,5 +54,6 @@ namespace DEiXTo.Presenters
         {
             _view.ApplyVisibilityStateInOrdering(checkedState);
         }
+        #endregion
     }
 }

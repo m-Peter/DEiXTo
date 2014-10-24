@@ -9,9 +9,12 @@ namespace DEiXTo.Models
     /// </summary>
     public class DOMTreeStructure
     {
+        #region Instance Variables
         private IDictionary<IHTMLDOMNode, TreeNode> _DOMTree = new Dictionary<IHTMLDOMNode, TreeNode>();
         private TreeNode _rootNode;
+        #endregion
 
+        #region Properties
         /// <summary>
         /// The root TreeNode of the DOM tree representation.
         /// </summary>
@@ -20,7 +23,9 @@ namespace DEiXTo.Models
             get { return _rootNode; }
             set { _rootNode = value; }
         }
+        #endregion
 
+        #region Public Methods
         /// <summary>
         /// Count the number of elements.
         /// </summary>
@@ -79,5 +84,6 @@ namespace DEiXTo.Models
         {
             _DOMTree.Clear();
         }
+        #endregion
     }
 }

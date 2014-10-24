@@ -5,9 +5,14 @@ namespace DEiXTo.Views
 {
     public partial class RegexBuilderWindow : Form , IRegexBuilderView
     {
+        #region Public Events
+        // Fires when the user presses the OK button
         public event Action AddRegex;
+        // Fires when the user presses a keyboard
         public event Action<KeyEventArgs> KeyDownPress;
+        #endregion
 
+        #region Constructors
         public RegexBuilderWindow()
         {
             InitializeComponent();
@@ -33,20 +38,22 @@ namespace DEiXTo.Views
             this.KeyPreview = true;
             this.KeyDown += RegexBuilderWindow_KeyDown;
         }
+        #endregion
 
-        void RegexBuilderWindow_KeyDown(object sender, KeyEventArgs e)
-        {
-            if (KeyDownPress != null)
-            {
-                KeyDownPress(e);
-            }
-        }
-
+        #region Public Methods
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
         public string GetRegexText()
         {
             return AddRegexTextBox.Text;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="regex"></param>
         public void SetRegexText(string regex)
         {
             AddRegexTextBox.Text = regex;
@@ -54,16 +61,24 @@ namespace DEiXTo.Views
             AddRegexTextBox.Focus();
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
         public void ShowInvalidRegexMessage()
         {
             MessageBox.Show("Invalid EMPTY regular expression!", "DEiXTo", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
         public void Exit()
         {
             this.Close();
         }
+        #endregion
 
+        #region Private Events
         private void OKButton_Click(object sender, EventArgs e)
         {
             if (AddRegex != null)
@@ -76,5 +91,14 @@ namespace DEiXTo.Views
         {
             Close();
         }
+
+        private void RegexBuilderWindow_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (KeyDownPress != null)
+            {
+                KeyDownPress(e);
+            }
+        }
+        #endregion
     }
 }
