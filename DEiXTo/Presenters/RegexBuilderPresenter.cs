@@ -2,6 +2,7 @@
 using System;
 using System.Windows.Forms;
 using DEiXTo.Services;
+using System.Drawing;
 
 namespace DEiXTo.Presenters
 {
@@ -38,9 +39,21 @@ namespace DEiXTo.Presenters
                 return;
             }
 
-            // If we got this far, we can publish our RegexAdded event subject
+            _node.SetRegex(regex);
+            if (_node.NodeFont != null)
+            {
+                var font = _node.NodeFont;
+                _node.NodeFont = new Font(font, FontStyle.Underline | FontStyle.Bold);
+            }
+            else
+            {
+                var font = new Font(FontFamily.GenericSansSerif, 8.25f);
+                _node.NodeFont = new Font(font, FontStyle.Underline);
+            }
+
             EventHub eventHub = EventHub.Instance;
             eventHub.Publish(new RegexAdded(regex, _node));
+
             _view.Exit();
         }
 

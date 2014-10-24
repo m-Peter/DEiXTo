@@ -396,13 +396,10 @@ namespace DEiXTo.Presenters
         /// <param name="subject"></param>
         public void Receive(RegexAdded subject)
         {
-            string regex = subject.Regex;
             TreeNode node = subject.Node;
-            node.SetRegex(regex);
-            _view.UnderlineNode(node);
-
             int index = node.SourceIndex();
             var element = _document.GetElementByIndex(index);
+
             _view.FillElementInfo(node, element.OuterHtml);
         }
 
