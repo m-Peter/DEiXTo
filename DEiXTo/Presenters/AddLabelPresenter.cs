@@ -45,9 +45,9 @@ namespace DEiXTo.Presenters
                 return;
             }
 
-            // If we got this far, we can publish our LabelAdded event subject
-            EventHub eventHub = EventHub.Instance;
-            eventHub.Publish(new LabelAdded(label, _node));
+            _node.SetLabel(label);
+            string labeledTag = string.Format("{0}:{1}", _node.Text, label);
+            _node.Text = labeledTag;
             _view.Exit();
         }
 

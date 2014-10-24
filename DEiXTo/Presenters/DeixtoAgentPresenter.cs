@@ -16,7 +16,7 @@ namespace DEiXTo.Presenters
     /// <summary>
     /// 
     /// </summary>
-    public class DeixtoAgentPresenter : ISubscriber<LabelAdded>, ISubscriber<RegexAdded>, ISubscriber<SiblingOrderAdded>
+    public class DeixtoAgentPresenter : ISubscriber<RegexAdded>, ISubscriber<SiblingOrderAdded>
     {
         private readonly IDeixtoAgentView _view;
         private ElementStyling _styling;
@@ -89,7 +89,6 @@ namespace DEiXTo.Presenters
             _view.TunePattern += tunePattern;
             _view.LoadURLsFromFile += loadURLsFromFile;
 
-            _eventHub.Subscribe<LabelAdded>(this);
             _eventHub.Subscribe<RegexAdded>(this);
             _eventHub.Subscribe<SiblingOrderAdded>(this);
 
@@ -389,18 +388,6 @@ namespace DEiXTo.Presenters
         void windowClosing(FormClosingEventArgs e)
         {
             _eventHub.Publish(new EventArgs());
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="subject"></param>
-        public void Receive(LabelAdded subject)
-        {
-            string label = subject.Label;
-            TreeNode node = subject.Node;
-            node.SetLabel(label);
-            _view.AddLabelToNode(label, node);
         }
 
         /// <summary>

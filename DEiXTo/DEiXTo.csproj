@@ -79,7 +79,6 @@
     <Compile Include="Services\IOpenFileDialog.cs" />
     <Compile Include="Services\ISaveFileDialog.cs" />
     <Compile Include="Services\ISubscriber.cs" />
-    <Compile Include="Services\LabelAdded.cs" />
     <Compile Include="Services\LinkContentExtractor.cs" />
     <Compile Include="Services\OpenFileDialogWrapper.cs" />
     <Compile Include="Services\ReadExtractionPattern.cs" />
