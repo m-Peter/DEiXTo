@@ -5,115 +5,59 @@
     /// </summary>
     public class NodeInfo
     {
-        private int _elementSourceIndex;
-        private string _path;
-        private string _content;
-        private string _source;
-        private string _label;
-        private string _regex;
-        private bool _isRoot;
-        private NodeState _state;
-        private bool _careAboutSiblingOrder;
-        private int _siblingOrderStart;
-        private int _siblingOrderStep;
-
         /// <summary>
         /// 
         /// </summary>
-        public int ElementSourceIndex
-        {
-            get { return _elementSourceIndex; }
-            set { _elementSourceIndex = value; }
-        }
-
+        public int ElementSourceIndex { get; set; }
+        
         /// <summary>
         /// 
         /// </summary>
-        public string Path
-        {
-            get { return _path; }
-            set { _path = value; }
-        }
-
+        public string Path { get; set; }
+        
         /// <summary>
         /// 
         /// </summary>
-        public string Content
-        {
-            get { return _content; }
-            set { _content = value; }
-        }
-
+        public string Content { get; set; }
+        
         /// <summary>
         /// 
         /// </summary>
-        public string Source
-        {
-            get { return _source; }
-            set { _source = value; }
-        }
-
+        public string Source { get; set; }
+        
         /// <summary>
         /// 
         /// </summary>
-        public string Label
-        {
-            get { return _label; }
-            set { _label = value; }
-        }
-
+        public string Label { get; set; }
+        
         /// <summary>
         /// 
         /// </summary>
-        public string Regex
-        {
-            get { return _regex; }
-            set { _regex = value; }
-        }
-
+        public string Regex { get; set; }
+        
         /// <summary>
         /// 
         /// </summary>
-        public bool IsRoot
-        {
-            get { return _isRoot; }
-            set { _isRoot = value; }
-        }
-
+        public bool IsRoot { get; set; }
+        
         /// <summary>
         /// 
         /// </summary>
-        public NodeState State
-        {
-            get { return _state; }
-            set { _state = value; }
-        }
-
+        public NodeState State { get; set; }
+        
         /// <summary>
         /// 
         /// </summary>
-        public bool CareAboutSiblingOrder
-        {
-            get { return _careAboutSiblingOrder; }
-            set { _careAboutSiblingOrder = value; }
-        }
-
+        public bool CareAboutSiblingOrder { get; set; }
+        
         /// <summary>
         /// 
         /// </summary>
-        public int SiblingOrderStart
-        {
-            get { return _siblingOrderStart; }
-            set { _siblingOrderStart = value; }
-        }
-
+        public int SiblingOrderStart { get; set; }
+        
         /// <summary>
         /// 
         /// </summary>
-        public int SiblingOrderStep
-        {
-            get { return _siblingOrderStep; }
-            set { _siblingOrderStep = value; }
-        }
+        public int SiblingOrderStep { get; set; }
     }
 }
