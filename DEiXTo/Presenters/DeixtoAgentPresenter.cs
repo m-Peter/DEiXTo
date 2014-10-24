@@ -557,14 +557,12 @@ namespace DEiXTo.Presenters
             var newNode = new TreeNode(element.TagName);
             var domElem = (IHTMLElement)element.DomElement;
 
-            NodeInfo pInfo = new NodeInfo();
-            pInfo.ElementSourceIndex = domElem.sourceIndex;
-
-            newNode.Tag = pInfo;
+            newNode.Tag = parentNode.Tag;
             newNode.SetState(NodeState.Grayed);
             newNode.SelectedImageIndex = 3;
             newNode.ImageIndex = 3;
             newNode.AddNode(node.GetClone());
+            
             _view.ClearPatternTree();
             _view.FillPatternTree(newNode);
             _view.ExpandPatternTree();
