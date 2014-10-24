@@ -16,7 +16,7 @@ namespace DEiXTo.Presenters
     /// <summary>
     /// 
     /// </summary>
-    public class DeixtoAgentPresenter : ISubscriber<RegexAdded>, ISubscriber<SiblingOrderAdded>
+    public class DeixtoAgentPresenter : ISubscriber<RegexAdded>
     {
         private readonly IDeixtoAgentView _view;
         private ElementStyling _styling;
@@ -90,7 +90,6 @@ namespace DEiXTo.Presenters
             _view.LoadURLsFromFile += loadURLsFromFile;
 
             _eventHub.Subscribe<RegexAdded>(this);
-            _eventHub.Subscribe<SiblingOrderAdded>(this);
 
             var imagesList = _imageLoader.LoadImages();
             _view.AddWorkingPatternImages(imagesList);
@@ -401,23 +400,6 @@ namespace DEiXTo.Presenters
             var element = _document.GetElementByIndex(index);
 
             _view.FillElementInfo(node, element.OuterHtml);
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="subject"></param>
-        public void Receive(SiblingOrderAdded subject)
-        {
-            int startIndex = subject.StartIndex;
-            int stepValue = subject.StepValue;
-            TreeNode node = subject.Node;
-
-            node.SetCareAboutSiblingOrder(true);
-            node.SetStartIndex(startIndex);
-            node.SetStepValue(stepValue);
-
-            node.ForeColor = Color.CadetBlue;
         }
 
         /// <summary>
