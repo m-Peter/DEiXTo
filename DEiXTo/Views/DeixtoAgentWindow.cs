@@ -952,16 +952,6 @@ namespace DEiXTo.Views
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="label"></param>
-        /// <param name="node"></param>
-        public void AddLabelToNode(string label, TreeNode node)
-        {
-            node.Text += (":" + label);
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
         /// <returns></returns>
         public TreeNodeCollection GetPatternTreeNodes()
         {
@@ -975,24 +965,6 @@ namespace DEiXTo.Views
         public TreeNode GetExtractionPattern()
         {
             return ExtractionPatternTreeView.Nodes[0];
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="node"></param>
-        public void UnderlineNode(TreeNode node)
-        {
-            if (node.NodeFont != null)
-            {
-                var font = node.NodeFont;
-                node.NodeFont = new Font(font, FontStyle.Underline | FontStyle.Bold);
-            }
-            else
-            {
-                var font = new Font(FontFamily.GenericSansSerif, 8.25f);
-                node.NodeFont = new Font(font, FontStyle.Underline);
-            }
         }
 
         private void BrowseToURLButton_Click(object sender, EventArgs e)

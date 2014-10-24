@@ -133,8 +133,6 @@ namespace DEiXTo.Views
         void SetNodeFont(TreeNode node);
         void ShowCannotDeleteRootMessage();
         void ApplyStateToNode(TreeNode node, int imageIndex);
-        void AddLabelToNode(string label, TreeNode node);
-        void UnderlineNode(TreeNode node);
         bool OutputFileSpecified { get; }
         string OutputFileName { get; set; }
         Format OutputFileFormat { get; }
