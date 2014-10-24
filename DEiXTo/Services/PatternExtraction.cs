@@ -176,7 +176,8 @@ namespace DEiXTo.Services
             if (_pattern.IsRoot())
             {
                 int counter = 0;
-                Match(_pattern, _domNodes, ref counter);
+                var pattern = TrimUncheckedNodes(_pattern);
+                Match(pattern, _domNodes, ref counter);
                 return;
             }
 
