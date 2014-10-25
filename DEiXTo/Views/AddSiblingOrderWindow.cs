@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DEiXTo.Presenters;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -12,19 +13,14 @@ namespace DEiXTo.Views
 {
     public partial class AddSiblingOrderWindow : Form, IAddSiblingOrderView
     {
-        #region Public Events
-        // Fires when the user changes the checked state of CareAboutSiblingOrder checkbox's
-        public event Action<Boolean> SiblingOrderCheckboxChanged;
-        // Fires when the user presses the OK button
-        public event Action AddSiblingOrder;
-        #endregion
-
         #region Constructors
         public AddSiblingOrderWindow()
         {
             InitializeComponent();
         }
         #endregion
+
+        public AddSiblingOrderPresenter Presenter { get; set; }
 
         #region Public Methods
         /// <summary>
@@ -43,6 +39,7 @@ namespace DEiXTo.Views
         public int GetStartIndex
         {
             get { return (int)StartIndexNUD.Value; }
+            set { StartIndexNUD.Value = value; }
         }
 
         /// <summary>
@@ -51,6 +48,7 @@ namespace DEiXTo.Views
         public int GetStepValue
         {
             get { return (int)StepValueNUD.Value; }
+            set { StepValueNUD.Value = value; }
         }
 
         /// <summary>
@@ -59,6 +57,7 @@ namespace DEiXTo.Views
         public bool CareAboutSiblingOrder
         {
             get { return SiblingOrderCheckBox.Checked; }
+            set { SiblingOrderCheckBox.Checked = value; }
         }
 
         /// <summary>
@@ -78,20 +77,14 @@ namespace DEiXTo.Views
 
         private void OKButton_Click(object sender, EventArgs e)
         {
-            if (AddSiblingOrder != null)
-            {
-                AddSiblingOrder();
-            }
+            Presenter.AddSiblingOrder();
         }
 
         private void SiblingOrderCheckBox_CheckedChanged(object sender, EventArgs e)
         {
             var state = SiblingOrderCheckBox.Checked;
             
-            if (SiblingOrderCheckboxChanged != null)
-            {
-                SiblingOrderCheckboxChanged(state);
-            }
+            Presenter.ChangeSiblingOrderVisibility(state);
         }
         #endregion
     }

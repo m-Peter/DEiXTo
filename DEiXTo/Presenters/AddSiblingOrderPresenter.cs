@@ -13,33 +13,31 @@ namespace DEiXTo.Presenters
     public class AddSiblingOrderPresenter
     {
         #region Instance Variables
-        private IAddSiblingOrderView _view;
         private TreeNode _node;
         #endregion
 
         #region Constructors
         public AddSiblingOrderPresenter(IAddSiblingOrderView view, TreeNode node)
         {
-            _view = view;
+            View = view;
             _node = node;
-
-            _view.SiblingOrderCheckboxChanged += siblingOrderCheckboxChanged;
-            _view.AddSiblingOrder += addSiblingOrder;
+            View.Presenter = this;
         }
         #endregion
 
-        #region Private Events
-        void addSiblingOrder()
+        public IAddSiblingOrderView View { get; set; }
+
+        public void AddSiblingOrder()
         {
-            if (!_view.CareAboutSiblingOrder)
+            if (!View.CareAboutSiblingOrder)
             {
-                _view.Exit();
+                View.Exit();
                 return;
             }
 
-            int startIndex = _view.GetStartIndex;
-            int stepValue = _view.GetStepValue;
-            bool careAboutSO = _view.CareAboutSiblingOrder;
+            int startIndex = View.GetStartIndex;
+            int stepValue = View.GetStepValue;
+            bool careAboutSO = View.CareAboutSiblingOrder;
 
             _node.SetCareAboutSiblingOrder(careAboutSO);
             _node.SetStartIndex(startIndex);
@@ -47,13 +45,12 @@ namespace DEiXTo.Presenters
 
             _node.ForeColor = Color.CadetBlue;
 
-            _view.Exit();
+            View.Exit();
         }
 
-        void siblingOrderCheckboxChanged(bool checkedState)
+        public void ChangeSiblingOrderVisibility(bool state)
         {
-            _view.ApplyVisibilityStateInOrdering(checkedState);
+            View.ApplyVisibilityStateInOrdering(state);
         }
-        #endregion
     }
 }

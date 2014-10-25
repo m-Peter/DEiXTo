@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DEiXTo.Presenters;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,13 +9,12 @@ namespace DEiXTo.Views
 {
     public interface IAddSiblingOrderView
     {
-        event Action<Boolean> SiblingOrderCheckboxChanged;
-        event Action AddSiblingOrder;
+        AddSiblingOrderPresenter Presenter { get; set; }
 
         void ApplyVisibilityStateInOrdering(bool checkedState);
-        int GetStartIndex { get; }
-        int GetStepValue { get; }
-        bool CareAboutSiblingOrder { get; }
+        int GetStartIndex { get; set; }
+        int GetStepValue { get; set; }
+        bool CareAboutSiblingOrder { get; set; }
         void Exit();
     }
 }
