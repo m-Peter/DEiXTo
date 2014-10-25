@@ -1,15 +1,15 @@
-﻿using System;
+﻿using DEiXTo.Presenters;
+using System;
 using System.Windows.Forms;
 
 namespace DEiXTo.Views
 {
     public interface IRegexBuilderView
     {
-        event Action AddRegex;
-        event Action<KeyEventArgs> KeyDownPress;
+        RegexBuilderPresenter Presenter { get; set; }
 
-        string GetRegexText();
-        void SetRegexText(string regex);
+        string RegexText { get; set; }
+
         void ShowInvalidRegexMessage();
         void Exit();
     }

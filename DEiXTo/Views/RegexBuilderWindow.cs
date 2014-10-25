@@ -1,17 +1,11 @@
-﻿using System;
+﻿using DEiXTo.Presenters;
+using System;
 using System.Windows.Forms;
 
 namespace DEiXTo.Views
 {
     public partial class RegexBuilderWindow : Form , IRegexBuilderView
     {
-        #region Public Events
-        // Fires when the user presses the OK button
-        public event Action AddRegex;
-        // Fires when the user presses a keyboard
-        public event Action<KeyEventArgs> KeyDownPress;
-        #endregion
-
         #region Constructors
         public RegexBuilderWindow()
         {
@@ -41,25 +35,20 @@ namespace DEiXTo.Views
         #endregion
 
         #region Public Methods
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <returns></returns>
-        public string GetRegexText()
+
+        public string RegexText
         {
-            return AddRegexTextBox.Text;
+            get { return AddRegexTextBox.Text; }
+            set
+            {
+                AddRegexTextBox.Text = value;
+                AddRegexTextBox.SelectAll();
+                AddRegexTextBox.Focus();
+            }
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="regex"></param>
-        public void SetRegexText(string regex)
-        {
-            AddRegexTextBox.Text = regex;
-            AddRegexTextBox.SelectAll();
-            AddRegexTextBox.Focus();
-        }
+        public RegexBuilderPresenter Presenter { get; set; }
+
 
         /// <summary>
         /// 
@@ -81,10 +70,7 @@ namespace DEiXTo.Views
         #region Private Events
         private void OKButton_Click(object sender, EventArgs e)
         {
-            if (AddRegex != null)
-            {
-                AddRegex();
-            }
+            Presenter.AddRegex();
         }
 
         private void CancelButton_Click(object sender, EventArgs e)
@@ -94,10 +80,7 @@ namespace DEiXTo.Views
 
         private void RegexBuilderWindow_KeyDown(object sender, KeyEventArgs e)
         {
-            if (KeyDownPress != null)
-            {
-                KeyDownPress(e);
-            }
+            Presenter.KeyDownPress(e.KeyCode);
         }
         #endregion
     }

@@ -9,50 +9,31 @@ namespace DEiXTo.Presenters
     public class RegexBuilderPresenter
     {
         #region Instance Variables
-        private IRegexBuilderView _view;
         private TreeNode _node;
+        private IEventHub _eventHub;
         #endregion
 
         #region Constructors
-        public RegexBuilderPresenter(IRegexBuilderView view, TreeNode node)
+        public RegexBuilderPresenter(IRegexBuilderView view, TreeNode node, IEventHub eventHub)
         {
-            _view = view;
+            View = view;
             _node = node;
+            View.Presenter = this;
+            _eventHub = eventHub;
 
-            _view.AddRegex += addRegex;
-            _view.SetRegexText(node.GetContent());
-            _view.KeyDownPress += keyDownPress;
+            View.RegexText = node.GetContent();
         }
         #endregion
 
-        #region Private Methods
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="key"></param>
-        /// <returns></returns>
-        private bool EnterPressed(Keys key)
-        {
-            return key == Keys.Enter;
-        }
-        #endregion
+        public IRegexBuilderView View { get; set; }
 
-        #region Private Events
-        void keyDownPress(KeyEventArgs e)
+        public void AddRegex()
         {
-            if (EnterPressed(e.KeyCode))
-            {
-                addRegex();
-            }
-        }
-
-        void addRegex()
-        {
-            string regex = _view.GetRegexText();
+            string regex = View.RegexText;
 
             if (String.IsNullOrWhiteSpace(regex))
             {
-                _view.ShowInvalidRegexMessage();
+                View.ShowInvalidRegexMessage();
                 return;
             }
 
@@ -68,10 +49,28 @@ namespace DEiXTo.Presenters
                 _node.NodeFont = new Font(font, FontStyle.Underline);
             }
 
-            EventHub eventHub = EventHub.Instance;
-            eventHub.Publish(new RegexAdded(regex, _node));
+            _eventHub.Publish(new RegexAdded(regex, _node));
 
-            _view.Exit();
+            View.Exit();
+        }
+
+        public void KeyDownPress(Keys key)
+        {
+            if (EnterPressed(key))
+            {
+                AddRegex();
+            }
+        }
+
+        #region Private Methods
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="key"></param>
+        /// <returns></returns>
+        private bool EnterPressed(Keys key)
+        {
+            return key == Keys.Enter;
         }
         #endregion
     }

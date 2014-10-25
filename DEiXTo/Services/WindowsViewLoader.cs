@@ -55,7 +55,7 @@ namespace DEiXTo.Services
         public void LoadRegexBuilderView(TreeNode node)
         {
             RegexBuilderWindow window = new RegexBuilderWindow();
-            RegexBuilderPresenter presenter = new RegexBuilderPresenter(window, node);
+            RegexBuilderPresenter presenter = new RegexBuilderPresenter(window, node, EventHub.Instance);
 
             window.ShowDialog();
         }
