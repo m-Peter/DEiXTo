@@ -8,20 +8,44 @@ namespace DEiXTo.Presenters
     public class AddLabelPresenter
     {
         #region Instance Variables
-        private IAddLabelView _view;
         private TreeNode _node;
         #endregion
 
         #region Constructors
         public AddLabelPresenter(IAddLabelView view, TreeNode node)
         {
-            _view = view;
+            View = view;
             _node = node;
-
-            _view.AddLabel += addLabel;
-            _view.KeyDownPress += keyDownPress;
+            View.Presenter = this;
         }
         #endregion
+
+        public IAddLabelView View { get; set; }
+
+        public void AddLabel()
+        {
+            string label = View.LabelText;
+
+            if (String.IsNullOrWhiteSpace(label))
+            {
+                View.ShowInvalidLabelMessage();
+                View.Exit();
+                return;
+            }
+
+            _node.SetLabel(label);
+            string labeledTag = string.Format("{0}:{1}", _node.Text, label);
+            _node.Text = labeledTag;
+            View.Exit();
+        }
+
+        public void KeyDownPress(Keys key)
+        {
+            if (EnterPressed(key))
+            {
+                AddLabel();
+            }
+        }
 
         #region Private Methods
         /// <summary>
@@ -32,40 +56,6 @@ namespace DEiXTo.Presenters
         private bool EnterPressed(Keys key)
         {
             return key == Keys.Enter;
-        }
-        #endregion
-
-        #region Private Events
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="e"></param>
-        void keyDownPress(KeyEventArgs e)
-        {
-            if (EnterPressed(e.KeyCode))
-            {
-                addLabel();
-            }
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        void addLabel()
-        {
-            string label = _view.GetLabelText();
-
-            if (String.IsNullOrWhiteSpace(label))
-            {
-                _view.ShowInvalidLabelMessage();
-                _view.Exit();
-                return;
-            }
-
-            _node.SetLabel(label);
-            string labeledTag = string.Format("{0}:{1}", _node.Text, label);
-            _node.Text = labeledTag;
-            _view.Exit();
         }
         #endregion
     }

@@ -56,6 +56,7 @@
     <Compile Include="Models\NodeInfo.cs" />
     <Compile Include="Models\OutputFormat.cs" />
     <Compile Include="Models\Result.cs" />
+    <Compile Include="Presenters.Tests\AddLabelPresenterTests.cs" />
     <Compile Include="Presenters.Tests\MainPresenterTests.cs" />
     <Compile Include="Presenters\AddLabelPresenter.cs" />
     <Compile Include="Presenters\AddSiblingOrderPresenter.cs" />

@@ -1,14 +1,15 @@
-﻿using System;
+﻿using DEiXTo.Presenters;
+using System;
 using System.Windows.Forms;
 
 namespace DEiXTo.Views
 {
     public interface IAddLabelView
     {
-        event Action AddLabel;
-        event Action<KeyEventArgs> KeyDownPress;
+        AddLabelPresenter Presenter { get; set; }
 
-        string GetLabelText();
+        string LabelText { get; set; }
+
         void ShowInvalidLabelMessage();
         void Exit();
     }

@@ -1,17 +1,11 @@
-﻿using System;
+﻿using DEiXTo.Presenters;
+using System;
 using System.Windows.Forms;
 
 namespace DEiXTo.Views
 {
     public partial class AddLabelWindow : Form, IAddLabelView
     {
-        #region Public Events
-        // Fires when the user presses the OK button
-        public event Action AddLabel;
-        // Fires when the user presses a keyboard
-        public event Action<KeyEventArgs> KeyDownPress;
-        #endregion
-
         #region Constructors
         public AddLabelWindow()
         {
@@ -23,14 +17,14 @@ namespace DEiXTo.Views
         #endregion
 
         #region Public Methods
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <returns></returns>
-        public string GetLabelText()
+
+        public string LabelText
         {
-            return AddLabelTextBox.Text;
+            get { return AddLabelTextBox.Text; }
+            set { AddLabelTextBox.Text = value; }
         }
+
+        public AddLabelPresenter Presenter { get; set; }
 
         /// <summary>
         /// 
@@ -52,10 +46,7 @@ namespace DEiXTo.Views
         #region Private Events
         private void OkButton_Click(object sender, EventArgs e)
         {
-            if (AddLabel != null)
-            {
-                AddLabel();
-            }
+            Presenter.AddLabel();
         }
 
         private void CancelButton_Click(object sender, EventArgs e)
@@ -65,10 +56,7 @@ namespace DEiXTo.Views
 
         private void AddLabelWindow_KeyDown(object sender, KeyEventArgs e)
         {
-            if (KeyDownPress != null)
-            {
-                KeyDownPress(e);
-            }
+            Presenter.KeyDownPress(e.KeyCode);
         }
         #endregion
     }
