@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DEiXTo.Presenters;
+using System;
 using System.Windows.Forms;
 
 namespace DEiXTo.Views
@@ -9,11 +10,7 @@ namespace DEiXTo.Views
     /// </summary>
     public interface IMainView
     {
-        event Action CreateNewAgent;
-        event Action CascadeAgentWindows;
-        event Action CloseAgentWindows;
-        event Action FloatAgentWindows;
-        event Action<FormClosingEventArgs> WindowClosing;
+        MainPresenter Presenter { get; set; }
 
         void CascadeAgents();
         void CloseAgents();

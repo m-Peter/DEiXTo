@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DEiXTo.Presenters;
+using System;
 using System.Windows.Forms;
 
 namespace DEiXTo.Views
@@ -11,25 +12,14 @@ namespace DEiXTo.Views
     /// </summary>
     public partial class MainWindow : Form, IMainView
     {
-        #region Public Events
-        // Fires when the NewAgent menu item gets clicked
-        public event Action CreateNewAgent;
-        // Fires when the CascadeAgents menu item gets clicked
-        public event Action CascadeAgentWindows;
-        // Fires when the CloseAgents menu item gets clicked
-        public event Action CloseAgentWindows;
-        // Fires when the FloatAgents menu item gets clicked
-        public event Action FloatAgentWindows;
-        // Fires when the user attempts to close the window
-        public event Action<FormClosingEventArgs> WindowClosing;
-        #endregion
-
         #region Constructors
         public MainWindow()
         {
             InitializeComponent();
         }
         #endregion
+
+        public MainPresenter Presenter { get; set; }
 
         #region Public Methods
         /// <summary>
@@ -81,42 +71,27 @@ namespace DEiXTo.Views
         #region Private Events
         private void newAgentToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            if (CreateNewAgent != null)
-            {
-                CreateNewAgent();
-            }
+            Presenter.CreateNewAgent();
         }
 
         private void cascadeToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            if (CascadeAgentWindows != null)
-            {
-                CascadeAgentWindows();
-            }
+            Presenter.CascadeAgentWindows();
         }
 
         private void closeAllToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            if (CloseAgentWindows != null)
-            {
-                CloseAgentWindows();
-            }
+            Presenter.CloseAgentWindows();
         }
 
         private void floatAllToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            if (FloatAgentWindows != null)
-            {
-                FloatAgentWindows();
-            }
+            Presenter.FloatAgentWindows();
         }
 
         private void MainWindow_FormClosing(object sender, FormClosingEventArgs e)
         {
-            if (WindowClosing != null)
-            {
-                WindowClosing(e);
-            }
+            Presenter.WindowClosing(e);
         }
         #endregion
     }
