@@ -58,6 +58,7 @@
     <Compile Include="Models\Result.cs" />
     <Compile Include="Presenters.Tests\AddLabelPresenterTests.cs" />
     <Compile Include="Presenters.Tests\AddSiblingOrderPresenterTests.cs" />
+    <Compile Include="Presenters.Tests\DeixtoAgentPresenterTests.cs" />
     <Compile Include="Presenters.Tests\MainPresenterTests.cs" />
     <Compile Include="Presenters.Tests\RegexBuilderPresenterTests.cs" />
     <Compile Include="Presenters\AddLabelPresenter.cs" />

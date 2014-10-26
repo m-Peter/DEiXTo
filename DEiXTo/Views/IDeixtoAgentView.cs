@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DEiXTo.Presenters;
+using System;
 using System.Windows.Forms;
 
 namespace DEiXTo.Views
@@ -52,6 +53,8 @@ namespace DEiXTo.Views
         event Action SelectOutputFile;
         event Action TunePattern;
         event Action LoadURLsFromFile;
+
+        DeixtoAgentPresenter Presenter { get; set; }
 
         string Url { get; }
         HtmlElement CurrentElement { get; set; }

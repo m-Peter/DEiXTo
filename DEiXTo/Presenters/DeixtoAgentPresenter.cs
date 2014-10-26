@@ -19,7 +19,7 @@ namespace DEiXTo.Presenters
     public class DeixtoAgentPresenter : ISubscriber<RegexAdded>
     {
         #region Instance Variables
-        private readonly IDeixtoAgentView _view;
+        //private readonly IDeixtoAgentView _view;
         private ElementStyling _styling;
         private TreeBuilder _builder;
         private DocumentQuery _document;
@@ -36,10 +36,13 @@ namespace DEiXTo.Presenters
         public event DOMBuilted DomBuilted;
         #endregion
 
+        public IDeixtoAgentView View { get; set; }
+
         #region Constructors
         public DeixtoAgentPresenter(IDeixtoAgentView view)
         {
-            _view = view;
+            View = view;
+            View.Presenter = this;
             _styling = new ElementStyling();
             _builder = new TreeBuilder();
             _imageLoader = new StatesImageLoader();
@@ -49,56 +52,56 @@ namespace DEiXTo.Presenters
             _eventHub = EventHub.Instance;
 
             // ATTACH THE EVENTS OF THE VIEW TO LOCAL METHODS
-            _view.BrowseToUrl += browseToUrl;
-            _view.KeyDownPress += keyDownPress;
-            _view.AutoFillChanged += autoFillChanged;
-            _view.CrawlingChanged += crawlingChanged;
-            _view.BrowserCompleted += browserCompleted;
-            _view.DocumentMouseOver += documentMouseOver;
-            _view.DocumentMouseLeave += documentMouseLeave;
-            _view.DOMNodeClick += DOMNodeClick;
-            _view.CreateWorkingPattern += createWorkingPattern;
-            _view.CreateAuxiliaryPattern += createAuxiliaryPattern;
-            _view.WorkingPatternNodeClick += workingPatternNodeClick;
-            _view.CreateWorkingPatternFromDocument += createWorkingPatternFromDocument;
-            _view.CreateAuxiliaryPatternFromDocument += createAuxiliaryPatternFromDocument;
-            _view.ShowBrowserContextMenu += showBrowserContextMenu;
-            _view.AuxiliaryPatternNodeClick += auxiliaryPatternNodeClick;
-            _view.SimplifyDOMTree += simplifyDOMTree;
-            _view.CreateSnapshot += createSnapshot;
-            _view.DeleteSnapshot += deleteSnapshot;
-            _view.MakeWorkingPatternFromSnapshot += makeWorkingPatternFromSnapshot;
-            _view.ClearTreeViews += clearTreeViews;
-            _view.RebuildDOM += rebuildDOM;
-            _view.ExecuteRule += executeRule;
-            _view.LevelUpWorkingPattern += levelUpWorkingPattern;
-            _view.LevelDownWorkingPattern += levelDownWorkingPattern;
-            _view.NodeStateChanged += nodeStateChanged;
-            _view.OutputResultSelected += outputResultSelected;
-            _view.AddNewLabel += addNewLabel;
-            _view.AddRegex += addRegex;
-            _view.RemoveLabel += removeLabel;
-            _view.RemoveRegex += removeRegex;
-            _view.WindowClosing += windowClosing;
-            _view.AddURLToTargetURLs += addURLToTargetURLs;
-            _view.RemoveURLFromTargetURLs += removeURLFromTargetURLs;
-            _view.TargetURLSelected += targetURLSelected;
-            _view.SaveExtractionPattern += saveExtractionPattern;
-            _view.LoadExtractionPattern += loadExtractionPattern;
-            _view.DeleteNode += deleteNode;
-            _view.AddPreviousSibling += addPreviousSibling;
-            _view.AddNextSibling += addNextSibling;
-            _view.AddSiblingOrder += addSiblingOrder;
-            _view.SaveToDisk += saveToDisk;
-            _view.SelectOutputFile += selectOutputFile;
-            _view.TunePattern += tunePattern;
-            _view.LoadURLsFromFile += loadURLsFromFile;
+            View.BrowseToUrl += browseToUrl;
+            View.KeyDownPress += keyDownPress;
+            View.AutoFillChanged += autoFillChanged;
+            View.CrawlingChanged += crawlingChanged;
+            View.BrowserCompleted += browserCompleted;
+            View.DocumentMouseOver += documentMouseOver;
+            View.DocumentMouseLeave += documentMouseLeave;
+            View.DOMNodeClick += DOMNodeClick;
+            View.CreateWorkingPattern += createWorkingPattern;
+            View.CreateAuxiliaryPattern += createAuxiliaryPattern;
+            View.WorkingPatternNodeClick += workingPatternNodeClick;
+            View.CreateWorkingPatternFromDocument += createWorkingPatternFromDocument;
+            View.CreateAuxiliaryPatternFromDocument += createAuxiliaryPatternFromDocument;
+            View.ShowBrowserContextMenu += showBrowserContextMenu;
+            View.AuxiliaryPatternNodeClick += auxiliaryPatternNodeClick;
+            View.SimplifyDOMTree += simplifyDOMTree;
+            View.CreateSnapshot += createSnapshot;
+            View.DeleteSnapshot += deleteSnapshot;
+            View.MakeWorkingPatternFromSnapshot += makeWorkingPatternFromSnapshot;
+            View.ClearTreeViews += clearTreeViews;
+            View.RebuildDOM += rebuildDOM;
+            View.ExecuteRule += executeRule;
+            View.LevelUpWorkingPattern += levelUpWorkingPattern;
+            View.LevelDownWorkingPattern += levelDownWorkingPattern;
+            View.NodeStateChanged += nodeStateChanged;
+            View.OutputResultSelected += outputResultSelected;
+            View.AddNewLabel += addNewLabel;
+            View.AddRegex += addRegex;
+            View.RemoveLabel += removeLabel;
+            View.RemoveRegex += removeRegex;
+            View.WindowClosing += windowClosing;
+            View.AddURLToTargetURLs += addURLToTargetURLs;
+            View.RemoveURLFromTargetURLs += removeURLFromTargetURLs;
+            View.TargetURLSelected += targetURLSelected;
+            View.SaveExtractionPattern += saveExtractionPattern;
+            View.LoadExtractionPattern += loadExtractionPattern;
+            View.DeleteNode += deleteNode;
+            View.AddPreviousSibling += addPreviousSibling;
+            View.AddNextSibling += addNextSibling;
+            View.AddSiblingOrder += addSiblingOrder;
+            View.SaveToDisk += saveToDisk;
+            View.SelectOutputFile += selectOutputFile;
+            View.TunePattern += tunePattern;
+            View.LoadURLsFromFile += loadURLsFromFile;
 
             _eventHub.Subscribe<RegexAdded>(this);
 
             var imagesList = _imageLoader.LoadImages();
-            _view.AddWorkingPatternImages(imagesList);
-            _view.AddExtractionTreeImages(imagesList);
+            View.AddWorkingPatternImages(imagesList);
+            View.AddExtractionTreeImages(imagesList);
         }
         #endregion
 
@@ -113,7 +116,7 @@ namespace DEiXTo.Presenters
             int index = node.SourceIndex();
             var element = _document.GetElementByIndex(index);
 
-            _view.FillElementInfo(node, element.OuterHtml);
+            View.FillElementInfo(node, element.OuterHtml);
         }
         #endregion
 
@@ -141,7 +144,7 @@ namespace DEiXTo.Presenters
 
                 AddOutputResults(executor);
 
-                _view.WritePageResults(count.ToString() + " results!");
+                View.WritePageResults(count.ToString() + " results!");
             }
         }
 
@@ -153,7 +156,7 @@ namespace DEiXTo.Presenters
         {
             var elem = _document.GetLinkToFollow(mylink);
             string href = elem.GetAttribute("href");
-            _view.NavigateTo(href);
+            View.NavigateTo(href);
         }
 
         /// <summary>
@@ -164,7 +167,7 @@ namespace DEiXTo.Presenters
         {
             foreach (var item in executor.ExtractedResults())
             {
-                _view.AddOutputItem(item.ToStringArray(), item.Node);
+                View.AddOutputItem(item.ToStringArray(), item.Node);
             }
         }
 
@@ -197,7 +200,7 @@ namespace DEiXTo.Presenters
 
             for (int i = 0; i < columns; i++)
             {
-                _view.AddOutputColumn(columnFormat + (i + 1));
+                View.AddOutputColumn(columnFormat + (i + 1));
             }
         }
 
@@ -211,7 +214,7 @@ namespace DEiXTo.Presenters
 
             for (int i = 0; i < columns; i++)
             {
-                _view.AddOutputColumn(labels[i]);
+                View.AddOutputColumn(labels[i]);
             }
         }
 
@@ -222,7 +225,7 @@ namespace DEiXTo.Presenters
         /// <returns></returns>
         private PatternExtraction CreateExecutor(TreeNode pattern)
         {
-            var domNodes = _view.GetBodyTreeNodes();
+            var domNodes = View.GetBodyTreeNodes();
             _executor = new PatternExtraction(pattern, domNodes);
             return _executor;
         }
@@ -235,7 +238,7 @@ namespace DEiXTo.Presenters
         {
             foreach (TreeNode node in nodes)
             {
-                _view.ApplyStateToNode(node, 5);
+                View.ApplyStateToNode(node, 5);
                 node.SetState(NodeState.Unchecked);
                 applyUncheckedToSubtree(node.Nodes);
             }
@@ -248,7 +251,7 @@ namespace DEiXTo.Presenters
         /// <returns></returns>
         private bool CustomMenuCanBeShown(HtmlElementEventArgs e)
         {
-            return e.CtrlKeyPressed && _view.BrowserContextMenuEnabled;
+            return e.CtrlKeyPressed && View.BrowserContextMenuEnabled;
         }
 
         /// <summary>
@@ -309,8 +312,8 @@ namespace DEiXTo.Presenters
             ReadTargetUrls reader = new ReadTargetUrls();
             string filename = _openFileDialog.Filename;
             var urls = reader.Read(filename);
-            _view.AppendTargetUrls(urls);
-            _view.TargetURLsFile = filename;
+            View.AppendTargetUrls(urls);
+            View.TargetURLsFile = filename;
         }
 
         /// <summary>
@@ -319,26 +322,26 @@ namespace DEiXTo.Presenters
         void tunePattern()
         {
             // Check if the Extraction Pattern is specified
-            if (!_view.ExtractionPatternSpecified)
+            if (!View.ExtractionPatternSpecified)
             {
-                _view.ShowSpecifyExtractionPatternMessage();
+                View.ShowSpecifyExtractionPatternMessage();
                 return;
             }
 
             // Check if the Target URL is specified
-            if (!_view.TargetURLSpecified)
+            if (!View.TargetURLSpecified)
             {
-                _view.ShowSpecifyTargetURLMessage();
+                View.ShowSpecifyTargetURLMessage();
                 return;
             }
 
             // Grab the first URL in the target URLs
-            string url = _view.FirstTargetURL;
+            string url = View.FirstTargetURL;
 
             DomBuilted += DeixtoAgentPresenter_DomBuilted;
             
             // Navigate to that URL
-            _view.NavigateTo(url);
+            View.NavigateTo(url);
         }
 
         /// <summary>
@@ -347,17 +350,17 @@ namespace DEiXTo.Presenters
         void DeixtoAgentPresenter_DomBuilted()
         {
             // Grab the Extraction Pattern
-            var pattern = _view.GetExtractionPattern();
+            var pattern = View.GetExtractionPattern();
 
             // Search for the tree structure in the Extraction Pattern
-            _executor = new PatternExtraction(pattern, _view.GetDOMTreeNodes());
-            var matchedNode = _executor.ScanTree(_view.GetDOMTreeNodes(), pattern);
+            _executor = new PatternExtraction(pattern, View.GetDOMTreeNodes());
+            var matchedNode = _executor.ScanTree(View.GetDOMTreeNodes(), pattern);
             var font = new Font(FontFamily.GenericSansSerif, 8.25f);
             matchedNode.NodeFont = new Font(font, FontStyle.Bold);
 
             // If you find one, make it Working Pattern
-            _view.FillPatternTree(matchedNode.GetClone());
-            _view.ExpandPatternTree();
+            View.FillPatternTree(matchedNode.GetClone());
+            View.ExpandPatternTree();
         }
 
         /// <summary>
@@ -365,7 +368,7 @@ namespace DEiXTo.Presenters
         /// </summary>
         void selectOutputFile()
         {
-            var format = _view.OutputFileFormat;
+            var format = View.OutputFileFormat;
 
             if (format == Format.Text)
             {
@@ -393,7 +396,7 @@ namespace DEiXTo.Presenters
             }
 
             string filename = _saveFileDialog.Filename;
-            _view.OutputFileName = filename;
+            View.OutputFileName = filename;
         }
 
         /// <summary>
@@ -472,7 +475,7 @@ namespace DEiXTo.Presenters
         /// <param name="node"></param>
         void deleteNode(TreeNode node)
         {
-            _view.DeletePatternNode(node);
+            View.DeletePatternNode(node);
         }
 
         /// <summary>
@@ -493,8 +496,8 @@ namespace DEiXTo.Presenters
 
             filename = _openFileDialog.Filename;
             var node = reader.read(filename);
-            _view.FillExtractionPattern(node);
-            _view.ExpandExtractionTree();
+            View.FillExtractionPattern(node);
+            View.ExpandExtractionTree();
         }
 
         /// <summary>
@@ -515,7 +518,7 @@ namespace DEiXTo.Presenters
             WriteExtractionPattern writer = new WriteExtractionPattern();
 
             filename = _saveFileDialog.Filename;
-            writer.write(filename, _view.GetPatternTreeNodes());
+            writer.write(filename, View.GetPatternTreeNodes());
         }
 
         /// <summary>
@@ -524,7 +527,7 @@ namespace DEiXTo.Presenters
         /// <param name="url"></param>
         void targetURLSelected(string url)
         {
-            _view.SetURLInput(url);
+            View.SetURLInput(url);
         }
 
         /// <summary>
@@ -533,20 +536,20 @@ namespace DEiXTo.Presenters
         void removeURLFromTargetURLs()
         {
             // retrieve the select URL from the TargetURLs list
-            string url = _view.TargetURLToAdd();
+            string url = View.TargetURLToAdd();
 
             if (String.IsNullOrWhiteSpace(url))
             {
-                _view.ShowSelectURLMessage();
+                View.ShowSelectURLMessage();
                 return;
             }
 
-            bool confirm = _view.AskUserToRemoveURL();
+            bool confirm = View.AskUserToRemoveURL();
 
             if (confirm)
             {
-                _view.RemoveTargetURL(url);
-                _view.ClearAddURLInput();
+                View.RemoveTargetURL(url);
+                View.ClearAddURLInput();
             }
         }
 
@@ -556,19 +559,19 @@ namespace DEiXTo.Presenters
         void addURLToTargetURLs()
         {
             // fetch the user-entered url
-            string url = _view.TargetURLToAdd();
+            string url = View.TargetURLToAdd();
 
             // if nothing was entered show a warning message
             if (String.IsNullOrWhiteSpace(url))
             {
-                _view.ShowEnterURLToAddMessage();
+                View.ShowEnterURLToAddMessage();
                 return;
             }
 
             // at this point we can add the url
-            _view.AppendTargetUrl(url);
+            View.AppendTargetUrl(url);
             // clear the entered value from the input text box
-            _view.ClearAddURLInput();
+            View.ClearAddURLInput();
         }
 
         /// <summary>
@@ -636,7 +639,7 @@ namespace DEiXTo.Presenters
             int index = node.SourceIndex();
             var element = _document.GetElementByIndex(index);
 
-            if (_view.HighlightModeEnabled)
+            if (View.HighlightModeEnabled)
             {
                 _styling.UnstyleElements();
                 _styling.Style(element);
@@ -644,10 +647,10 @@ namespace DEiXTo.Presenters
 
             var path = node.GetPath();
 
-            _view.FillElementInfo(node, element.OuterHtml);
-            _view.SelectDOMNode(_domTree.GetNodeFor(element));
+            View.FillElementInfo(node, element.OuterHtml);
+            View.SelectDOMNode(_domTree.GetNodeFor(element));
 
-            if (_view.CanAutoScroll)
+            if (View.CanAutoScroll)
             {
                 element.ScrollIntoView(false);
             }
@@ -661,7 +664,7 @@ namespace DEiXTo.Presenters
         void nodeStateChanged(TreeNode node, NodeState state)
         {
             int imageIndex = new StateToImageMapper().GetImageFromState(state);
-            _view.ApplyStateToNode(node, imageIndex);
+            View.ApplyStateToNode(node, imageIndex);
             node.SetState(state);
 
             if (state == NodeState.Unchecked)
@@ -678,15 +681,15 @@ namespace DEiXTo.Presenters
         {
             if (node.IsRoot())
             {
-                _view.ShowCannotDeleteRootMessage();
+                View.ShowCannotDeleteRootMessage();
                 return;
             }
 
             var newNode = node.FirstNode.GetClone();
 
-            _view.ClearPatternTree();
-            _view.FillPatternTree(newNode);
-            _view.ExpandPatternTree();
+            View.ClearPatternTree();
+            View.FillPatternTree(newNode);
+            View.ExpandPatternTree();
         }
 
         /// <summary>
@@ -715,10 +718,10 @@ namespace DEiXTo.Presenters
             newNode.SelectedImageIndex = 3;
             newNode.ImageIndex = 3;
             newNode.AddNode(node.GetClone());
-            
-            _view.ClearPatternTree();
-            _view.FillPatternTree(newNode);
-            _view.ExpandPatternTree();
+
+            View.ClearPatternTree();
+            View.FillPatternTree(newNode);
+            View.ExpandPatternTree();
         }
 
         /// <summary>
@@ -726,42 +729,42 @@ namespace DEiXTo.Presenters
         /// </summary>
         void executeRule()
         {
-            var pattern = _view.GetWorkingPattern();
+            var pattern = View.GetWorkingPattern();
 
             if (pattern == null)
             {
-                _view.ShowSpecifyPatternMessage();
+                View.ShowSpecifyPatternMessage();
                 return;
             }
 
-            if (_view.CrawlingEnabled)
+            if (View.CrawlingEnabled)
             {
-                string mylink = _view.HtmlLink();
-                int depth = _view.CrawlingDepth();
+                string mylink = View.HtmlLink();
+                int depth = View.CrawlingDepth();
                 int count = 0;
 
                 if (String.IsNullOrWhiteSpace(mylink))
                 {
-                    _view.ShowEmptyLinkMessage();
+                    View.ShowEmptyLinkMessage();
                     return;
                 }
 
                 if (depth <= 0)
                 {
-                    _view.ShowInvalidDepthMessage();
+                    View.ShowInvalidDepthMessage();
                     return;
                 }
 
-                _view.FocusOutputTabPage();
+                View.FocusOutputTabPage();
 
                 CrawlPages(depth, mylink, pattern, ref count);
 
-                _view.WritePageResults("Extraction Completed: " + count.ToString() + " results!");
+                View.WritePageResults("Extraction Completed: " + count.ToString() + " results!");
             }
             else
             {
-                _view.FocusOutputTabPage();
-                _view.ClearExtractedOutputs();
+                View.FocusOutputTabPage();
+                View.ClearExtractedOutputs();
 
                 var executor = CreateExecutor(pattern);
 
@@ -771,20 +774,20 @@ namespace DEiXTo.Presenters
 
                 AddOutputResults(executor);
 
-                _view.WritePageResults("Extraction Completed: " + executor.Count.ToString() + " results!");
+                View.WritePageResults("Extraction Completed: " + executor.Count.ToString() + " results!");
 
-                if (_view.OutputFileSpecified)
+                if (View.OutputFileSpecified)
                 {
-                    var format = _view.OutputFileFormat;
-                    string filename = _view.OutputFileName;
+                    var format = View.OutputFileFormat;
+                    string filename = View.OutputFileName;
                     var writer = RecordsWriterFactory.GetWriterFor(format, filename);
                     var records = _executor.ExtractedResults();
                     writer.Write(records);
                 }
 
                 var rootNode = executor.TrimUncheckedNodes(pattern);
-                _view.FillExtractionPattern(rootNode);
-                _view.ExpandExtractionTree();
+                View.FillExtractionPattern(rootNode);
+                View.ExpandExtractionTree();
             }
         }
 
@@ -807,13 +810,13 @@ namespace DEiXTo.Presenters
                 return;
             }
 
-            bool confirm = _view.AskUserToClearTreeViews();
+            bool confirm = View.AskUserToClearTreeViews();
 
             if (confirm)
             {
-                _view.ClearAuxiliaryTree();
-                _view.ClearPatternTree();
-                _view.ClearSnapshotTree();
+                View.ClearAuxiliaryTree();
+                View.ClearPatternTree();
+                View.ClearSnapshotTree();
             }
         }
 
@@ -823,9 +826,9 @@ namespace DEiXTo.Presenters
         /// <param name="node"></param>
         void makeWorkingPatternFromSnapshot(TreeNode node)
         {
-            _view.ClearPatternTree();
-            _view.FillPatternTree(node.GetClone());
-            _view.ExpandPatternTree();
+            View.ClearPatternTree();
+            View.FillPatternTree(node.GetClone());
+            View.ExpandPatternTree();
         }
 
         /// <summary>
@@ -834,7 +837,7 @@ namespace DEiXTo.Presenters
         /// <param name="node"></param>
         void deleteSnapshot(TreeNode node)
         {
-            _view.DeleteSnapshotInstance(node);
+            View.DeleteSnapshotInstance(node);
         }
 
         /// <summary>
@@ -845,7 +848,7 @@ namespace DEiXTo.Presenters
         {
             TreeNode root = new TreeNode("SNAP " + string.Format("{0:hh:mm:ss tt}", DateTime.Now));
             root.AddNode(node.GetClone());
-            _view.FillSnapshotTree(root);
+            View.FillSnapshotTree(root);
         }
 
         /// <summary>
@@ -856,25 +859,25 @@ namespace DEiXTo.Presenters
         /// </summary>
         void simplifyDOMTree()
         {
-            var ignoredTags = _view.IgnoredTags();
+            var ignoredTags = View.IgnoredTags();
 
             if (ignoredTags.Count() == 0)
             {
-                _view.ShowNoTagSelectedMessage();
+                View.ShowNoTagSelectedMessage();
                 return;
             }
 
-            _view.ClearPatternTree();
-            _view.ClearSnapshotTree();
-            _view.ClearAuxiliaryTree();
-            _view.ClearDOMTree();
+            View.ClearPatternTree();
+            View.ClearSnapshotTree();
+            View.ClearAuxiliaryTree();
+            View.ClearDOMTree();
 
-            _document = new DocumentQuery(_view.GetHtmlDocument());
+            _document = new DocumentQuery(View.GetHtmlDocument());
             var elem = _document.GetHtmlElement();
             _domTree = _builder.BuildSimplifiedDOMTree(elem, ignoredTags);
-            _view.FillDomTree(_domTree.RootNode);
-            _view.ClearTargetURLs();
-            _view.AppendTargetUrl(_view.Url);
+            View.FillDomTree(_domTree.RootNode);
+            View.ClearTargetURLs();
+            View.AppendTargetUrl(View.Url);
         }
 
         /// <summary>
@@ -885,7 +888,7 @@ namespace DEiXTo.Presenters
         {
             if (node.IsTextNode())
             {
-                _view.FillTextNodeElementInfo(node);
+                View.FillTextNodeElementInfo(node);
                 return;
             }
 
@@ -895,10 +898,10 @@ namespace DEiXTo.Presenters
             _styling.UnstyleElements();
             _styling.Style(element);
 
-            _view.FillElementInfo(node, element.OuterHtml);
-            _view.SelectDOMNode(_domTree.GetNodeFor(element));
+            View.FillElementInfo(node, element.OuterHtml);
+            View.SelectDOMNode(_domTree.GetNodeFor(element));
 
-            if (_view.CanAutoScroll)
+            if (View.CanAutoScroll)
             {
                 element.ScrollIntoView(false);
             }
@@ -910,14 +913,14 @@ namespace DEiXTo.Presenters
         /// <param name="element"></param>
         void createAuxiliaryPatternFromDocument(HtmlElement element)
         {
-            _view.FocusAuxiliaryTabPage();
-            _view.ClearAuxiliaryTree();
+            View.FocusAuxiliaryTabPage();
+            View.ClearAuxiliaryTree();
 
             var node = _domTree.GetNodeFor(element);
 
-            _view.FillAuxiliaryTree(node.GetClone());
+            View.FillAuxiliaryTree(node.GetClone());
 
-            _view.ExpandAuxiliaryTree();
+            View.ExpandAuxiliaryTree();
         }
 
         /// <summary>
@@ -935,8 +938,8 @@ namespace DEiXTo.Presenters
                 return;
             }
 
-            _view.CurrentElement = _document.GetElementFromPoint(e.ClientMousePosition);
-            _view.ShowBrowserMenu();
+            View.CurrentElement = _document.GetElementFromPoint(e.ClientMousePosition);
+            View.ShowBrowserMenu();
         }
 
         /// <summary>
@@ -945,16 +948,16 @@ namespace DEiXTo.Presenters
         /// <param name="element"></param>
         void createWorkingPatternFromDocument(HtmlElement element)
         {
-            _view.ClearPatternTree();
+            View.ClearPatternTree();
 
             var node = _domTree.GetNodeFor(element);
             var newNode = _domTree.GetNodeFor(element).GetClone();
             newNode.SetAsRoot();
 
-            _view.SetNodeFont(newNode);
-            _view.FillPatternTree(newNode);
+            View.SetNodeFont(newNode);
+            View.FillPatternTree(newNode);
 
-            _view.ExpandPatternTree();
+            View.ExpandPatternTree();
         }
 
         /// <summary>
@@ -966,28 +969,28 @@ namespace DEiXTo.Presenters
         {
             if (RightButtonPressed(button))
             {
-                _view.SetAdjustContextMenuFor(node);
+                View.SetAdjustContextMenuFor(node);
             }
 
             if (node.IsTextNode())
             {
-                _view.FillTextNodeElementInfo(node);
+                View.FillTextNodeElementInfo(node);
                 return;
             }
 
             int index = node.SourceIndex();
             var element = _document.GetElementByIndex(index);
 
-            if (_view.HighlightModeEnabled)
+            if (View.HighlightModeEnabled)
             {
                 _styling.UnstyleElements();
                 _styling.Style(element);
             }
 
-            _view.FillElementInfo(node, element.OuterHtml);
-            _view.SelectDOMNode(_domTree.GetNodeFor(element));
+            View.FillElementInfo(node, element.OuterHtml);
+            View.SelectDOMNode(_domTree.GetNodeFor(element));
 
-            if (_view.CanAutoScroll)
+            if (View.CanAutoScroll)
             {
                 element.ScrollIntoView(false);
             }
@@ -999,15 +1002,15 @@ namespace DEiXTo.Presenters
         /// <param name="node"></param>
         void createAuxiliaryPattern(TreeNode node)
         {
-            _view.FocusAuxiliaryTabPage();
-            _view.ClearAuxiliaryTree();
+            View.FocusAuxiliaryTabPage();
+            View.ClearAuxiliaryTree();
 
             int index = node.SourceIndex();
             var element = _document.GetElementByIndex(index);
 
-            _view.FillAuxiliaryTree(node.GetClone());
+            View.FillAuxiliaryTree(node.GetClone());
 
-            _view.ExpandAuxiliaryTree();
+            View.ExpandAuxiliaryTree();
         }
 
         /// <summary>
@@ -1016,17 +1019,17 @@ namespace DEiXTo.Presenters
         /// <param name="node"></param>
         void createWorkingPattern(TreeNode node)
         {
-            _view.ClearPatternTree();
+            View.ClearPatternTree();
 
             int index = node.SourceIndex();
             var element = _document.GetElementByIndex(index);
             var newNode = _domTree.GetNodeFor(element).GetClone();
             newNode.SetAsRoot();
 
-            _view.SetNodeFont(newNode);
-            _view.FillPatternTree(newNode);
+            View.SetNodeFont(newNode);
+            View.FillPatternTree(newNode);
 
-            _view.ExpandPatternTree();
+            View.ExpandPatternTree();
         }
 
         /// <summary>
@@ -1038,12 +1041,12 @@ namespace DEiXTo.Presenters
         {
             if (RightButtonPressed(button))
             {
-                _view.SetContextMenuFor(node);
+                View.SetContextMenuFor(node);
             }
 
             if (node.IsTextNode())
             {
-                _view.FillTextNodeElementInfo(node);
+                View.FillTextNodeElementInfo(node);
                 return;
             }
 
@@ -1054,9 +1057,9 @@ namespace DEiXTo.Presenters
             // Style the HTML element in the WebBrowser
             _styling.Style(element);
 
-            _view.FillElementInfo(node, element.OuterHtml);
+            View.FillElementInfo(node, element.OuterHtml);
 
-            if (_view.CanAutoScroll)
+            if (View.CanAutoScroll)
             {
                 element.ScrollIntoView(false);
             }
@@ -1072,12 +1075,12 @@ namespace DEiXTo.Presenters
         /// <param name="element">The HtmlElement the mouse is leaving from.</param>
         void documentMouseLeave(HtmlElement element)
         {
-            if (_view.HighlightModeEnabled)
+            if (View.HighlightModeEnabled)
             {
                 _styling.Unstyle(element);
             }
 
-            _view.ClearElementInfo();
+            View.ClearElementInfo();
         }
 
         /// <summary>
@@ -1092,7 +1095,7 @@ namespace DEiXTo.Presenters
         {
             var node = _domTree.GetNodeFor(element);
 
-            if (node == null || !_view.HighlightModeEnabled)
+            if (node == null || !View.HighlightModeEnabled)
             {
                 return;
             }
@@ -1100,9 +1103,9 @@ namespace DEiXTo.Presenters
             _styling.UnstyleElements();
             _styling.Style(element);
 
-            _view.SelectDOMNode(node);
+            View.SelectDOMNode(node);
 
-            _view.FillElementInfo(node, element.OuterHtml);
+            View.FillElementInfo(node, element.OuterHtml);
         }
 
         /// <summary>
@@ -1111,7 +1114,7 @@ namespace DEiXTo.Presenters
         /// <param name="state"></param>
         void crawlingChanged(bool state)
         {
-            _view.ApplyVisibilityStateInCrawling(state);
+            View.ApplyVisibilityStateInCrawling(state);
         }
 
         /// <summary>
@@ -1120,7 +1123,7 @@ namespace DEiXTo.Presenters
         /// <param name="state"></param>
         void autoFillChanged(bool state)
         {
-            _view.ApplyVisibilityStateInAutoFill(state);
+            View.ApplyVisibilityStateInAutoFill(state);
         }
 
         /// <summary>
@@ -1144,10 +1147,10 @@ namespace DEiXTo.Presenters
                 switch (e.KeyCode)
                 {
                     case Keys.Right:
-                        _view.NavigateForward();
+                        View.NavigateForward();
                         break;
                     case Keys.Left:
-                        _view.NavigateBack();
+                        View.NavigateBack();
                         break;
                 }
                 e.Handled = true;
@@ -1166,11 +1169,11 @@ namespace DEiXTo.Presenters
         /// </summary>
         void browseToUrl()
         {
-            var url = _view.Url;
+            var url = View.Url;
 
             if (String.IsNullOrWhiteSpace(url))
             {
-                _view.ShowSpecifyURLMessage();
+                View.ShowSpecifyURLMessage();
                 return;
             }
 
@@ -1178,20 +1181,20 @@ namespace DEiXTo.Presenters
 
             if (!documentValidator.IsValid())
             {
-                _view.ShowRequestNotFoundMessage();
+                View.ShowRequestNotFoundMessage();
                 return;
             }
 
             // If the resource described by the URL exists, then proceed with the navigation
-            _view.ClearAuxiliaryTree();
+            View.ClearAuxiliaryTree();
 
-            if (!_view.CrawlingEnabled)
+            if (!View.CrawlingEnabled)
             {
-                _view.ClearPatternTree();
+                View.ClearPatternTree();
             }
 
-            _view.ClearSnapshotTree();
-            _view.NavigateTo(documentValidator.Url());
+            View.ClearSnapshotTree();
+            View.NavigateTo(documentValidator.Url());
         }
 
         /// <summary>
@@ -1204,26 +1207,26 @@ namespace DEiXTo.Presenters
         void browserCompleted()
         {
             _styling.Clear();
-            _view.ClearSnapshotTree();
+            View.ClearSnapshotTree();
 
-            if (!_view.CrawlingEnabled)
+            if (!View.CrawlingEnabled)
             {
-                _view.ClearPatternTree();
+                View.ClearPatternTree();
             }
 
-            _view.ClearAuxiliaryTree();
-            _view.ClearDOMTree();
+            View.ClearAuxiliaryTree();
+            View.ClearDOMTree();
 
-            _document = new DocumentQuery(_view.GetHtmlDocument());
+            _document = new DocumentQuery(View.GetHtmlDocument());
             var elem = _document.GetHtmlElement();
 
-            _view.ClearTargetURLs();
-            _view.AppendTargetUrl(_view.GetDocumentUrl());
-            _view.UpdateDocumentUrl();
+            View.ClearTargetURLs();
+            View.AppendTargetUrl(View.GetDocumentUrl());
+            View.UpdateDocumentUrl();
 
             _domTree = _builder.BuildDOMTree(elem);
-            _view.FillDomTree(_domTree.RootNode);
-            _view.AttachDocumentEvents();
+            View.FillDomTree(_domTree.RootNode);
+            View.AttachDocumentEvents();
 
             if (DomBuilted != null)
             {

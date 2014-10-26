@@ -3,6 +3,7 @@ using DEiXTo.Services;
 using System;
 using System.Windows.Forms;
 using DEiXTo.Models;
+using DEiXTo.Presenters;
 
 namespace DEiXTo.Views
 {
@@ -149,6 +150,8 @@ namespace DEiXTo.Views
         {
             get { return URLComboBox.Text; }
         }
+
+        public DeixtoAgentPresenter Presenter { get; set; }
 
         /// <summary>
         /// 
