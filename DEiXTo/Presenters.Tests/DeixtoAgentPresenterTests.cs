@@ -7,6 +7,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 using DEiXTo.Views;
 using DEiXTo.Services;
+using System.Windows.Forms;
 
 namespace DEiXTo.Presenters.Tests
 {
@@ -14,15 +15,32 @@ namespace DEiXTo.Presenters.Tests
     public class DeixtoAgentPresenterTests
     {
         private Mock<IDeixtoAgentView> _view;
-        private Mock<IViewLoader> _loader;
+        private Mock<ISaveFileDialog> _saveFileDialog;
         private DeixtoAgentPresenter _presenter;
 
         [TestInitialize]
         public void SetUp()
         {
             _view = new Mock<IDeixtoAgentView>();
-            _loader = new Mock<IViewLoader>();
-            _presenter = new DeixtoAgentPresenter(_view.Object);
+            _saveFileDialog = new Mock<ISaveFileDialog>();
+            _presenter = new DeixtoAgentPresenter(_view.Object, _saveFileDialog.Object);
+        }
+
+        [TestMethod]
+        public void TestMethod()
+        {
+            // Arrange
+            _view.Setup(m => m.OutputFileFormat).Returns(Format.Text);
+            _saveFileDialog.Setup(m => m.ShowDialog()).Returns(DialogResult.OK);
+            _saveFileDialog.Setup(m => m.Filename).Returns("output_file");
+
+            // Act
+            _presenter.SelectOutputFile();
+
+            // Assert
+            _saveFileDialog.VerifySet(m => m.Filter = "Text Files (*.txt)|");
+            _saveFileDialog.VerifySet(m => m.Extension = "txt");
+            _view.VerifySet(m => m.OutputFileName = "output_file");
         }
     }
 }

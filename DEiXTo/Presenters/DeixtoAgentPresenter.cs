@@ -39,7 +39,7 @@ namespace DEiXTo.Presenters
         public IDeixtoAgentView View { get; set; }
 
         #region Constructors
-        public DeixtoAgentPresenter(IDeixtoAgentView view)
+        public DeixtoAgentPresenter(IDeixtoAgentView view, ISaveFileDialog saveFileDialog)
         {
             View = view;
             View.Presenter = this;
@@ -47,7 +47,7 @@ namespace DEiXTo.Presenters
             _builder = new TreeBuilder();
             _imageLoader = new StatesImageLoader();
             _loader = new WindowsViewLoader();
-            _saveFileDialog = new SaveFileDialogWrapper();
+            _saveFileDialog = saveFileDialog;
             _openFileDialog = new OpenFileDialogWrapper();
             _eventHub = EventHub.Instance;
 
@@ -93,7 +93,6 @@ namespace DEiXTo.Presenters
             View.AddNextSibling += addNextSibling;
             View.AddSiblingOrder += addSiblingOrder;
             View.SaveToDisk += saveToDisk;
-            View.SelectOutputFile += selectOutputFile;
             View.TunePattern += tunePattern;
             View.LoadURLsFromFile += loadURLsFromFile;
 
@@ -366,7 +365,7 @@ namespace DEiXTo.Presenters
         /// <summary>
         /// 
         /// </summary>
-        void selectOutputFile()
+        public void SelectOutputFile()
         {
             var format = View.OutputFileFormat;
 

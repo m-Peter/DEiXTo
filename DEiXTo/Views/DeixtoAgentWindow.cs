@@ -59,7 +59,6 @@ namespace DEiXTo.Views
         public event Action<TreeNode> AddNextSibling;
         public event Action<TreeNode> AddSiblingOrder;
         public event Action SaveToDisk;
-        public event Action SelectOutputFile;
         public event Action TunePattern;
         public event Action LoadURLsFromFile;
         #endregion
@@ -1402,10 +1401,7 @@ namespace DEiXTo.Views
 
         private void SelectOutputFileButton_Click(object sender, EventArgs e)
         {
-            if (SelectOutputFile != null)
-            {
-                SelectOutputFile();
-            }
+            Presenter.SelectOutputFile();
         }
 
         private void TunePatternButton_Click(object sender, EventArgs e)

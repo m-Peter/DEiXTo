@@ -30,7 +30,8 @@ namespace DEiXTo.Services
         public void LoadAgentView(string title, IMainView parent)
         {
             DeixtoAgentWindow window = new DeixtoAgentWindow();
-            DeixtoAgentPresenter presenter = new DeixtoAgentPresenter(window);
+            ISaveFileDialog saveFileDialog = new SaveFileDialogWrapper();
+            DeixtoAgentPresenter presenter = new DeixtoAgentPresenter(window, saveFileDialog);
             
             window.Text = title;
             window.MdiParent = (Form)parent;

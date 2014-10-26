@@ -50,7 +50,6 @@ namespace DEiXTo.Views
         event Action<TreeNode> AddNextSibling;
         event Action<TreeNode> AddSiblingOrder;
         event Action SaveToDisk;
-        event Action SelectOutputFile;
         event Action TunePattern;
         event Action LoadURLsFromFile;
 
