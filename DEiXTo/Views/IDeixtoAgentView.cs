@@ -9,50 +9,6 @@ namespace DEiXTo.Views
     /// </summary>
     public interface IDeixtoAgentView
     {
-        event Action BrowseToUrl;
-        event Action SimplifyDOMTree;
-        event Action<KeyEventArgs> KeyDownPress;
-        event Action<Boolean> AutoFillChanged;
-        event Action<Boolean> CrawlingChanged;
-        event Action BrowserCompleted;
-        event Action<HtmlElement> DocumentMouseOver;
-        event Action<HtmlElement> DocumentMouseLeave;
-        event Action<TreeNode, MouseButtons> DOMNodeClick;
-        event Action<TreeNode> CreateWorkingPattern;
-        event Action<TreeNode> CreateAuxiliaryPattern;
-        event Action<TreeNode> CreateSnapshot;
-        event Action<HtmlElement> CreateWorkingPatternFromDocument;
-        event Action<TreeNode, MouseButtons> WorkingPatternNodeClick;
-        event Action<TreeNode> AuxiliaryPatternNodeClick;
-        event HtmlElementEventHandler ShowBrowserContextMenu;
-        event Action<HtmlElement> CreateAuxiliaryPatternFromDocument;
-        event Action<TreeNode> MakeWorkingPatternFromSnapshot;
-        event Action<TreeNode> DeleteSnapshot;
-        event Action<int> ClearTreeViews;
-        event Action RebuildDOM;
-        event Action ExecuteRule;
-        event Action<TreeNode> LevelUpWorkingPattern;
-        event Action<TreeNode> LevelDownWorkingPattern;
-        event Action<TreeNode, NodeState> NodeStateChanged;
-        event Action<bool, TreeNode> OutputResultSelected;
-        event Action<TreeNode> AddNewLabel;
-        event Action<TreeNode> AddRegex;
-        event Action<TreeNode> RemoveLabel;
-        event Action<TreeNode> RemoveRegex;
-        event Action<TreeNode> DeleteNode;
-        event Action<FormClosingEventArgs> WindowClosing;
-        event Action AddURLToTargetURLs;
-        event Action RemoveURLFromTargetURLs;
-        event Action<String> TargetURLSelected;
-        event Action SaveExtractionPattern;
-        event Action LoadExtractionPattern;
-        event Action<TreeNode> AddPreviousSibling;
-        event Action<TreeNode> AddNextSibling;
-        event Action<TreeNode> AddSiblingOrder;
-        event Action SaveToDisk;
-        event Action TunePattern;
-        event Action LoadURLsFromFile;
-
         DeixtoAgentPresenter Presenter { get; set; }
 
         string Url { get; }

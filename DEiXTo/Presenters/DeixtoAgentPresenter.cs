@@ -19,7 +19,6 @@ namespace DEiXTo.Presenters
     public class DeixtoAgentPresenter : ISubscriber<RegexAdded>
     {
         #region Instance Variables
-        //private readonly IDeixtoAgentView _view;
         private ElementStyling _styling;
         private TreeBuilder _builder;
         private DocumentQuery _document;
@@ -50,51 +49,6 @@ namespace DEiXTo.Presenters
             _saveFileDialog = saveFileDialog;
             _openFileDialog = new OpenFileDialogWrapper();
             _eventHub = EventHub.Instance;
-
-            // ATTACH THE EVENTS OF THE VIEW TO LOCAL METHODS
-            View.BrowseToUrl += browseToUrl;
-            View.KeyDownPress += keyDownPress;
-            View.AutoFillChanged += autoFillChanged;
-            View.CrawlingChanged += crawlingChanged;
-            View.BrowserCompleted += browserCompleted;
-            View.DocumentMouseOver += documentMouseOver;
-            View.DocumentMouseLeave += documentMouseLeave;
-            View.DOMNodeClick += DOMNodeClick;
-            View.CreateWorkingPattern += createWorkingPattern;
-            View.CreateAuxiliaryPattern += createAuxiliaryPattern;
-            View.WorkingPatternNodeClick += workingPatternNodeClick;
-            View.CreateWorkingPatternFromDocument += createWorkingPatternFromDocument;
-            View.CreateAuxiliaryPatternFromDocument += createAuxiliaryPatternFromDocument;
-            View.ShowBrowserContextMenu += showBrowserContextMenu;
-            View.AuxiliaryPatternNodeClick += auxiliaryPatternNodeClick;
-            View.SimplifyDOMTree += simplifyDOMTree;
-            View.CreateSnapshot += createSnapshot;
-            View.DeleteSnapshot += deleteSnapshot;
-            View.MakeWorkingPatternFromSnapshot += makeWorkingPatternFromSnapshot;
-            View.ClearTreeViews += clearTreeViews;
-            View.RebuildDOM += rebuildDOM;
-            View.ExecuteRule += executeRule;
-            View.LevelUpWorkingPattern += levelUpWorkingPattern;
-            View.LevelDownWorkingPattern += levelDownWorkingPattern;
-            View.NodeStateChanged += nodeStateChanged;
-            View.OutputResultSelected += outputResultSelected;
-            View.AddNewLabel += addNewLabel;
-            View.AddRegex += addRegex;
-            View.RemoveLabel += removeLabel;
-            View.RemoveRegex += removeRegex;
-            View.WindowClosing += windowClosing;
-            View.AddURLToTargetURLs += addURLToTargetURLs;
-            View.RemoveURLFromTargetURLs += removeURLFromTargetURLs;
-            View.TargetURLSelected += targetURLSelected;
-            View.SaveExtractionPattern += saveExtractionPattern;
-            View.LoadExtractionPattern += loadExtractionPattern;
-            View.DeleteNode += deleteNode;
-            View.AddPreviousSibling += addPreviousSibling;
-            View.AddNextSibling += addNextSibling;
-            View.AddSiblingOrder += addSiblingOrder;
-            View.SaveToDisk += saveToDisk;
-            View.TunePattern += tunePattern;
-            View.LoadURLsFromFile += loadURLsFromFile;
 
             _eventHub.Subscribe<RegexAdded>(this);
 
@@ -298,7 +252,7 @@ namespace DEiXTo.Presenters
         /// <summary>
         /// 
         /// </summary>
-        void loadURLsFromFile()
+        public void LoadURLsFromFile()
         {
             _openFileDialog.Filter = "Text Files (*.txt)|";
             var answer = _openFileDialog.ShowDialog();
@@ -318,7 +272,7 @@ namespace DEiXTo.Presenters
         /// <summary>
         /// 
         /// </summary>
-        void tunePattern()
+        public void TunePattern()
         {
             // Check if the Extraction Pattern is specified
             if (!View.ExtractionPatternSpecified)
@@ -401,7 +355,7 @@ namespace DEiXTo.Presenters
         /// <summary>
         /// 
         /// </summary>
-        void saveToDisk()
+        public void SaveToDisk()
         {
             _saveFileDialog.Filter = "Text Files (*.txt)|";
             _saveFileDialog.Extension = "txt";
@@ -422,7 +376,7 @@ namespace DEiXTo.Presenters
         /// 
         /// </summary>
         /// <param name="node"></param>
-        void addSiblingOrder(TreeNode node)
+        public void AddSiblingOrder(TreeNode node)
         {
             _loader.LoadAddSiblingOrderView(node);
         }
@@ -431,7 +385,7 @@ namespace DEiXTo.Presenters
         /// 
         /// </summary>
         /// <param name="node"></param>
-        void addNextSibling(TreeNode node)
+        public void AddNextSibling(TreeNode node)
         {
             var parent = node.Parent;
             int index = node.SourceIndex();
@@ -452,7 +406,7 @@ namespace DEiXTo.Presenters
         /// 
         /// </summary>
         /// <param name="node"></param>
-        void addPreviousSibling(TreeNode node)
+        public void AddPreviousSibling(TreeNode node)
         {
             var parent = node.Parent;
             int index = node.SourceIndex();
@@ -472,7 +426,7 @@ namespace DEiXTo.Presenters
         /// 
         /// </summary>
         /// <param name="node"></param>
-        void deleteNode(TreeNode node)
+        public void DeleteNode(TreeNode node)
         {
             View.DeletePatternNode(node);
         }
@@ -480,7 +434,7 @@ namespace DEiXTo.Presenters
         /// <summary>
         /// 
         /// </summary>
-        void loadExtractionPattern()
+        public void LoadExtractionPattern()
         {
             _openFileDialog.Filter = "XML Files (*.xml)|";
             var answer = _openFileDialog.ShowDialog();
@@ -502,7 +456,7 @@ namespace DEiXTo.Presenters
         /// <summary>
         /// 
         /// </summary>
-        void saveExtractionPattern()
+        public void SaveExtractionPattern()
         {
             _saveFileDialog.Filter = "XML Files (*.xml)|";
             _saveFileDialog.Extension = "xml";
@@ -524,7 +478,7 @@ namespace DEiXTo.Presenters
         /// 
         /// </summary>
         /// <param name="url"></param>
-        void targetURLSelected(string url)
+        public void TargetURLSelected(string url)
         {
             View.SetURLInput(url);
         }
@@ -532,7 +486,7 @@ namespace DEiXTo.Presenters
         /// <summary>
         /// 
         /// </summary>
-        void removeURLFromTargetURLs()
+        public void RemoveURLFromTargetURLs()
         {
             // retrieve the select URL from the TargetURLs list
             string url = View.TargetURLToAdd();
@@ -555,7 +509,7 @@ namespace DEiXTo.Presenters
         /// <summary>
         /// 
         /// </summary>
-        void addURLToTargetURLs()
+        public void AddURLToTargetURLs()
         {
             // fetch the user-entered url
             string url = View.TargetURLToAdd();
@@ -577,7 +531,7 @@ namespace DEiXTo.Presenters
         /// 
         /// </summary>
         /// <param name="node"></param>
-        void removeRegex(TreeNode node)
+        public void RemoveRegex(TreeNode node)
         {
             var font = node.NodeFont;
             node.NodeFont = new System.Drawing.Font(font, FontStyle.Regular);
@@ -588,7 +542,7 @@ namespace DEiXTo.Presenters
         /// 
         /// </summary>
         /// <param name="node"></param>
-        void removeLabel(TreeNode node)
+        public void RemoveLabel(TreeNode node)
         {
             string text = node.Text;
             int index = text.IndexOf(":");
@@ -600,7 +554,7 @@ namespace DEiXTo.Presenters
         /// 
         /// </summary>
         /// <param name="e"></param>
-        void windowClosing(FormClosingEventArgs e)
+        public void windowClosing(FormClosingEventArgs e)
         {
             _eventHub.Publish(new EventArgs());
         }
@@ -609,7 +563,7 @@ namespace DEiXTo.Presenters
         /// 
         /// </summary>
         /// <param name="node"></param>
-        void addRegex(TreeNode node)
+        public void AddRegex(TreeNode node)
         {
             _loader.LoadRegexBuilderView(node);
         }
@@ -618,7 +572,7 @@ namespace DEiXTo.Presenters
         /// 
         /// </summary>
         /// <param name="node"></param>
-        void addNewLabel(TreeNode node)
+        public void AddNewLabel(TreeNode node)
         {
             _loader.LoadAddLabelView(node);
         }
@@ -628,7 +582,7 @@ namespace DEiXTo.Presenters
         /// </summary>
         /// <param name="selected"></param>
         /// <param name="node"></param>
-        void outputResultSelected(bool selected, TreeNode node)
+        public void OutputResultSelected(bool selected, TreeNode node)
         {
             if (!selected)
             {
@@ -660,7 +614,7 @@ namespace DEiXTo.Presenters
         /// </summary>
         /// <param name="node"></param>
         /// <param name="state"></param>
-        void nodeStateChanged(TreeNode node, NodeState state)
+        public void NodeStateChanged(TreeNode node, NodeState state)
         {
             int imageIndex = new StateToImageMapper().GetImageFromState(state);
             View.ApplyStateToNode(node, imageIndex);
@@ -676,7 +630,7 @@ namespace DEiXTo.Presenters
         /// 
         /// </summary>
         /// <param name="node"></param>
-        void levelDownWorkingPattern(TreeNode node)
+        public void LevelDownWorkingPattern(TreeNode node)
         {
             if (node.IsRoot())
             {
@@ -695,7 +649,7 @@ namespace DEiXTo.Presenters
         /// 
         /// </summary>
         /// <param name="node"></param>
-        void levelUpWorkingPattern(TreeNode node)
+        public void LevelUpWorkingPattern(TreeNode node)
         {
             int indx = node.SourceIndex();
             var tmpElem = _document.GetElementByIndex(indx);
@@ -726,7 +680,7 @@ namespace DEiXTo.Presenters
         /// <summary>
         /// 
         /// </summary>
-        void executeRule()
+        public void ExecuteRule()
         {
             var pattern = View.GetWorkingPattern();
 
@@ -793,16 +747,16 @@ namespace DEiXTo.Presenters
         /// <summary>
         /// Reconstructs the DOM tree structure.
         /// </summary>
-        void rebuildDOM()
+        public void RebuildDOM()
         {
-            browserCompleted();
+            BrowserCompleted();
         }
 
         /// <summary>
         /// 
         /// </summary>
         /// <param name="nodesCount"></param>
-        void clearTreeViews(int nodesCount)
+        public void ClearTreeViews(int nodesCount)
         {
             if (nodesCount == 0)
             {
@@ -823,7 +777,7 @@ namespace DEiXTo.Presenters
         /// 
         /// </summary>
         /// <param name="node"></param>
-        void makeWorkingPatternFromSnapshot(TreeNode node)
+        public void MakeWorkingPatternFromSnapshot(TreeNode node)
         {
             View.ClearPatternTree();
             View.FillPatternTree(node.GetClone());
@@ -834,7 +788,7 @@ namespace DEiXTo.Presenters
         /// 
         /// </summary>
         /// <param name="node"></param>
-        void deleteSnapshot(TreeNode node)
+        public void DeleteSnapshot(TreeNode node)
         {
             View.DeleteSnapshotInstance(node);
         }
@@ -843,7 +797,7 @@ namespace DEiXTo.Presenters
         /// 
         /// </summary>
         /// <param name="node"></param>
-        void createSnapshot(TreeNode node)
+        public void CreateSnapshot(TreeNode node)
         {
             TreeNode root = new TreeNode("SNAP " + string.Format("{0:hh:mm:ss tt}", DateTime.Now));
             root.AddNode(node.GetClone());
@@ -856,7 +810,7 @@ namespace DEiXTo.Presenters
         /// PRECONDITIONS: At least one tag is selected.
         /// POSTCONDITIONS: Clears all the TreeViews and the TargetURLs list.
         /// </summary>
-        void simplifyDOMTree()
+        public void SimplifyDOMTree()
         {
             var ignoredTags = View.IgnoredTags();
 
@@ -883,7 +837,7 @@ namespace DEiXTo.Presenters
         /// 
         /// </summary>
         /// <param name="node"></param>
-        void auxiliaryPatternNodeClick(TreeNode node)
+        public void AuxiliaryPatternNodeClick(TreeNode node)
         {
             if (node.IsTextNode())
             {
@@ -910,7 +864,7 @@ namespace DEiXTo.Presenters
         /// 
         /// </summary>
         /// <param name="element"></param>
-        void createAuxiliaryPatternFromDocument(HtmlElement element)
+        public void CreateAuxiliaryPatternFromDocument(HtmlElement element)
         {
             View.FocusAuxiliaryTabPage();
             View.ClearAuxiliaryTree();
@@ -927,7 +881,7 @@ namespace DEiXTo.Presenters
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        void showBrowserContextMenu(object sender, HtmlElementEventArgs e)
+        public void ShowBrowserContextMenu(object sender, HtmlElementEventArgs e)
         {
             // specify that the event was handled
             e.ReturnValue = e.CtrlKeyPressed;
@@ -945,7 +899,7 @@ namespace DEiXTo.Presenters
         /// 
         /// </summary>
         /// <param name="element"></param>
-        void createWorkingPatternFromDocument(HtmlElement element)
+        public void CreateWorkingPatternFromDocument(HtmlElement element)
         {
             View.ClearPatternTree();
 
@@ -964,7 +918,7 @@ namespace DEiXTo.Presenters
         /// </summary>
         /// <param name="node"></param>
         /// <param name="button"></param>
-        void workingPatternNodeClick(TreeNode node, MouseButtons button)
+        public void WorkingPatternNodeClick(TreeNode node, MouseButtons button)
         {
             if (RightButtonPressed(button))
             {
@@ -999,7 +953,7 @@ namespace DEiXTo.Presenters
         /// 
         /// </summary>
         /// <param name="node"></param>
-        void createAuxiliaryPattern(TreeNode node)
+        public void CreateAuxiliaryPattern(TreeNode node)
         {
             View.FocusAuxiliaryTabPage();
             View.ClearAuxiliaryTree();
@@ -1016,7 +970,7 @@ namespace DEiXTo.Presenters
         /// 
         /// </summary>
         /// <param name="node"></param>
-        void createWorkingPattern(TreeNode node)
+        public void CreateWorkingPattern(TreeNode node)
         {
             View.ClearPatternTree();
 
@@ -1036,7 +990,7 @@ namespace DEiXTo.Presenters
         /// </summary>
         /// <param name="node"></param>
         /// <param name="button"></param>
-        void DOMNodeClick(TreeNode node, MouseButtons button)
+        public void DOMNodeClick(TreeNode node, MouseButtons button)
         {
             if (RightButtonPressed(button))
             {
@@ -1072,7 +1026,7 @@ namespace DEiXTo.Presenters
         /// POSTCONDITION: The ElementInfo TabPage is cleared.
         /// </summary>
         /// <param name="element">The HtmlElement the mouse is leaving from.</param>
-        void documentMouseLeave(HtmlElement element)
+        public void DocumentMouseLeave(HtmlElement element)
         {
             if (View.HighlightModeEnabled)
             {
@@ -1090,7 +1044,7 @@ namespace DEiXTo.Presenters
         /// DOM TreeNode is selected.
         /// </summary>
         /// <param name="element"></param>
-        void documentMouseOver(HtmlElement element)
+        public void DocumentMouseOver(HtmlElement element)
         {
             var node = _domTree.GetNodeFor(element);
 
@@ -1111,7 +1065,7 @@ namespace DEiXTo.Presenters
         /// 
         /// </summary>
         /// <param name="state"></param>
-        void crawlingChanged(bool state)
+        public void CrawlingChanged(bool state)
         {
             View.ApplyVisibilityStateInCrawling(state);
         }
@@ -1120,7 +1074,7 @@ namespace DEiXTo.Presenters
         /// 
         /// </summary>
         /// <param name="state"></param>
-        void autoFillChanged(bool state)
+        public void AutoFillChanged(bool state)
         {
             View.ApplyVisibilityStateInAutoFill(state);
         }
@@ -1133,11 +1087,11 @@ namespace DEiXTo.Presenters
         /// navigates to the specified URL.
         /// </summary>
         /// <param name="e">Information arguments from the KeyDown event.</param>
-        void keyDownPress(KeyEventArgs e)
+        public void KeyDownPress(KeyEventArgs e)
         {
             if (EnterPressed(e))
             {
-                browseToUrl();
+                BrowseToUrl();
                 return;
             }
 
@@ -1166,7 +1120,7 @@ namespace DEiXTo.Presenters
         /// POSTCONDITIONS: All the TreeViews and TargetURLs are cleared and the WebBrowser is
         /// navigated to the HTML document.
         /// </summary>
-        void browseToUrl()
+        public void BrowseToUrl()
         {
             var url = View.Url;
 
@@ -1203,7 +1157,7 @@ namespace DEiXTo.Presenters
         /// POSTCONDITIONS: The document's URL is inserted to the TargetURLs list. Clears
         /// all the TreeViews.
         /// </summary>
-        void browserCompleted()
+        public void BrowserCompleted()
         {
             _styling.Clear();
             View.ClearSnapshotTree();

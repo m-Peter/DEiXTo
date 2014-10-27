@@ -9,59 +9,6 @@ namespace DEiXTo.Views
 {
     public partial class DeixtoAgentWindow : Form, IDeixtoAgentView
     {
-        #region Public Events
-        // Fires when the user clicks the Browse button
-        public event Action BrowseToUrl;
-        // Fires when the user enters a keyboard key
-        public event Action<KeyEventArgs> KeyDownPress;
-        // Fires when the user checks the Auto Fill Check Box
-        public event Action<Boolean> AutoFillChanged;
-        // Fires when the user checks the Crawling Check Box
-        public event Action<Boolean> CrawlingChanged;
-        // Fires when the Document specified by the URL has completed downloading
-        public event Action BrowserCompleted;
-        // Fires when the user's mouse passes over an element in WebBrowser's Document
-        public event Action<HtmlElement> DocumentMouseOver;
-        // Fires when the user's mouse leaves an element of WebBrowser's Document
-        public event Action<HtmlElement> DocumentMouseLeave;
-        // Fires when the user clicks a Node of the DOM Tree
-        public event Action<TreeNode, MouseButtons> DOMNodeClick;
-        public event Action<TreeNode> CreateWorkingPattern;
-        public event Action<TreeNode> CreateAuxiliaryPattern;
-        public event Action<TreeNode, MouseButtons> WorkingPatternNodeClick;
-        public event Action<HtmlElement> CreateWorkingPatternFromDocument;
-        public event Action<HtmlElement> CreateAuxiliaryPatternFromDocument;
-        public event HtmlElementEventHandler ShowBrowserContextMenu;
-        public event Action<TreeNode> AuxiliaryPatternNodeClick;
-        public event Action SimplifyDOMTree;
-        public event Action<TreeNode> CreateSnapshot;
-        public event Action<TreeNode> MakeWorkingPatternFromSnapshot;
-        public event Action<TreeNode> DeleteSnapshot;
-        public event Action<int> ClearTreeViews;
-        public event Action RebuildDOM;
-        public event Action ExecuteRule;
-        public event Action<TreeNode> LevelUpWorkingPattern;
-        public event Action<TreeNode> LevelDownWorkingPattern;
-        public event Action<TreeNode, NodeState> NodeStateChanged;
-        public event Action<bool, TreeNode> OutputResultSelected;
-        public event Action<TreeNode> AddNewLabel;
-        public event Action<TreeNode> AddRegex;
-        public event Action<TreeNode> RemoveLabel;
-        public event Action<TreeNode> RemoveRegex;
-        public event Action<TreeNode> DeleteNode;
-        public event Action<FormClosingEventArgs> WindowClosing;
-        public event Action AddURLToTargetURLs;
-        public event Action RemoveURLFromTargetURLs;
-        public event Action<String> TargetURLSelected;
-        public event Action SaveExtractionPattern;
-        public event Action LoadExtractionPattern;
-        public event Action<TreeNode> AddPreviousSibling;
-        public event Action<TreeNode> AddNextSibling;
-        public event Action<TreeNode> AddSiblingOrder;
-        public event Action SaveToDisk;
-        public event Action TunePattern;
-        public event Action LoadURLsFromFile;
-        #endregion
 
         #region Instance Variables
         private HtmlElement _currentElement;
@@ -982,28 +929,19 @@ namespace DEiXTo.Views
         #region Private Events
         private void BrowseToURLButton_Click(object sender, EventArgs e)
         {
-            if (BrowseToUrl != null)
-            {
-                BrowseToUrl();
-            }
+            Presenter.BrowseToUrl();
         }
 
         private void AutoFillCheckBox_CheckedChanged(object sender, EventArgs e)
         {
             var state = AutoFillCheckBox.Checked;
-            if (AutoFillChanged != null)
-            {
-                AutoFillChanged(state);
-            }
+            Presenter.AutoFillChanged(state);
         }
 
         private void CrawlingCheckBox_CheckedChanged(object sender, EventArgs e)
         {
             var state = CrawlingCheckBox.Checked;
-            if (CrawlingChanged != null)
-            {
-                CrawlingChanged(state);
-            }
+            Presenter.CrawlingChanged(state);
         }
 
         private void DeixtoAgentWindow_ClientSizeChanged(object sender, EventArgs e)
@@ -1014,317 +952,211 @@ namespace DEiXTo.Views
 
         private void WebBrowser_DocumentCompleted(object sender, WebBrowserDocumentCompletedEventArgs e)
         {
-            if (BrowserCompleted != null && e.Url.Equals(WebBrowser.Url))
+            if (e.Url.Equals(WebBrowser.Url))
             {
-                BrowserCompleted();
+                Presenter.BrowserCompleted();
             }
         }
 
         void Document_ContextMenuShowing(object sender, HtmlElementEventArgs e)
         {
-            if (ShowBrowserContextMenu != null)
-            {
-                ShowBrowserContextMenu(sender, e);
-            }
+            Presenter.ShowBrowserContextMenu(sender, e);
         }
 
         void Document_MouseLeave(object sender, HtmlElementEventArgs e)
         {
-            if (DocumentMouseLeave != null)
-            {
-                DocumentMouseLeave(e.FromElement);
-            }
+            Presenter.DocumentMouseLeave(e.FromElement);
         }
 
         void Document_MouseOver(object sender, HtmlElementEventArgs e)
         {
-            if (DocumentMouseOver != null)
-            {
-                DocumentMouseOver(e.ToElement);
-            }
+            Presenter.DocumentMouseOver(e.ToElement);
         }
 
         void DeixtoAgentWindow_KeyDown(object sender, KeyEventArgs e)
         {
-            if (KeyDownPress != null)
-            {
-                KeyDownPress(e);
-            }
+            Presenter.KeyDownPress(e);
         }
 
         private void HtmlTreeView_NodeMouseClick(object sender, TreeNodeMouseClickEventArgs e)
         {
-            if (DOMNodeClick != null)
-            {
-                DOMNodeClick(e.Node, e.Button);
-            }
+            Presenter.DOMNodeClick(e.Node, e.Button);
         }
 
         private void WorkingPatternMenuItem_Click(object sender, EventArgs e)
         {
-            if (CreateWorkingPattern != null)
-            {
-                var node = HtmlTreeView.SelectedNode;
-                CreateWorkingPattern(node);
-            }
+            var node = HtmlTreeView.SelectedNode;
+            Presenter.CreateWorkingPattern(node);
         }
 
         private void AuxiliaryPatternMenuItem_Click(object sender, EventArgs e)
         {
-            if (CreateAuxiliaryPattern != null)
-            {
-                var node = HtmlTreeView.SelectedNode;
-                CreateAuxiliaryPattern(node);
-            }
+            var node = HtmlTreeView.SelectedNode;
+            Presenter.CreateAuxiliaryPattern(node);
         }
 
         private void WorkingPatternTreeView_NodeMouseClick(object sender, TreeNodeMouseClickEventArgs e)
         {
-            if (WorkingPatternNodeClick != null)
-            {
-                WorkingPatternNodeClick(e.Node, e.Button);
-            }
+            Presenter.WorkingPatternNodeClick(e.Node, e.Button);
         }
 
         private void UseAsWorkingPatternMenuItem_Click(object sender, EventArgs e)
         {
-            if (CreateWorkingPatternFromDocument != null)
-            {
-                CreateWorkingPatternFromDocument(CurrentElement);
-            }
+            Presenter.CreateWorkingPatternFromDocument(CurrentElement);
         }
 
         private void UseAsAuxiliaryPatternMenuItem_Click(object sender, EventArgs e)
         {
-            if (CreateAuxiliaryPatternFromDocument != null)
-            {
-                CreateAuxiliaryPatternFromDocument(CurrentElement);
-            }
+            Presenter.CreateAuxiliaryPatternFromDocument(CurrentElement);
         }
 
         private void AuxiliaryTreeView_NodeMouseClick(object sender, TreeNodeMouseClickEventArgs e)
         {
-            if (AuxiliaryPatternNodeClick != null)
-            {
-                AuxiliaryPatternNodeClick(e.Node);
-            }
+            Presenter.AuxiliaryPatternNodeClick(e.Node);
         }
 
         private void SimplifyDOMButton_Click(object sender, EventArgs e)
         {
-            if (SimplifyDOMTree != null)
-            {
-                SimplifyDOMTree();
-            }
+            Presenter.SimplifyDOMTree();
         }
 
         private void CreateSnapshotButton_Click(object sender, EventArgs e)
         {
-            if (CreateSnapshot != null)
-            {
-                var node = WorkingPatternTreeView.Nodes[0];
-                CreateSnapshot(node);
-            }
+            var node = WorkingPatternTreeView.Nodes[0];
+            Presenter.CreateSnapshot(node);
         }
 
         private void MakeItWorkingPatternToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            if (MakeWorkingPatternFromSnapshot != null)
-            {
-                var node = SnapshotsTreeView.SelectedNode.FirstNode;
-                MakeWorkingPatternFromSnapshot(node);
-            }
+            var node = SnapshotsTreeView.SelectedNode.FirstNode;
+            Presenter.MakeWorkingPatternFromSnapshot(node);
         }
 
         private void DeleteSnapshotToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            if (DeleteSnapshot != null)
-            {
-                var node = SnapshotsTreeView.SelectedNode;
-                DeleteSnapshot(node);
-            }
+            var node = SnapshotsTreeView.SelectedNode;
+            Presenter.DeleteSnapshot(node);
         }
 
         private void ClearTreeViewsButton_Click(object sender, EventArgs e)
         {
-            if (ClearTreeViews != null)
-            {
-                int count = WorkingPatternTreeView.Nodes.Count + AuxiliaryTreeView.Nodes.Count + SnapshotsTreeView.Nodes.Count;
-                ClearTreeViews(count);
-            }
+            int count = WorkingPatternTreeView.Nodes.Count + AuxiliaryTreeView.Nodes.Count + SnapshotsTreeView.Nodes.Count;
+            Presenter.ClearTreeViews(count);
         }
 
         private void RebuildDOMButton_Click(object sender, EventArgs e)
         {
-            if (RebuildDOM != null)
-            {
-                RebuildDOM();
-            }
+            Presenter.RebuildDOM();
         }
 
         private void ExecuteButton_Click(object sender, EventArgs e)
         {
-            if (ExecuteRule != null)
-            {
-                ExecuteRule();
-            }
+            Presenter.ExecuteRule();
         }
 
         private void LevelUpButton_Click(object sender, EventArgs e)
         {
-            if (LevelUpWorkingPattern != null)
-            {
-                var node = WorkingPatternTreeView.Nodes[0];
-                LevelUpWorkingPattern(node);
-            }
+            var node = WorkingPatternTreeView.Nodes[0];
+            Presenter.LevelUpWorkingPattern(node);
         }
 
         private void LevelDownButton_Click(object sender, EventArgs e)
         {
-            if (LevelDownWorkingPattern != null)
-            {
-                var node = WorkingPatternTreeView.Nodes[0];
-                LevelDownWorkingPattern(node);
-            }
+            var node = WorkingPatternTreeView.Nodes[0];
+            Presenter.LevelDownWorkingPattern(node);
         }
 
         private void matchAndExtractContentToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            if (NodeStateChanged != null)
-            {
-                var node = WorkingPatternTreeView.SelectedNode;
-                NodeStateChanged(node, NodeState.Checked);
-            }
+            var node = WorkingPatternTreeView.SelectedNode;
+            Presenter.NodeStateChanged(node, NodeState.Checked);
         }
 
         private void matchAndExtractSourceToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            if (NodeStateChanged != null)
-            {
-                var node = WorkingPatternTreeView.SelectedNode;
-                NodeStateChanged(node, NodeState.CheckedSource);
-            }
+            var node = WorkingPatternTreeView.SelectedNode;
+            Presenter.NodeStateChanged(node, NodeState.CheckedSource);
         }
 
         private void matchNodeToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            if (NodeStateChanged != null)
-            {
-                var node = WorkingPatternTreeView.SelectedNode;
-                NodeStateChanged(node, NodeState.Grayed);
-            }
+            var node = WorkingPatternTreeView.SelectedNode;
+            Presenter.NodeStateChanged(node, NodeState.Grayed);
         }
 
         private void dontCareAboutThisNodeToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            if (NodeStateChanged != null)
-            {
-                var node = WorkingPatternTreeView.SelectedNode;
-                NodeStateChanged(node, NodeState.Unchecked);
-            }
+            var node = WorkingPatternTreeView.SelectedNode;
+            Presenter.NodeStateChanged(node, NodeState.Unchecked);
         }
 
         private void matchNodeOPTIONALToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            if (NodeStateChanged != null)
-            {
-                var node = WorkingPatternTreeView.SelectedNode;
-                NodeStateChanged(node, NodeState.GrayedImplied);
-            }
+            var node = WorkingPatternTreeView.SelectedNode;
+            Presenter.NodeStateChanged(node, NodeState.GrayedImplied);
         }
 
         private void matchAndExtractOPTIONALToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            if (NodeStateChanged != null)
-            {
-                var node = WorkingPatternTreeView.SelectedNode;
-                NodeStateChanged(node, NodeState.CheckedImplied);
-            }
+            var node = WorkingPatternTreeView.SelectedNode;
+            Presenter.NodeStateChanged(node, NodeState.CheckedImplied);
         }
 
         private void OutputListView_ItemSelectionChanged(object sender, ListViewItemSelectionChangedEventArgs e)
         {
-            if (OutputResultSelected != null)
-            {
-                var node = e.Item.Tag as TreeNode;
-                bool selected = e.IsSelected;
-                OutputResultSelected(selected, node);
-            }
+            var node = e.Item.Tag as TreeNode;
+            bool selected = e.IsSelected;
+            Presenter.OutputResultSelected(selected, node);
         }
 
         private void NewLabelMenuItem_Click(object sender, EventArgs e)
         {
-            if (AddNewLabel != null)
-            {
-                var node = WorkingPatternTreeView.SelectedNode;
-                AddNewLabel(node);
-            }
+            var node = WorkingPatternTreeView.SelectedNode;
+            Presenter.AddNewLabel(node);
         }
 
         private void AddRegexMenuItem_Click(object sender, EventArgs e)
         {
-            if (AddRegex != null)
-            {
-                var node = WorkingPatternTreeView.SelectedNode;
-                AddRegex(node);
-            }
+            var node = WorkingPatternTreeView.SelectedNode;
+            Presenter.AddRegex(node);
         }
 
         private void DeixtoAgentWindow_FormClosing(object sender, FormClosingEventArgs e)
         {
-            if (WindowClosing != null)
-            {
-                WindowClosing(e);
-            }
+            Presenter.windowClosing(e);
         }
 
         private void RemoveLabelMenuItem_Click(object sender, EventArgs e)
         {
-            if (RemoveLabel != null)
-            {
-                var node = WorkingPatternTreeView.SelectedNode;
-                RemoveLabel(node);
-            }
+            var node = WorkingPatternTreeView.SelectedNode;
+            Presenter.RemoveLabel(node);
         }
 
         private void RemoveRegExMenuItem_Click(object sender, EventArgs e)
         {
-            if (RemoveRegex != null)
-            {
-                var node = WorkingPatternTreeView.SelectedNode;
-                RemoveRegex(node);
-            }
+            var node = WorkingPatternTreeView.SelectedNode;
+            Presenter.RemoveRegex(node);
         }
 
         private void AddURLButton_Click(object sender, EventArgs e)
         {
-            if (AddURLToTargetURLs != null)
-            {
-                AddURLToTargetURLs();
-            }
+            Presenter.AddURLToTargetURLs();
         }
 
         private void RemoveURLButton_Click(object sender, EventArgs e)
         {
-            if (RemoveURLFromTargetURLs != null)
-            {
-                RemoveURLFromTargetURLs();
-            }
+            Presenter.RemoveURLFromTargetURLs();
         }
 
         private void TargetURLsListBox_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if (TargetURLSelected != null)
+            if (TargetURLsListBox.SelectedItem == null)
             {
-                if (TargetURLsListBox.SelectedItem == null)
-                {
-                    return;
-                }
-
-                string selectedURL = TargetURLsListBox.SelectedItem.ToString();
-
-                TargetURLSelected(selectedURL);
+                return;
             }
+
+            string selectedURL = TargetURLsListBox.SelectedItem.ToString();
+            Presenter.TargetURLSelected(selectedURL);
         }
 
         private void RSSListView_ItemSelectionChanged(object sender, ListViewItemSelectionChangedEventArgs e)
@@ -1341,62 +1173,41 @@ namespace DEiXTo.Views
 
         private void SavePatternButton_Click(object sender, EventArgs e)
         {
-            if (SaveExtractionPattern != null)
-            {
-                SaveExtractionPattern();
-            }
+            Presenter.SaveExtractionPattern();
         }
 
         private void LoadPatternButton_Click(object sender, EventArgs e)
         {
-            if (LoadExtractionPattern != null)
-            {
-                LoadExtractionPattern();
-            }
+            Presenter.LoadExtractionPattern();
         }
 
         private void DeleteNodeMenuItem_Click(object sender, EventArgs e)
         {
-            if (DeleteNode != null)
-            {
-                var node = WorkingPatternTreeView.SelectedNode;
-                DeleteNode(node);
-            }
+            var node = WorkingPatternTreeView.SelectedNode;
+            Presenter.DeleteNode(node);
         }
 
         private void AddPreviousSiblingMenuItem_Click(object sender, EventArgs e)
         {
-            if (AddPreviousSibling != null)
-            {
-                var node = WorkingPatternTreeView.SelectedNode;
-                AddPreviousSibling(node);
-            }
+            var node = WorkingPatternTreeView.SelectedNode;
+            Presenter.AddPreviousSibling(node);
         }
 
         private void AddNextSiblingMenuItem_Click(object sender, EventArgs e)
         {
-            if (AddNextSibling != null)
-            {
-                var node = WorkingPatternTreeView.SelectedNode;
-                AddNextSibling(node);
-            }
+            var node = WorkingPatternTreeView.SelectedNode;
+            Presenter.AddNextSibling(node);
         }
 
         private void EnterSiblingOrderMenuItem_Click(object sender, EventArgs e)
         {
-            if (AddSiblingOrder != null)
-            {
-                var node = WorkingPatternTreeView.SelectedNode;
-                AddSiblingOrder(node);
-            }
+            var node = WorkingPatternTreeView.SelectedNode;
+            Presenter.AddSiblingOrder(node);
         }
 
         private void SaveToDiskButton_Click(object sender, EventArgs e)
         {
-            if (SaveToDisk != null)
-            {
-                SaveToDisk();
-            }
+            Presenter.SaveToDisk();
         }
 
         private void SelectOutputFileButton_Click(object sender, EventArgs e)
@@ -1406,18 +1217,12 @@ namespace DEiXTo.Views
 
         private void TunePatternButton_Click(object sender, EventArgs e)
         {
-            if (TunePattern != null)
-            {
-                TunePattern();
-            }
+            Presenter.TunePattern();
         }
 
         private void BrowseURLsFileButton_Click(object sender, EventArgs e)
         {
-            if (LoadURLsFromFile != null)
-            {
-                LoadURLsFromFile();
-            }
+            Presenter.LoadURLsFromFile();
         }
         #endregion
     }
