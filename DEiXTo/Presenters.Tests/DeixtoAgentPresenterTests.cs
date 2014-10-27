@@ -25,9 +25,65 @@ namespace DEiXTo.Presenters.Tests
             _saveFileDialog = new Mock<ISaveFileDialog>();
             _presenter = new DeixtoAgentPresenter(_view.Object, _saveFileDialog.Object);
         }
+        
+        [TestMethod]
+        public void TestForTextOutputFormatDialogAddsTextFilterAndExtesion()
+        {
+            // Arrange
+            _view.Setup(v => v.OutputFileFormat).Returns(Format.Text);
+
+            // Act
+            _presenter.SelectOutputFile();
+
+            // Assert
+            _saveFileDialog.VerifySet(s => s.Filter = "Text Files (*.txt)|");
+            _saveFileDialog.VerifySet(s => s.Extension = "txt");
+        }
 
         [TestMethod]
-        public void TestMethod()
+        public void TestForXmlOutputFormatDialogAddsXmlFilterAndExtension()
+        {
+            // Arrange
+            _view.Setup(v => v.OutputFileFormat).Returns(Format.XML);
+
+            // Act
+            _presenter.SelectOutputFile();
+
+            // Assert
+            _saveFileDialog.VerifySet(s => s.Filter = "XML Files (*.xml)|");
+            _saveFileDialog.VerifySet(s => s.Extension = "xml");
+        }
+
+        [TestMethod]
+        public void TestForRssOutputFormatDialogAddsRssFilterAndExtesion()
+        {
+            // Arrange
+            _view.Setup(v => v.OutputFileFormat).Returns(Format.RSS);
+
+            // Act
+            _presenter.SelectOutputFile();
+            
+            // Assert
+            _saveFileDialog.VerifySet(s => s.Filter = "RSS Files (*.rss)|");
+            _saveFileDialog.VerifySet(s => s.Extension = "rss");
+        }
+
+        [TestMethod]
+        public void TestOutputFileSelectionAbortsForNegativeAnswer()
+        {
+            // Arrange
+            _view.Setup(v => v.OutputFileFormat).Returns(Format.XML);
+            _saveFileDialog.Setup(s => s.ShowDialog()).Returns(DialogResult.Abort);
+
+            // Act
+            _presenter.SelectOutputFile();
+            
+            // Assert
+            _view.VerifyGet(v => v.OutputFileName, Times.Never);
+        }
+
+        [TestMethod]
+        public void TestOutputFileNameIsSetAfterSelectingFile()
         {
             // Arrange
             _view.Setup(m => m.OutputFileFormat).Returns(Format.Text);
