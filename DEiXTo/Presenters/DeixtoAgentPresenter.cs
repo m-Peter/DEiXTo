@@ -38,14 +38,14 @@ namespace DEiXTo.Presenters
         public IDeixtoAgentView View { get; set; }
 
         #region Constructors
-        public DeixtoAgentPresenter(IDeixtoAgentView view, ISaveFileDialog saveFileDialog)
+        public DeixtoAgentPresenter(IDeixtoAgentView view, ISaveFileDialog saveFileDialog, IViewLoader loader)
         {
             View = view;
             View.Presenter = this;
             _styling = new ElementStyling();
             _builder = new TreeBuilder();
             _imageLoader = new StatesImageLoader();
-            _loader = new WindowsViewLoader();
+            _loader = loader;
             _saveFileDialog = saveFileDialog;
             _openFileDialog = new OpenFileDialogWrapper();
             _eventHub = EventHub.Instance;

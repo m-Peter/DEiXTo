@@ -16,6 +16,7 @@ namespace DEiXTo.Presenters.Tests
     {
         private Mock<IDeixtoAgentView> _view;
         private Mock<ISaveFileDialog> _saveFileDialog;
+        private Mock<IViewLoader> _loader;
         private DeixtoAgentPresenter _presenter;
 
         [TestInitialize]
@@ -23,7 +24,8 @@ namespace DEiXTo.Presenters.Tests
         {
             _view = new Mock<IDeixtoAgentView>();
             _saveFileDialog = new Mock<ISaveFileDialog>();
-            _presenter = new DeixtoAgentPresenter(_view.Object, _saveFileDialog.Object);
+            _loader = new Mock<IViewLoader>();
+            _presenter = new DeixtoAgentPresenter(_view.Object, _saveFileDialog.Object, _loader.Object);
         }
         
         [TestMethod]
@@ -97,6 +99,19 @@ namespace DEiXTo.Presenters.Tests
             _saveFileDialog.VerifySet(m => m.Filter = "Text Files (*.txt)|");
             _saveFileDialog.VerifySet(m => m.Extension = "txt");
             _view.VerifySet(m => m.OutputFileName = "output_file");
+        }
+
+        [TestMethod]
+        public void TestAddSiblingOrder()
+        {
+            // Arrange
+            var node = new TreeNode("DIV");
+
+            // Act
+            _presenter.AddSiblingOrder(node);
+
+            // Assert
+            _loader.Verify(l => l.LoadAddSiblingOrderView(It.Is<TreeNode>(n => n == node)));
         }
     }
 }
