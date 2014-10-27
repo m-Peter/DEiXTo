@@ -322,24 +322,9 @@ namespace DEiXTo.Presenters
         public void SelectOutputFile()
         {
             var format = View.OutputFileFormat;
-
-            if (format == Format.Text)
-            {
-                _saveFileDialog.Filter = "Text Files (*.txt)|";
-                _saveFileDialog.Extension = "txt";
-            }
-            
-            if (format == Format.XML)
-            {
-                _saveFileDialog.Filter = "XML Files (*.xml)|";
-                _saveFileDialog.Extension = "xml";
-            }
-            
-            if (format == Format.RSS)
-            {
-                _saveFileDialog.Filter = "RSS Files (*.rss)|";
-                _saveFileDialog.Extension = "rss";
-            }
+            var factory = new DialogBuilderFactory();
+            var builder = factory.CreateBuilder(format);
+            builder.Build(_saveFileDialog);
 
             var answer = _saveFileDialog.ShowDialog();
 

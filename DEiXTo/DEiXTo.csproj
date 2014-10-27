@@ -71,12 +71,14 @@
     <Compile Include="Services.Tests\DocumentValidatorFactoryTests.cs" />
     <Compile Include="Services.Tests\PatternExtractionTests.cs" />
     <Compile Include="Services\ContentExtractionFactory.cs" />
+    <Compile Include="Services\DialogBuilderFactory.cs" />
     <Compile Include="Services\DocumentQuery.cs" />
     <Compile Include="Services\DocumentValidatorFactory.cs" />
     <Compile Include="Services\EventHub.cs" />
     <Compile Include="Services\ExtractedRecordsWriter.cs" />
     <Compile Include="Services\FormContentExtractor.cs" />
     <Compile Include="Services\GenericContentExtractor.cs" />
+    <Compile Include="Services\IDialogBuilder.cs" />
     <Compile Include="Services\IEventHub.cs" />
     <Compile Include="Services\ImageContentExtractor.cs" />
     <Compile Include="Services\InputContentExtractor.cs" />
@@ -89,9 +91,11 @@
     <Compile Include="Services\ReadTargetUrls.cs" />
     <Compile Include="Services\RecordsWriterFactory.cs" />
     <Compile Include="Services\RegexAdded.cs" />
+    <Compile Include="Services\RssDialogBuilder.cs" />
     <Compile Include="Services\SaveFileDialogWrapper.cs" />
     <Compile Include="Services\StateToImageMapper.cs" />
     <Compile Include="Services\TagContentExtractor.cs" />
+    <Compile Include="Services\TextDialogBuilder.cs" />
     <Compile Include="Services\TreeBuilder.cs" />
     <Compile Include="Services\ElementStyling.cs" />
     <Compile Include="Services\IDocumentValidator.cs" />
@@ -104,6 +108,7 @@
     <Compile Include="Services\WindowsViewLoader.cs" />
     <Compile Include="Services\TextRecordsWriter.cs" />
     <Compile Include="Services\WriteExtractionPattern.cs" />
+    <Compile Include="Services\XmlDialogBuilder.cs" />
     <Compile Include="Services\XmlRecordsWriter.cs" />
     <Compile Include="Views\AddLabelWindow.cs">
       <SubType>Form</SubType>
