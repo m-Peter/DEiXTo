@@ -25,7 +25,7 @@ namespace DEiXTo.Presenters
         private StatesImageLoader _imageLoader;
         private DOMTreeStructure _domTree;
         private IViewLoader _loader;
-        private EventHub _eventHub;
+        private IEventHub _eventHub;
         private ISaveFileDialog _saveFileDialog;
         private IOpenFileDialog _openFileDialog;
         private PatternExtraction _executor;
@@ -38,7 +38,7 @@ namespace DEiXTo.Presenters
         public IDeixtoAgentView View { get; set; }
 
         #region Constructors
-        public DeixtoAgentPresenter(IDeixtoAgentView view, ISaveFileDialog saveFileDialog, IViewLoader loader)
+        public DeixtoAgentPresenter(IDeixtoAgentView view, ISaveFileDialog saveFileDialog, IViewLoader loader, IEventHub eventHub)
         {
             View = view;
             View.Presenter = this;
@@ -48,7 +48,7 @@ namespace DEiXTo.Presenters
             _loader = loader;
             _saveFileDialog = saveFileDialog;
             _openFileDialog = new OpenFileDialogWrapper();
-            _eventHub = EventHub.Instance;
+            _eventHub = eventHub;
 
             _eventHub.Subscribe<RegexAdded>(this);
 
@@ -254,6 +254,7 @@ namespace DEiXTo.Presenters
         /// </summary>
         public void LoadURLsFromFile()
         {
+            // TODO REMOVE DEPENDENCIES
             _openFileDialog.Filter = "Text Files (*.txt)|";
             var answer = _openFileDialog.ShowDialog();
 
@@ -302,6 +303,7 @@ namespace DEiXTo.Presenters
         /// </summary>
         void DeixtoAgentPresenter_DomBuilted()
         {
+            // TODO REMOVE DEPENDENCIES
             // Grab the Extraction Pattern
             var pattern = View.GetExtractionPattern();
 
@@ -342,6 +344,7 @@ namespace DEiXTo.Presenters
         /// </summary>
         public void SaveToDisk()
         {
+            // TODO REMOVE DEPENDENCIES
             _saveFileDialog.Filter = "Text Files (*.txt)|";
             _saveFileDialog.Extension = "txt";
             var answer = _saveFileDialog.ShowDialog();
@@ -372,6 +375,7 @@ namespace DEiXTo.Presenters
         /// <param name="node"></param>
         public void AddNextSibling(TreeNode node)
         {
+            // TODO REMOVE DEPENDENCIES
             var parent = node.Parent;
             int index = node.SourceIndex();
             var tmpElem = _document.GetElementByIndex(index);
@@ -393,6 +397,7 @@ namespace DEiXTo.Presenters
         /// <param name="node"></param>
         public void AddPreviousSibling(TreeNode node)
         {
+            // TODO REMOVE DEPENDENCIES
             var parent = node.Parent;
             int index = node.SourceIndex();
             var tmpElem = _document.GetElementByIndex(index);
@@ -421,6 +426,7 @@ namespace DEiXTo.Presenters
         /// </summary>
         public void LoadExtractionPattern()
         {
+            // TODO REMOVE DEPENDENCIES
             _openFileDialog.Filter = "XML Files (*.xml)|";
             var answer = _openFileDialog.ShowDialog();
 
@@ -443,6 +449,7 @@ namespace DEiXTo.Presenters
         /// </summary>
         public void SaveExtractionPattern()
         {
+            // TODO REMOVE DEPENDENCIES
             _saveFileDialog.Filter = "XML Files (*.xml)|";
             _saveFileDialog.Extension = "xml";
             var answer = _saveFileDialog.ShowDialog();
@@ -519,7 +526,7 @@ namespace DEiXTo.Presenters
         public void RemoveRegex(TreeNode node)
         {
             var font = node.NodeFont;
-            node.NodeFont = new System.Drawing.Font(font, FontStyle.Regular);
+            node.NodeFont = new Font(font, FontStyle.Regular);
             node.SetRegex(null);
         }
 
@@ -539,7 +546,7 @@ namespace DEiXTo.Presenters
         /// 
         /// </summary>
         /// <param name="e"></param>
-        public void windowClosing(FormClosingEventArgs e)
+        public void windowClosing()
         {
             _eventHub.Publish(new EventArgs());
         }
@@ -569,6 +576,7 @@ namespace DEiXTo.Presenters
         /// <param name="node"></param>
         public void OutputResultSelected(bool selected, TreeNode node)
         {
+            // TODO REMOVE DEPENDENCIEs
             if (!selected)
             {
                 return;
@@ -636,6 +644,7 @@ namespace DEiXTo.Presenters
         /// <param name="node"></param>
         public void LevelUpWorkingPattern(TreeNode node)
         {
+            // TODO REMOVE DEPENDENCIES
             int indx = node.SourceIndex();
             var tmpElem = _document.GetElementByIndex(indx);
             var tmpNode = _domTree.GetNodeFor(tmpElem);
@@ -797,6 +806,7 @@ namespace DEiXTo.Presenters
         /// </summary>
         public void SimplifyDOMTree()
         {
+            // TODO REMOVE DEPENDENCIES
             var ignoredTags = View.IgnoredTags();
 
             if (ignoredTags.Count() == 0)
@@ -824,6 +834,7 @@ namespace DEiXTo.Presenters
         /// <param name="node"></param>
         public void AuxiliaryPatternNodeClick(TreeNode node)
         {
+            // TODO REMOVE DEPENDENCIES
             if (node.IsTextNode())
             {
                 View.FillTextNodeElementInfo(node);
@@ -851,6 +862,7 @@ namespace DEiXTo.Presenters
         /// <param name="element"></param>
         public void CreateAuxiliaryPatternFromDocument(HtmlElement element)
         {
+            // TODO REMOVE DEPENDENCIES
             View.FocusAuxiliaryTabPage();
             View.ClearAuxiliaryTree();
 
@@ -868,6 +880,7 @@ namespace DEiXTo.Presenters
         /// <param name="e"></param>
         public void ShowBrowserContextMenu(object sender, HtmlElementEventArgs e)
         {
+            // TODO REMOVE DEPENDENCIES
             // specify that the event was handled
             e.ReturnValue = e.CtrlKeyPressed;
 
@@ -886,6 +899,7 @@ namespace DEiXTo.Presenters
         /// <param name="element"></param>
         public void CreateWorkingPatternFromDocument(HtmlElement element)
         {
+            // TODO REMOVE DEPENDENCIES
             View.ClearPatternTree();
 
             var node = _domTree.GetNodeFor(element);
@@ -905,6 +919,7 @@ namespace DEiXTo.Presenters
         /// <param name="button"></param>
         public void WorkingPatternNodeClick(TreeNode node, MouseButtons button)
         {
+            // TODO REMOVE DEPENDENCIES
             if (RightButtonPressed(button))
             {
                 View.SetAdjustContextMenuFor(node);
@@ -940,6 +955,7 @@ namespace DEiXTo.Presenters
         /// <param name="node"></param>
         public void CreateAuxiliaryPattern(TreeNode node)
         {
+            // TODO REMOVE DEPENDENCIES
             View.FocusAuxiliaryTabPage();
             View.ClearAuxiliaryTree();
 
@@ -957,6 +973,7 @@ namespace DEiXTo.Presenters
         /// <param name="node"></param>
         public void CreateWorkingPattern(TreeNode node)
         {
+            // TODO REMOVE DEPENDENCIES
             View.ClearPatternTree();
 
             int index = node.SourceIndex();
@@ -977,6 +994,7 @@ namespace DEiXTo.Presenters
         /// <param name="button"></param>
         public void DOMNodeClick(TreeNode node, MouseButtons button)
         {
+            // TODO REMOVE DEPENDENCIES
             if (RightButtonPressed(button))
             {
                 View.SetContextMenuFor(node);
@@ -1013,6 +1031,7 @@ namespace DEiXTo.Presenters
         /// <param name="element">The HtmlElement the mouse is leaving from.</param>
         public void DocumentMouseLeave(HtmlElement element)
         {
+            // TODO REMOVE DEPENDENCIES
             if (View.HighlightModeEnabled)
             {
                 _styling.Unstyle(element);
@@ -1031,6 +1050,7 @@ namespace DEiXTo.Presenters
         /// <param name="element"></param>
         public void DocumentMouseOver(HtmlElement element)
         {
+            // TODO REMOVE DEPENDENCIES
             var node = _domTree.GetNodeFor(element);
 
             if (node == null || !View.HighlightModeEnabled)

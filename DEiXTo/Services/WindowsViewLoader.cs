@@ -31,7 +31,7 @@ namespace DEiXTo.Services
         {
             DeixtoAgentWindow window = new DeixtoAgentWindow();
             ISaveFileDialog saveFileDialog = new SaveFileDialogWrapper();
-            DeixtoAgentPresenter presenter = new DeixtoAgentPresenter(window, saveFileDialog, this);
+            DeixtoAgentPresenter presenter = new DeixtoAgentPresenter(window, saveFileDialog, this, EventHub.Instance);
             
             window.Text = title;
             window.MdiParent = (Form)parent;

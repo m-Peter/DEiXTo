@@ -1123,7 +1123,7 @@ namespace DEiXTo.Views
 
         private void DeixtoAgentWindow_FormClosing(object sender, FormClosingEventArgs e)
         {
-            Presenter.windowClosing(e);
+            Presenter.windowClosing();
         }
 
         private void RemoveLabelMenuItem_Click(object sender, EventArgs e)

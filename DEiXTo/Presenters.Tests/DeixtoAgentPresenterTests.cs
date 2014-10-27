@@ -8,6 +8,8 @@ using Moq;
 using DEiXTo.Views;
 using DEiXTo.Services;
 using System.Windows.Forms;
+using DEiXTo.Models;
+using System.Drawing;
 
 namespace DEiXTo.Presenters.Tests
 {
@@ -17,6 +19,7 @@ namespace DEiXTo.Presenters.Tests
         private Mock<IDeixtoAgentView> _view;
         private Mock<ISaveFileDialog> _saveFileDialog;
         private Mock<IViewLoader> _loader;
+        private Mock<IEventHub> _eventHub;
         private DeixtoAgentPresenter _presenter;
 
         [TestInitialize]
@@ -25,7 +28,8 @@ namespace DEiXTo.Presenters.Tests
             _view = new Mock<IDeixtoAgentView>();
             _saveFileDialog = new Mock<ISaveFileDialog>();
             _loader = new Mock<IViewLoader>();
-            _presenter = new DeixtoAgentPresenter(_view.Object, _saveFileDialog.Object, _loader.Object);
+            _eventHub = new Mock<IEventHub>();
+            _presenter = new DeixtoAgentPresenter(_view.Object, _saveFileDialog.Object, _loader.Object, _eventHub.Object);
         }
         
         [TestMethod]
@@ -112,6 +116,408 @@ namespace DEiXTo.Presenters.Tests
 
             // Assert
             _loader.Verify(l => l.LoadAddSiblingOrderView(It.Is<TreeNode>(n => n == node)));
+        }
+
+        [TestMethod]
+        public void TestDeleteNodeFromWorkingPattern()
+        {
+            // Arrange
+            var node = new TreeNode("DIV");
+
+            // Act
+            _presenter.DeleteNode(node);
+
+            // Assert
+            _view.Verify(v => v.DeletePatternNode(It.Is<TreeNode>(n => n == node)));
+        }
+
+        [TestMethod]
+        public void TestUrlInputIsFilledUponTargetUrlSelection()
+        {
+            // Arrange
+            string url = "http://www.google.gr";
+
+            // Act
+            _presenter.TargetURLSelected(url);
+
+            // Assert
+            _view.Verify(v => v.SetURLInput(It.Is<string>(s => s == url)));
+        }
+
+        [TestMethod]
+        public void TestRemoveUrlFromTargetUrls()
+        {
+            // Arrange
+            string url = "http://www.google.gr";
+            _view.Setup(v => v.TargetURLToAdd()).Returns(url);
+            _view.Setup(v => v.AskUserToRemoveURL()).Returns(true);
+
+            // Act
+            _presenter.RemoveURLFromTargetURLs();
+
+            // Assert
+            _view.Verify(v => v.RemoveTargetURL(It.Is<string>(s => s == url)));
+            _view.Verify(v => v.ClearAddURLInput());
+        }
+
+        [TestMethod]
+        public void TestRemovingEmptyUrlFromTargetUrlsShowsWarningMessage()
+        {
+            // Arrange
+            string url = "";
+            _view.Setup(v => v.TargetURLToAdd()).Returns(url);
+
+            // Act
+            _presenter.RemoveURLFromTargetURLs();
+
+            // Assert
+            _view.Verify(v => v.ShowSelectURLMessage());
+        }
+
+        [TestMethod]
+        public void TestUrlDeletionIsAbortedIfUserDoesNotConfirm()
+        {
+            // Arrange
+            string url = "http://www.google.gr";
+            _view.Setup(v => v.TargetURLToAdd()).Returns(url);
+            _view.Setup(v => v.AskUserToRemoveURL()).Returns(false);
+
+            // Act
+            _presenter.RemoveURLFromTargetURLs();
+
+            // Assert
+            _view.Verify(v => v.RemoveTargetURL(url), Times.Never);
+        }
+
+        [TestMethod]
+        public void TestAddUrlToTargetUrls()
+        {
+            // Arrange
+            string url = "http://www.google.gr";
+            _view.Setup(v => v.TargetURLToAdd()).Returns(url);
+
+            // Act
+            _presenter.AddURLToTargetURLs();
+
+            // Assert
+            _view.Verify(v => v.AppendTargetUrl(It.Is<string>(s => s == url)));
+            _view.Verify(v => v.ClearAddURLInput());
+        }
+
+        [TestMethod]
+        public void TestEmptyUrlIsNotAddedToTargetUrls()
+        {
+            // Arrange
+            string url = "";
+            _view.Setup(v => v.TargetURLToAdd()).Returns(url);
+
+            // Act
+            _presenter.AddURLToTargetURLs();
+
+            // Assert
+            _view.Verify(v => v.ShowEnterURLToAddMessage());
+        }
+
+        [TestMethod]
+        public void TestRemoveRegexFromNode()
+        {
+            // Arrange
+            TreeNode node = new TreeNode("DIV");
+            node.NodeFont = new Font(FontFamily.GenericSerif, 8.25f, FontStyle.Bold);
+            NodeInfo nInfo = new NodeInfo();
+            nInfo.Regex = "/[a-z]{3}/";
+            node.Tag = nInfo;
+
+            // Act
+            _presenter.RemoveRegex(node);
+
+            // Assert
+            Assert.IsNull(node.GetRegex());
+            var font = node.NodeFont;
+            Assert.AreEqual(FontStyle.Regular, font.Style);
+        }
+
+        [TestMethod]
+        public void TestRemoveLabelFromNode()
+        {
+            // Arrange
+            TreeNode node = new TreeNode("DIV:CONTAINER");
+            NodeInfo nInfo = new NodeInfo();
+            nInfo.Label = "CONTAINER";
+            node.Tag = nInfo;
+
+            // Act
+            _presenter.RemoveLabel(node);
+
+            // Assert
+            Assert.IsNull(node.GetLabel());
+            Assert.AreEqual("DIV", node.Text);
+        }
+
+        [TestMethod]
+        public void TestAddRegexToNode()
+        {
+            // Arrange
+            TreeNode node = new TreeNode("DIV");
+
+            // Act
+            _presenter.AddRegex(node);
+
+            // Assert
+            _loader.Verify(l => l.LoadRegexBuilderView(It.Is<TreeNode>(n => n == node)));
+        }
+
+        [TestMethod]
+        public void TestAddLabelToNode()
+        {
+            // Arrange
+            TreeNode node = new TreeNode("DIV");
+
+            // Act
+            _presenter.AddNewLabel(node);
+
+            // Assert
+            _loader.Verify(l => l.LoadAddLabelView(It.Is<TreeNode>(n => n == node)));
+        }
+
+        [TestMethod]
+        public void TestWindowClosingPublishesEvent()
+        {
+            // Act
+            _presenter.windowClosing();
+            
+            // Assert
+            _eventHub.Verify(e => e.Publish(It.IsAny<EventArgs>()));
+        }
+
+        [TestMethod]
+        public void TestNodeStateChanges()
+        {
+            // Arrange
+            TreeNode node = new TreeNode("DIV");
+            NodeInfo nInfo = new NodeInfo();
+            node.Tag = nInfo;
+
+            // Act
+            _presenter.NodeStateChanged(node, NodeState.Grayed);
+
+            // Assert
+            _view.Verify(v => v.ApplyStateToNode(node, 3));
+            Assert.AreEqual(NodeState.Grayed, node.GetState());
+        }
+
+        [TestMethod]
+        public void TestNodeStateChangesToUnchecked()
+        {
+            // Arrange
+            TreeNode node = new TreeNode("DIV");
+            TreeNode n1 = new TreeNode("H1");
+            TreeNode n2 = new TreeNode("P");
+            node.Nodes.Add(n1);
+            node.Nodes.Add(n2);
+            NodeInfo nInfo = new NodeInfo();
+            node.Tag = nInfo;
+
+            // Act
+            _presenter.NodeStateChanged(node, NodeState.Unchecked);
+
+            // Assert
+            _view.Verify(v => v.ApplyStateToNode(node, 5));
+            _view.Verify(v => v.ApplyStateToNode(n1, 5));
+            _view.Verify(v => v.ApplyStateToNode(n2, 5));
+            Assert.AreEqual(NodeState.Unchecked, node.GetState());
+        }
+
+        [TestMethod]
+        public void TestLevelDownWorkingPattern()
+        {
+            // Arrange
+            TreeNode node = new TreeNode("DIV");
+            TreeNode n1 = new TreeNode("H1");
+            node.Nodes.Add(n1);
+            NodeInfo nInfo = new NodeInfo();
+            nInfo.IsRoot = false;
+            node.Tag = nInfo;
+
+            // Act
+            _presenter.LevelDownWorkingPattern(node);
+
+            // Assert
+            _view.Verify(v => v.ClearPatternTree());
+            _view.Verify(v => v.FillPatternTree(It.Is<TreeNode>(n => n.Text == "H1")));
+            _view.Verify(v => v.ExpandPatternTree());
+        }
+
+        [TestMethod]
+        public void TestCannotLevelDownFromRootNode()
+        {
+            // Arrange
+            TreeNode node = new TreeNode("DIV");
+            NodeInfo nInfo = new NodeInfo();
+            nInfo.IsRoot = true;
+            node.Tag = nInfo;
+
+            // Act
+            _presenter.LevelDownWorkingPattern(node);
+
+            // Assert
+            _view.Verify(v => v.ShowCannotDeleteRootMessage());
+        }
+
+        [TestMethod]
+        public void TestClearTreeViews()
+        {
+            // Arrange
+            _view.Setup(v => v.AskUserToClearTreeViews()).Returns(true);
+
+            // Act
+            _presenter.ClearTreeViews(2);
+
+            // Assert
+            _view.Verify(v => v.ClearAuxiliaryTree());
+            _view.Verify(v => v.ClearPatternTree());
+            _view.Verify(v => v.ClearSnapshotTree());
+        }
+
+        [TestMethod]
+        public void TestClearTreeViewsAbortsIfUserDoesNotConfirm()
+        {
+            // Arrange
+            _view.Setup(v => v.AskUserToClearTreeViews()).Returns(false);
+
+            // Act
+            _presenter.ClearTreeViews(2);
+
+            // Assert
+            _view.Verify(v => v.ClearAuxiliaryTree(), Times.Never);
+            _view.Verify(v => v.ClearPatternTree(), Times.Never);
+            _view.Verify(v => v.ClearSnapshotTree(), Times.Never);
+        }
+
+        [TestMethod]
+        public void TestClearTreeViewsDoesNotProceedIfCountIsZero()
+        {
+            // Act
+            _presenter.ClearTreeViews(0);
+
+            // Assert
+            _view.Verify(v => v.ClearAuxiliaryTree(), Times.Never);
+            _view.Verify(v => v.ClearPatternTree(), Times.Never);
+            _view.Verify(v => v.ClearSnapshotTree(), Times.Never);
+        }
+
+        [TestMethod]
+        public void TestMakeWorkingPatternFromSnapshot()
+        {
+            // Arrange
+            TreeNode node = new TreeNode("DIV");
+
+            // Act
+            _presenter.MakeWorkingPatternFromSnapshot(node);
+
+            // Assert
+            _view.Verify(v => v.ClearPatternTree());
+            _view.Verify(v => v.FillPatternTree(It.Is<TreeNode>(n => n.Text == node.Text)));
+            _view.Verify(v => v.ExpandPatternTree());
+        }
+
+        [TestMethod]
+        public void TestDeleteNodeFromSnapshots()
+        {
+            // Arrange
+            TreeNode node = new TreeNode("DIV");
+
+            // Act
+            _presenter.DeleteSnapshot(node);
+
+            // Assert
+            _view.Verify(v => v.DeleteSnapshotInstance(node));
+        }
+
+        [TestMethod]
+        public void TestCreateSnapshots()
+        {
+            // Arrange
+            TreeNode node = new TreeNode("DIV");
+
+            // Act
+            _presenter.CreateSnapshot(node);
+
+            // Assert
+            _view.Verify(v => v.FillSnapshotTree(It.Is<TreeNode>(n => n.Text.StartsWith("SNAP"))));
+        }
+
+        [TestMethod]
+        public void TestCrawlingChanged()
+        {
+            // Act
+            _presenter.CrawlingChanged(true);
+
+            // Assert
+            _view.Verify(v => v.ApplyVisibilityStateInCrawling(true));
+
+            // Act
+            _presenter.CrawlingChanged(false);
+
+            // Assert
+            _view.Verify(v => v.ApplyVisibilityStateInCrawling(false));
+        }
+
+        [TestMethod]
+        public void TestAutoFillChanged()
+        {
+            // Act
+            _presenter.AutoFillChanged(true);
+
+            // Assert
+            _view.Verify(v => v.ApplyVisibilityStateInAutoFill(true));
+
+            // Act
+            _presenter.AutoFillChanged(false);
+
+            // Assert
+            _view.Verify(v => v.ApplyVisibilityStateInAutoFill(false));
+        }
+
+        [TestMethod]
+        public void TestBrowsesToUrlWhenEnterPressed()
+        {
+            // Arrange
+            var args = new KeyEventArgs(Keys.Enter);
+            var url = "http://www.google.gr/";
+            _view.Setup(v => v.Url).Returns(url);
+
+            // Act
+            _presenter.KeyDownPress(args);
+
+            // Assert
+            _view.Verify(v => v.NavigateTo("http://www.google.gr/"));
+        }
+
+        [TestMethod]
+        public void TestNavigatesBackWhenAltAndLeftArePressed()
+        {
+            // Arrange
+            var args = new KeyEventArgs(Keys.Alt | Keys.Left);
+
+            // Act
+            _presenter.KeyDownPress(args);
+
+            // Assert
+            _view.Verify(v => v.NavigateBack());
+        }
+
+        [TestMethod]
+        public void TestNavigatesForwardWhenAltAndRightArePressed()
+        {
+            // Arrange
+            var args = new KeyEventArgs(Keys.Alt | Keys.Right);
+
+            // Act
+            _presenter.KeyDownPress(args);
+
+            // Assert
+            _view.Verify(v => v.NavigateForward());
         }
     }
 }
