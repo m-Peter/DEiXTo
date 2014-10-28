@@ -11,6 +11,7 @@ namespace DEiXTo.Services
     {
         HtmlElement GetElementFromNode(TreeNode node);
         TreeNode GetDomNode(TreeNode node);
+        TreeNode GetNodeFromElement(HtmlElement element);
         TreeNode LoadExtractionPattern(string filename);
         IOpenFileDialog GetOpenFileDialog(string filter);
         ISaveFileDialog GetSaveFileDialog(string filter, string extension);

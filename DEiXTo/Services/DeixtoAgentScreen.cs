@@ -40,6 +40,13 @@ namespace DEiXTo.Services
             return element;
         }
 
+        public TreeNode GetNodeFromElement(HtmlElement element)
+        {
+            var node = _domTree.GetNodeFor(element);
+
+            return node;
+        }
+
         public TreeNode GetDomNode(TreeNode node)
         {
             int index = node.SourceIndex();

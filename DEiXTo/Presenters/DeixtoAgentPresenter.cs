@@ -850,14 +850,12 @@ namespace DEiXTo.Presenters
         /// <param name="element"></param>
         public void CreateAuxiliaryPatternFromDocument(HtmlElement element)
         {
-            // TODO REMOVE DEPENDENCIES
             View.FocusAuxiliaryTabPage();
             View.ClearAuxiliaryTree();
 
-            var node = _domTree.GetNodeFor(element);
+            var domNode = _screen.GetNodeFromElement(element);
 
-            View.FillAuxiliaryTree(node.GetClone());
-
+            View.FillAuxiliaryTree(domNode.GetClone());
             View.ExpandAuxiliaryTree();
         }
 
