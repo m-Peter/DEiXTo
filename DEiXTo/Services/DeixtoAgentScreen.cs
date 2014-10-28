@@ -106,6 +106,11 @@ namespace DEiXTo.Services
             _styling.Style(element);
         }
 
+        public void RemoveHighlighting(HtmlElement element)
+        {
+            _styling.Unstyle(element);
+        }
+
         public void CreateDocument(HtmlDocument document)
         {
             _document = new DocumentQuery(document);

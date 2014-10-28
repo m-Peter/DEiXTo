@@ -989,6 +989,39 @@ namespace DEiXTo.Presenters.Tests
             _view.Verify(v => v.FillTextNodeElementInfo(node));
         }
 
+        [TestMethod]
+        public void TestDocumentMouseLeave()
+        {
+            // Arrange
+            var element = CreateHtmlElement();
+            _view.Setup(v => v.HighlightModeEnabled).Returns(true);
+
+            // Act
+            _presenter.DocumentMouseLeave(element);
+
+            // Assert
+            _screen.Verify(s => s.RemoveHighlighting(element));
+            _view.Verify(v => v.ClearElementInfo());
+        }
+
+        [TestMethod]
+        public void TestDocumentMouseOver()
+        {
+            // Arrange
+            var element = CreateHtmlElement();
+            var node = new TreeNode("DIV");
+            _view.Setup(v => v.HighlightModeEnabled).Returns(true);
+            _screen.Setup(s => s.GetNodeFromElement(element)).Returns(node);
+
+            // Act
+            _presenter.DocumentMouseOver(element);
+
+            // Assert
+            _screen.Verify(s => s.HighlightElement(element));
+            _view.Verify(v => v.SelectDOMNode(node));
+            _view.Verify(v => v.FillElementInfo(node, element.OuterHtml));
+        }
+
         // HELPER METHODS
         private HtmlElement CreateHtmlElement()
         {

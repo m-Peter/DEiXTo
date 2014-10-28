@@ -993,10 +993,9 @@ namespace DEiXTo.Presenters
         /// <param name="element">The HtmlElement the mouse is leaving from.</param>
         public void DocumentMouseLeave(HtmlElement element)
         {
-            // TODO REMOVE DEPENDENCIES
             if (View.HighlightModeEnabled)
             {
-                _styling.Unstyle(element);
+                _screen.RemoveHighlighting(element);
             }
 
             View.ClearElementInfo();
@@ -1012,19 +1011,15 @@ namespace DEiXTo.Presenters
         /// <param name="element"></param>
         public void DocumentMouseOver(HtmlElement element)
         {
-            // TODO REMOVE DEPENDENCIES
-            var node = _domTree.GetNodeFor(element);
+            var node = _screen.GetNodeFromElement(element);
 
             if (node == null || !View.HighlightModeEnabled)
             {
                 return;
             }
 
-            _styling.UnstyleElements();
-            _styling.Style(element);
-
+            _screen.HighlightElement(element);
             View.SelectDOMNode(node);
-
             View.FillElementInfo(node, element.OuterHtml);
         }
 
