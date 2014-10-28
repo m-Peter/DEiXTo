@@ -678,6 +678,31 @@ namespace DEiXTo.Presenters.Tests
             _view.Verify(v => v.ExpandExtractionTree());
         }
 
+        [TestMethod]
+        public void TestSaveExtractionPattern()
+        {
+            // Arrange
+            string filter = "XML Files (*.xml)|";
+            string extension = "xml";
+            string filename = "extraction_pattern";
+            var dom = new TreeNode("DIV");
+            var d1 = new TreeNode("h1");
+            var d2 = new TreeNode("p");
+            dom.AddNode(d1);
+            dom.AddNode(d2);
+            var dialog = new Mock<ISaveFileDialog>();
+            _screen.Setup(s => s.GetSaveFileDialog(filter, extension)).Returns(dialog.Object);
+            dialog.Setup(d => d.ShowDialog()).Returns(DialogResult.OK);
+            dialog.Setup(d => d.Filename).Returns(filename);
+            _view.Setup(v => v.GetPatternTreeNodes()).Returns(dom.Nodes);
+
+            // Act
+            _presenter.SaveExtractionPattern();
+
+            // Assert
+            _screen.Verify(s => s.SaveExtractionPattern(filename, dom.Nodes));
+        }
+
         // HELPER METHODS
         private HtmlElement CreateHtmlElement()
         {

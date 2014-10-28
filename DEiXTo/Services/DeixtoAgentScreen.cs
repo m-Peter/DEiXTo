@@ -82,6 +82,15 @@ namespace DEiXTo.Services
             return _saveFileDialog;
         }
 
+        public ISaveFileDialog GetSaveFileDialog(string filter, string extension)
+        {
+            _saveFileDialog = new SaveFileDialogWrapper();
+            _saveFileDialog.Filter = filter;
+            _saveFileDialog.Extension = extension;
+
+            return _saveFileDialog;
+        }
+
         public string[] LoadUrlsFromFile(string filename)
         {
             var urls = _readTargetUrls.Read(filename);
@@ -93,6 +102,12 @@ namespace DEiXTo.Services
             _recordsWriter = new TextRecordsWriter(filename);
             var records = _executor.ExtractedResults();
             _recordsWriter.Write(records);
+        }
+
+        public void SaveExtractionPattern(string filename, TreeNodeCollection nodes)
+        {
+            var writer = new WriteExtractionPattern();
+            writer.write(filename, nodes);
         }
     }
 }

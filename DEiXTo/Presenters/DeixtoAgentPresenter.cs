@@ -444,21 +444,18 @@ namespace DEiXTo.Presenters
         /// </summary>
         public void SaveExtractionPattern()
         {
-            // TODO REMOVE DEPENDENCIES
-            _saveFileDialog.Filter = "XML Files (*.xml)|";
-            _saveFileDialog.Extension = "xml";
-            var answer = _saveFileDialog.ShowDialog();
+            string filter = "XML Files (*.xml)|";
+            string extension = "xml";
+            var dialog = _screen.GetSaveFileDialog(filter, extension);
+            var answer = dialog.ShowDialog();
 
             if (Negative(answer))
             {
                 return;
             }
 
-            string filename = string.Empty;
-            WriteExtractionPattern writer = new WriteExtractionPattern();
-
-            filename = _saveFileDialog.Filename;
-            writer.write(filename, View.GetPatternTreeNodes());
+            string filename = dialog.Filename;
+            _screen.SaveExtractionPattern(filename, View.GetPatternTreeNodes());
         }
 
         /// <summary>
