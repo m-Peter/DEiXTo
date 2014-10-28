@@ -49,7 +49,7 @@ namespace DEiXTo.Presenters
                 _node.NodeFont = new Font(font, FontStyle.Underline);
             }
 
-            _eventHub.Publish(new RegexAdded(regex, _node));
+            _eventHub.Publish(new RegexAdded(_node));
 
             View.Exit();
         }

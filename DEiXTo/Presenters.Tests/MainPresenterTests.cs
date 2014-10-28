@@ -12,6 +12,7 @@ namespace DEiXTo.Presenters.Tests
     {
         private Mock<IMainView> _view;
         private Mock<IViewLoader> _loader;
+        private Mock<IEventHub> _eventHub;
         private MainPresenter _presenter;
 
         [TestInitialize]
@@ -19,7 +20,8 @@ namespace DEiXTo.Presenters.Tests
         {
             _view = new Mock<IMainView>();
             _loader = new Mock<IViewLoader>();
-            _presenter = new MainPresenter(_view.Object, _loader.Object);
+            _eventHub = new Mock<IEventHub>();
+            _presenter = new MainPresenter(_view.Object, _loader.Object, _eventHub.Object);
         }
 
         [TestMethod]

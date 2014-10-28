@@ -29,6 +29,7 @@ namespace DEiXTo.Presenters
         private ISaveFileDialog _saveFileDialog;
         private IOpenFileDialog _openFileDialog;
         private PatternExtraction _executor;
+        private IDeixtoAgentScreen _screen;
         #endregion
 
         #region Public Events
@@ -38,10 +39,11 @@ namespace DEiXTo.Presenters
         public IDeixtoAgentView View { get; set; }
 
         #region Constructors
-        public DeixtoAgentPresenter(IDeixtoAgentView view, ISaveFileDialog saveFileDialog, IViewLoader loader, IEventHub eventHub)
+        public DeixtoAgentPresenter(IDeixtoAgentView view, ISaveFileDialog saveFileDialog, IViewLoader loader, IEventHub eventHub, IDeixtoAgentScreen screen)
         {
             View = view;
             View.Presenter = this;
+            _screen = screen;
             _styling = new ElementStyling();
             _builder = new TreeBuilder();
             _imageLoader = new StatesImageLoader();
@@ -66,8 +68,9 @@ namespace DEiXTo.Presenters
         public void Receive(RegexAdded subject)
         {
             TreeNode node = subject.Node;
-            int index = node.SourceIndex();
-            var element = _document.GetElementByIndex(index);
+            //int index = node.SourceIndex();
+            //var element = _document.GetElementByIndex(index);
+            var element = _screen.GetElementFromNode(node);
 
             View.FillElementInfo(node, element.OuterHtml);
         }
@@ -254,18 +257,17 @@ namespace DEiXTo.Presenters
         /// </summary>
         public void LoadURLsFromFile()
         {
-            // TODO REMOVE DEPENDENCIES
-            _openFileDialog.Filter = "Text Files (*.txt)|";
-            var answer = _openFileDialog.ShowDialog();
+            var openFileDialog = _screen.GetTextFileDialog();
+            var answer = openFileDialog.ShowDialog();
 
             if (Negative(answer))
             {
                 return;
             }
-            
-            ReadTargetUrls reader = new ReadTargetUrls();
-            string filename = _openFileDialog.Filename;
-            var urls = reader.Read(filename);
+
+            var filename = openFileDialog.Filename;
+            var urls = _screen.LoadUrlsFromFile(filename);
+
             View.AppendTargetUrls(urls);
             View.TargetURLsFile = filename;
         }

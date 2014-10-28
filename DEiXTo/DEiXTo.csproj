@@ -71,6 +71,7 @@
     <Compile Include="Services.Tests\DocumentValidatorFactoryTests.cs" />
     <Compile Include="Services.Tests\PatternExtractionTests.cs" />
     <Compile Include="Services\ContentExtractionFactory.cs" />
+    <Compile Include="Services\DeixtoAgentScreen.cs" />
     <Compile Include="Services\DialogBuilderFactory.cs" />
     <Compile Include="Services\DocumentQuery.cs" />
     <Compile Include="Services\DocumentValidatorFactory.cs" />
@@ -78,6 +79,7 @@
     <Compile Include="Services\ExtractedRecordsWriter.cs" />
     <Compile Include="Services\FormContentExtractor.cs" />
     <Compile Include="Services\GenericContentExtractor.cs" />
+    <Compile Include="Services\IDeixtoAgentScreen.cs" />
     <Compile Include="Services\IDialogBuilder.cs" />
     <Compile Include="Services\IEventHub.cs" />
     <Compile Include="Services\ImageContentExtractor.cs" />

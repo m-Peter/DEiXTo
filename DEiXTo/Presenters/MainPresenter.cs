@@ -13,16 +13,17 @@ namespace DEiXTo.Presenters
         #region Instance Variables
         //private readonly IMainView _view;
         private readonly IViewLoader _viewLoader;
+        private readonly IEventHub _eventHub;
         // count the number of childs contained in the associated View
         private int _formCounter = 0;
         #endregion
 
         #region Constructors
-        public MainPresenter(IMainView view, IViewLoader viewLoader)
+        public MainPresenter(IMainView view, IViewLoader viewLoader, IEventHub eventHub)
         {
             View = view;
             _viewLoader = viewLoader;
-            EventHub eventHub = EventHub.Instance;
+            _eventHub = eventHub;
             View.Presenter = this;
 
             eventHub.Subscribe<EventArgs>(this);

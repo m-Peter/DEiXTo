@@ -20,6 +20,7 @@ namespace DEiXTo.Presenters.Tests
         private Mock<ISaveFileDialog> _saveFileDialog;
         private Mock<IViewLoader> _loader;
         private Mock<IEventHub> _eventHub;
+        private Mock<IDeixtoAgentScreen> _screen;
         private DeixtoAgentPresenter _presenter;
 
         [TestInitialize]
@@ -29,7 +30,9 @@ namespace DEiXTo.Presenters.Tests
             _saveFileDialog = new Mock<ISaveFileDialog>();
             _loader = new Mock<IViewLoader>();
             _eventHub = new Mock<IEventHub>();
-            _presenter = new DeixtoAgentPresenter(_view.Object, _saveFileDialog.Object, _loader.Object, _eventHub.Object);
+            _screen = new Mock<IDeixtoAgentScreen>();
+
+            _presenter = new DeixtoAgentPresenter(_view.Object, _saveFileDialog.Object, _loader.Object, _eventHub.Object, _screen.Object);
         }
         
         [TestMethod]
@@ -518,6 +521,59 @@ namespace DEiXTo.Presenters.Tests
 
             // Assert
             _view.Verify(v => v.NavigateForward());
+        }
+
+        [TestMethod]
+        public void TestReceiveRegexAdded()
+        {
+            // Arrange
+            TreeNode node = new TreeNode("DIV");
+            NodeInfo nInfo = new NodeInfo();
+            nInfo.ElementSourceIndex = 12;
+            node.Tag = nInfo;
+            RegexAdded ra = new RegexAdded(node);
+            var element = CreateHtmlElement();
+            _screen.Setup(s => s.GetElementFromNode(node)).Returns(element);
+
+            // Act
+            _presenter.Receive(ra);
+            
+            // Assert
+            _view.Verify(v => v.FillElementInfo(node, element.OuterHtml));
+        }
+
+        [TestMethod]
+        public void TestLoadUrlsFromFile()
+        {
+            // Arrange
+            string filename = "output_file";
+            string[] urls = new string[] { "http://www.google.gr", "http://www.cs.teilar.gr" };
+            var dialog = new Mock<IOpenFileDialog>();
+            _screen.Setup(s => s.GetTextFileDialog()).Returns(dialog.Object);
+            dialog.Setup(d => d.ShowDialog()).Returns(DialogResult.OK);
+            dialog.Setup(d => d.Filename).Returns(filename);
+            _screen.Setup(s => s.LoadUrlsFromFile(filename)).Returns(urls);
+
+            // Act
+            _presenter.LoadURLsFromFile();
+
+            // Assert
+            _view.Verify(v => v.AppendTargetUrls(urls));
+            _view.VerifySet(v => v.TargetURLsFile = filename);
+        }
+
+        // HELPER METHODS
+        private HtmlElement CreateHtmlElement()
+        {
+            WebBrowser browser = new WebBrowser();
+            browser.DocumentText = "<html></html>";
+            browser.Show();
+            var doc = browser.Document;
+            doc.Write("<html></html>");
+            var element = doc.GetElementsByTagName("html");
+            var elem = element[0];
+
+            return elem;
         }
     }
 }
