@@ -546,10 +546,11 @@ namespace DEiXTo.Presenters.Tests
         public void TestLoadUrlsFromFile()
         {
             // Arrange
+            string filter = "Text Files (*.txt)|";
             string filename = "output_file";
             string[] urls = new string[] { "http://www.google.gr", "http://www.cs.teilar.gr" };
             var dialog = new Mock<IOpenFileDialog>();
-            _screen.Setup(s => s.GetTextFileDialog()).Returns(dialog.Object);
+            _screen.Setup(s => s.GetOpenFileDialog(filter)).Returns(dialog.Object);
             dialog.Setup(d => d.ShowDialog()).Returns(DialogResult.OK);
             dialog.Setup(d => d.Filename).Returns(filename);
             _screen.Setup(s => s.LoadUrlsFromFile(filename)).Returns(urls);
@@ -566,8 +567,9 @@ namespace DEiXTo.Presenters.Tests
         public void TestLoadingOfUrlsIsAbortedIfUserDoesNotSelectFile()
         {
             // Arrange
+            string filter = "Text Files (*.txt)|";
             var dialog = new Mock<IOpenFileDialog>();
-            _screen.Setup(s => s.GetTextFileDialog()).Returns(dialog.Object);
+            _screen.Setup(s => s.GetOpenFileDialog(filter)).Returns(dialog.Object);
             dialog.Setup(d => d.ShowDialog()).Returns(DialogResult.Abort);
 
             // Act
@@ -581,11 +583,13 @@ namespace DEiXTo.Presenters.Tests
         public void TestSaveToDisk()
         {
             // Arrange
+            string filter = "Text Files (*.txt)|";
+            string extension = "txt";
             string filename = "extracted_records";
             var dialog = new Mock<ISaveFileDialog>();
             dialog.Setup(d => d.ShowDialog()).Returns(DialogResult.OK);
             dialog.Setup(d => d.Filename).Returns(filename);
-            _screen.Setup(s => s.GetTextSaveFileDialog()).Returns(dialog.Object);
+            _screen.Setup(s => s.GetSaveFileDialog(filter, extension)).Returns(dialog.Object);
 
             // Act
             _presenter.SaveToDisk();
@@ -598,8 +602,10 @@ namespace DEiXTo.Presenters.Tests
         public void TestSaveToDiskAbortsIfUserDoesNotSelectOutputFile()
         {
             // Arrange
+            string filter = "Text Files (*.txt)|";
+            string extension = "txt";
             var dialog = new Mock<ISaveFileDialog>();
-            _screen.Setup(s => s.GetTextSaveFileDialog()).Returns(dialog.Object);
+            _screen.Setup(s => s.GetSaveFileDialog(filter, extension)).Returns(dialog.Object);
             dialog.Setup(d => d.ShowDialog()).Returns(DialogResult.Abort);
 
             // Act

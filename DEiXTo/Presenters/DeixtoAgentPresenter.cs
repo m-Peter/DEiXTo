@@ -257,7 +257,8 @@ namespace DEiXTo.Presenters
         /// </summary>
         public void LoadURLsFromFile()
         {
-            var openFileDialog = _screen.GetTextFileDialog();
+            string filter = "Text Files (*.txt)|";
+            var openFileDialog = _screen.GetOpenFileDialog(filter);
             var answer = openFileDialog.ShowDialog();
 
             if (Negative(answer))
@@ -346,7 +347,9 @@ namespace DEiXTo.Presenters
         /// </summary>
         public void SaveToDisk()
         {
-            var saveFileDialog = _screen.GetTextSaveFileDialog();
+            string filter = "Text Files (*.txt)|";
+            string extension = "txt";
+            var saveFileDialog = _screen.GetSaveFileDialog(filter, extension);
 
             var answer = saveFileDialog.ShowDialog();
 

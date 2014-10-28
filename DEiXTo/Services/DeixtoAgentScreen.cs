@@ -57,29 +57,12 @@ namespace DEiXTo.Services
             return node;
         }
 
-        public IOpenFileDialog GetTextFileDialog()
-        {
-            _openFileDialog = new OpenFileDialogWrapper();
-            _openFileDialog.Filter = "Text Files (*.txt)|";
-
-            return _openFileDialog;
-        }
-
         public IOpenFileDialog GetOpenFileDialog(string filter)
         {
             _openFileDialog = new OpenFileDialogWrapper();
             _openFileDialog.Filter = filter;
 
             return _openFileDialog;
-        }
-
-        public ISaveFileDialog GetTextSaveFileDialog()
-        {
-            _saveFileDialog = new SaveFileDialogWrapper();
-            _saveFileDialog.Filter = "Text Files (*.txt)|";
-            _saveFileDialog.Extension = "txt";
-
-            return _saveFileDialog;
         }
 
         public ISaveFileDialog GetSaveFileDialog(string filter, string extension)
