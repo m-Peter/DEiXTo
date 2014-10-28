@@ -730,15 +730,36 @@ namespace DEiXTo.Presenters.Tests
             _view.Verify(v => v.SelectDOMNode(domNode));
         }
 
+        [TestMethod]
+        public void TestLevelUpWorkingPattern()
+        {
+            // Arrange
+            var element = CreateHtmlElement();
+            var node = new TreeNode("LI");
+            var dom = new TreeNode("DIV");
+            var d1 = new TreeNode("LI");
+            dom.Nodes.Add(d1);
+            _screen.Setup(s => s.GetDomNode(node)).Returns(d1);
+            _screen.Setup(s => s.GetElementFromNode(dom)).Returns(element);
+
+            // Act
+            _presenter.LevelUpWorkingPattern(node);
+
+            // Assert
+            _view.Verify(v => v.ClearPatternTree());
+            _view.Verify(v => v.FillPatternTree(It.Is<TreeNode>(n => n.Text == "LI")));
+            _view.Verify(v => v.ExpandPatternTree());
+        }
+
         // HELPER METHODS
         private HtmlElement CreateHtmlElement()
         {
             WebBrowser browser = new WebBrowser();
-            browser.DocumentText = "<html></html>";
+            browser.DocumentText = "<li></li>";
             browser.Show();
             var doc = browser.Document;
-            doc.Write("<html></html>");
-            var element = doc.GetElementsByTagName("html");
+            doc.Write("<li></li>");
+            var element = doc.GetElementsByTagName("li");
             var elem = element[0];
 
             return elem;

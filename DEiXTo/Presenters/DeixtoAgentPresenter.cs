@@ -636,19 +636,17 @@ namespace DEiXTo.Presenters
         /// <param name="node"></param>
         public void LevelUpWorkingPattern(TreeNode node)
         {
-            // TODO REMOVE DEPENDENCIES
-            int indx = node.SourceIndex();
-            var tmpElem = _document.GetElementByIndex(indx);
-            var tmpNode = _domTree.GetNodeFor(tmpElem);
-            var parentNode = tmpNode.Parent;
+            // Translate the given node to its opposite DOM node
+            var domNode = _screen.GetDomNode(node);
+            // Retrieve the parent of the DOM node
+            var parentNode = domNode.Parent;
 
             if (parentNode == null && parentNode.Tag == null)
             {
                 return;
             }
 
-            int index = parentNode.SourceIndex();
-            var element = _document.GetElementByIndex(index);
+            var element = _screen.GetElementFromNode(parentNode);
             var newNode = new TreeNode(element.TagName);
             var domElem = (IHTMLElement)element.DomElement;
 
