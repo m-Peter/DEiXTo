@@ -920,6 +920,24 @@ namespace DEiXTo.Presenters.Tests
             _view.Verify(v => v.ExpandAuxiliaryTree());
         }
 
+        [TestMethod]
+        public void TestCreateWorkingPattern()
+        {
+            // Arrange
+            var node = new TreeNode("DIV");
+            var domNode = new TreeNode("DIV");
+            _screen.Setup(s => s.GetDomNode(node)).Returns(domNode);
+
+            // Act
+            _presenter.CreateWorkingPattern(node);
+
+            // Assert
+            _view.Verify(v => v.ClearPatternTree());
+            _view.Verify(v => v.SetNodeFont(It.Is<TreeNode>(n => n.Text == "DIV")));
+            _view.Verify(v => v.FillPatternTree(It.Is<TreeNode>(n => n.Text == "DIV")));
+            _view.Verify(v => v.ExpandPatternTree());
+        }
+
         // HELPER METHODS
         private HtmlElement CreateHtmlElement()
         {

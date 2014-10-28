@@ -944,17 +944,13 @@ namespace DEiXTo.Presenters
         /// <param name="node"></param>
         public void CreateWorkingPattern(TreeNode node)
         {
-            // TODO REMOVE DEPENDENCIES
             View.ClearPatternTree();
 
-            int index = node.SourceIndex();
-            var element = _document.GetElementByIndex(index);
-            var newNode = _domTree.GetNodeFor(element).GetClone();
-            newNode.SetAsRoot();
+            var domNode = _screen.GetDomNode(node).GetClone();
+            domNode.SetAsRoot();
 
-            View.SetNodeFont(newNode);
-            View.FillPatternTree(newNode);
-
+            View.SetNodeFont(domNode);
+            View.FillPatternTree(domNode);
             View.ExpandPatternTree();
         }
 
