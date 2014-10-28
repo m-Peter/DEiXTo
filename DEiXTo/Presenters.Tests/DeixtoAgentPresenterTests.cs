@@ -791,6 +791,38 @@ namespace DEiXTo.Presenters.Tests
             _view.Verify(v => v.ShowNoTagSelectedMessage());
         }
 
+        [TestMethod]
+        public void TestAuxiliaryPatternTextNodeClick()
+        {
+            // Arrange
+            var node = new TreeNode("TEXT");
+            
+            // Act
+            _presenter.AuxiliaryPatternNodeClick(node);
+            
+            // Assert
+            _view.Verify(v => v.FillTextNodeElementInfo(node));
+        }
+
+        [TestMethod]
+        public void TestAuxiliaryPatternNodeClick()
+        {
+            // Arrange
+            var element = CreateHtmlElement();
+            var node = new TreeNode("DIV");
+            var domNode = new TreeNode("DIV");
+            _screen.Setup(s => s.GetElementFromNode(node)).Returns(element);
+            _screen.Setup(s => s.GetDomNode(node)).Returns(domNode);
+
+            // Act
+            _presenter.AuxiliaryPatternNodeClick(node);
+
+            // Assert
+            _screen.Verify(s => s.HighlightElement(element));
+            _view.Verify(v => v.FillElementInfo(node, element.OuterHtml));
+            _view.Verify(v => v.SelectDOMNode(domNode));
+        }
+
         // HELPER METHODS
         private HtmlElement CreateHtmlElement()
         {
