@@ -374,7 +374,6 @@ namespace DEiXTo.Presenters
         /// <param name="node"></param>
         public void AddNextSibling(TreeNode node)
         {
-            // TODO REMOVE DEPENDENCIES
             var parent = node.Parent;
             //int index = node.SourceIndex();
             //var tmpElem = _document.GetElementByIndex(index);
@@ -397,7 +396,6 @@ namespace DEiXTo.Presenters
         /// <param name="node"></param>
         public void AddPreviousSibling(TreeNode node)
         {
-            // TODO REMOVE DEPENDENCIES
             var parent = node.Parent;
             //int index = node.SourceIndex();
             //var tmpElem = _document.GetElementByIndex(index);
@@ -427,20 +425,16 @@ namespace DEiXTo.Presenters
         /// </summary>
         public void LoadExtractionPattern()
         {
-            // TODO REMOVE DEPENDENCIES
-            _openFileDialog.Filter = "XML Files (*.xml)|";
-            var answer = _openFileDialog.ShowDialog();
+            var dialog = _screen.GetOpenFileDialog("XML Files (*.xml)|");
+            var answer = dialog.ShowDialog();
 
             if (Negative(answer))
             {
                 return;
             }
 
-            string filename = string.Empty;
-            ReadExtractionPattern reader = new ReadExtractionPattern();
-
-            filename = _openFileDialog.Filename;
-            var node = reader.read(filename);
+            string filename = dialog.Filename;
+            var node = _screen.LoadExtractionPattern(filename);
             View.FillExtractionPattern(node);
             View.ExpandExtractionTree();
         }

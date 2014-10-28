@@ -657,6 +657,27 @@ namespace DEiXTo.Presenters.Tests
             Assert.AreEqual(d1.Text, node.Nodes[0].Text);
         }
 
+        [TestMethod]
+        public void TestLoadExtractionPattern()
+        {
+            // Arrange
+            string filter = "XML Files (*.xml)|";
+            string filename = "extraction_pattern";
+            var node = new TreeNode("DIV");
+            var dialog = new Mock<IOpenFileDialog>();
+            _screen.Setup(s => s.GetOpenFileDialog(filter)).Returns(dialog.Object);
+            dialog.Setup(d => d.ShowDialog()).Returns(DialogResult.OK);
+            dialog.Setup(d => d.Filename).Returns(filename);
+            _screen.Setup(s => s.LoadExtractionPattern(filename)).Returns(node);
+
+            // Act
+            _presenter.LoadExtractionPattern();
+            
+            // Assert
+            _view.Verify(v => v.FillExtractionPattern(node));
+            _view.Verify(v => v.ExpandExtractionTree());
+        }
+
         // HELPER METHODS
         private HtmlElement CreateHtmlElement()
         {

@@ -49,10 +49,26 @@ namespace DEiXTo.Services
             return domNode;
         }
 
+        public TreeNode LoadExtractionPattern(string filename)
+        {
+            var reader = new ReadExtractionPattern();
+            var node = reader.read(filename);
+
+            return node;
+        }
+
         public IOpenFileDialog GetTextFileDialog()
         {
             _openFileDialog = new OpenFileDialogWrapper();
             _openFileDialog.Filter = "Text Files (*.txt)|";
+
+            return _openFileDialog;
+        }
+
+        public IOpenFileDialog GetOpenFileDialog(string filter)
+        {
+            _openFileDialog = new OpenFileDialogWrapper();
+            _openFileDialog.Filter = filter;
 
             return _openFileDialog;
         }
