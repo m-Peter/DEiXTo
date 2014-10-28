@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DEiXTo.Models;
+using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
@@ -28,5 +29,6 @@ namespace DEiXTo.Services
         TreeNode BuildSimplifiedDOM(string[] ignoredTags);
         TreeNode BuildDom();
         ImageList LoadStateImages();
+        IExtraction Execute(TreeNode pattern, TreeNodeCollection domNodes);
     }
 }

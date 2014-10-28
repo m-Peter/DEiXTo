@@ -1068,6 +1068,50 @@ namespace DEiXTo.Presenters.Tests
             _view.Verify(v => v.AttachDocumentEvents());
         }
 
+        [TestMethod]
+        public void TestExecuteRuleWithNoWorkingPattern()
+        {
+            // Arrange
+            TreeNode node = null;
+            _view.Setup(v => v.GetWorkingPattern()).Returns(node);
+
+            // Act
+            _presenter.ExecuteRule();
+
+            // Assert
+            _view.Verify(v => v.ShowSpecifyPatternMessage());
+        }
+
+        [TestMethod]
+        public void TestExecuteRuleSingePage()
+        {
+            // Arrange
+            IList<Result> results = new List<Result>();
+            var extraction = new Mock<IExtraction>();
+            var node = new TreeNode("DIV");
+            var n1 = new TreeNode("H1");
+            var n2 = new TreeNode("P");
+            node.AddNode(n1);
+            node.AddNode(n2);
+            var domNodes = node.Nodes;
+            _view.Setup(v => v.GetWorkingPattern()).Returns(node);
+            _view.Setup(v => v.GetBodyTreeNodes()).Returns(domNodes);
+            _screen.Setup(s => s.Execute(node, domNodes)).Returns(extraction.Object);
+            extraction.Setup(e => e.RecordsCount).Returns(4);
+            extraction.Setup(e => e.VariablesCount).Returns(3);
+            extraction.Setup(e => e.OutputVariableLabels).Returns(new List<string>());
+            extraction.Setup(e => e.ExtractedRecords).Returns(results);
+
+            // Act
+            _presenter.ExecuteRule();
+
+            // Assert
+            string message = "Extraction Completed: 4 results!";
+            _view.Verify(v => v.WritePageResults(message));
+            _view.Verify(v => v.FillExtractionPattern(It.Is<TreeNode>(n => n.Text == "DIV")));
+            _view.Verify(v => v.ExpandExtractionTree());
+        }
+
         // HELPER METHODS
         private HtmlElement CreateHtmlElement()
         {

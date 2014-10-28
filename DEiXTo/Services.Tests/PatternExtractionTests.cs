@@ -280,7 +280,7 @@ namespace DEiXTo.Services.Tests
             var root = getRootTree();
             var domNodes = getDOMNodes(1);
 
-            PatternExtraction pattern = new PatternExtraction(root, domNodes);
+            PatternExecutor pattern = new PatternExecutor(root, domNodes);
             pattern.FindMatches();
             Assert.AreEqual(1, pattern.Count);
         }
@@ -291,7 +291,7 @@ namespace DEiXTo.Services.Tests
             var root = getRootTree();
             var domNodes = getDOMNodes(2);
 
-            PatternExtraction pattern = new PatternExtraction(root, domNodes);
+            PatternExecutor pattern = new PatternExecutor(root, domNodes);
             pattern.FindMatches();
             Assert.AreEqual(2, pattern.Count);
         }
@@ -302,7 +302,7 @@ namespace DEiXTo.Services.Tests
             var root = getRootTree();
             var domNodes = getDOMNodes(11);
 
-            PatternExtraction pattern = new PatternExtraction(root, domNodes);
+            PatternExecutor pattern = new PatternExecutor(root, domNodes);
             pattern.FindMatches();
             Assert.AreEqual(11, pattern.Count);
         }
@@ -313,7 +313,7 @@ namespace DEiXTo.Services.Tests
             var root = getRootTree();
             var domNodes = getDOMNodes(10, true);
 
-            PatternExtraction pattern = new PatternExtraction(root, domNodes);
+            PatternExecutor pattern = new PatternExecutor(root, domNodes);
             pattern.FindMatches();
             Assert.AreEqual(11, pattern.Count);
         }
@@ -329,7 +329,7 @@ namespace DEiXTo.Services.Tests
             div.AddNode(root);
             body.AddNode(div);
 
-            PatternExtraction pattern = new PatternExtraction(root, body.Nodes);
+            PatternExecutor pattern = new PatternExecutor(root, body.Nodes);
             pattern.FindMatches();
             Assert.AreEqual(3, pattern.Count);
         }

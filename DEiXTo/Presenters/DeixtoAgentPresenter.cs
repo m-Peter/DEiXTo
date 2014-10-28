@@ -22,7 +22,7 @@ namespace DEiXTo.Presenters
         private DocumentQuery _document;
         private IViewLoader _loader;
         private IEventHub _eventHub;
-        private PatternExtraction _executor;
+        private PatternExecutor _executor;
         private IDeixtoAgentScreen _screen;
         #endregion
 
@@ -100,77 +100,6 @@ namespace DEiXTo.Presenters
             var elem = _document.GetLinkToFollow(mylink);
             string href = elem.GetAttribute("href");
             View.NavigateTo(href);
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="executor"></param>
-        private void AddOutputResults(PatternExtraction executor)
-        {
-            foreach (var item in executor.ExtractedResults())
-            {
-                View.AddOutputItem(item.ToStringArray(), item.Node);
-            }
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="executor"></param>
-        private void AddOutputColumns(PatternExtraction executor)
-        {
-            var labels = executor.OutputVariableLabels();
-
-            if (labels.Count == 0)
-            {
-                int columns = executor.CountOutputVariables();
-                AddDefaultColumns(columns);
-
-                return;
-            }
-
-            AddLabeledColumns(labels);
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="columns"></param>
-        private void AddDefaultColumns(int columns)
-        {
-            var columnFormat = "VAR";
-
-            for (int i = 0; i < columns; i++)
-            {
-                View.AddOutputColumn(columnFormat + (i + 1));
-            }
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="labels"></param>
-        private void AddLabeledColumns(List<string> labels)
-        {
-            int columns = labels.Count;
-
-            for (int i = 0; i < columns; i++)
-            {
-                View.AddOutputColumn(labels[i]);
-            }
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="pattern"></param>
-        /// <returns></returns>
-        private PatternExtraction CreateExecutor(TreeNode pattern)
-        {
-            var domNodes = View.GetBodyTreeNodes();
-            _executor = new PatternExtraction(pattern, domNodes);
-            return _executor;
         }
 
         /// <summary>
@@ -298,7 +227,7 @@ namespace DEiXTo.Presenters
             var pattern = View.GetExtractionPattern();
 
             // Search for the tree structure in the Extraction Pattern
-            _executor = new PatternExtraction(pattern, View.GetDOMTreeNodes());
+            _executor = new PatternExecutor(pattern, View.GetDOMTreeNodes());
             var matchedNode = _executor.ScanTree(View.GetDOMTreeNodes(), pattern);
             var font = new Font(FontFamily.GenericSansSerif, 8.25f);
             matchedNode.NodeFont = new Font(font, FontStyle.Bold);
@@ -682,7 +611,18 @@ namespace DEiXTo.Presenters
                 View.FocusOutputTabPage();
                 View.ClearExtractedOutputs();
 
-                var executor = CreateExecutor(pattern);
+                // Here we go!
+                // what parts do I need here and what can go into a separate
+                // class.
+                // The presenter at its current state, creates the executor(1st smell).
+                // Then he performs #FindMatches, so the extraction can take place.
+                // Then he creates the output columns based on the number of output
+                // variables.
+                // He then adds the output results, which can be labeled or follow a
+                // default format.
+                // Let's start by moving the creation of executor in the DeixtoAgentScreen.
+
+                /*var executor = CreateExecutor(pattern);
 
                 executor.FindMatches();
 
@@ -703,7 +643,91 @@ namespace DEiXTo.Presenters
 
                 var rootNode = executor.TrimUncheckedNodes(pattern);
                 View.FillExtractionPattern(rootNode);
+                View.ExpandExtractionTree();*/
+
+                var domNodes = View.GetBodyTreeNodes();
+                var extractionResult = _screen.Execute(pattern, domNodes);
+
+                AddOutputColumns(extractionResult);
+                AddOutputResults(extractionResult);
+
+                View.WritePageResults("Extraction Completed: " + extractionResult.RecordsCount.ToString() + " results!");
+
+                View.FillExtractionPattern(pattern.GetClone());
                 View.ExpandExtractionTree();
+            }
+        }
+
+        private PatternExecutor CreateExecutor(TreeNode pattern)
+        {
+            var domNodes = View.GetBodyTreeNodes();
+            _executor = new PatternExecutor(pattern, domNodes);
+            return _executor;
+        }
+
+        private void AddOutputColumns(PatternExecutor executor)
+        {
+            var labels = executor.OutputVariableLabels();
+
+            if (labels.Count == 0)
+            {
+                int columns = executor.CountOutputVariables();
+                AddDefaultColumns(columns);
+
+                return;
+            }
+
+            AddLabeledColumns(labels);
+        }
+
+        private void AddOutputColumns(IExtraction extraction)
+        {
+            var labels = extraction.OutputVariableLabels;
+
+            if (labels.Count == 0)
+            {
+                int columns = extraction.VariablesCount;
+                AddDefaultColumns(columns);
+
+                return;
+            }
+
+            AddLabeledColumns(labels);
+        }
+
+        private void AddOutputResults(PatternExecutor executor)
+        {
+            foreach (var item in executor.ExtractedResults())
+            {
+                View.AddOutputItem(item.ToStringArray(), item.Node);
+            }
+        }
+
+        private void AddOutputResults(IExtraction extraction)
+        {
+            foreach (var item in extraction.ExtractedRecords)
+            {
+                View.AddOutputItem(item.ToStringArray(), item.Node);
+            }
+        }
+
+        private void AddDefaultColumns(int columns)
+        {
+            var columnFormat = "VAR";
+
+            for (int i = 0; i < columns; i++)
+            {
+                View.AddOutputColumn(columnFormat + (i + 1));
+            }
+        }
+
+        private void AddLabeledColumns(List<string> labels)
+        {
+            int columns = labels.Count;
+
+            for (int i = 0; i < columns; i++)
+            {
+                View.AddOutputColumn(labels[i]);
             }
         }
 

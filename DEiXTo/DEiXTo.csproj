@@ -52,6 +52,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Models\DOMTreeStructure.cs" />
+    <Compile Include="Models\ExtractionResult.cs" />
+    <Compile Include="Models\IExtraction.cs" />
     <Compile Include="Models\NodeState.cs" />
     <Compile Include="Models\NodeInfo.cs" />
     <Compile Include="Models\OutputFormat.cs" />
@@ -103,7 +105,7 @@
     <Compile Include="Services\IDocumentValidator.cs" />
     <Compile Include="Services\IViewLoader.cs" />
     <Compile Include="Services\LocalDocumentValidator.cs" />
-    <Compile Include="Services\PatternExtraction.cs" />
+    <Compile Include="Services\PatternExecutor.cs" />
     <Compile Include="Services\StatesImageLoader.cs" />
     <Compile Include="Services\TreeNodeExtensions.cs" />
     <Compile Include="Services\WebDocumentValidator.cs" />

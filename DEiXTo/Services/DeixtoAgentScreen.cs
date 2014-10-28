@@ -19,7 +19,7 @@ namespace DEiXTo.Services
         private IViewLoader _loader;
         private ISaveFileDialog _saveFileDialog;
         private IOpenFileDialog _openFileDialog;
-        private PatternExtraction _executor;
+        private PatternExecutor _executor;
         private ReadTargetUrls _readTargetUrls;
         private TextRecordsWriter _recordsWriter;
 
@@ -160,6 +160,19 @@ namespace DEiXTo.Services
         public ImageList LoadStateImages()
         {
             return _imageLoader.LoadImages();
+        }
+
+        public IExtraction Execute(TreeNode pattern, TreeNodeCollection domNodes)
+        {
+            _executor = new PatternExecutor(pattern, domNodes);
+            _executor.FindMatches();
+
+            var result = new ExtractionResult();
+            result.VariablesCount = _executor.CountOutputVariables();
+            result.OutputVariableLabels = _executor.OutputVariableLabels();
+            result.ExtractedRecords = _executor.ExtractedResults();
+
+            return result;
         }
 
         private void resetOpenFileDialog()

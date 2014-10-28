@@ -8,13 +8,13 @@ namespace DEiXTo.Services
     /// <summary>
     /// 
     /// </summary>
-    public class PatternExtraction
+    public class PatternExecutor
     {
         private TreeNode _pattern;
         private TreeNodeCollection _domNodes;
         private List<Result> _results;
 
-        public PatternExtraction(TreeNode pattern, TreeNodeCollection domNodes)
+        public PatternExecutor(TreeNode pattern, TreeNodeCollection domNodes)
         {
             _pattern = pattern;
             _domNodes = domNodes;
