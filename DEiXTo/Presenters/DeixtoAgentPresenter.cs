@@ -571,25 +571,22 @@ namespace DEiXTo.Presenters
         /// <param name="node"></param>
         public void OutputResultSelected(bool selected, TreeNode node)
         {
-            // TODO REMOVE DEPENDENCIEs
             if (!selected)
             {
                 return;
             }
 
-            int index = node.SourceIndex();
-            var element = _document.GetElementByIndex(index);
+            var element = _screen.GetElementFromNode(node);
 
             if (View.HighlightModeEnabled)
             {
-                _styling.UnstyleElements();
-                _styling.Style(element);
+                _screen.HighlightElement(element);
             }
 
-            var path = node.GetPath();
-
             View.FillElementInfo(node, element.OuterHtml);
-            View.SelectDOMNode(_domTree.GetNodeFor(element));
+            
+            var domNode = _screen.GetDomNode(node);
+            View.SelectDOMNode(domNode);
 
             if (View.CanAutoScroll)
             {

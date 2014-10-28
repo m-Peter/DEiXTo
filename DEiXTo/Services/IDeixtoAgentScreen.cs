@@ -17,5 +17,6 @@ namespace DEiXTo.Services
         string[] LoadUrlsFromFile(string filename);
         void WriteExtractedRecords(string filename);
         void SaveExtractionPattern(string filename, TreeNodeCollection nodes);
+        void HighlightElement(HtmlElement element);
     }
 }

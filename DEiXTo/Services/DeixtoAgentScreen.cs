@@ -92,5 +92,11 @@ namespace DEiXTo.Services
             var writer = new WriteExtractionPattern();
             writer.write(filename, nodes);
         }
+
+        public void HighlightElement(HtmlElement element)
+        {
+            _styling.UnstyleElements();
+            _styling.Style(element);
+        }
     }
 }

@@ -709,6 +709,27 @@ namespace DEiXTo.Presenters.Tests
             _screen.Verify(s => s.SaveExtractionPattern(filename, dom.Nodes));
         }
 
+        [TestMethod]
+        public void TestOutputResultSelected()
+        {
+            // Arrange
+            var element = CreateHtmlElement();
+            var node = new TreeNode("H1");
+            var domNode = new TreeNode("H1");
+            _screen.Setup(s => s.GetElementFromNode(node)).Returns(element);
+            _view.Setup(v => v.HighlightModeEnabled).Returns(true);
+            _screen.Setup(s => s.GetDomNode(node)).Returns(domNode);
+            _view.Setup(v => v.CanAutoScroll).Returns(true);
+
+            // Act
+            _presenter.OutputResultSelected(true, node);
+
+            // Assert
+            _screen.Setup(s => s.HighlightElement(element));
+            _view.Verify(v => v.FillElementInfo(node, element.OuterHtml));
+            _view.Verify(v => v.SelectDOMNode(domNode));
+        }
+
         // HELPER METHODS
         private HtmlElement CreateHtmlElement()
         {
