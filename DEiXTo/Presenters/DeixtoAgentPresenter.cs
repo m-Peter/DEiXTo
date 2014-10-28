@@ -930,12 +930,8 @@ namespace DEiXTo.Presenters
         /// <param name="node"></param>
         public void CreateAuxiliaryPattern(TreeNode node)
         {
-            // TODO REMOVE DEPENDENCIES
             View.FocusAuxiliaryTabPage();
             View.ClearAuxiliaryTree();
-
-            int index = node.SourceIndex();
-            var element = _document.GetElementByIndex(index);
 
             View.FillAuxiliaryTree(node.GetClone());
 
