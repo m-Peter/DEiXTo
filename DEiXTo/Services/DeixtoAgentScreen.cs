@@ -1,6 +1,7 @@
 ﻿using DEiXTo.Models;
 using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -36,6 +37,13 @@ namespace DEiXTo.Services
         {
             int index = node.SourceIndex();
             var element = _document.GetElementByIndex(index);
+
+            return element;
+        }
+
+        public HtmlElement GetElementFromPosition(Point position)
+        {
+            var element = _document.GetElementFromPoint(position);
 
             return element;
         }

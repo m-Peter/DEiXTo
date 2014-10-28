@@ -858,8 +858,8 @@ namespace DEiXTo.Presenters.Tests
             // Assert
             _view.Verify(v => v.ClearPatternTree());
             Assert.IsTrue(domNode.IsRoot());
-            _view.Verify(v => v.SetNodeFont(domNode));
-            _view.Verify(v => v.FillPatternTree(domNode));
+            _view.Verify(v => v.SetNodeFont(It.Is<TreeNode>(n => n.Text == "DIV")));
+            _view.Verify(v => v.FillPatternTree(It.Is<TreeNode>(n => n.Text == "DIV")));
             _view.Verify(v => v.ExpandPatternTree());
         }
 
@@ -902,6 +902,20 @@ namespace DEiXTo.Presenters.Tests
             _screen.Verify(s => s.HighlightElement(element));
             _view.Verify(v => v.FillElementInfo(node, element.OuterHtml));
             _view.Verify(v => v.SelectDOMNode(domNode));
+        }
+
+        [TestMethod]
+        public void TestWorkingPatternTextNodeClick()
+        {
+            // Arrange
+            var node = new TreeNode("TEXT");
+
+            // Act
+            _presenter.WorkingPatternNodeClick(node, MouseButtons.Left);
+
+            //Assert
+            _view.Verify(v => v.FillTextNodeElementInfo(node));
+
         }
 
         [TestMethod]

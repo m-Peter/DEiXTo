@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -10,6 +11,7 @@ namespace DEiXTo.Services
     public interface IDeixtoAgentScreen
     {
         HtmlElement GetElementFromNode(TreeNode node);
+        HtmlElement GetElementFromPosition(Point position);
         TreeNode GetDomNode(TreeNode node);
         TreeNode GetNodeFromElement(HtmlElement element);
         TreeNode LoadExtractionPattern(string filename);

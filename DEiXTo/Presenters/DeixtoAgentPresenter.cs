@@ -68,8 +68,6 @@ namespace DEiXTo.Presenters
         public void Receive(RegexAdded subject)
         {
             TreeNode node = subject.Node;
-            //int index = node.SourceIndex();
-            //var element = _document.GetElementByIndex(index);
             var element = _screen.GetElementFromNode(node);
 
             View.FillElementInfo(node, element.OuterHtml);
@@ -378,9 +376,6 @@ namespace DEiXTo.Presenters
         public void AddNextSibling(TreeNode node)
         {
             var parent = node.Parent;
-            //int index = node.SourceIndex();
-            //var tmpElem = _document.GetElementByIndex(index);
-            //var tmpNode = _domTree.GetNodeFor(tmpElem);
             var tmpNode = _screen.GetDomNode(node);
             var nextNode = tmpNode.NextNode;
 
@@ -400,9 +395,6 @@ namespace DEiXTo.Presenters
         public void AddPreviousSibling(TreeNode node)
         {
             var parent = node.Parent;
-            //int index = node.SourceIndex();
-            //var tmpElem = _document.GetElementByIndex(index);
-            //var tmpNode = _domTree.GetNodeFor(tmpElem);
             var tmpNode = _screen.GetDomNode(node);
             var prevNode = tmpNode.PrevNode;
 
@@ -875,7 +867,7 @@ namespace DEiXTo.Presenters
                 return;
             }
 
-            View.CurrentElement = _document.GetElementFromPoint(e.ClientMousePosition);
+            View.CurrentElement = _screen.GetElementFromPosition(e.ClientMousePosition);
             View.ShowBrowserMenu();
         }
 
@@ -887,7 +879,7 @@ namespace DEiXTo.Presenters
         {
             View.ClearPatternTree();
 
-            var newNode = _screen.GetNodeFromElement(element);
+            var newNode = _screen.GetNodeFromElement(element).GetClone();
             newNode.SetAsRoot();
 
             View.SetNodeFont(newNode);
@@ -905,6 +897,12 @@ namespace DEiXTo.Presenters
             if (RightButtonPressed(button))
             {
                 View.SetAdjustContextMenuFor(node);
+            }
+
+            if (node.IsTextNode())
+            {
+                View.FillTextNodeElementInfo(node);
+                return;
             }
 
             var element = _screen.GetElementFromNode(node);
