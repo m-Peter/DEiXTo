@@ -609,6 +609,30 @@ namespace DEiXTo.Presenters.Tests
             _screen.Verify(v => v.WriteExtractedRecords(It.IsAny<string>()), Times.Never);
         }
 
+        [TestMethod]
+        public void TestAddNextSiblingNode()
+        {
+            // Arrange
+            var node = new TreeNode("DIV");
+            var n1 = new TreeNode("h1");
+            node.Nodes.Add(n1);
+
+            var dom = new TreeNode("DIV");
+            var d1 = new TreeNode("h1");
+            var d2 = new TreeNode("p");
+            dom.AddNode(d1);
+            dom.AddNode(d2);
+
+            _screen.Setup(s => s.GetDomNode(n1)).Returns(d1);
+
+            // Act
+            _presenter.AddNextSibling(n1);
+
+            // Assert
+            Assert.AreEqual(2, node.Nodes.Count);
+            Assert.AreEqual(d2.Text, node.Nodes[1].Text);
+        }
+
         // HELPER METHODS
         private HtmlElement CreateHtmlElement()
         {

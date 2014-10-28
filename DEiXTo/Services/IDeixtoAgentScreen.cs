@@ -10,6 +10,7 @@ namespace DEiXTo.Services
     public interface IDeixtoAgentScreen
     {
         HtmlElement GetElementFromNode(TreeNode node);
+        TreeNode GetDomNode(TreeNode node);
         IOpenFileDialog GetTextFileDialog();
         ISaveFileDialog GetTextSaveFileDialog();
         string[] LoadUrlsFromFile(string filename);

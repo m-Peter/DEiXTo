@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DEiXTo.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -13,6 +14,7 @@ namespace DEiXTo.Services
         private TreeBuilder _builder;
         private DocumentQuery _document;
         private StatesImageLoader _imageLoader;
+        private DOMTreeStructure _domTree;
         private IViewLoader _loader;
         private ISaveFileDialog _saveFileDialog;
         private IOpenFileDialog _openFileDialog;
@@ -27,6 +29,7 @@ namespace DEiXTo.Services
             _imageLoader = new StatesImageLoader();
             _loader = new WindowsViewLoader();
             _readTargetUrls = new ReadTargetUrls();
+            _domTree = new DOMTreeStructure();
         }
 
         public HtmlElement GetElementFromNode(TreeNode node)
@@ -35,6 +38,15 @@ namespace DEiXTo.Services
             var element = _document.GetElementByIndex(index);
 
             return element;
+        }
+
+        public TreeNode GetDomNode(TreeNode node)
+        {
+            int index = node.SourceIndex();
+            var element = _document.GetElementByIndex(index);
+            var domNode = _domTree.GetNodeFor(element);
+
+            return domNode;
         }
 
         public IOpenFileDialog GetTextFileDialog()

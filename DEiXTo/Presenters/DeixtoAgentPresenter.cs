@@ -376,9 +376,10 @@ namespace DEiXTo.Presenters
         {
             // TODO REMOVE DEPENDENCIES
             var parent = node.Parent;
-            int index = node.SourceIndex();
-            var tmpElem = _document.GetElementByIndex(index);
-            var tmpNode = _domTree.GetNodeFor(tmpElem);
+            //int index = node.SourceIndex();
+            //var tmpElem = _document.GetElementByIndex(index);
+            //var tmpNode = _domTree.GetNodeFor(tmpElem);
+            var tmpNode = _screen.GetDomNode(node);
             var nextNode = tmpNode.NextNode;
 
             if (nextNode == null)
@@ -387,7 +388,7 @@ namespace DEiXTo.Presenters
             }
 
             int indx = node.Index;
-            parent.Nodes.Insert(index++, nextNode.GetClone());
+            parent.Nodes.Insert(++indx, nextNode.GetClone());
         }
 
         /// <summary>
