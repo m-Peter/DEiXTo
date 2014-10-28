@@ -32,80 +32,83 @@ namespace DEiXTo.Presenters.Tests
             _eventHub = new Mock<IEventHub>();
             _screen = new Mock<IDeixtoAgentScreen>();
 
-            _presenter = new DeixtoAgentPresenter(_view.Object, _saveFileDialog.Object, _loader.Object, _eventHub.Object, _screen.Object);
+            _presenter = new DeixtoAgentPresenter(_view.Object, _loader.Object, _eventHub.Object, _screen.Object);
         }
         
         [TestMethod]
-        public void TestForTextOutputFormatDialogAddsTextFilterAndExtesion()
+        public void TestSelectTextFormatOutputFile()
         {
             // Arrange
-            _view.Setup(v => v.OutputFileFormat).Returns(Format.Text);
+            string filename = "output_file";
+            var dialog = new Mock<ISaveFileDialog>();
+            var format = Format.Text;
+            _view.Setup(v => v.OutputFileFormat).Returns(format);
+            _screen.Setup(s => s.GetSaveFileDialog(format)).Returns(dialog.Object);
+            dialog.Setup(d => d.ShowDialog()).Returns(DialogResult.OK);
+            dialog.Setup(d => d.Filename).Returns(filename);
 
             // Act
             _presenter.SelectOutputFile();
 
             // Assert
-            _saveFileDialog.VerifySet(s => s.Filter = "Text Files (*.txt)|");
-            _saveFileDialog.VerifySet(s => s.Extension = "txt");
+            _view.VerifySet(v => v.OutputFileName = filename);
         }
 
         [TestMethod]
-        public void TestForXmlOutputFormatDialogAddsXmlFilterAndExtension()
+        public void TestSelectXmlFormatOutputFile()
         {
             // Arrange
-            _view.Setup(v => v.OutputFileFormat).Returns(Format.XML);
+            string filename = "output_file";
+            var dialog = new Mock<ISaveFileDialog>();
+            var format = Format.XML;
+            _view.Setup(v => v.OutputFileFormat).Returns(format);
+            _screen.Setup(s => s.GetSaveFileDialog(format)).Returns(dialog.Object);
+            dialog.Setup(d => d.ShowDialog()).Returns(DialogResult.OK);
+            dialog.Setup(d => d.Filename).Returns(filename);
 
             // Act
             _presenter.SelectOutputFile();
 
             // Assert
-            _saveFileDialog.VerifySet(s => s.Filter = "XML Files (*.xml)|");
-            _saveFileDialog.VerifySet(s => s.Extension = "xml");
+            _view.VerifySet(v => v.OutputFileName = filename);
         }
 
         [TestMethod]
-        public void TestForRssOutputFormatDialogAddsRssFilterAndExtesion()
+        public void TestSelectRssFormatOutputFile()
         {
             // Arrange
-            _view.Setup(v => v.OutputFileFormat).Returns(Format.RSS);
+            string filename = "output_file";
+            var dialog = new Mock<ISaveFileDialog>();
+            var format = Format.RSS;
+            _view.Setup(v => v.OutputFileFormat).Returns(format);
+            _screen.Setup(s => s.GetSaveFileDialog(format)).Returns(dialog.Object);
+            dialog.Setup(d => d.ShowDialog()).Returns(DialogResult.OK);
+            dialog.Setup(d => d.Filename).Returns(filename);
 
             // Act
             _presenter.SelectOutputFile();
             
             // Assert
-            _saveFileDialog.VerifySet(s => s.Filter = "RSS Files (*.rss)|");
-            _saveFileDialog.VerifySet(s => s.Extension = "rss");
+            _view.VerifySet(v => v.OutputFileName = filename);
         }
 
         [TestMethod]
         public void TestOutputFileSelectionAbortsForNegativeAnswer()
         {
             // Arrange
-            _view.Setup(v => v.OutputFileFormat).Returns(Format.XML);
-            _saveFileDialog.Setup(s => s.ShowDialog()).Returns(DialogResult.Abort);
+            string filename = "output_file";
+            var dialog = new Mock<ISaveFileDialog>();
+            var format = Format.XML;
+            _view.Setup(v => v.OutputFileFormat).Returns(format);
+            _screen.Setup(s => s.GetSaveFileDialog(format)).Returns(dialog.Object);
+            dialog.Setup(d => d.ShowDialog()).Returns(DialogResult.Abort);
+            dialog.Setup(d => d.Filename).Returns(filename);
 
             // Act
             _presenter.SelectOutputFile();
             
             // Assert
             _view.VerifyGet(v => v.OutputFileName, Times.Never);
-        }
-
-        [TestMethod]
-        public void TestOutputFileNameIsSetAfterSelectingFile()
-        {
-            // Arrange
-            _view.Setup(m => m.OutputFileFormat).Returns(Format.Text);
-            _saveFileDialog.Setup(m => m.ShowDialog()).Returns(DialogResult.OK);
-            _saveFileDialog.Setup(m => m.Filename).Returns("output_file");
-
-            // Act
-            _presenter.SelectOutputFile();
-
-            // Assert
-            _saveFileDialog.VerifySet(m => m.Filter = "Text Files (*.txt)|");
-            _saveFileDialog.VerifySet(m => m.Extension = "txt");
-            _view.VerifySet(m => m.OutputFileName = "output_file");
         }
 
         [TestMethod]

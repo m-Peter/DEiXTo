@@ -20,11 +20,8 @@ namespace DEiXTo.Presenters
     {
         #region Instance Variables
         private DocumentQuery _document;
-        private StatesImageLoader _imageLoader;
         private IViewLoader _loader;
         private IEventHub _eventHub;
-        private ISaveFileDialog _saveFileDialog;
-        private IOpenFileDialog _openFileDialog;
         private PatternExtraction _executor;
         private IDeixtoAgentScreen _screen;
         #endregion
@@ -36,20 +33,17 @@ namespace DEiXTo.Presenters
         public IDeixtoAgentView View { get; set; }
 
         #region Constructors
-        public DeixtoAgentPresenter(IDeixtoAgentView view, ISaveFileDialog saveFileDialog, IViewLoader loader, IEventHub eventHub, IDeixtoAgentScreen screen)
+        public DeixtoAgentPresenter(IDeixtoAgentView view, IViewLoader loader, IEventHub eventHub, IDeixtoAgentScreen screen)
         {
             View = view;
             View.Presenter = this;
             _screen = screen;
-            _imageLoader = new StatesImageLoader();
             _loader = loader;
-            _saveFileDialog = saveFileDialog;
-            _openFileDialog = new OpenFileDialogWrapper();
             _eventHub = eventHub;
 
             _eventHub.Subscribe<RegexAdded>(this);
 
-            var imagesList = _imageLoader.LoadImages();
+            var imagesList = _screen.LoadStateImages();
             View.AddWorkingPatternImages(imagesList);
             View.AddExtractionTreeImages(imagesList);
         }
@@ -320,18 +314,16 @@ namespace DEiXTo.Presenters
         public void SelectOutputFile()
         {
             var format = View.OutputFileFormat;
-            var factory = new DialogBuilderFactory();
-            var builder = factory.CreateBuilder(format);
-            builder.Build(_saveFileDialog);
+            var dialog = _screen.GetSaveFileDialog(format);
 
-            var answer = _saveFileDialog.ShowDialog();
+            var answer = dialog.ShowDialog();
 
             if (Negative(answer))
             {
                 return;
             }
 
-            string filename = _saveFileDialog.Filename;
+            string filename = dialog.Filename;
             View.OutputFileName = filename;
         }
 

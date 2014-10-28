@@ -31,6 +31,8 @@ namespace DEiXTo.Services
             _loader = new WindowsViewLoader();
             _readTargetUrls = new ReadTargetUrls();
             _domTree = new DOMTreeStructure();
+            _openFileDialog = new OpenFileDialogWrapper();
+            _saveFileDialog = new SaveFileDialogWrapper();
         }
 
         public HtmlElement GetElementFromNode(TreeNode node)
@@ -74,7 +76,7 @@ namespace DEiXTo.Services
 
         public IOpenFileDialog GetOpenFileDialog(string filter)
         {
-            _openFileDialog = new OpenFileDialogWrapper();
+            resetOpenFileDialog();
             _openFileDialog.Filter = filter;
 
             return _openFileDialog;
@@ -82,9 +84,19 @@ namespace DEiXTo.Services
 
         public ISaveFileDialog GetSaveFileDialog(string filter, string extension)
         {
-            _saveFileDialog = new SaveFileDialogWrapper();
+            resetSaveFileDialog();
             _saveFileDialog.Filter = filter;
             _saveFileDialog.Extension = extension;
+
+            return _saveFileDialog;
+        }
+
+        public ISaveFileDialog GetSaveFileDialog(Format format)
+        {
+            resetSaveFileDialog();
+            var factory = new DialogBuilderFactory();
+            var builder = factory.CreateBuilder(format);
+            builder.Build(_saveFileDialog);
 
             return _saveFileDialog;
         }
@@ -143,6 +155,24 @@ namespace DEiXTo.Services
             _domTree = _builder.BuildDOMTree(element);
 
             return _domTree.RootNode;
+        }
+
+        public ImageList LoadStateImages()
+        {
+            return _imageLoader.LoadImages();
+        }
+
+        private void resetOpenFileDialog()
+        {
+            _openFileDialog.Filename = string.Empty;
+            _openFileDialog.Filter = string.Empty;
+        }
+
+        private void resetSaveFileDialog()
+        {
+            _saveFileDialog.Filename = string.Empty;
+            _saveFileDialog.Filter = string.Empty;
+            _saveFileDialog.Extension = string.Empty;
         }
     }
 }
