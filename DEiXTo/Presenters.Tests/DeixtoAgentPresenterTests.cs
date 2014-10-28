@@ -1022,6 +1022,35 @@ namespace DEiXTo.Presenters.Tests
             _view.Verify(v => v.FillElementInfo(node, element.OuterHtml));
         }
 
+        [TestMethod]
+        public void TestBrowserCompleted()
+        {
+            // Arrange
+            string url = "http://www.google.gr";
+            var node = new TreeNode("HTML");
+            var document = CreateHtmlDocument();
+            _view.Setup(v => v.CrawlingEnabled).Returns(false);
+            _view.Setup(v => v.GetHtmlDocument()).Returns(document);
+            _view.Setup(v => v.GetDocumentUrl()).Returns(url);
+            _screen.Setup(s => s.BuildDom()).Returns(node);
+
+            // Act
+            _presenter.BrowserCompleted();
+
+            // Assert
+            _screen.Verify(s => s.ClearStyling());
+            _view.Verify(v => v.ClearSnapshotTree());
+            _view.Verify(v => v.ClearPatternTree());
+            _view.Verify(v => v.ClearAuxiliaryTree());
+            _view.Verify(v => v.ClearDOMTree());
+            _screen.Verify(s => s.CreateDocument(document));
+            _view.Verify(v => v.ClearTargetURLs());
+            _view.Verify(v => v.AppendTargetUrl(url));
+            _view.Verify(v => v.UpdateDocumentUrl());
+            _view.Verify(v => v.FillDomTree(node));
+            _view.Verify(v => v.AttachDocumentEvents());
+        }
+
         // HELPER METHODS
         private HtmlElement CreateHtmlElement()
         {

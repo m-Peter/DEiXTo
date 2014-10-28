@@ -20,7 +20,9 @@ namespace DEiXTo.Services
         void SaveExtractionPattern(string filename, TreeNodeCollection nodes);
         void HighlightElement(HtmlElement element);
         void RemoveHighlighting(HtmlElement element);
+        void ClearStyling();
         void CreateDocument(HtmlDocument document);
         TreeNode BuildSimplifiedDOM(string[] ignoredTags);
+        TreeNode BuildDom();
     }
 }

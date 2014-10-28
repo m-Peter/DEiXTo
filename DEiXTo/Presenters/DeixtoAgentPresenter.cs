@@ -1121,8 +1121,7 @@ namespace DEiXTo.Presenters
         /// </summary>
         public void BrowserCompleted()
         {
-            // TODO REMOVE DEPENDENCIES
-            _styling.Clear();
+            _screen.ClearStyling();
             View.ClearSnapshotTree();
 
             if (!View.CrawlingEnabled)
@@ -1133,15 +1132,15 @@ namespace DEiXTo.Presenters
             View.ClearAuxiliaryTree();
             View.ClearDOMTree();
 
-            _document = new DocumentQuery(View.GetHtmlDocument());
-            var elem = _document.GetHtmlElement();
+            var document = View.GetHtmlDocument();
+            _screen.CreateDocument(document);
 
             View.ClearTargetURLs();
             View.AppendTargetUrl(View.GetDocumentUrl());
             View.UpdateDocumentUrl();
 
-            _domTree = _builder.BuildDOMTree(elem);
-            View.FillDomTree(_domTree.RootNode);
+            var rootNode = _screen.BuildDom();
+            View.FillDomTree(rootNode);
             View.AttachDocumentEvents();
 
             if (DomBuilted != null)

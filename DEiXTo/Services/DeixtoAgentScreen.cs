@@ -111,6 +111,11 @@ namespace DEiXTo.Services
             _styling.Unstyle(element);
         }
 
+        public void ClearStyling()
+        {
+            _styling.Clear();
+        }
+
         public void CreateDocument(HtmlDocument document)
         {
             _document = new DocumentQuery(document);
@@ -120,6 +125,14 @@ namespace DEiXTo.Services
         {
             var element = _document.GetHtmlElement();
             _domTree = _builder.BuildSimplifiedDOMTree(element, ignoredTags);
+
+            return _domTree.RootNode;
+        }
+
+        public TreeNode BuildDom()
+        {
+            var element = _document.GetHtmlElement();
+            _domTree = _builder.BuildDOMTree(element);
 
             return _domTree.RootNode;
         }
