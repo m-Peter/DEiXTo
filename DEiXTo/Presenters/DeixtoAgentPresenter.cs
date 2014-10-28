@@ -902,29 +902,21 @@ namespace DEiXTo.Presenters
         /// <param name="button"></param>
         public void WorkingPatternNodeClick(TreeNode node, MouseButtons button)
         {
-            // TODO REMOVE DEPENDENCIES
             if (RightButtonPressed(button))
             {
                 View.SetAdjustContextMenuFor(node);
             }
 
-            if (node.IsTextNode())
-            {
-                View.FillTextNodeElementInfo(node);
-                return;
-            }
-
-            int index = node.SourceIndex();
-            var element = _document.GetElementByIndex(index);
+            var element = _screen.GetElementFromNode(node);
 
             if (View.HighlightModeEnabled)
             {
-                _styling.UnstyleElements();
-                _styling.Style(element);
+                _screen.HighlightElement(element);
             }
 
             View.FillElementInfo(node, element.OuterHtml);
-            View.SelectDOMNode(_domTree.GetNodeFor(element));
+            var domNode = _screen.GetNodeFromElement(element);
+            View.SelectDOMNode(domNode);
 
             if (View.CanAutoScroll)
             {
@@ -1147,6 +1139,7 @@ namespace DEiXTo.Presenters
         /// </summary>
         public void BrowserCompleted()
         {
+            // TODO REMOVE DEPENDENCIES
             _styling.Clear();
             View.ClearSnapshotTree();
 

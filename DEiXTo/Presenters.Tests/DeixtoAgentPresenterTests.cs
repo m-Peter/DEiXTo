@@ -863,6 +863,47 @@ namespace DEiXTo.Presenters.Tests
             _view.Verify(v => v.ExpandPatternTree());
         }
 
+        [TestMethod]
+        public void TestWorkingPatternRightNodeClick()
+        {
+            // Arrange
+            var node = new TreeNode("DIV");
+            var domNode = new TreeNode("DIV");
+            var element = CreateHtmlElement();
+            _screen.Setup(s => s.GetElementFromNode(node)).Returns(element);
+            _view.Setup(v => v.HighlightModeEnabled).Returns(true);
+            _screen.Setup(s => s.GetNodeFromElement(element)).Returns(domNode);
+
+            // Act
+            _presenter.WorkingPatternNodeClick(node, MouseButtons.Right);
+
+            // Assert
+            _view.Verify(v => v.SetAdjustContextMenuFor(node));
+            _screen.Verify(s => s.HighlightElement(element));
+            _view.Verify(v => v.FillElementInfo(node, element.OuterHtml));
+            _view.Verify(v => v.SelectDOMNode(domNode));
+        }
+
+        [TestMethod]
+        public void TestWorkingPatternNodeClick()
+        {
+            // Arrange
+            var node = new TreeNode("DIV");
+            var domNode = new TreeNode("DIV");
+            var element = CreateHtmlElement();
+            _screen.Setup(s => s.GetElementFromNode(node)).Returns(element);
+            _view.Setup(v => v.HighlightModeEnabled).Returns(true);
+            _screen.Setup(s => s.GetNodeFromElement(element)).Returns(domNode);
+
+            // Act
+            _presenter.WorkingPatternNodeClick(node, MouseButtons.Left);
+
+            // Assert
+            _screen.Verify(s => s.HighlightElement(element));
+            _view.Verify(v => v.FillElementInfo(node, element.OuterHtml));
+            _view.Verify(v => v.SelectDOMNode(domNode));
+        }
+
         // HELPER METHODS
         private HtmlElement CreateHtmlElement()
         {
