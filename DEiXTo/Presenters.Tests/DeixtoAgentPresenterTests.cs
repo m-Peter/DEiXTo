@@ -751,6 +751,46 @@ namespace DEiXTo.Presenters.Tests
             _view.Verify(v => v.ExpandPatternTree());
         }
 
+        [TestMethod]
+        public void TestSimplifyDomTree()
+        {
+            // Arrange
+            string url = "htt://www.google.gr";
+            var document = CreateHtmlDocument();
+            var node = new TreeNode("HTML");
+            string[] tags = new string[] { "em" };
+            _view.Setup(v => v.IgnoredTags()).Returns(tags);
+            _view.Setup(v => v.GetHtmlDocument()).Returns(document);
+            _screen.Setup(s => s.BuildSimplifiedDOM(tags)).Returns(node);
+            _view.Setup(v => v.Url).Returns(url);
+
+            // Act
+            _presenter.SimplifyDOMTree();
+
+            // Assert
+            _view.Verify(v => v.ClearPatternTree());
+            _view.Verify(v => v.ClearSnapshotTree());
+            _view.Verify(v => v.ClearAuxiliaryTree());
+            _view.Verify(v => v.ClearDOMTree());
+            _screen.Verify(s => s.CreateDocument(document));
+            _view.Verify(v => v.FillDomTree(node));
+            _view.Verify(v => v.ClearTargetURLs());
+            _view.Verify(v => v.AppendTargetUrl(url));
+        }
+
+        [TestMethod]
+        public void TestSimplifyDomTreeNoTagSelected()
+        {
+            // Arrange
+            _view.Setup(v => v.IgnoredTags()).Returns(new string[0]);
+
+            // Act
+            _presenter.SimplifyDOMTree();
+
+            // Assert
+            _view.Verify(v => v.ShowNoTagSelectedMessage());
+        }
+
         // HELPER METHODS
         private HtmlElement CreateHtmlElement()
         {
@@ -763,6 +803,17 @@ namespace DEiXTo.Presenters.Tests
             var elem = element[0];
 
             return elem;
+        }
+
+        private HtmlDocument CreateHtmlDocument()
+        {
+            WebBrowser browser = new WebBrowser();
+            browser.DocumentText = "<html></html>";
+            browser.Show();
+            var doc = browser.Document;
+            doc.Write("<html></html>");
+
+            return browser.Document;
         }
     }
 }

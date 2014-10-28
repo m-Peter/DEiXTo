@@ -98,5 +98,18 @@ namespace DEiXTo.Services
             _styling.UnstyleElements();
             _styling.Style(element);
         }
+
+        public void CreateDocument(HtmlDocument document)
+        {
+            _document = new DocumentQuery(document);
+        }
+
+        public TreeNode BuildSimplifiedDOM(string[] ignoredTags)
+        {
+            var element = _document.GetHtmlElement();
+            _domTree = _builder.BuildSimplifiedDOMTree(element, ignoredTags);
+
+            return _domTree.RootNode;
+        }
     }
 }

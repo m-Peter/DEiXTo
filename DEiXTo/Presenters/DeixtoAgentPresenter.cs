@@ -796,7 +796,6 @@ namespace DEiXTo.Presenters
         /// </summary>
         public void SimplifyDOMTree()
         {
-            // TODO REMOVE DEPENDENCIES
             var ignoredTags = View.IgnoredTags();
 
             if (ignoredTags.Count() == 0)
@@ -810,10 +809,11 @@ namespace DEiXTo.Presenters
             View.ClearAuxiliaryTree();
             View.ClearDOMTree();
 
-            _document = new DocumentQuery(View.GetHtmlDocument());
-            var elem = _document.GetHtmlElement();
-            _domTree = _builder.BuildSimplifiedDOMTree(elem, ignoredTags);
-            View.FillDomTree(_domTree.RootNode);
+            var document = View.GetHtmlDocument();
+            _screen.CreateDocument(document);
+            var rootNode = _screen.BuildSimplifiedDOM(ignoredTags);
+
+            View.FillDomTree(rootNode);
             View.ClearTargetURLs();
             View.AppendTargetUrl(View.Url);
         }
