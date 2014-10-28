@@ -346,20 +346,17 @@ namespace DEiXTo.Presenters
         /// </summary>
         public void SaveToDisk()
         {
-            // TODO REMOVE DEPENDENCIES
-            _saveFileDialog.Filter = "Text Files (*.txt)|";
-            _saveFileDialog.Extension = "txt";
-            var answer = _saveFileDialog.ShowDialog();
+            var saveFileDialog = _screen.GetTextSaveFileDialog();
+
+            var answer = saveFileDialog.ShowDialog();
 
             if (Negative(answer))
             {
                 return;
             }
 
-            string filename = _saveFileDialog.Filename;
-            TextRecordsWriter writer = new TextRecordsWriter(filename);
-            var records = _executor.ExtractedResults();
-            writer.Write(records);
+            string filename = saveFileDialog.Filename;
+            _screen.WriteExtractedRecords(filename);
         }
 
         /// <summary>

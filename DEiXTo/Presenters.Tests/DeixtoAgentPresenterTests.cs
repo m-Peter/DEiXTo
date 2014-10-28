@@ -562,6 +562,53 @@ namespace DEiXTo.Presenters.Tests
             _view.VerifySet(v => v.TargetURLsFile = filename);
         }
 
+        [TestMethod]
+        public void TestLoadingOfUrlsIsAbortedIfUserDoesNotSelectFile()
+        {
+            // Arrange
+            var dialog = new Mock<IOpenFileDialog>();
+            _screen.Setup(s => s.GetTextFileDialog()).Returns(dialog.Object);
+            dialog.Setup(d => d.ShowDialog()).Returns(DialogResult.Abort);
+
+            // Act
+            _presenter.LoadURLsFromFile();
+
+            // Assert
+            _screen.Verify(s => s.LoadUrlsFromFile("output_file"), Times.Never);
+        }
+
+        [TestMethod]
+        public void TestSaveToDisk()
+        {
+            // Arrange
+            string filename = "extracted_records";
+            var dialog = new Mock<ISaveFileDialog>();
+            dialog.Setup(d => d.ShowDialog()).Returns(DialogResult.OK);
+            dialog.Setup(d => d.Filename).Returns(filename);
+            _screen.Setup(s => s.GetTextSaveFileDialog()).Returns(dialog.Object);
+
+            // Act
+            _presenter.SaveToDisk();
+
+            // Assert
+            _screen.Verify(s => s.WriteExtractedRecords(filename));
+        }
+
+        [TestMethod]
+        public void TestSaveToDiskAbortsIfUserDoesNotSelectOutputFile()
+        {
+            // Arrange
+            var dialog = new Mock<ISaveFileDialog>();
+            _screen.Setup(s => s.GetTextSaveFileDialog()).Returns(dialog.Object);
+            dialog.Setup(d => d.ShowDialog()).Returns(DialogResult.Abort);
+
+            // Act
+            _presenter.SaveToDisk();
+
+            // Assert
+            _screen.Verify(v => v.WriteExtractedRecords(It.IsAny<string>()), Times.Never);
+        }
+
         // HELPER METHODS
         private HtmlElement CreateHtmlElement()
         {

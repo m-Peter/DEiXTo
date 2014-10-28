@@ -18,6 +18,7 @@ namespace DEiXTo.Services
         private IOpenFileDialog _openFileDialog;
         private PatternExtraction _executor;
         private ReadTargetUrls _readTargetUrls;
+        private TextRecordsWriter _recordsWriter;
 
         public DeixtoAgentScreen()
         {
@@ -44,10 +45,26 @@ namespace DEiXTo.Services
             return _openFileDialog;
         }
 
+        public ISaveFileDialog GetTextSaveFileDialog()
+        {
+            _saveFileDialog = new SaveFileDialogWrapper();
+            _saveFileDialog.Filter = "Text Files (*.txt)|";
+            _saveFileDialog.Extension = "txt";
+
+            return _saveFileDialog;
+        }
+
         public string[] LoadUrlsFromFile(string filename)
         {
             var urls = _readTargetUrls.Read(filename);
             return urls;
+        }
+
+        public void WriteExtractedRecords(string filename)
+        {
+            _recordsWriter = new TextRecordsWriter(filename);
+            var records = _executor.ExtractedResults();
+            _recordsWriter.Write(records);
         }
     }
 }
