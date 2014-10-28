@@ -961,7 +961,6 @@ namespace DEiXTo.Presenters
         /// <param name="button"></param>
         public void DOMNodeClick(TreeNode node, MouseButtons button)
         {
-            // TODO REMOVE DEPENDENCIES
             if (RightButtonPressed(button))
             {
                 View.SetContextMenuFor(node);
@@ -973,13 +972,9 @@ namespace DEiXTo.Presenters
                 return;
             }
 
-            _styling.UnstyleElements();
-            // Retrieve the HTML element that corresponds to the DOM TreeNode
-            int index = node.SourceIndex();
-            var element = _document.GetElementByIndex(index);
-            // Style the HTML element in the WebBrowser
-            _styling.Style(element);
+            var element = _screen.GetElementFromNode(node);
 
+            _screen.HighlightElement(element);
             View.FillElementInfo(node, element.OuterHtml);
 
             if (View.CanAutoScroll)

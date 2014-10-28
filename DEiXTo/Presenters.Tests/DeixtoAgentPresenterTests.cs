@@ -938,6 +938,57 @@ namespace DEiXTo.Presenters.Tests
             _view.Verify(v => v.ExpandPatternTree());
         }
 
+        [TestMethod]
+        public void TestDOMNodeClick()
+        {
+            // Arrange
+            var element = CreateHtmlElement();
+            var node = new TreeNode("DIV");
+            _screen.Setup(s => s.GetElementFromNode(node)).Returns(element);
+            _view.Setup(v => v.CanAutoScroll).Returns(true);
+
+            // Act
+            _presenter.DOMNodeClick(node, MouseButtons.Left);
+            
+            // Assert
+            _screen.Verify(s => s.HighlightElement(element));
+            _view.Verify(v => v.FillElementInfo(node, element.OuterHtml));
+        }
+
+        [TestMethod]
+        public void TestDOMNodeRightClick()
+        {
+            // Arrange
+            var element = CreateHtmlElement();
+            var node = new TreeNode("DIV");
+            _screen.Setup(s => s.GetElementFromNode(node)).Returns(element);
+            _view.Setup(v => v.CanAutoScroll).Returns(true);
+
+            // Act
+            _presenter.DOMNodeClick(node, MouseButtons.Right);
+
+            // Assert
+            _view.Verify(v => v.SetContextMenuFor(node));
+            _screen.Verify(s => s.HighlightElement(element));
+            _view.Verify(v => v.FillElementInfo(node, element.OuterHtml));
+        }
+
+        [TestMethod]
+        public void TestDOMTextNodeClick()
+        {
+            // Arrange
+            var element = CreateHtmlElement();
+            var node = new TreeNode("TEXT");
+            _screen.Setup(s => s.GetElementFromNode(node)).Returns(element);
+            _view.Setup(v => v.CanAutoScroll).Returns(true);
+
+            // Act
+            _presenter.DOMNodeClick(node, MouseButtons.Left);
+
+            // Assert
+            _view.Verify(v => v.FillTextNodeElementInfo(node));
+        }
+
         // HELPER METHODS
         private HtmlElement CreateHtmlElement()
         {
