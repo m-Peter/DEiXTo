@@ -19,11 +19,8 @@ namespace DEiXTo.Presenters
     public class DeixtoAgentPresenter : ISubscriber<RegexAdded>
     {
         #region Instance Variables
-        private ElementStyling _styling;
-        private TreeBuilder _builder;
         private DocumentQuery _document;
         private StatesImageLoader _imageLoader;
-        private DOMTreeStructure _domTree;
         private IViewLoader _loader;
         private IEventHub _eventHub;
         private ISaveFileDialog _saveFileDialog;
@@ -44,8 +41,6 @@ namespace DEiXTo.Presenters
             View = view;
             View.Presenter = this;
             _screen = screen;
-            _styling = new ElementStyling();
-            _builder = new TreeBuilder();
             _imageLoader = new StatesImageLoader();
             _loader = loader;
             _saveFileDialog = saveFileDialog;
