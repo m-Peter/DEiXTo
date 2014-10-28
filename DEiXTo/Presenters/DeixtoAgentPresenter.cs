@@ -399,9 +399,10 @@ namespace DEiXTo.Presenters
         {
             // TODO REMOVE DEPENDENCIES
             var parent = node.Parent;
-            int index = node.SourceIndex();
-            var tmpElem = _document.GetElementByIndex(index);
-            var tmpNode = _domTree.GetNodeFor(tmpElem);
+            //int index = node.SourceIndex();
+            //var tmpElem = _document.GetElementByIndex(index);
+            //var tmpNode = _domTree.GetNodeFor(tmpElem);
+            var tmpNode = _screen.GetDomNode(node);
             var prevNode = tmpNode.PrevNode;
 
             if (prevNode == null)
