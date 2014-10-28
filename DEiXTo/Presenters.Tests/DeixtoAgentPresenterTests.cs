@@ -841,6 +841,28 @@ namespace DEiXTo.Presenters.Tests
             _view.Verify(v => v.ExpandAuxiliaryTree());
         }
 
+        [TestMethod]
+        public void TestCreateWorkingPatternFromDocument()
+        {
+            // Arrange
+            var element = CreateHtmlElement();
+            var node = new TreeNode("DIV");
+            var domNode = new TreeNode("DIV");
+            NodeInfo nInfo = new NodeInfo();
+            domNode.Tag = nInfo;
+            _screen.Setup(s => s.GetNodeFromElement(element)).Returns(domNode);
+
+            // Act
+            _presenter.CreateWorkingPatternFromDocument(element);
+
+            // Assert
+            _view.Verify(v => v.ClearPatternTree());
+            Assert.IsTrue(domNode.IsRoot());
+            _view.Verify(v => v.SetNodeFont(domNode));
+            _view.Verify(v => v.FillPatternTree(domNode));
+            _view.Verify(v => v.ExpandPatternTree());
+        }
+
         // HELPER METHODS
         private HtmlElement CreateHtmlElement()
         {

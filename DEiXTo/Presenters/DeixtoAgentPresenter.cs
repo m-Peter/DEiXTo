@@ -885,16 +885,13 @@ namespace DEiXTo.Presenters
         /// <param name="element"></param>
         public void CreateWorkingPatternFromDocument(HtmlElement element)
         {
-            // TODO REMOVE DEPENDENCIES
             View.ClearPatternTree();
 
-            var node = _domTree.GetNodeFor(element);
-            var newNode = _domTree.GetNodeFor(element).GetClone();
+            var newNode = _screen.GetNodeFromElement(element);
             newNode.SetAsRoot();
 
             View.SetNodeFont(newNode);
             View.FillPatternTree(newNode);
-
             View.ExpandPatternTree();
         }
 
