@@ -1,4 +1,5 @@
-﻿using DEiXTo.Presenters;
+﻿using DEiXTo.Models;
+using DEiXTo.Presenters;
 using System;
 using System.Windows.Forms;
 
@@ -11,6 +12,7 @@ namespace DEiXTo.Views
     {
         DeixtoAgentPresenter Presenter { get; set; }
 
+        DeixtoWrapper Wrapper { get; set; } 
         string Url { get; }
         HtmlElement CurrentElement { get; set; }
         bool HighlightModeEnabled { get; }

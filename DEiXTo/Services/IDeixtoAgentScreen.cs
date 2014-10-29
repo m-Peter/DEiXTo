@@ -30,5 +30,6 @@ namespace DEiXTo.Services
         TreeNode BuildDom();
         ImageList LoadStateImages();
         IExtraction Execute(TreeNode pattern, TreeNodeCollection domNodes);
+        void SaveWrapper(string filename, TreeNode pattern);
     }
 }

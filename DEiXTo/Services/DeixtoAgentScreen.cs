@@ -175,6 +175,11 @@ namespace DEiXTo.Services
             return result;
         }
 
+        public void SaveWrapper(string filename, TreeNode pattern)
+        {
+
+        }
+
         private void resetOpenFileDialog()
         {
             _openFileDialog.Filename = string.Empty;

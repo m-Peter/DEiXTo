@@ -50,7 +50,7 @@ namespace DEiXTo.Views
             DeixtoAgentTooltip.SetToolTip(this.CrawlingCheckBox, "Check this to handle records that span in many pages");
             DeixtoAgentTooltip.SetToolTip(this.GoButton, "Run in auto mode");
             DeixtoAgentTooltip.SetToolTip(this.OpenButton, "Open Project File");
-            DeixtoAgentTooltip.SetToolTip(this.SaveButton, "Open Project File");
+            DeixtoAgentTooltip.SetToolTip(this.SaveWrapperButton, "Open Project File");
             ListViewItem item1 = new ListViewItem(new string[] { "title", "Channel name", "The name of the channel. It's how people refer to your service. If you have an HTML website that contains the same information as your RSS file, the title of your channel should be the same as the title of your website.", "GoUpstate.com News Headlines" });
             ListViewItem item2 = new ListViewItem(new string[] { "link", "http://mycomputer.mydomain.com", "The URL to the HTML website corresponding to the channel.", "http://goupstate.com" });
             ListViewItem item3 = new ListViewItem(new string[] { "description", "ΔEiXTo generated RSS feed", "Phrase or sentence describing the channel.", "The latest news from GoUpstate.com, a Spartanburn Herald-Journal Web site." });
@@ -89,6 +89,13 @@ namespace DEiXTo.Views
         #endregion
 
         #region Public Methods
+
+        public DeixtoWrapper Wrapper
+        {
+            get;
+            set;
+        }
+
         /// <summary>
         /// Get the URL specified by the user
         /// </summary>
@@ -1225,5 +1232,10 @@ namespace DEiXTo.Views
             Presenter.LoadURLsFromFile();
         }
         #endregion
+
+        private void SaveWrapperButton_Click(object sender, EventArgs e)
+        {
+            Presenter.SaveWrapper();
+        }
     }
 }

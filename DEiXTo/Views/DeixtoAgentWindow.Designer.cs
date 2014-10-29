@@ -63,7 +63,7 @@
             this.WorkingPatternTreeView = new System.Windows.Forms.TreeView();
             this.SettingsTabControl = new System.Windows.Forms.TabControl();
             this.ProjectInfo = new System.Windows.Forms.TabPage();
-            this.SaveButton = new System.Windows.Forms.Button();
+            this.SaveWrapperButton = new System.Windows.Forms.Button();
             this.OpenButton = new System.Windows.Forms.Button();
             this.GoButton = new System.Windows.Forms.Button();
             this.CrawlingGroupBox = new System.Windows.Forms.GroupBox();
@@ -660,7 +660,7 @@
             // 
             // ProjectInfo
             // 
-            this.ProjectInfo.Controls.Add(this.SaveButton);
+            this.ProjectInfo.Controls.Add(this.SaveWrapperButton);
             this.ProjectInfo.Controls.Add(this.OpenButton);
             this.ProjectInfo.Controls.Add(this.GoButton);
             this.ProjectInfo.Controls.Add(this.CrawlingGroupBox);
@@ -679,15 +679,16 @@
             this.ProjectInfo.Text = "Project Info";
             this.ProjectInfo.UseVisualStyleBackColor = true;
             // 
-            // SaveButton
+            // SaveWrapperButton
             // 
-            this.SaveButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.SaveButton.Location = new System.Drawing.Point(440, 331);
-            this.SaveButton.Name = "SaveButton";
-            this.SaveButton.Size = new System.Drawing.Size(77, 25);
-            this.SaveButton.TabIndex = 10;
-            this.SaveButton.Text = "Save";
-            this.SaveButton.UseVisualStyleBackColor = true;
+            this.SaveWrapperButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.SaveWrapperButton.Location = new System.Drawing.Point(440, 331);
+            this.SaveWrapperButton.Name = "SaveWrapperButton";
+            this.SaveWrapperButton.Size = new System.Drawing.Size(77, 25);
+            this.SaveWrapperButton.TabIndex = 10;
+            this.SaveWrapperButton.Text = "Save";
+            this.SaveWrapperButton.UseVisualStyleBackColor = true;
+            this.SaveWrapperButton.Click += new System.EventHandler(this.SaveWrapperButton_Click);
             // 
             // OpenButton
             // 
@@ -2043,7 +2044,7 @@
         private System.Windows.Forms.GroupBox OutputModeGroupBox;
         private System.Windows.Forms.GroupBox SubmitFormGroupBox;
         private System.Windows.Forms.GroupBox OutputFileGroupBox;
-        private System.Windows.Forms.Button SaveButton;
+        private System.Windows.Forms.Button SaveWrapperButton;
         private System.Windows.Forms.Button OpenButton;
         private System.Windows.Forms.Button GoButton;
         private System.Windows.Forms.TextBox AddURLTextBox;

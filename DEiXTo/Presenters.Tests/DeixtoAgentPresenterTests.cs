@@ -10,6 +10,7 @@ using DEiXTo.Services;
 using System.Windows.Forms;
 using DEiXTo.Models;
 using System.Drawing;
+using mshtml;
 
 namespace DEiXTo.Presenters.Tests
 {
@@ -1112,6 +1113,32 @@ namespace DEiXTo.Presenters.Tests
             _view.Verify(v => v.ExpandExtractionTree());
         }
 
+        [TestMethod]
+        public void TestSaveWrapper()
+        {
+            // Arrange
+            var node = new TreeNode("DIV");
+            var n1 = new TreeNode("H1");
+            var n2 = new TreeNode("P");
+            var nodes = node.Nodes;
+            var wrapper = new DeixtoWrapper();
+            string filter = "Wrapper Project Files (*.wpf)|";
+            string extension = "wpf";
+            string filename = "deixto_wrapper";
+            var dialog = new Mock<ISaveFileDialog>();
+            _screen.Setup(s => s.GetSaveFileDialog(filter, extension)).Returns(dialog.Object);
+            dialog.Setup(d => d.ShowDialog()).Returns(DialogResult.OK);
+            _view.Setup(v => v.Wrapper).Returns(wrapper);
+            dialog.Setup(d => d.Filename).Returns(filename);
+            _view.Setup(v => v.GetExtractionPattern()).Returns(node);
+
+            // Act
+            _presenter.SaveWrapper();
+
+            // Assert
+            _screen.Verify(s => s.SaveWrapper(filename, node));
+        }
+
         // HELPER METHODS
         private HtmlElement CreateHtmlElement()
         {
@@ -1121,6 +1148,19 @@ namespace DEiXTo.Presenters.Tests
             var doc = browser.Document;
             doc.Write("<li></li>");
             var element = doc.GetElementsByTagName("li");
+            var elem = element[0];
+
+            return elem;
+        }
+
+        private HtmlElement CreateHtmlElementWithAttribute()
+        {
+            WebBrowser browser = new WebBrowser();
+            browser.DocumentText = "<a href='projects' id='projects_link'>Projects</a>";
+            browser.Show();
+            var doc = browser.Document;
+            doc.Write("<a href='projects' id='projects_link'>Projects</a>");
+            var element = doc.GetElementsByTagName("a");
             var elem = element[0];
 
             return elem;

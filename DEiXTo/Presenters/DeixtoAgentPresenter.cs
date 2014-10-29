@@ -2,7 +2,6 @@
 using System;
 using System.Linq;
 using System.Windows.Forms;
-using mshtml;
 using DEiXTo.Services;
 using DEiXTo.Models;
 using System.Drawing;
@@ -1156,6 +1155,26 @@ namespace DEiXTo.Presenters
             {
                 DomBuilted();
             }
+        }
+
+        public void SaveWrapper()
+        {
+            string filter = "Wrapper Project Files (*.wpf)|";
+            string extension = "wpf";
+            var dialog = _screen.GetSaveFileDialog(filter, extension);
+
+            var answer = dialog.ShowDialog();
+
+            if (Negative(answer))
+            {
+                return;
+            }
+
+            var wrapper = View.Wrapper;
+            string filename = dialog.Filename;
+            var pattern = View.GetExtractionPattern();
+
+            _screen.SaveWrapper(filename, pattern);
         }
         #endregion
     }
