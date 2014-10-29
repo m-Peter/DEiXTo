@@ -10,7 +10,6 @@ using DEiXTo.Services;
 using System.Windows.Forms;
 using DEiXTo.Models;
 using System.Drawing;
-using mshtml;
 
 namespace DEiXTo.Presenters.Tests
 {
@@ -1130,13 +1129,12 @@ namespace DEiXTo.Presenters.Tests
             dialog.Setup(d => d.ShowDialog()).Returns(DialogResult.OK);
             _view.Setup(v => v.Wrapper).Returns(wrapper);
             dialog.Setup(d => d.Filename).Returns(filename);
-            _view.Setup(v => v.GetExtractionPattern()).Returns(node);
 
             // Act
             _presenter.SaveWrapper();
 
             // Assert
-            _screen.Verify(s => s.SaveWrapper(filename, node));
+            _screen.Verify(s => s.SaveWrapper(wrapper, filename));
         }
 
         // HELPER METHODS

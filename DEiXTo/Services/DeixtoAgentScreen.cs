@@ -175,9 +175,10 @@ namespace DEiXTo.Services
             return result;
         }
 
-        public void SaveWrapper(string filename, TreeNode pattern)
+        public void SaveWrapper(DeixtoWrapper wrapper, string filename)
         {
-
+            var writer = new WriteWrapper(wrapper);
+            writer.write(filename, wrapper.ExtractionPattern.Nodes);
         }
 
         private void resetOpenFileDialog()

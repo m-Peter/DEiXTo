@@ -6,6 +6,7 @@ using DEiXTo.Services;
 using DEiXTo.Models;
 using System.Drawing;
 using System.Collections.Generic;
+using mshtml;
 
 namespace DEiXTo.Presenters
 {
@@ -1172,9 +1173,8 @@ namespace DEiXTo.Presenters
 
             var wrapper = View.Wrapper;
             string filename = dialog.Filename;
-            var pattern = View.GetExtractionPattern();
 
-            _screen.SaveWrapper(filename, pattern);
+            _screen.SaveWrapper(wrapper, filename);
         }
         #endregion
     }

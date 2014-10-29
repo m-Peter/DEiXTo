@@ -113,6 +113,7 @@
     <Compile Include="Services\WindowsViewLoader.cs" />
     <Compile Include="Services\TextRecordsWriter.cs" />
     <Compile Include="Services\WriteExtractionPattern.cs" />
+    <Compile Include="Services\WriteWrapper.cs" />
     <Compile Include="Services\XmlDialogBuilder.cs" />
     <Compile Include="Services\XmlRecordsWriter.cs" />
     <Compile Include="Views\AddLabelWindow.cs">
