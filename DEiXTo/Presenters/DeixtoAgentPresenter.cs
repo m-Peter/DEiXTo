@@ -7,6 +7,7 @@ using DEiXTo.Models;
 using System.Drawing;
 using System.Collections.Generic;
 using mshtml;
+using System.Text;
 
 namespace DEiXTo.Presenters
 {
@@ -799,7 +800,7 @@ namespace DEiXTo.Presenters
         /// </summary>
         public void SimplifyDOMTree()
         {
-            var ignoredTags = View.IgnoredTags();
+            var ignoredTags = View.IgnoredTags;
 
             if (ignoredTags.Count() == 0)
             {
@@ -1101,7 +1102,7 @@ namespace DEiXTo.Presenters
                 return;
             }
 
-            var documentValidator = new DocumentValidatorFactory().CreateValidator(url);
+            var documentValidator = _screen.CreateValidator(url);
 
             if (!documentValidator.IsValid())
             {
@@ -1160,6 +1161,57 @@ namespace DEiXTo.Presenters
 
         public void SaveWrapper()
         {
+            var targetUrls = View.TargetUrls;
+            var inputFile = View.TargetURLsFile;
+
+            if (targetUrls.Count() == 0 && String.IsNullOrWhiteSpace(inputFile))
+            {
+                View.ShowSpecifyInputSourceMessage();
+                return;
+            }
+
+            if (targetUrls.Count() > 0 && !string.IsNullOrWhiteSpace(inputFile))
+            {
+                View.ShowSelectOneInputSourceMessage();
+                return;
+            }
+
+            var pattern = View.GetExtractionPatternNodes();
+
+            if (pattern.Count == 0)
+            {
+                View.ShowSpecifyExtractionPatternMessage();
+                return;
+            }
+
+            var wrapper = new DeixtoWrapper();
+
+            if (String.IsNullOrWhiteSpace(inputFile))
+            {
+                wrapper.TargetUrls = targetUrls;
+            }
+            else
+            {
+                wrapper.InputFile = inputFile;
+            }
+
+            wrapper.ExtractionPattern = View.ExtractionPattern;
+            wrapper.AutoFill = View.AutoFill;
+            wrapper.Delay = View.Delay;
+            wrapper.ExtractNativeUrl = View.ExtractNativeUrl;
+            wrapper.FormInputName = View.FormInputName;
+            wrapper.FormName = View.FormName;
+            wrapper.FormTerm = View.FormTerm;
+            wrapper.HtmlNextLink = View.HtmlNextLink;
+            wrapper.IgnoredTags = View.IgnoredTags;
+            wrapper.MaxCrawlingDepth = View.MaxCrawlingDepth;
+            wrapper.MultiPageCrawling = View.MultiPageCrawling;
+            wrapper.NumberOfHits = View.NumberOfHits;
+            wrapper.OutputFileName = View.OutputFileName;
+            wrapper.OutputFormat = View.OutputFormat;
+            wrapper.OutputMode = View.OutputMode;
+
+
             string filter = "Wrapper Project Files (*.wpf)|";
             string extension = "wpf";
             var dialog = _screen.GetSaveFileDialog(filter, extension);
@@ -1171,10 +1223,44 @@ namespace DEiXTo.Presenters
                 return;
             }
 
-            var wrapper = View.Wrapper;
             string filename = dialog.Filename;
 
-            _screen.SaveWrapper(wrapper, filename);
+            _screen.SaveWrapper(wrapper, pattern, filename);
+        }
+
+        public void LoadWrapper()
+        {
+            string filter = "Wrapper Project Files (*.wpf)|";
+            var dialog = _screen.GetOpenFileDialog(filter);
+
+            var answer = dialog.ShowDialog();
+
+            if (Negative(answer))
+            {
+                return;
+            }
+
+            string filename = dialog.Filename;
+
+            var wrapper = _screen.LoadWrapper(filename);
+            View.AutoFill = wrapper.AutoFill;
+            View.Delay = wrapper.Delay;
+            View.ExtractionPattern = wrapper.ExtractionPattern;
+            View.ExtractNativeUrl = wrapper.ExtractNativeUrl;
+            View.FormInputName = wrapper.FormInputName;
+            View.FormName = wrapper.FormName;
+            View.FormTerm = wrapper.FormTerm;
+            View.HtmlNextLink = wrapper.HtmlNextLink;
+            View.IgnoredTags = wrapper.IgnoredTags;
+            View.InputFile = wrapper.InputFile;
+            View.MaxCrawlingDepth = wrapper.MaxCrawlingDepth;
+            View.MultiPageCrawling = wrapper.MultiPageCrawling;
+            View.NumberOfHits = wrapper.NumberOfHits;
+            View.OutputFileName = wrapper.OutputFileName;
+            View.OutputFormat = wrapper.OutputFormat;
+            View.OutputMode = wrapper.OutputMode;
+            View.TargetUrls = wrapper.TargetUrls;
+            View.ExpandExtractionTree();
         }
         #endregion
     }

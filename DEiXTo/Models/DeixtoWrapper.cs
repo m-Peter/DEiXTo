@@ -27,10 +27,4 @@ namespace DEiXTo.Models
         public int Delay { get; set; }
         public bool ExtractNativeUrl { get; set; }
     }
-
-    public enum OutputMode
-    {
-        Overwrite,
-        Append
-    }
 }

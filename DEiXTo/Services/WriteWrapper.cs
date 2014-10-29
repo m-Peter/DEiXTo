@@ -12,97 +12,147 @@ namespace DEiXTo.Services
     public class WriteWrapper
     {
         private DeixtoWrapper _wrapper;
+        private XmlWriter _writer;
 
         public WriteWrapper(DeixtoWrapper wrapper)
         {
             _wrapper = wrapper;
         }
 
+        private void writeInputFile()
+        {
+            _writer.WriteStartElement("InputFile"); // Write InputFile
+            _writer.WriteAttributeString("Filename", _wrapper.InputFile); // Write Filename attribute
+            _writer.WriteEndElement(); // Close InputFile element
+        }
+
+        private void writeTargetUrls()
+        {
+            _writer.WriteStartElement("TargetUrls"); // Write TargetUrls element
+
+            if (_wrapper.TargetUrls == null)
+            {
+                _writer.WriteEndElement(); // Close TargetUrls element
+                return;
+            }
+
+            foreach (var url in _wrapper.TargetUrls)
+            {
+                _writer.WriteStartElement("URL"); // Write URL element
+                _writer.WriteAttributeString("Address", url); // Write Address attribute
+                _writer.WriteEndElement(); // Close URL element
+            }
+
+            _writer.WriteEndElement(); // Close TargetUrls element
+        }
+
+        private void writeMultiPage()
+        {
+            _writer.WriteStartElement("MultiplePage"); // Write MultiplePage element
+            _writer.WriteAttributeString("Enabled", _wrapper.MultiPageCrawling ? "true" : "false"); // Write Enabled attribute
+            _writer.WriteAttributeString("ContainsText", _wrapper.HtmlNextLink); // Write ContainsText attribute
+            _writer.WriteAttributeString("MaxCrawlDepth", _wrapper.MaxCrawlingDepth.ToString()); // Write MaxCrawlDepth attribute
+            _writer.WriteEndElement(); // Close MultiplePage element
+        }
+
+        private void writeMaxHits()
+        {
+            _writer.WriteStartElement("MaxHits"); // Write MaxHits element
+            _writer.WriteAttributeString("Value", _wrapper.NumberOfHits.ToString()); // Write Value attribute
+            _writer.WriteEndElement(); // Close MaxHits element
+        }
+
+        private void writeExtractPageUrl()
+        {
+            _writer.WriteStartElement("ExtractPageURL"); // Write ExtractPageUrl element
+            _writer.WriteAttributeString("Enabled", _wrapper.ExtractNativeUrl ? "true" : "false"); // Write Enabled attribute
+            _writer.WriteEndElement(); // Close ExtractpageUrl element
+        }
+
+        private void writeSubmitForm()
+        {
+            _writer.WriteStartElement("SubmitForm"); // Write SubmitForm element
+            _writer.WriteAttributeString("Enabled", _wrapper.AutoFill ? "true" : "false"); // Write Enabled attribute
+            _writer.WriteAttributeString("FormName", _wrapper.FormName); // Write FormName attribute
+            _writer.WriteAttributeString("InputName", _wrapper.FormInputName); // Write InputName attribute
+            _writer.WriteAttributeString("Term", _wrapper.FormTerm); // Write Term attribute
+            _writer.WriteEndElement(); // Close SubmitForm element
+        }
+
+        private void writeExtractionPattern(TreeNodeCollection nodes)
+        {
+            _writer.WriteStartElement("ExtractionPattern"); // Write ExtractionPattern element
+            writeNodes1(nodes, true);
+            _writer.WriteEndElement(); // Close ExtractionPattern element
+        }
+
+        private void writeIgnoredTags()
+        {
+            _writer.WriteStartElement("IgnoredTagsList"); // Write IgnoredTagsList element
+
+            foreach (var tag in _wrapper.IgnoredTags)
+            {
+                _writer.WriteStartElement("IgnoredTag"); // Write IgnoredTag element
+                _writer.WriteAttributeString("Label", tag); // Write the Label attribute
+                _writer.WriteEndElement(); // Close IgnoredTag element
+            }
+
+            _writer.WriteEndElement(); // Close IgnoredTagsList element
+        }
+
+        private void writeOutputFile()
+        {
+            _writer.WriteStartElement("OutputFile"); // Write OutputFile element
+            _writer.WriteAttributeString("Filename", _wrapper.OutputFileName); // Write Filename attribute
+
+            string format = null;
+            
+            if (_wrapper.OutputFormat == Format.Text)
+            {
+                format = "TabDelimited";
+            }
+            else if (_wrapper.OutputFormat == Format.XML)
+            {
+                format = "XML";
+            }
+            else if (_wrapper.OutputFormat == Format.RSS)
+            {
+                format = "RSS";
+            }
+            
+            _writer.WriteAttributeString("Format", format); // Write Format attribute
+            _writer.WriteAttributeString("FileMode", _wrapper.OutputMode.ToString()); // Write FileMode attribute
+            _writer.WriteEndElement(); // Close OutputFile element
+        }
+
         public void write(string filename, TreeNodeCollection nodes)
         {
             XmlWriterSettings settings = new XmlWriterSettings();
             settings.Indent = true;
-            using (XmlWriter writer = XmlWriter.Create(filename, settings))
+
+            using (_writer = XmlWriter.Create(filename, settings))
             {
-                writer.WriteStartDocument(); // Write the first line
-                writer.WriteDocType("Project", null, "wpf.dtd", null); // Write the DOCTYPE
+                _writer.WriteStartDocument(); // Write the first line
+                _writer.WriteDocType("Project", null, "wpf.dtd", null); // Write the DOCTYPE
 
-                writer.WriteStartElement("Project"); // Write Project element
+                _writer.WriteStartElement("Project"); // Write Project element
 
-                writer.WriteStartElement("InputFile"); // Write InputFile
-                writer.WriteAttributeString("Filename", _wrapper.InputFile); // Write Filename attribute
-                writer.WriteEndElement(); // Close InputFile element
+                writeInputFile();
+                writeTargetUrls();
+                writeMultiPage();
+                writeMaxHits();
+                writeExtractPageUrl();
+                writeSubmitForm();
+                writeExtractionPattern(nodes);
+                writeIgnoredTags();
+                writeOutputFile();
 
-                writer.WriteStartElement("TargetUrls"); // Write TargetUrls element
-
-                foreach (var url in _wrapper.TargetUrls)
-                {
-                    writer.WriteStartElement("URL"); // Write URL element
-                    writer.WriteAttributeString("Address", url); // Write Address attribute
-                    writer.WriteEndElement(); // Close URL element
-                }
-
-                writer.WriteEndElement(); // Close TargetUrls element
-
-                writer.WriteStartElement("MultiplePage"); // Write MultiplePage element
-                writer.WriteAttributeString("Enabled", _wrapper.MultiPageCrawling ? "true" : "false"); // Write Enabled attribute
-                writer.WriteAttributeString("ContainsText", _wrapper.HtmlNextLink); // Write ContainsText attribute
-                writer.WriteAttributeString("MaxCrawlDepth", _wrapper.MaxCrawlingDepth.ToString()); // Write MaxCrawlDepth attribute
-                writer.WriteEndElement(); // Close MultiplePage element
-
-                writer.WriteStartElement("MaxHits"); // Write MaxHits element
-                writer.WriteAttributeString("Value", _wrapper.NumberOfHits.ToString()); // Write Value attribute
-                writer.WriteEndElement(); // Close MaxHits element
-
-                writer.WriteStartElement("ExtractPageUrl"); // Write ExtractPageUrl element
-                writer.WriteAttributeString("Enabled", _wrapper.ExtractNativeUrl ? "true" : "false"); // Write Enabled attribute
-                writer.WriteEndElement(); // Close ExtractpageUrl element
-
-                writer.WriteStartElement("SubmitForm"); // Write SubmitForm element
-                writer.WriteAttributeString("Enabled", _wrapper.AutoFill ? "true" : "false"); // Write Enabled attribute
-                writer.WriteAttributeString("FormName", _wrapper.FormName); // Write FormName attribute
-                writer.WriteAttributeString("InputName", _wrapper.FormInputName); // Write InputName attribute
-                writer.WriteAttributeString("Term", _wrapper.FormTerm); // Write Term attribute
-                writer.WriteEndElement(); // Close SubmitForm element
-
-                writer.WriteStartElement("ExtractionPattern"); // Write ExtractionPattern element
-                writeNodes1(writer, nodes, true);
-                writer.WriteEndElement(); // Close ExtractionPattern element
-
-                writer.WriteStartElement("IgnoredTagsList"); // Write IgnoredTagsList element
-                foreach (var tag in _wrapper.IgnoredTags)
-                {
-                    writer.WriteStartElement("IgnoredTag"); // Write IgnoredTag element
-                    writer.WriteAttributeString("Label", tag); // Write the Label attribute
-                    writer.WriteEndElement(); // Close IgnoredTag element
-                }
-                writer.WriteEndElement(); // Close IgnoredTagsList element
-
-                writer.WriteStartElement("OutputFile"); // Write OutputFile element
-                writer.WriteAttributeString("Filename", _wrapper.OutputFileName); // Write Filename attribute
-                string format = null;
-                if (_wrapper.OutputFormat == Format.Text)
-                {
-                    format = "TabDelimited";
-                }
-                else if (_wrapper.OutputFormat == Format.XML)
-                {
-                    format = "XML";
-                }
-                else if (_wrapper.OutputFormat == Format.RSS)
-                {
-                    format = "RSS";
-                }
-                writer.WriteAttributeString("Format", format); // Write Format attribute
-                writer.WriteAttributeString("FileMode", _wrapper.OutputMode.ToString()); // Write FileMode attribute
-                writer.WriteEndElement(); // Close OutputFile element
-
-                writer.WriteEndElement(); // Close Project element
-                writer.WriteEndDocument(); // Close the document
+                _writer.WriteEndElement(); // Close Project element
+                _writer.WriteEndDocument(); // Close the document
             }
         }
 
-        private void writeNodes1(XmlWriter writer, TreeNodeCollection nodes, bool isRoot)
+        private void writeNodes1(TreeNodeCollection nodes, bool isRoot)
         {
             foreach (TreeNode node in nodes)
             {
@@ -111,18 +161,18 @@ namespace DEiXTo.Services
                     continue;
                 }
 
-                writer.WriteStartElement("Node"); // Write Node element
-                writer.WriteAttributeString("tag", node.Text); // Write tag attribute
+                _writer.WriteStartElement("Node"); // Write Node element
+                _writer.WriteAttributeString("tag", node.Text); // Write tag attribute
                 string stateIndex = getStateIndex1(node.SelectedImageIndex);
-                writer.WriteAttributeString("stateIndex", stateIndex); // Write stateIndex attribute
+                _writer.WriteAttributeString("stateIndex", stateIndex); // Write stateIndex attribute
 
                 if (isRoot)
                 {
-                    writer.WriteAttributeString("IsRoot", "true");
+                    _writer.WriteAttributeString("IsRoot", "true");
                 }
 
-                writeNodes1(writer, node.Nodes, false);
-                writer.WriteEndElement(); // Close Node Element
+                writeNodes1(node.Nodes, false);
+                _writer.WriteEndElement(); // Close Node Element
             }
         }
 

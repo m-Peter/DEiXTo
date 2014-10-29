@@ -30,6 +30,8 @@ namespace DEiXTo.Services
         TreeNode BuildDom();
         ImageList LoadStateImages();
         IExtraction Execute(TreeNode pattern, TreeNodeCollection domNodes);
-        void SaveWrapper(DeixtoWrapper wrapper, string filename);
+        void SaveWrapper(DeixtoWrapper wrapper, TreeNodeCollection nodes, string filename);
+        DeixtoWrapper LoadWrapper(string filename);
+        IDocumentValidator CreateValidator(string url);
     }
 }

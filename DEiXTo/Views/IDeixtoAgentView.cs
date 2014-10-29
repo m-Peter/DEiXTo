@@ -12,7 +12,25 @@ namespace DEiXTo.Views
     {
         DeixtoAgentPresenter Presenter { get; set; }
 
-        DeixtoWrapper Wrapper { get; set; } 
+        string[] IgnoredTags { get; set; }
+        string[] TargetUrls { get; set; }
+        OutputMode OutputMode { get; set; }
+        Format OutputFormat { get; set; }
+        string OutputFileName { get; set; }
+        int NumberOfHits { get; set; }
+        bool MultiPageCrawling { get; set; }
+        int MaxCrawlingDepth { get; set; }
+        string InputFile { get; set; }
+        string FormTerm { get; set; }
+        string FormInputName { get; set; }
+        string FormName { get; set; }
+        bool ExtractNativeUrl { get; set; }
+        TreeNode ExtractionPattern { get; set; }
+        int Delay { get; set; }
+        bool AutoFill { get; set; }
+        string HtmlNextLink { get; set; }
+
+        DeixtoWrapper Wrapper { get; set; }
         string Url { get; }
         HtmlElement CurrentElement { get; set; }
         bool HighlightModeEnabled { get; }
@@ -54,6 +72,8 @@ namespace DEiXTo.Views
         int CrawlingDepth();
         string HtmlLink();
         void ShowSpecifyExtractionPatternMessage();
+        void ShowSpecifyInputSourceMessage();
+        void ShowSelectOneInputSourceMessage();
         void ShowSpecifyTargetURLMessage();
         void AppendTargetUrl(string url);
         void AppendTargetUrls(string[] urls);
@@ -72,7 +92,7 @@ namespace DEiXTo.Views
         void SetContextMenuFor(TreeNode node);
         void SetAdjustContextMenuFor(TreeNode node);
         void ShowBrowserMenu();
-        string[] IgnoredTags();
+
         void AttachDocumentEvents();
         void DeleteSnapshotInstance(TreeNode node);
         bool AskUserToClearTreeViews();
@@ -84,6 +104,7 @@ namespace DEiXTo.Views
         TreeNodeCollection GetDOMTreeNodes();
         TreeNodeCollection GetBodyTreeNodes();
         TreeNodeCollection GetPatternTreeNodes();
+        TreeNodeCollection GetExtractionPatternNodes();
         void AddOutputColumn(string columnHeader);
         void AddOutputItem(string[] contents, TreeNode node);
         void WritePageResults(string message);
@@ -94,7 +115,6 @@ namespace DEiXTo.Views
         void ShowCannotDeleteRootMessage();
         void ApplyStateToNode(TreeNode node, int imageIndex);
         bool OutputFileSpecified { get; }
-        string OutputFileName { get; set; }
         Format OutputFileFormat { get; }
     }
 }

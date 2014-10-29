@@ -175,10 +175,25 @@ namespace DEiXTo.Services
             return result;
         }
 
-        public void SaveWrapper(DeixtoWrapper wrapper, string filename)
+        public void SaveWrapper(DeixtoWrapper wrapper, TreeNodeCollection nodes, string filename)
         {
             var writer = new WriteWrapper(wrapper);
-            writer.write(filename, wrapper.ExtractionPattern.Nodes);
+            writer.write(filename, nodes);
+        }
+
+        public DeixtoWrapper LoadWrapper(string filename)
+        {
+            var reader = new ReadWrapperSettings();
+            var wrapper = reader.read(filename);
+
+            return wrapper;
+        }
+
+        public IDocumentValidator CreateValidator(string url)
+        {
+            var documentValidator = new DocumentValidatorFactory().CreateValidator(url);
+
+            return documentValidator;
         }
 
         private void resetOpenFileDialog()

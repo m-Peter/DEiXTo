@@ -64,7 +64,7 @@
             this.SettingsTabControl = new System.Windows.Forms.TabControl();
             this.ProjectInfo = new System.Windows.Forms.TabPage();
             this.SaveWrapperButton = new System.Windows.Forms.Button();
-            this.OpenButton = new System.Windows.Forms.Button();
+            this.OpenWrapperButton = new System.Windows.Forms.Button();
             this.GoButton = new System.Windows.Forms.Button();
             this.CrawlingGroupBox = new System.Windows.Forms.GroupBox();
             this.HTMLLinkTextBox = new System.Windows.Forms.TextBox();
@@ -661,7 +661,7 @@
             // ProjectInfo
             // 
             this.ProjectInfo.Controls.Add(this.SaveWrapperButton);
-            this.ProjectInfo.Controls.Add(this.OpenButton);
+            this.ProjectInfo.Controls.Add(this.OpenWrapperButton);
             this.ProjectInfo.Controls.Add(this.GoButton);
             this.ProjectInfo.Controls.Add(this.CrawlingGroupBox);
             this.ProjectInfo.Controls.Add(this.OptionsGroupBox);
@@ -690,15 +690,16 @@
             this.SaveWrapperButton.UseVisualStyleBackColor = true;
             this.SaveWrapperButton.Click += new System.EventHandler(this.SaveWrapperButton_Click);
             // 
-            // OpenButton
+            // OpenWrapperButton
             // 
-            this.OpenButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.OpenButton.Location = new System.Drawing.Point(440, 295);
-            this.OpenButton.Name = "OpenButton";
-            this.OpenButton.Size = new System.Drawing.Size(77, 30);
-            this.OpenButton.TabIndex = 9;
-            this.OpenButton.Text = "Open";
-            this.OpenButton.UseVisualStyleBackColor = true;
+            this.OpenWrapperButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.OpenWrapperButton.Location = new System.Drawing.Point(440, 295);
+            this.OpenWrapperButton.Name = "OpenWrapperButton";
+            this.OpenWrapperButton.Size = new System.Drawing.Size(77, 30);
+            this.OpenWrapperButton.TabIndex = 9;
+            this.OpenWrapperButton.Text = "Open";
+            this.OpenWrapperButton.UseVisualStyleBackColor = true;
+            this.OpenWrapperButton.Click += new System.EventHandler(this.OpenWrapperButton_Click);
             // 
             // GoButton
             // 
@@ -2045,7 +2046,7 @@
         private System.Windows.Forms.GroupBox SubmitFormGroupBox;
         private System.Windows.Forms.GroupBox OutputFileGroupBox;
         private System.Windows.Forms.Button SaveWrapperButton;
-        private System.Windows.Forms.Button OpenButton;
+        private System.Windows.Forms.Button OpenWrapperButton;
         private System.Windows.Forms.Button GoButton;
         private System.Windows.Forms.TextBox AddURLTextBox;
         private System.Windows.Forms.Label OutputFileFormatLabel;

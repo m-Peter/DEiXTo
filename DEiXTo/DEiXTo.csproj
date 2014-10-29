@@ -54,10 +54,12 @@
     <Compile Include="Models\DeixtoWrapper.cs" />
     <Compile Include="Models\DOMTreeStructure.cs" />
     <Compile Include="Models\ExtractionResult.cs" />
+    <Compile Include="Models\Format.cs" />
     <Compile Include="Models\IExtraction.cs" />
     <Compile Include="Models\NodeState.cs" />
     <Compile Include="Models\NodeInfo.cs" />
     <Compile Include="Models\OutputFormat.cs" />
+    <Compile Include="Models\OutputMode.cs" />
     <Compile Include="Models\Result.cs" />
     <Compile Include="Presenters.Tests\AddLabelPresenterTests.cs" />
     <Compile Include="Presenters.Tests\AddSiblingOrderPresenterTests.cs" />
@@ -94,6 +96,7 @@
     <Compile Include="Services\OpenFileDialogWrapper.cs" />
     <Compile Include="Services\ReadExtractionPattern.cs" />
     <Compile Include="Services\ReadTargetUrls.cs" />
+    <Compile Include="Services\ReadWrapperSettings.cs" />
     <Compile Include="Services\RecordsWriterFactory.cs" />
     <Compile Include="Services\RegexAdded.cs" />
     <Compile Include="Services\RssDialogBuilder.cs" />

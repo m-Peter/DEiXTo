@@ -489,9 +489,13 @@ namespace DEiXTo.Presenters.Tests
         public void TestBrowsesToUrlWhenEnterPressed()
         {
             // Arrange
+            var validator = new Mock<IDocumentValidator>();
             var args = new KeyEventArgs(Keys.Enter);
             var url = "http://www.google.gr/";
             _view.Setup(v => v.Url).Returns(url);
+            _screen.Setup(s => s.CreateValidator(url)).Returns(validator.Object);
+            validator.Setup(v => v.IsValid()).Returns(true);
+            validator.Setup(v => v.Url()).Returns(url);
 
             // Act
             _presenter.KeyDownPress(args);
@@ -762,7 +766,7 @@ namespace DEiXTo.Presenters.Tests
             var document = CreateHtmlDocument();
             var node = new TreeNode("HTML");
             string[] tags = new string[] { "em" };
-            _view.Setup(v => v.IgnoredTags()).Returns(tags);
+            _view.Setup(v => v.IgnoredTags).Returns(tags);
             _view.Setup(v => v.GetHtmlDocument()).Returns(document);
             _screen.Setup(s => s.BuildSimplifiedDOM(tags)).Returns(node);
             _view.Setup(v => v.Url).Returns(url);
@@ -785,7 +789,7 @@ namespace DEiXTo.Presenters.Tests
         public void TestSimplifyDomTreeNoTagSelected()
         {
             // Arrange
-            _view.Setup(v => v.IgnoredTags()).Returns(new string[0]);
+            _view.Setup(v => v.IgnoredTags).Returns(new string[0]);
 
             // Act
             _presenter.SimplifyDOMTree();
@@ -1119,22 +1123,68 @@ namespace DEiXTo.Presenters.Tests
             var node = new TreeNode("DIV");
             var n1 = new TreeNode("H1");
             var n2 = new TreeNode("P");
+            node.AddNode(n1);
+            node.AddNode(n2);
             var nodes = node.Nodes;
-            var wrapper = new DeixtoWrapper();
             string filter = "Wrapper Project Files (*.wpf)|";
             string extension = "wpf";
             string filename = "deixto_wrapper";
             var dialog = new Mock<ISaveFileDialog>();
             _screen.Setup(s => s.GetSaveFileDialog(filter, extension)).Returns(dialog.Object);
             dialog.Setup(d => d.ShowDialog()).Returns(DialogResult.OK);
-            _view.Setup(v => v.Wrapper).Returns(wrapper);
             dialog.Setup(d => d.Filename).Returns(filename);
+            _view.Setup(v => v.TargetUrls).Returns(new string[] {"http://www.teilar.gr"});
+            _view.Setup(v => v.TargetURLsFile).Returns("");
+            _view.Setup(v => v.GetExtractionPatternNodes()).Returns(nodes);
 
             // Act
             _presenter.SaveWrapper();
 
             // Assert
-            _screen.Verify(s => s.SaveWrapper(wrapper, filename));
+            _screen.Verify(s => s.SaveWrapper(It.IsAny<DeixtoWrapper>(), nodes, filename));
+        }
+
+        [TestMethod]
+        public void TestSavingWrapperRequiresOneInputSource()
+        {
+            // Arrange
+            _view.Setup(v => v.TargetUrls).Returns(new string[0]);
+            _view.Setup(v => v.TargetURLsFile).Returns(String.Empty);
+
+            // Act
+            _presenter.SaveWrapper();
+
+            // Assert
+            _view.Verify(v => v.ShowSpecifyInputSourceMessage());
+        }
+
+        [TestMethod]
+        public void TestSavingWrapperAcceptsOnlyOneInputSource()
+        {
+            // Arrange
+            _view.Setup(v => v.TargetUrls).Returns(new string[] {"http://www.teilar.gr"});
+            _view.Setup(v => v.TargetURLsFile).Returns("some_file");
+
+            // Act
+            _presenter.SaveWrapper();
+
+            // Assert
+            _view.Verify(v => v.ShowSelectOneInputSourceMessage());
+        }
+
+        [TestMethod]
+        public void TestSavingWrapperRequiresExtractionPattern()
+        {
+            // Arrange
+            var node = new TreeNode("DIV");
+            _view.Setup(v => v.TargetURLsFile).Returns("some_file");
+            _view.Setup(v => v.GetExtractionPatternNodes()).Returns(node.Nodes);
+
+            // Act
+            _presenter.SaveWrapper();
+
+            // Assert
+            _view.Verify(v => v.ShowSpecifyExtractionPatternMessage());
         }
 
         // HELPER METHODS

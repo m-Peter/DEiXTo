@@ -1,11 +1,4 @@
-﻿public enum Format
-{
-    Text,
-    XML,
-    RSS
-}
-
-public struct OutputFormat
+﻿public struct OutputFormat
 {
     #region Instance Variables
     private Format _format;

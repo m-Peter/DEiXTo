@@ -11,7 +11,6 @@ namespace DEiXTo.Presenters
     public class MainPresenter : ISubscriber<EventArgs>
     {
         #region Instance Variables
-        //private readonly IMainView _view;
         private readonly IViewLoader _viewLoader;
         private readonly IEventHub _eventHub;
         // count the number of childs contained in the associated View

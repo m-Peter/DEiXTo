@@ -27,17 +27,21 @@ namespace DEiXTo.Presenters.Tests
         [TestMethod]
         public void TestCreateNewAgent()
         {
+            // Act
             _presenter.CreateNewAgent();
-
+            
+            // Assert
             _loader.Verify(m => m.LoadAgentView("Agent 1", _view.Object));
         }
 
         [TestMethod]
         public void TestCreatingNewAgentsIncreasesFormCounter()
         {
+            // Act
             _presenter.CreateNewAgent();
             _presenter.CreateNewAgent();
 
+            // Assert
             _loader.Verify(m => m.LoadAgentView("Agent 2", _view.Object));
             Assert.AreEqual(2, _presenter.FormCounter);
         }
@@ -45,70 +49,92 @@ namespace DEiXTo.Presenters.Tests
         [TestMethod]
         public void TestFormCounterIsResetWhenAllAgentWindowsAreClosed()
         {
+            // Act
             _presenter.CreateNewAgent();
 
+            // Assert
             _loader.Verify(m => m.LoadAgentView("Agent 1", _view.Object));
             Assert.AreEqual(1, _presenter.FormCounter);
 
+            // Act
             _presenter.CloseAgentWindows();
 
+            // Assert
             Assert.AreEqual(0, _presenter.FormCounter);
         }
 
         [TestMethod]
         public void TestFormCounterIsReducedByOneWhenSingleAgentIsClose()
         {
+            // Act
             _presenter.CreateNewAgent();
             _presenter.CreateNewAgent();
 
+            // Assert
             _loader.Verify(m => m.LoadAgentView("Agent 2", _view.Object));
             Assert.AreEqual(2, _presenter.FormCounter);
 
+            // Act
             _presenter.Receive(null);
 
+            // Assert
             Assert.AreEqual(1, _presenter.FormCounter);
         }
 
         [TestMethod]
         public void TestCascadeAgents()
         {
+            // Act
             _presenter.CascadeAgentWindows();
 
+            // Assert
             _view.Verify(m => m.CascadeAgents());
         }
 
         [TestMethod]
         public void TestCloseAgents()
         {
+            // Act
             _presenter.CloseAgentWindows();
 
+            // Assert
             _view.Verify(m => m.CloseAgents());
         }
 
         [TestMethod]
         public void TestFloatAgents()
         {
+            // Act
             _presenter.FloatAgentWindows();
 
+            // Assert
             _view.Verify(m => m.FloatAgents());
         }
 
         [TestMethod]
         public void TestCloseMainWindowPromptsUser()
         {
-            _presenter.WindowClosing(new FormClosingEventArgs(CloseReason.UserClosing, true));
+            // Arrange
+            var args = new FormClosingEventArgs(CloseReason.UserClosing, true);
+            
+            // Act
+            _presenter.WindowClosing(args);
 
+            // Assert
             _view.Verify(m => m.AskUserToConfirmClosing());
         }
 
         [TestMethod]
         public void TestMainWindowRemainsOpenWithNegativeResponse()
         {
+            // Arrange
             var args = new FormClosingEventArgs(CloseReason.UserClosing, false);
             _view.Setup(m => m.AskUserToConfirmClosing()).Returns(false);
             
+            // Act
             _presenter.WindowClosing(args);
 
+            // Assert
             _view.Verify(m => m.AskUserToConfirmClosing());
             Assert.IsTrue(args.Cancel);
         }
@@ -116,11 +142,14 @@ namespace DEiXTo.Presenters.Tests
         [TestMethod]
         public void TestMainWindowClosesWithPositiveResponse()
         {
+            // Arrange
             var args = new FormClosingEventArgs(CloseReason.UserClosing, false);
             _view.Setup(m => m.AskUserToConfirmClosing()).Returns(true);
 
+            // Act
             _presenter.WindowClosing(args);
 
+            // Assert
             _view.Verify(m => m.AskUserToConfirmClosing());
             Assert.IsFalse(args.Cancel);
         }

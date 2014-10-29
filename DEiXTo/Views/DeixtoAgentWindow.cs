@@ -49,7 +49,7 @@ namespace DEiXTo.Views
             DeixtoAgentTooltip.SetToolTip(this.HitsNUD, "Considered only if > 0");
             DeixtoAgentTooltip.SetToolTip(this.CrawlingCheckBox, "Check this to handle records that span in many pages");
             DeixtoAgentTooltip.SetToolTip(this.GoButton, "Run in auto mode");
-            DeixtoAgentTooltip.SetToolTip(this.OpenButton, "Open Project File");
+            DeixtoAgentTooltip.SetToolTip(this.OpenWrapperButton, "Open Project File");
             DeixtoAgentTooltip.SetToolTip(this.SaveWrapperButton, "Open Project File");
             ListViewItem item1 = new ListViewItem(new string[] { "title", "Channel name", "The name of the channel. It's how people refer to your service. If you have an HTML website that contains the same information as your RSS file, the title of your channel should be the same as the title of your website.", "GoUpstate.com News Headlines" });
             ListViewItem item2 = new ListViewItem(new string[] { "link", "http://mycomputer.mydomain.com", "The URL to the HTML website corresponding to the channel.", "http://goupstate.com" });
@@ -92,8 +92,216 @@ namespace DEiXTo.Views
 
         public DeixtoWrapper Wrapper
         {
-            get;
-            set;
+            get
+            {
+                DeixtoWrapper wrapper = new DeixtoWrapper();
+
+                //wrapper.AutoFill = AutoFillCheckBox.Checked;
+                //wrapper.HtmlNextLink = HTMLLinkTextBox.Text;
+                //wrapper.Delay = (int)DelayNUD.Value;
+                //wrapper.ExtractionPattern = ExtractionPatternTreeView.Nodes[0];
+                //wrapper.ExtractNativeUrl = ExtractURLCheckBox.Checked;
+                //wrapper.FormName = FormNameTextBox.Text;
+                //wrapper.FormInputName = InputNameTextBox.Text;
+                //wrapper.FormTerm = SearchQueryTextBox.Text;
+                //wrapper.IgnoredTags = IgnoredTags();
+                //wrapper.InputFile = URLsFileTextBox.Text;
+                //wrapper.MaxCrawlingDepth = CrawlingDepth();
+                //wrapper.MultiPageCrawling = CrawlingEnabled;
+                //wrapper.NumberOfHits = (int)HitsNUD.Value;
+                //wrapper.OutputFileName = OutputFileNameTextBox.Text;
+                //wrapper.OutputFormat = OutputFileFormat;
+                //wrapper.OutputMode = OverwriteRadioBtn.Checked ? OutputMode.Overwrite : OutputMode.Append;
+                //wrapper.TargetUrls = TargetUrls();
+
+                return wrapper;
+            }
+            set
+            {
+
+            }
+        }
+
+        public string[] TargetUrls
+        {
+            get
+            {
+                var count = TargetURLsListBox.Items.Count;
+                string[] targetUrls = new string[count];
+
+                int i = 0;
+                foreach (string url in TargetURLsListBox.Items)
+                {
+                    targetUrls[i] = url;
+                    i++;
+                }
+
+                return targetUrls;
+            }
+            set
+            {
+                TargetURLsListBox.Items.AddRange(value);
+            }
+        }
+
+        /// <summary>
+        /// Collects all the tags from the ListBox that are checked.
+        /// </summary>
+        /// <returns>An string array with the checked tags.</returns>
+        public string[] IgnoredTags
+        {
+            get
+            {
+                var items = HTMLTagsListBox.CheckedItems;
+                string[] ignoredTags = new string[items.Count];
+                int i = 0;
+                foreach (var item in items)
+                {
+                    var tag = item as string;
+                    ignoredTags[i] = tag;
+                    i++;
+                }
+
+                return ignoredTags;
+            }
+            set
+            {
+                foreach (string tag in value)
+                {
+                    var index = HTMLTagsListBox.Items.IndexOf(tag);
+                    HTMLTagsListBox.SetItemChecked(index, true);
+                }
+            }
+        }
+
+        public OutputMode OutputMode
+        {
+            get { return OverwriteRadioBtn.Checked ? OutputMode.Overwrite : OutputMode.Append; }
+            set
+            {
+                if (value == global::OutputMode.Overwrite)
+                {
+                    OverwriteRadioBtn.Checked = true;
+                }
+                else if (value == global::OutputMode.Append)
+                {
+                    AppendRadioBtn.Checked = true;
+                }
+            }
+        }
+
+        public Format OutputFormat
+        {
+            get { return OutputFileFormat; }
+            set
+            {
+                foreach (var item in OutputFileFormatComboBox.Items)
+                {
+                    var fitem = (OutputFormat)item;
+                    if (fitem.Format == value)
+                    {
+                        OutputFileFormatComboBox.SelectedItem = item;
+                    }
+                }
+            }
+        }
+
+        public Format OutputFileFormat
+        {
+            get
+            {
+                OutputFormat type = (OutputFormat)OutputFileFormatComboBox.SelectedItem;
+                return type.Format;
+            }
+        }
+
+        public string OutputFileName
+        {
+            get { return OutputFileNameTextBox.Text; }
+            set { OutputFileNameTextBox.Text = value; }
+        }
+
+        public int NumberOfHits
+        {
+            get { return (int)HitsNUD.Value; }
+            set { HitsNUD.Value = value; }
+        }
+
+        public bool MultiPageCrawling
+        {
+            get { return CrawlingEnabled; }
+            set
+            {
+                CrawlingCheckBox.Checked = value;
+                ApplyVisibilityStateInCrawling(value);
+            }
+        }
+
+        public int MaxCrawlingDepth
+        {
+            get { return CrawlingDepth(); }
+            set
+            {
+                CrawlingDepthNUD.Value = value;
+            }
+        }
+
+        public string InputFile
+        {
+            get { return URLsFileTextBox.Text; }
+            set { URLsFileTextBox.Text = value; }
+        }
+
+        public string FormTerm
+        {
+            get { return SearchQueryTextBox.Text; }
+            set { SearchQueryTextBox.Text = value; }
+        }
+
+        public string FormInputName
+        {
+            get { return InputNameTextBox.Text; }
+            set { InputNameTextBox.Text = value; }
+        }
+
+        public string FormName
+        {
+            get { return FormNameTextBox.Text; }
+            set { FormNameTextBox.Text = value; }
+        }
+
+        public bool ExtractNativeUrl
+        {
+            get { return ExtractURLCheckBox.Checked; }
+            set { ExtractURLCheckBox.Checked = value; }
+        }
+
+        public TreeNode ExtractionPattern
+        {
+            get { return ExtractionPatternTreeView.Nodes[0]; }
+            set { ExtractionPatternTreeView.Nodes.Add(value); }
+        }
+
+        public int Delay
+        {
+            get { return (int)DelayNUD.Value; }
+            set { DelayNUD.Value = value; }
+        }
+
+        public bool AutoFill
+        {
+            get { return AutoFillCheckBox.Checked; }
+            set
+            {
+                AutoFillCheckBox.Checked = value;
+                ApplyVisibilityStateInAutoFill(value);
+            }
+        }
+
+        public string HtmlNextLink
+        {
+            get { return HTMLLinkTextBox.Text; }
+            set { HTMLLinkTextBox.Text = value; }
         }
 
         /// <summary>
@@ -199,6 +407,19 @@ namespace DEiXTo.Views
         public void ShowSpecifyURLMessage()
         {
             MessageBox.Show("Please specify URL!", "DEiXTo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public void ShowSpecifyInputSourceMessage()
+        {
+            MessageBox.Show("Please specify target URLs or input file.", "DEiXTo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+        }
+
+        public void ShowSelectOneInputSourceMessage()
+        {
+            MessageBox.Show("Please select just one input source", "DEiXTo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
         }
 
         /// <summary>
@@ -482,6 +703,8 @@ namespace DEiXTo.Views
             TargetURLsListBox.Items.AddRange(urls);
         }
 
+        
+
         /// <summary>
         /// Clear all the URLs from the TargetURLs collection.
         /// </summary>
@@ -671,24 +894,7 @@ namespace DEiXTo.Views
             get { return BrowserMenuStrip.Enabled; }
         }
 
-        /// <summary>
-        /// Collects all the tags from the ListBox that are checked.
-        /// </summary>
-        /// <returns>An string array with the checked tags.</returns>
-        public string[] IgnoredTags()
-        {
-            var items = HTMLTagsListBox.CheckedItems;
-            string[] ignoredTags = new string[items.Count];
-            int i = 0;
-            foreach (var item in items)
-            {
-                var tag = item as string;
-                ignoredTags[i] = tag;
-                i++;
-            }
-
-            return ignoredTags;
-        }
+        
 
         /// <summary>
         /// 
@@ -842,27 +1048,6 @@ namespace DEiXTo.Views
         /// <summary>
         /// 
         /// </summary>
-        public string OutputFileName
-        {
-            get { return OutputFileNameTextBox.Text; }
-            set { OutputFileNameTextBox.Text = value; }
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        public Format OutputFileFormat
-        {
-            get
-            {
-                OutputFormat type = (OutputFormat)OutputFileFormatComboBox.SelectedItem;
-                return type.Format;
-            }
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
         /// <param name="columnHeader"></param>
         public void AddOutputColumn(string columnHeader)
         {
@@ -918,6 +1103,11 @@ namespace DEiXTo.Views
         public TreeNode GetExtractionPattern()
         {
             return ExtractionPatternTreeView.Nodes[0];
+        }
+
+        public TreeNodeCollection GetExtractionPatternNodes()
+        {
+            return ExtractionPatternTreeView.Nodes;
         }
         #endregion
 
@@ -1236,6 +1426,11 @@ namespace DEiXTo.Views
         private void SaveWrapperButton_Click(object sender, EventArgs e)
         {
             Presenter.SaveWrapper();
+        }
+
+        private void OpenWrapperButton_Click(object sender, EventArgs e)
+        {
+            Presenter.LoadWrapper();
         }
     }
 }
