@@ -13,5 +13,6 @@ namespace DEiXTo.Services
         string Filename { get; set; }
         string Extension { get; set; }
         DialogResult ShowDialog();
+        void Reset();
     }
 }

@@ -52,7 +52,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Models\DeixtoWrapper.cs" />
-    <Compile Include="Models\DOMTreeStructure.cs" />
+    <Compile Include="Models\DOMTree.cs" />
     <Compile Include="Models\ExtractionResult.cs" />
     <Compile Include="Models\Format.cs" />
     <Compile Include="Models\IExtraction.cs" />

@@ -17,11 +17,11 @@ namespace DEiXTo.Services
         /// </summary>
         /// <param name="element">The root HtmlElement</param>
         /// <returns>The DOMTreeStructure representation</returns>
-        public DOMTreeStructure BuildDOMTree(HtmlElement element)
+        public DOMTree BuildDOMTree(HtmlElement element)
         {
             var domNode = element.DomElement as IHTMLDOMNode;
             var rootNode = new TreeNode();
-            DOMTreeStructure domTree = new DOMTreeStructure();
+            DOMTree domTree = new DOMTree();
             BuildDOMTreeRec(domNode, rootNode, domTree);
             domTree.RootNode = rootNode.FirstNode;
             return domTree;
@@ -33,11 +33,11 @@ namespace DEiXTo.Services
         /// <param name="element"></param>
         /// <param name="ignoredTags"></param>
         /// <returns></returns>
-        public DOMTreeStructure BuildSimplifiedDOMTree(HtmlElement element, string[] ignoredTags)
+        public DOMTree BuildSimplifiedDOMTree(HtmlElement element, string[] ignoredTags)
         {
             var domNode = element.DomElement as IHTMLDOMNode;
             var rootNode = new TreeNode();
-            DOMTreeStructure domTree = new DOMTreeStructure();
+            DOMTree domTree = new DOMTree();
             BuildSimpliefiedDOMTreeRec(domNode, rootNode, domTree, ignoredTags);
             domTree.RootNode = rootNode.FirstNode;
             return domTree;
@@ -69,7 +69,7 @@ namespace DEiXTo.Services
         /// <param name="domTree"></param>
         /// <param name="ignoredTags"></param>
         /// <param name="pInfo"></param>
-        private void AddTextNode(IHTMLDOMNode element, TreeNode node, DOMTreeStructure domTree, string[] ignoredTags, NodeInfo pInfo)
+        private void AddTextNode(IHTMLDOMNode element, TreeNode node, DOMTree domTree, string[] ignoredTags, NodeInfo pInfo)
         {
             IHTMLDOMChildrenCollection childrenElements = element.childNodes as IHTMLDOMChildrenCollection;
             int len = childrenElements.length;
@@ -119,7 +119,7 @@ namespace DEiXTo.Services
         /// <param name="node"></param>
         /// <param name="domTree"></param>
         /// <param name="ignoredTags"></param>
-        private void BuildSimpliefiedDOMTreeRec(IHTMLDOMNode element, TreeNode node, DOMTreeStructure domTree, string[] ignoredTags)
+        private void BuildSimpliefiedDOMTreeRec(IHTMLDOMNode element, TreeNode node, DOMTree domTree, string[] ignoredTags)
         {
             // P
             //    TEXT
@@ -169,7 +169,7 @@ namespace DEiXTo.Services
         /// <param name="tmpNode"></param>
         /// <param name="domTree"></param>
         /// <param name="ignoredTags"></param>
-        private void InsertChildNodesIgnored(IHTMLDOMNode element, NodeInfo pInfo, TreeNode tmpNode, DOMTreeStructure domTree, string[] ignoredTags)
+        private void InsertChildNodesIgnored(IHTMLDOMNode element, NodeInfo pInfo, TreeNode tmpNode, DOMTree domTree, string[] ignoredTags)
         {
             IHTMLDOMChildrenCollection childrenElements = element.childNodes as IHTMLDOMChildrenCollection;
             int len = childrenElements.length;
@@ -215,7 +215,7 @@ namespace DEiXTo.Services
         /// <param name="element"></param>
         /// <param name="node"></param>
         /// <param name="domTree"></param>
-        private TreeNode InsertNode(IHTMLDOMNode element, TreeNode node, DOMTreeStructure domTree)
+        private TreeNode InsertNode(IHTMLDOMNode element, TreeNode node, DOMTree domTree)
         {
             var newNode = node.Nodes.Add(element.nodeName);
             domTree.Add(element, newNode);
@@ -251,7 +251,7 @@ namespace DEiXTo.Services
         /// <summary>
         /// 
         /// </summary>
-        private void InsertChildNodes(IHTMLDOMNode element, NodeInfo pInfo, TreeNode newNode, DOMTreeStructure domTree)
+        private void InsertChildNodes(IHTMLDOMNode element, NodeInfo pInfo, TreeNode newNode, DOMTree domTree)
         {
             IHTMLDOMChildrenCollection childrenElements = element.childNodes as IHTMLDOMChildrenCollection;
             int len = childrenElements.length;
@@ -310,7 +310,7 @@ namespace DEiXTo.Services
         /// <param name="element"></param>
         /// <param name="node"></param>
         /// <param name="domTree"></param>
-        private void BuildDOMTreeRec(IHTMLDOMNode element, TreeNode node, DOMTreeStructure domTree)
+        private void BuildDOMTreeRec(IHTMLDOMNode element, TreeNode node, DOMTree domTree)
         {
             if (IgnoredElement(element))
             {

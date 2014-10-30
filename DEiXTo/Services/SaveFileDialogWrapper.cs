@@ -7,7 +7,7 @@ using System.Windows.Forms;
 
 namespace DEiXTo.Services
 {
-    public class SaveFileDialogWrapper : ISaveFileDialog
+    public class SaveFileDialogWrapper : ISaveFileDialog, IDisposable
     {
         private readonly SaveFileDialog _dialog;
 
@@ -56,6 +56,25 @@ namespace DEiXTo.Services
         public DialogResult ShowDialog()
         {
             return _dialog.ShowDialog();
+        }
+
+        public void Reset()
+        {
+            _dialog.Reset();
+        }
+
+        public void Dispose()
+        {
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+
+        protected virtual void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                _dialog.Dispose();
+            }
         }
     }
 }

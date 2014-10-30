@@ -12,5 +12,6 @@ namespace DEiXTo.Services
         string Filter { get; set; }
         string Filename { get; set; }
         DialogResult ShowDialog();
+        void Reset();
     }
 }

@@ -15,7 +15,7 @@ namespace DEiXTo.Services
         private TreeBuilder _builder;
         private DocumentQuery _document;
         private StatesImageLoader _imageLoader;
-        private DOMTreeStructure _domTree;
+        private DOMTree _domTree;
         private IViewLoader _loader;
         private ISaveFileDialog _saveFileDialog;
         private IOpenFileDialog _openFileDialog;
@@ -30,7 +30,7 @@ namespace DEiXTo.Services
             _imageLoader = new StatesImageLoader();
             _loader = new WindowsViewLoader();
             _readTargetUrls = new ReadTargetUrls();
-            _domTree = new DOMTreeStructure();
+            _domTree = new DOMTree();
             _openFileDialog = new OpenFileDialogWrapper();
             _saveFileDialog = new SaveFileDialogWrapper();
         }
@@ -211,15 +211,12 @@ namespace DEiXTo.Services
 
         private void resetOpenFileDialog()
         {
-            _openFileDialog.Filename = string.Empty;
-            _openFileDialog.Filter = string.Empty;
+            _openFileDialog.Reset();
         }
 
         private void resetSaveFileDialog()
         {
-            _saveFileDialog.Filename = string.Empty;
-            _saveFileDialog.Filter = string.Empty;
-            _saveFileDialog.Extension = string.Empty;
+            _saveFileDialog.Reset();
         }
     }
 }

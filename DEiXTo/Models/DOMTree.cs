@@ -7,7 +7,7 @@ namespace DEiXTo.Models
     /// <summary>
     /// 
     /// </summary>
-    public class DOMTreeStructure
+    public class DOMTree
     {
         #region Instance Variables
         private IDictionary<IHTMLDOMNode, TreeNode> _DOMTree = new Dictionary<IHTMLDOMNode, TreeNode>();
