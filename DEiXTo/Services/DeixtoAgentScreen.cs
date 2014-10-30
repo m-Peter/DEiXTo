@@ -204,6 +204,11 @@ namespace DEiXTo.Services
             _document.SubmitForm(form);
         }
 
+        public HtmlElement GetLinkToFollow(string link)
+        {
+            return _document.GetLinkToFollow(link);
+        }
+
         private void resetOpenFileDialog()
         {
             _openFileDialog.Filename = string.Empty;

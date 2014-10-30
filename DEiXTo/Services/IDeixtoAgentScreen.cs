@@ -34,5 +34,6 @@ namespace DEiXTo.Services
         DeixtoWrapper LoadWrapper(string filename);
         IDocumentValidator CreateValidator(string url);
         void SubmitForm(string formName, string inputName, string term);
+        HtmlElement GetLinkToFollow(string link);
     }
 }

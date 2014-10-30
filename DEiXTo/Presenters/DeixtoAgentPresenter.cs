@@ -21,7 +21,6 @@ namespace DEiXTo.Presenters
     public class DeixtoAgentPresenter : ISubscriber<RegexAdded>
     {
         #region Instance Variables
-        private DocumentQuery _document;
         private IViewLoader _loader;
         private IEventHub _eventHub;
         private PatternExecutor _executor;
@@ -67,44 +66,7 @@ namespace DEiXTo.Presenters
         #endregion
 
         #region Private Methods
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="depth"></param>
-        /// <param name="mylink"></param>
-        /// <param name="pattern"></param>
-        /// <param name="count"></param>
-        private void CrawlPages(int depth, string mylink, TreeNode pattern, ref int count)
-        {
-            for (int i = 0; i < depth; i++)
-            {
-                FollowNextLink(mylink);
-
-                var executor = CreateExecutor(pattern);
-
-                executor.FindMatches();
-
-                count += executor.Count;
-
-                AddOutputColumns(executor);
-
-                AddOutputResults(executor);
-
-                View.WritePageResults(count.ToString() + " results!");
-            }
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="mylink"></param>
-        private void FollowNextLink(string mylink)
-        {
-            var elem = _document.GetLinkToFollow(mylink);
-            string href = elem.GetAttribute("href");
-            View.NavigateTo(href);
-        }
-
+        
         /// <summary>
         /// 
         /// </summary>
@@ -585,6 +547,8 @@ namespace DEiXTo.Presenters
                 return;
             }
 
+            View.FocusOutputTabPage();
+
             if (View.CrawlingEnabled)
             {
                 string mylink = View.HtmlLink();
@@ -603,50 +567,13 @@ namespace DEiXTo.Presenters
                     return;
                 }
 
-                View.FocusOutputTabPage();
-
                 CrawlPages(depth, mylink, pattern, ref count);
 
                 View.WritePageResults("Extraction Completed: " + count.ToString() + " results!");
             }
             else
             {
-                View.FocusOutputTabPage();
                 View.ClearExtractedOutputs();
-
-                // Here we go!
-                // what parts do I need here and what can go into a separate
-                // class.
-                // The presenter at its current state, creates the executor(1st smell).
-                // Then he performs #FindMatches, so the extraction can take place.
-                // Then he creates the output columns based on the number of output
-                // variables.
-                // He then adds the output results, which can be labeled or follow a
-                // default format.
-                // Let's start by moving the creation of executor in the DeixtoAgentScreen.
-
-                /*var executor = CreateExecutor(pattern);
-
-                executor.FindMatches();
-
-                AddOutputColumns(executor);
-
-                AddOutputResults(executor);
-
-                View.WritePageResults("Extraction Completed: " + executor.Count.ToString() + " results!");
-
-                if (View.OutputFileSpecified)
-                {
-                    var format = View.OutputFileFormat;
-                    string filename = View.OutputFileName;
-                    var writer = RecordsWriterFactory.GetWriterFor(format, filename);
-                    var records = _executor.ExtractedResults();
-                    writer.Write(records);
-                }
-
-                var rootNode = executor.TrimUncheckedNodes(pattern);
-                View.FillExtractionPattern(rootNode);
-                View.ExpandExtractionTree();*/
 
                 var domNodes = View.GetBodyTreeNodes();
                 var extractionResult = _screen.Execute(pattern, domNodes);
@@ -659,6 +586,33 @@ namespace DEiXTo.Presenters
                 View.FillExtractionPattern(pattern.GetClone());
                 View.ExpandExtractionTree();
             }
+        }
+
+        private void CrawlPages(int depth, string mylink, TreeNode pattern, ref int count)
+        {
+            var domNodes = View.GetBodyTreeNodes();
+            var extractionResult = _screen.Execute(pattern, domNodes);
+            AddOutputColumns(extractionResult);
+
+            for (int i = 0; i < depth; i++)
+            {
+                FollowNextLink(mylink);
+
+                domNodes = View.GetBodyTreeNodes();
+                extractionResult = _screen.Execute(pattern, domNodes);
+                count += extractionResult.RecordsCount;
+                
+                AddOutputResults(extractionResult);
+
+                View.WritePageResults(count.ToString() + " results!");
+            }
+        }
+
+        private void FollowNextLink(string nextLink)
+        {
+            var elem = _screen.GetLinkToFollow(nextLink);
+            string href = elem.GetAttribute("href");
+            View.NavigateTo(href);
         }
 
         private PatternExecutor CreateExecutor(TreeNode pattern)
