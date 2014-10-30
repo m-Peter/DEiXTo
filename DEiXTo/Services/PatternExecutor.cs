@@ -29,7 +29,7 @@ namespace DEiXTo.Services
         {
             int outputVariables = 0;
 
-            if (IsOutputVariable(_pattern))
+            if (_pattern.IsOutputVariable())
             {
                 outputVariables += 1;
             }
@@ -95,30 +95,13 @@ namespace DEiXTo.Services
         {
             foreach (TreeNode node in nodes)
             {
-                if (IsOutputVariable(node))
+                if (node.IsOutputVariable())
                 {
                     counter += 1;
                 }
 
                 countVariables(node.Nodes, ref counter);
             }
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="node"></param>
-        /// <returns></returns>
-        private bool IsOutputVariable(TreeNode node)
-        {
-            var state = node.GetState();
-
-            if (state == NodeState.Checked || state == NodeState.CheckedSource || state == NodeState.CheckedImplied)
-            {
-                return true;
-            }
-
-            return false;
         }
 
         /// <summary>
@@ -364,57 +347,6 @@ namespace DEiXTo.Services
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="node"></param>
-        /// <returns></returns>
-        private bool isRequired(TreeNode node)
-        {
-            var state = node.GetState();
-
-            if (state == NodeState.Grayed || state == NodeState.Checked || state == NodeState.CheckedSource)
-            {
-                return true;
-            }
-
-            return false;
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="node"></param>
-        /// <returns></returns>
-        private bool isOptional(TreeNode node)
-        {
-            var state = node.GetState();
-
-            if (state == NodeState.CheckedImplied || state == NodeState.GrayedImplied)
-            {
-                return true;
-            }
-
-            return false;
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="node"></param>
-        /// <returns></returns>
-        private bool isSkipped(TreeNode node)
-        {
-            var state = node.GetState();
-
-            if (state == NodeState.Unchecked)
-            {
-                return true;
-            }
-
-            return false;
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
         /// <param name="state"></param>
         /// <param name="node"></param>
         /// <param name="result"></param>
@@ -534,7 +466,7 @@ namespace DEiXTo.Services
                 var nextLeft = left.Nodes[i];
                 bool hasNode = HasNextNode(right, i);
 
-                if (isRequired(nextLeft))
+                if (nextLeft.IsRequired())
                 {
                     if (hasNode)
                     {
@@ -549,7 +481,7 @@ namespace DEiXTo.Services
                     }
                 }
                 
-                if (isOptional(nextLeft))
+                if (nextLeft.IsOptional())
                 {
                     if (hasNode)
                     {

@@ -26,6 +26,54 @@ namespace DEiXTo.Services
             return "";
         }
 
+        public static bool IsOutputVariable(this TreeNode node)
+        {
+            var state = GetPointerInfo(node).State;
+
+            if (state == NodeState.Checked || state == NodeState.CheckedSource || state == NodeState.CheckedImplied)
+            {
+                return true;
+            }
+
+            return false;
+        }
+
+        public static bool IsRequired(this TreeNode node)
+        {
+            var state = GetPointerInfo(node).State;
+
+            if (state == NodeState.Grayed || state == NodeState.Checked || state == NodeState.CheckedSource)
+            {
+                return true;
+            }
+
+            return false;
+        }
+
+        public static bool IsOptional(this TreeNode node)
+        {
+            var state = GetPointerInfo(node).State;
+
+            if (state == NodeState.CheckedImplied || state == NodeState.GrayedImplied)
+            {
+                return true;
+            }
+
+            return false;
+        }
+
+        public static bool IsSkipped(this TreeNode node)
+        {
+            var state = GetPointerInfo(node).State;
+
+            if (state == NodeState.Unchecked)
+            {
+                return true;
+            }
+
+            return false;
+        }
+
         /// <summary>
         /// 
         /// </summary>
