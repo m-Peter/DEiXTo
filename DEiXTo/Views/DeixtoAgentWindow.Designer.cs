@@ -710,6 +710,7 @@
             this.GoButton.TabIndex = 8;
             this.GoButton.Text = "Go";
             this.GoButton.UseVisualStyleBackColor = true;
+            this.GoButton.Click += new System.EventHandler(this.GoButton_Click);
             // 
             // CrawlingGroupBox
             // 

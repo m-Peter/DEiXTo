@@ -1262,6 +1262,25 @@ namespace DEiXTo.Presenters
             View.TargetUrls = wrapper.TargetUrls;
             View.ExpandExtractionTree();
         }
+
+        public void RunInAutoMode()
+        {
+            // navigate to the url
+            var url = View.FirstTargetURL;
+            View.NavigateTo(url);
+
+            // search for the extraction pattern in dom
+            var pattern = View.ExtractionPattern;
+            var domNodes = View.GetBodyTreeNodes();
+            var extractionResult = _screen.Execute(pattern, domNodes);
+            
+            // list the results
+            View.FocusOutputTabPage();
+            AddOutputColumns(extractionResult);
+            AddOutputResults(extractionResult);
+
+            View.WritePageResults("Extraction Completed: " + extractionResult.RecordsCount.ToString() + " results!");
+        }
         #endregion
     }
 }
