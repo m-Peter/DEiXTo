@@ -1187,7 +1187,69 @@ namespace DEiXTo.Presenters.Tests
             _view.Verify(v => v.ShowSpecifyExtractionPatternMessage());
         }
 
+        [TestMethod]
+        public void TestLoadWrapper()
+        {
+            // Arrange
+            var wrapper = CreateWrapper();
+            var filter = "Wrapper Project Files (*.wpf)|";
+            var filename = "wrapper_file";
+            var dialog = new Mock<IOpenFileDialog>();
+            _screen.Setup(s => s.GetOpenFileDialog(filter)).Returns(dialog.Object);
+            dialog.Setup(d => d.ShowDialog()).Returns(DialogResult.OK);
+            dialog.Setup(d => d.Filename).Returns(filename);
+            _screen.Setup(s => s.LoadWrapper(filename)).Returns(wrapper);
+
+            // Act
+            _presenter.LoadWrapper();
+
+            // Assert
+            _view.VerifySet(v => v.AutoFill = wrapper.AutoFill);
+            _view.VerifySet(v => v.Delay = wrapper.Delay);
+            _view.VerifySet(v => v.ExtractionPattern = wrapper.ExtractionPattern);
+            _view.VerifySet(v => v.ExtractNativeUrl = wrapper.ExtractNativeUrl);
+            _view.VerifySet(v => v.FormInputName = wrapper.FormInputName);
+            _view.VerifySet(v => v.FormName = wrapper.FormName);
+            _view.VerifySet(v => v.FormTerm = wrapper.FormTerm);
+            _view.VerifySet(v => v.HtmlNextLink = wrapper.HtmlNextLink);
+            _view.VerifySet(v => v.IgnoredTags = wrapper.IgnoredTags);
+            _view.VerifySet(v => v.InputFile = wrapper.InputFile);
+            _view.VerifySet(v => v.MaxCrawlingDepth = wrapper.MaxCrawlingDepth);
+            _view.VerifySet(v => v.MultiPageCrawling = wrapper.MultiPageCrawling);
+            _view.VerifySet(v => v.NumberOfHits = wrapper.NumberOfHits);
+            _view.VerifySet(v => v.OutputFileName = wrapper.OutputFileName);
+            _view.VerifySet(v => v.OutputFormat = wrapper.OutputFormat);
+            _view.VerifySet(v => v.OutputMode = wrapper.OutputMode);
+            _view.VerifySet(v => v.TargetUrls = wrapper.TargetUrls);
+            _view.Verify(v => v.ExpandExtractionTree());
+        }
+
         // HELPER METHODS
+        private DeixtoWrapper CreateWrapper()
+        {
+            var wrapper = new DeixtoWrapper();
+
+            wrapper.AutoFill = true;
+            wrapper.Delay = 2;
+            wrapper.ExtractionPattern = new TreeNode("DIV");
+            wrapper.ExtractNativeUrl = true;
+            wrapper.FormInputName = "repo";
+            wrapper.FormName = "q";
+            wrapper.FormTerm = "rails";
+            wrapper.HtmlNextLink = "Next";
+            wrapper.IgnoredTags = new string[] { "<B>", "<I>", "<EM>" };
+            wrapper.InputFile = "some_input_file";
+            wrapper.MaxCrawlingDepth = 3;
+            wrapper.MultiPageCrawling = true;
+            wrapper.NumberOfHits = 4;
+            wrapper.OutputFileName = "some_output_file";
+            wrapper.OutputFormat = Format.XML;
+            wrapper.OutputMode = OutputMode.Append;
+            wrapper.TargetUrls = new string[] { "url1", "url2" };
+
+            return wrapper;
+        }
+
         private HtmlElement CreateHtmlElement()
         {
             WebBrowser browser = new WebBrowser();
