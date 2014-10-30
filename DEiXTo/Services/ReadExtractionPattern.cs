@@ -122,10 +122,11 @@ namespace DEiXTo.Services
         /// </summary>
         /// <param name="node"></param>
         /// <param name="treeNode"></param>
-        private void ReadStateAttribute(XmlNode node, TreeNode treeNode)
+        private void ReadStateAttribute(XmlNode node, NodeInfo nInfo, TreeNode treeNode)
         {
             var state = node.Attributes["stateIndex"].Value;
 
+            nInfo.State = getState(state);
             treeNode.SelectedImageIndex = getStateIndex(state);
             treeNode.ImageIndex = getStateIndex(state);
         }
@@ -156,7 +157,7 @@ namespace DEiXTo.Services
 
                         treeNode.Tag = pInfo;
 
-                        ReadStateAttribute(node, treeNode);
+                        ReadStateAttribute(node, pInfo, treeNode);
 
                         createPattern(node.ChildNodes, treeNode);
                     }
@@ -173,7 +174,7 @@ namespace DEiXTo.Services
 
                         tempNode.Tag = pInfo;
 
-                        ReadStateAttribute(node, tempNode);
+                        ReadStateAttribute(node, pInfo, tempNode);
 
                         createPattern(node.ChildNodes, tempNode);
                     }
@@ -200,6 +201,35 @@ namespace DEiXTo.Services
         {
             var result = tagValue.Split(':');
             return result[1];
+        }
+
+        private NodeState getState(string state)
+        {
+            NodeState nState = NodeState.Undefined;
+
+            switch (state)
+            {
+                case "checked":
+                    nState = NodeState.Checked;
+                    break;
+                case "checked_implied":
+                    nState = NodeState.CheckedImplied;
+                    break;
+                case "checked_source":
+                    nState = NodeState.CheckedSource;
+                    break;
+                case "grayed":
+                    nState = NodeState.Grayed;
+                    break;
+                case "grayed_implied":
+                    nState = NodeState.GrayedImplied;
+                    break;
+                case "dont_care":
+                    nState = NodeState.Unchecked;
+                    break;
+            }
+
+            return nState;
         }
 
         /// <summary>
