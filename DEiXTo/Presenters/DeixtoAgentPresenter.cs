@@ -615,28 +615,6 @@ namespace DEiXTo.Presenters
             View.NavigateTo(href);
         }
 
-        private PatternExecutor CreateExecutor(TreeNode pattern)
-        {
-            var domNodes = View.GetBodyTreeNodes();
-            _executor = new PatternExecutor(pattern, domNodes);
-            return _executor;
-        }
-
-        private void AddOutputColumns(PatternExecutor executor)
-        {
-            var labels = executor.OutputVariableLabels();
-
-            if (labels.Count == 0)
-            {
-                int columns = executor.CountOutputVariables();
-                AddDefaultColumns(columns);
-
-                return;
-            }
-
-            AddLabeledColumns(labels);
-        }
-
         private void AddOutputColumns(IExtraction extraction)
         {
             var labels = extraction.OutputVariableLabels;
@@ -650,14 +628,6 @@ namespace DEiXTo.Presenters
             }
 
             AddLabeledColumns(labels);
-        }
-
-        private void AddOutputResults(PatternExecutor executor)
-        {
-            foreach (var item in executor.ExtractedResults())
-            {
-                View.AddOutputItem(item.ToStringArray(), item.Node);
-            }
         }
 
         private void AddOutputResults(IExtraction extraction)

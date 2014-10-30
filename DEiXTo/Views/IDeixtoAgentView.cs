@@ -30,7 +30,6 @@ namespace DEiXTo.Views
         bool AutoFill { get; set; }
         string HtmlNextLink { get; set; }
 
-        DeixtoWrapper Wrapper { get; set; }
         string Url { get; }
         HtmlElement CurrentElement { get; set; }
         bool HighlightModeEnabled { get; }

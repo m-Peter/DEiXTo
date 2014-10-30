@@ -91,38 +91,6 @@ namespace DEiXTo.Views
 
         #region Public Methods
 
-        public DeixtoWrapper Wrapper
-        {
-            get
-            {
-                DeixtoWrapper wrapper = new DeixtoWrapper();
-
-                //wrapper.AutoFill = AutoFillCheckBox.Checked;
-                //wrapper.HtmlNextLink = HTMLLinkTextBox.Text;
-                //wrapper.Delay = (int)DelayNUD.Value;
-                //wrapper.ExtractionPattern = ExtractionPatternTreeView.Nodes[0];
-                //wrapper.ExtractNativeUrl = ExtractURLCheckBox.Checked;
-                //wrapper.FormName = FormNameTextBox.Text;
-                //wrapper.FormInputName = InputNameTextBox.Text;
-                //wrapper.FormTerm = SearchQueryTextBox.Text;
-                //wrapper.IgnoredTags = IgnoredTags();
-                //wrapper.InputFile = URLsFileTextBox.Text;
-                //wrapper.MaxCrawlingDepth = CrawlingDepth();
-                //wrapper.MultiPageCrawling = CrawlingEnabled;
-                //wrapper.NumberOfHits = (int)HitsNUD.Value;
-                //wrapper.OutputFileName = OutputFileNameTextBox.Text;
-                //wrapper.OutputFormat = OutputFileFormat;
-                //wrapper.OutputMode = OverwriteRadioBtn.Checked ? OutputMode.Overwrite : OutputMode.Append;
-                //wrapper.TargetUrls = TargetUrls();
-
-                return wrapper;
-            }
-            set
-            {
-
-            }
-        }
-
         public string[] TargetUrls
         {
             get
