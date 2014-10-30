@@ -1,6 +1,7 @@
 ﻿using DEiXTo.Models;
 using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -175,10 +176,13 @@ namespace DEiXTo.Services
                         if (isRoot != null && isRoot.Value == "true")
                         {
                             pInfo.IsRoot = true;
+                            var font = new Font(FontFamily.GenericSansSerif, 8.25f);
+                            tNode.NodeFont = new Font(font, FontStyle.Bold);
                         }
 
-                        tNode.Tag = pInfo;
                         var state = node.Attributes["stateIndex"].Value;
+                        pInfo.State = getState(state);
+                        tNode.Tag = pInfo;
 
                         tNode.SelectedImageIndex = getStateIndex(state);
                         tNode.ImageIndex = getStateIndex(state);
@@ -193,10 +197,13 @@ namespace DEiXTo.Services
                         if (isRoot != null && isRoot.Value == "true")
                         {
                             pInfo.IsRoot = true;
+                            var font = new Font(FontFamily.GenericSansSerif, 8.25f);
+                            temp.NodeFont = new Font(font, FontStyle.Bold);
                         }
 
-                        temp.Tag = pInfo;
                         var state = node.Attributes["stateIndex"].Value;
+                        pInfo.State = getState(state);
+                        temp.Tag = pInfo;
 
                         temp.SelectedImageIndex = getStateIndex(state);
                         temp.ImageIndex = getStateIndex(state);
@@ -204,6 +211,35 @@ namespace DEiXTo.Services
                     }
                 }
             }
+        }
+
+        private NodeState getState(string state)
+        {
+            NodeState nState = NodeState.Undefined;
+
+            switch (state)
+            {
+                case "checked":
+                    nState = NodeState.Checked;
+                    break;
+                case "checked_implied":
+                    nState = NodeState.CheckedImplied;
+                    break;
+                case "checked_source":
+                    nState = NodeState.CheckedSource;
+                    break;
+                case "grayed":
+                    nState = NodeState.Grayed;
+                    break;
+                case "grayed_implied":
+                    nState = NodeState.GrayedImplied;
+                    break;
+                case "dont_care":
+                    nState = NodeState.Unchecked;
+                    break;
+            }
+
+            return nState;
         }
 
         private int getStateIndex(string state)
