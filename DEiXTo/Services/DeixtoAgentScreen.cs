@@ -196,6 +196,14 @@ namespace DEiXTo.Services
             return documentValidator;
         }
 
+        public void SubmitForm(string formName, string inputName, string term)
+        {
+            var form = _document.GetForm(formName);
+            var input = _document.GetInputFor(form, inputName);
+            _document.FillInput(input, term);
+            _document.SubmitForm(form);
+        }
+
         private void resetOpenFileDialog()
         {
             _openFileDialog.Filename = string.Empty;

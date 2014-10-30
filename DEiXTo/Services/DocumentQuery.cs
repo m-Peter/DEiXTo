@@ -1,4 +1,5 @@
-﻿using System.Drawing;
+﻿using mshtml;
+using System.Drawing;
 using System.Windows.Forms;
 
 namespace DEiXTo.Services
@@ -24,6 +25,45 @@ namespace DEiXTo.Services
         public HtmlElement GetElementByIndex(int index)
         {
             return _htmlDocument.All[index];
+        }
+
+        public void FillInput(HtmlElement input, string term)
+        {
+            var domInput = input.DomElement as IHTMLInputElement;
+            domInput.value = term;
+        }
+
+        public void SubmitForm(HtmlElement form)
+        {
+            form.InvokeMember("submit");
+        }
+
+        public HtmlElement GetForm(string formName)
+        {
+            var forms = _htmlDocument.Forms;
+
+            foreach (HtmlElement form in forms)
+            {
+                if (form.Name == formName)
+                {
+                    return form;
+                }
+            }
+
+            return forms[0];
+        }
+
+        public HtmlElement GetInputFor(HtmlElement form, string inputName)
+        {
+            foreach (HtmlElement input in form.All)
+            {
+                if (input.Name == inputName)
+                {
+                    return input;
+                }
+            }
+
+            return form.All[0];
         }
 
         /// <summary>

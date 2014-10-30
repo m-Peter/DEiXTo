@@ -13,6 +13,7 @@ namespace DEiXTo.Presenters
 {
 
     public delegate void DOMBuilted();
+    public delegate void FormSubmitted();
 
     /// <summary>
     /// 
@@ -29,6 +30,7 @@ namespace DEiXTo.Presenters
 
         #region Public Events
         public event DOMBuilted DomBuilted;
+        public event FormSubmitted FormSubmitted;
         #endregion
 
         public IDeixtoAgentView View { get; set; }
@@ -1157,6 +1159,11 @@ namespace DEiXTo.Presenters
             {
                 DomBuilted();
             }
+
+            if (FormSubmitted != null)
+            {
+                FormSubmitted();
+            }
         }
 
         public void SaveWrapper()
@@ -1269,11 +1276,38 @@ namespace DEiXTo.Presenters
             var url = View.FirstTargetURL;
             View.NavigateTo(url);
 
+            // check if there is a submit form
+            if (View.AutoFill)
+            {
+                var form = View.FormName;
+                var input = View.FormInputName;
+                var term = View.FormTerm;
+
+                _screen.SubmitForm(form, input, term);
+                FormSubmitted += DeixtoAgentPresenter_FormSubmitted;
+                return;
+            }
+
             // search for the extraction pattern in dom
             var pattern = View.ExtractionPattern;
             var domNodes = View.GetBodyTreeNodes();
             var extractionResult = _screen.Execute(pattern, domNodes);
             
+            // list the results
+            View.FocusOutputTabPage();
+            AddOutputColumns(extractionResult);
+            AddOutputResults(extractionResult);
+
+            View.WritePageResults("Extraction Completed: " + extractionResult.RecordsCount.ToString() + " results!");
+        }
+
+        void DeixtoAgentPresenter_FormSubmitted()
+        {
+            // search for the extraction pattern in dom
+            var pattern = View.ExtractionPattern;
+            var domNodes = View.GetBodyTreeNodes();
+            var extractionResult = _screen.Execute(pattern, domNodes);
+
             // list the results
             View.FocusOutputTabPage();
             AddOutputColumns(extractionResult);

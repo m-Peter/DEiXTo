@@ -33,5 +33,6 @@ namespace DEiXTo.Services
         void SaveWrapper(DeixtoWrapper wrapper, TreeNodeCollection nodes, string filename);
         DeixtoWrapper LoadWrapper(string filename);
         IDocumentValidator CreateValidator(string url);
+        void SubmitForm(string formName, string inputName, string term);
     }
 }

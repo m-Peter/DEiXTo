@@ -1436,23 +1436,6 @@ namespace DEiXTo.Views
 
         private void GoButton_Click(object sender, EventArgs e)
         {
-            /*string url = "http://www.sitepoint.com";
-            NavigateTo(url);
-            var form = WebBrowser.Document.Forms[0];
-            var method = form.GetAttribute("method");
-            var action = form.GetAttribute("action");
-
-            foreach (HtmlElement item in form.All)
-            {
-                if (item.Name == "s")
-                {
-                    var input = item.DomElement as IHTMLInputElement;
-                    input.value = "JavaScript";
-                }
-                break;
-            }
-            
-            form.InvokeMember("submit");*/
             Presenter.RunInAutoMode();
         }
     }
