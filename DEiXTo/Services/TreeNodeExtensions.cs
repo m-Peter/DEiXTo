@@ -252,7 +252,7 @@ namespace DEiXTo.Services
 
             if (pInfo != null)
             {
-                return pInfo.ElementSourceIndex;
+                return pInfo.SourceIndex;
             }
 
             return -1;

@@ -239,7 +239,7 @@ namespace DEiXTo.Services
         {
             var tmpElem = (IHTMLElement)element;
 
-            pInfo.ElementSourceIndex = tmpElem.sourceIndex;
+            pInfo.SourceIndex = tmpElem.sourceIndex;
             pInfo.Path = ComputePath(node, tmpElem);
             pInfo.Content = ContentExtractionFactory.GetExtractorFor(tmpElem).ExtractContent();
             pInfo.State = NodeState.Grayed;

@@ -536,7 +536,7 @@ namespace DEiXTo.Presenters.Tests
             // Arrange
             TreeNode node = new TreeNode("DIV");
             NodeInfo nInfo = new NodeInfo();
-            nInfo.ElementSourceIndex = 12;
+            nInfo.SourceIndex = 12;
             node.Tag = nInfo;
             RegexAdded ra = new RegexAdded(node);
             var element = CreateHtmlElement();
