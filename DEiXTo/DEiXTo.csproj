@@ -76,6 +76,7 @@
     <Compile Include="Services.Tests\ContentExtractionFactoryTests.cs" />
     <Compile Include="Services.Tests\DialogBuilderFactoryTests.cs" />
     <Compile Include="Services.Tests\DialogBuilderTests.cs" />
+    <Compile Include="Services.Tests\DocumentQueryTests.cs" />
     <Compile Include="Services.Tests\DocumentValidatorFactoryTests.cs" />
     <Compile Include="Services.Tests\ElementStylingTests.cs" />
     <Compile Include="Services.Tests\NodeBuilderTests.cs" />

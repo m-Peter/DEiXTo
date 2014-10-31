@@ -27,17 +27,31 @@ namespace DEiXTo.Services
             return _htmlDocument.All[index];
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="input"></param>
+        /// <param name="term"></param>
         public void FillInput(HtmlElement input, string term)
         {
             var domInput = input.DomElement as IHTMLInputElement;
             domInput.value = term;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="form"></param>
         public void SubmitForm(HtmlElement form)
         {
             form.InvokeMember("submit");
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="formName"></param>
+        /// <returns></returns>
         public HtmlElement GetForm(string formName)
         {
             var forms = _htmlDocument.Forms;
@@ -53,6 +67,12 @@ namespace DEiXTo.Services
             return forms[0];
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="form"></param>
+        /// <param name="inputName"></param>
+        /// <returns></returns>
         public HtmlElement GetInputFor(HtmlElement form, string inputName)
         {
             foreach (HtmlElement input in form.All)
@@ -92,7 +112,7 @@ namespace DEiXTo.Services
         /// <returns></returns>
         public HtmlElement GetLinkToFollow(string mylink)
         {
-            HtmlElementCollection links = _htmlDocument.GetElementsByTagName("A");
+            var links = _htmlDocument.Links;
             HtmlElement link = null;
 
             foreach (HtmlElement element in links)
