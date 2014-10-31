@@ -77,6 +77,7 @@
     <Compile Include="Services.Tests\DocumentValidatorFactoryTests.cs" />
     <Compile Include="Services.Tests\NodeBuilderTests.cs" />
     <Compile Include="Services.Tests\PatternExtractionTests.cs" />
+    <Compile Include="Services.Tests\TagContentExtractorTests.cs" />
     <Compile Include="Services\ContentExtractionFactory.cs" />
     <Compile Include="Services\DeixtoAgentScreen.cs" />
     <Compile Include="Services\DialogBuilderFactory.cs" />
