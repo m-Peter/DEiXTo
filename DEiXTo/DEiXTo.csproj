@@ -51,8 +51,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Models.Tests\ExtractionPatternTests.cs" />
     <Compile Include="Models\DeixtoWrapper.cs" />
     <Compile Include="Models\DOMTree.cs" />
+    <Compile Include="Models\ExtractionPattern.cs" />
     <Compile Include="Models\ExtractionResult.cs" />
     <Compile Include="Models\Format.cs" />
     <Compile Include="Models\IExtraction.cs" />

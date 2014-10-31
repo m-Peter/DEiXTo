@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Windows.Forms;
 using mshtml;
+using System.Text.RegularExpressions;
 
 namespace DEiXTo.Services.Tests
 {
@@ -75,6 +76,7 @@ namespace DEiXTo.Services.Tests
         {
             // Arrange
             var element = CreateGenericElement();
+            element.ToString();
             var domElement = element.DomElement as IHTMLElement;
 
             // Act
