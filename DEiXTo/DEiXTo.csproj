@@ -73,6 +73,7 @@
     <Compile Include="Presenters\RegexBuilderPresenter.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Services.Tests\ContentExtractionFactoryTests.cs" />
     <Compile Include="Services.Tests\DocumentValidatorFactoryTests.cs" />
     <Compile Include="Services.Tests\NodeBuilderTests.cs" />
     <Compile Include="Services.Tests\PatternExtractionTests.cs" />
