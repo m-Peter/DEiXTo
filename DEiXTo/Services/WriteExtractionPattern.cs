@@ -38,16 +38,6 @@ namespace DEiXTo.Services
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="node"></param>
-        /// <returns></returns>
-        private bool isSkipped(TreeNode node)
-        {
-            return node.GetState() == NodeState.Unchecked;
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
         /// <param name="writer"></param>
         /// <param name="nodes"></param>
         /// <param name="isRoot"></param>
@@ -55,7 +45,7 @@ namespace DEiXTo.Services
         {
             foreach (TreeNode node in nodes)
             {
-                if (isSkipped(node))
+                if (node.IsSkipped())
                 {
                     continue;
                 }
