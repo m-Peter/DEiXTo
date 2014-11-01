@@ -67,10 +67,9 @@ namespace DEiXTo.Services
             }
 
             // Extract the tree above the virtual root node.
-            var upperTree = _pattern.GetUpperTree();
-
+            //var upperTree = _pattern.GetUpperTree();
+            var upperTree = _pattern.GetUpperTreeInc();
             TreeNode vRoot = _pattern.FindVirtualRoot();
-
             MatchSplit(vRoot, _domNodes, upperTree);
         }
 
@@ -123,7 +122,7 @@ namespace DEiXTo.Services
             {
                 if (CompareRecursiveTree(pattern, node, result))
                 {
-                    string fw = "";
+                    /*string fw = "";
                     int count = 0;
                     traverse(upper, ref fw, ref count);
                     string bw = "";
@@ -133,8 +132,14 @@ namespace DEiXTo.Services
                     if (fw != bw)
                     {
                         return;
-                    }
+                    }*/
+                    bool match = CheckUpper(upper, node);
 
+                    if (!match)
+                    {
+                        return;
+                    }
+                    
                     result.Node = node;
                     _results.Add(result);
                     result = new Result();
@@ -144,12 +149,64 @@ namespace DEiXTo.Services
             }
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="t"></param>
-        /// <param name="format"></param>
-        /// <param name="count"></param>
+        private bool CheckUpper(TreeNode pattern, TreeNode instance)
+        {
+            if (pattern.Text != instance.Text)
+            {
+                return false;
+            }
+
+            var leftParent = pattern.Parent;
+            var rightParent = instance.Parent;
+
+            if (leftParent == null)
+            {
+                return true;
+            }
+
+            if (rightParent == null)
+            {
+                return false;
+            }
+
+            if (!CompareTrees(leftParent, rightParent))
+            {
+                return false;
+            }
+
+            CheckUpper(leftParent, rightParent);
+
+            return true;
+        }
+
+        private bool CompareTrees(TreeNode left, TreeNode right)
+        {
+            if (left.Text != right.Text)
+            {
+                return false;
+            }
+
+            for (int i = 0; i < left.Nodes.Count; i++)
+            {
+                var nextLeft = left.Nodes[i];
+                bool hasNode = HasNextNode(right, i);
+
+                if (hasNode)
+                {
+                    return false;
+                }
+
+                var nextRight = right.Nodes[i];
+
+                if (!CompareTrees(nextLeft, nextRight))
+                {
+                    return false;
+                }
+            }
+
+            return true;
+        }
+
         private void traverse(TreeNode t, ref string format, ref int count)
         {
             for (int i = t.Nodes.Count - 1; i >= 0; i--)
@@ -161,13 +218,6 @@ namespace DEiXTo.Services
             format += (t.Text);
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="t"></param>
-        /// <param name="format"></param>
-        /// <param name="limit"></param>
-        /// <param name="count"></param>
         private void backward(TreeNode t, ref string format, int limit, ref int count)
         {
             if (limit == count)

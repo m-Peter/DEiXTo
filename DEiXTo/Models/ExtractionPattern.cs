@@ -39,6 +39,36 @@ namespace DEiXTo.Models
             return upperNode;
         }
 
+        public TreeNode GetUpperTreeInc()
+        {
+            var upperNode = new TreeNode(_rootNode.Text);
+            upperNode.Tag = _rootNode.Tag;
+            var leafNode = new TreeNode();
+
+            BuiltUpperTreeInc(_rootNode.Nodes, upperNode, ref leafNode);
+
+            return leafNode;
+        }
+
+        private void BuiltUpperTreeInc(TreeNodeCollection nodes, TreeNode root, ref TreeNode leafNode)
+        {
+            foreach (TreeNode node in nodes)
+            {
+                var newNode = new TreeNode(node.Text);
+                newNode.Tag = node.Tag;
+                root.Nodes.Add(newNode);
+
+                if (node.IsRoot())
+                {
+                    leafNode.Text = newNode.Text;
+                    leafNode = newNode;
+                    return;
+                }
+
+                BuiltUpperTree(node.Nodes, newNode);
+            }
+        }
+
         private void BuiltUpperTree(TreeNodeCollection nodes, TreeNode root)
         {
             foreach (TreeNode node in nodes)

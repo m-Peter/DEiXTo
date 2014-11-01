@@ -1,5 +1,7 @@
 ﻿using DEiXTo.Models;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System.Collections;
+using System.Collections.Generic;
 using System.Windows.Forms;
 
 namespace DEiXTo.Services.Tests
@@ -263,6 +265,323 @@ namespace DEiXTo.Services.Tests
 
             // Assert
             Assert.AreEqual(3, pattern.Count);
+        }
+
+        [TestMethod]
+        public void TestSplitTreeWithVirtualRoot()
+        {
+            // Arrange
+            // section
+            //    a
+            //       img
+            //    p
+            //       text
+            //    h2
+            //       a
+            //          text
+            var section = CreateNode("SECTION", NodeState.Grayed);
+            var a = CreateNode("A", NodeState.Grayed);
+            var img = CreateNode("IMG", NodeState.Grayed);
+            a.AddNode(img);
+            var p = CreateNode("P", NodeState.Grayed);
+            var pText = CreateNode("TEXT", NodeState.Checked);
+            p.AddNode(pText);
+            var h2 = CreateRootNode("H2");
+            var h2A = CreateNode("A", NodeState.Grayed);
+            h2.AddNode(h2A);
+            var aText = CreateNode("TEXT", NodeState.Checked);
+            h2A.AddNode(aText);
+
+            AddNodesTo(section, a, p, h2);
+            var pattern = new ExtractionPattern(section);
+
+            // Act
+            var vRoot = pattern.FindVirtualRoot();
+            var upperTree = pattern.GetUpperTree();
+
+            // Assert
+            Assert.AreEqual("H2", vRoot.Text);
+            Assert.AreEqual(NodeState.Grayed, vRoot.GetState());
+            Assert.AreEqual("SECTION", upperTree.Text);
+            Assert.AreEqual(NodeState.Grayed, upperTree.GetState());
+
+            // Act
+            string backwards = "";
+            traverseBackwards(upperTree, ref backwards);
+            Assert.AreEqual("-TEXT-P-IMG-A-SECTION", backwards);
+        }
+
+        [TestMethod]
+        public void TestCompareTrees()
+        {
+            // Arrange
+            var left = GetLeftTree();
+            var right = GetRightTree();
+
+            // Act
+            var match = CompareTrees(left, right);
+
+            // Assert
+            Assert.IsTrue(match);
+        }
+
+        [TestMethod]
+        public void TestCompareUpperTreeInc()
+        {
+            // Arrange
+            // section
+            //    a
+            //       img
+            //    p
+            //       text
+            //    h2
+            //       a
+            //          text
+            var section = CreateNode("SECTION", NodeState.Grayed);
+            var a = CreateNode("A", NodeState.Grayed);
+            var img = CreateNode("IMG", NodeState.Grayed);
+            a.AddNode(img);
+            var p = CreateNode("P", NodeState.Grayed);
+            var pText = CreateNode("TEXT", NodeState.Checked);
+            p.AddNode(pText);
+            var h2 = CreateRootNode("H2");
+            var h2A = CreateNode("A", NodeState.Grayed);
+            h2.AddNode(h2A);
+            var aText = CreateNode("TEXT", NodeState.Checked);
+            h2A.AddNode(aText);
+
+            AddNodesTo(section, a, p, h2);
+            var pattern = new ExtractionPattern(section);
+
+            // Act
+            var vRoot = pattern.FindVirtualRoot();
+            var leaf = pattern.GetUpperTreeInc();
+
+            // Assert
+            Assert.AreEqual("H2", vRoot.Text);
+            Assert.AreEqual("H2", leaf.Text);
+            Assert.AreEqual("SECTION", leaf.Parent.Text);
+        }
+
+        [TestMethod]
+        public void TestCompareTreeWithVirtualRootInIt()
+        {
+            // Arrange
+            // section
+            //    a
+            //       img
+            //    p
+            //       text
+            //    h2
+            //       a
+            //          text
+            var section = CreateNode("SECTION", NodeState.Grayed);
+            var a = CreateNode("A", NodeState.Grayed);
+            var img = CreateNode("IMG", NodeState.Grayed);
+            a.AddNode(img);
+            var p = CreateNode("P", NodeState.Grayed);
+            var pText = CreateNode("TEXT", NodeState.Checked);
+            p.AddNode(pText);
+            var h2 = CreateRootNode("H2");
+            var h2A = CreateNode("A", NodeState.Grayed);
+            h2.AddNode(h2A);
+            var aText = CreateNode("TEXT", NodeState.Checked);
+            h2A.AddNode(aText);
+
+            AddNodesTo(section, a, p, h2);
+            var pattern = new ExtractionPattern(section);
+
+            // Act
+            var vRoot = pattern.FindVirtualRoot();
+            var leafNode = pattern.GetUpperTreeInc();
+
+            // Assert
+            Assert.IsTrue(CompareTrees(h2, vRoot));
+            Assert.AreEqual("H2", leafNode.Text);
+            Assert.AreEqual("SECTION", leafNode.Parent.Text);
+            Assert.IsTrue(CheckUpper(leafNode, h2));
+        }
+
+        [TestMethod]
+        public void TestCheckUpperReturnsFalse()
+        {
+            // Arrange
+            var section = CreateNode("SECTION", NodeState.Grayed);
+            var a = CreateNode("A", NodeState.Grayed);
+            var img = CreateNode("IMG", NodeState.Grayed);
+            a.AddNode(img);
+            var p = CreateNode("P", NodeState.Grayed);
+            var pText = CreateNode("TEXT", NodeState.Checked);
+            p.AddNode(pText);
+            var h2 = CreateRootNode("H2");
+            var h2A = CreateNode("A", NodeState.Grayed);
+            h2.AddNode(h2A);
+            var aText = CreateNode("TEXT", NodeState.Checked);
+            h2A.AddNode(aText);
+
+            AddNodesTo(section, a, p, h2);
+            var pattern = new ExtractionPattern(section);
+
+            // Act
+            var vRoot = pattern.FindVirtualRoot();
+            var leafNode = pattern.GetUpperTreeInc();
+
+            // Assert
+            var instance = GetUnmatchingInstance();
+            var match = CheckUpper(leafNode, instance);
+            Assert.IsFalse(match);
+        }
+
+        private TreeNode GetUnmatchingInstance()
+        {
+            var section = CreateNode("SECTION", NodeState.Grayed);
+            var a = CreateNode("A", NodeState.Grayed);
+            var img = CreateNode("IMG", NodeState.Grayed);
+            a.AddNode(img);
+            var p = CreateNode("P", NodeState.Grayed);
+            //var pText = CreateNode("TEXT", NodeState.Checked);
+            //p.AddNode(pText);
+            var h2 = CreateRootNode("H2");
+            var h2A = CreateNode("A", NodeState.Grayed);
+            h2.AddNode(h2A);
+            var aText = CreateNode("TEXT", NodeState.Checked);
+            h2A.AddNode(aText);
+
+            AddNodesTo(section, a, p, h2);
+
+            return h2;
+        }
+
+        private bool CheckUpper(TreeNode pattern, TreeNode instance)
+        {
+            if (pattern.Text != instance.Text)
+            {
+                return false;
+            }
+
+            var leftParent = pattern.Parent;
+            var rightParent = instance.Parent;
+
+            if (leftParent == null)
+            {
+                return true;
+            }
+
+            if (rightParent == null)
+            {
+                return false;
+            }
+
+            if (!CompareTrees(leftParent, rightParent))
+            {
+                return false;
+            }
+
+            CheckUpper(leftParent, rightParent);
+
+            return true;
+        }
+
+        private bool CompareTrees(TreeNode left, TreeNode right)
+        {
+            if (left.Text != right.Text)
+            {
+                return false;
+            }
+
+            for (int i = 0; i < left.Nodes.Count; i++)
+            {
+                var nextLeft = left.Nodes[i];
+                bool hasNode = HasNextNode(right, i);
+
+                if (hasNode)
+                {
+                    return false;
+                }
+
+                var nextRight = right.Nodes[i];
+
+                if (!CompareTrees(nextLeft, nextRight))
+                {
+                    return false;
+                }
+            }
+
+            return true;
+        }
+
+        private bool HasNextNode(TreeNode node, int index)
+        {
+            return node.Nodes.Count <= index;
+        }
+
+        private void traverse(TreeNode node, Stack<TreeNode> stack)
+        {
+            stack.Push(node);
+
+            foreach (TreeNode n in node.Nodes)
+            {
+                traverse(n, stack);
+            }
+        }
+
+        private TreeNode GetLeftTree()
+        {
+            var section = CreateNode("SECTION", NodeState.Grayed);
+            var a = CreateNode("A", NodeState.Grayed);
+            var img = CreateNode("IMG", NodeState.Grayed);
+            a.AddNode(img);
+            var p = CreateNode("P", NodeState.Grayed);
+            var pText = CreateNode("TEXT", NodeState.Checked);
+            p.AddNode(pText);
+            var h2 = CreateRootNode("H2");
+            var h2A = CreateNode("A", NodeState.Grayed);
+            h2.AddNode(h2A);
+            var aText = CreateNode("TEXT", NodeState.Checked);
+            h2A.AddNode(aText);
+
+            AddNodesTo(section, a, p, h2);
+
+            return section;
+        }
+
+        private TreeNode GetRightTree()
+        {
+            var section = CreateNode("SECTION", NodeState.Grayed);
+            var a = CreateNode("A", NodeState.Grayed);
+            var img = CreateNode("IMG", NodeState.Grayed);
+            a.AddNode(img);
+            var p = CreateNode("P", NodeState.Grayed);
+            var pText = CreateNode("TEXT", NodeState.Checked);
+            p.AddNode(pText);
+            var h2 = CreateRootNode("H2");
+            var h2A = CreateNode("A", NodeState.Grayed);
+            h2.AddNode(h2A);
+            var aText = CreateNode("TEXT", NodeState.Checked);
+            h2A.AddNode(aText);
+
+            AddNodesTo(section, a, p, h2);
+
+            return section;
+        }
+
+        private void traverseBackwards(TreeNode node, Stack<TreeNode> stack)
+        {
+            for (int i = node.Nodes.Count - 1; i >= 0; i--)
+            {
+                traverseBackwards(node.Nodes[i], stack);
+            }
+            stack.Push(node);
+        }
+
+        private void traverseBackwards(TreeNode root, ref string format)
+        {
+            for (int i = root.Nodes.Count - 1; i >= 0; i--)
+            {
+                traverseBackwards(root.Nodes[i], ref format);
+            }
+
+            format += string.Format("-{0}", root.Text);
         }
 
         public TreeNodeCollection CreateDomNodes()
