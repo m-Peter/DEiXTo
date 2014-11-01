@@ -5,7 +5,7 @@ using System.Windows.Forms;
 namespace DEiXTo.Services.Tests
 {
     [TestClass]
-    public class PatternExtractionTests
+    public class PatternExecutorTests
     {
         private TreeNode getRootTree()
         {
@@ -163,54 +163,71 @@ namespace DEiXTo.Services.Tests
         [TestMethod]
         public void TestFindSingleMatch()
         {
+            // Arrange
             var root = getRootTree();
             var extraction = new ExtractionPattern(root);
             var domNodes = getDOMNodes(1);
-
             PatternExecutor pattern = new PatternExecutor(extraction, domNodes);
+            
+            // Act
             pattern.FindMatches();
+            
+            // Assert
             Assert.AreEqual(1, pattern.Count);
         }
 
         [TestMethod]
         public void TestTwoMatches()
         {
+            // Arrange
             var root = getRootTree();
             var extraction = new ExtractionPattern(root);
             var domNodes = getDOMNodes(2);
-
             PatternExecutor pattern = new PatternExecutor(extraction, domNodes);
+            
+            // Act
             pattern.FindMatches();
+            
+            // Assert
             Assert.AreEqual(2, pattern.Count);
         }
 
         [TestMethod]
         public void TestManyMatches()
         {
+            // Arrange
             var root = getRootTree();
             var extraction = new ExtractionPattern(root);
             var domNodes = getDOMNodes(11);
-
             PatternExecutor pattern = new PatternExecutor(extraction, domNodes);
+            
+            // Act
             pattern.FindMatches();
+            
+            // Assert
             Assert.AreEqual(11, pattern.Count);
         }
 
         [TestMethod]
         public void TestManyMatchesWithOneOptionalNode()
         {
+            // Arrange
             var root = getRootTree();
             var extraction = new ExtractionPattern(root);
             var domNodes = getDOMNodes(10, true);
-
             PatternExecutor pattern = new PatternExecutor(extraction, domNodes);
+            
+            // Act
             pattern.FindMatches();
+            
+            // Assert
             Assert.AreEqual(11, pattern.Count);
         }
 
         [TestMethod]
         public void TestDOMWithUnchecked()
         {
+            // Arrange
             var root = GetRootWithChecked();
             var extraction = new ExtractionPattern(root);
             var body = new TreeNode("BODY");
@@ -219,10 +236,71 @@ namespace DEiXTo.Services.Tests
             div.AddNode(GetTreeWithUnchecked());
             div.AddNode(root);
             body.AddNode(div);
-
             PatternExecutor pattern = new PatternExecutor(extraction, body.Nodes);
+            
+            // Act
             pattern.FindMatches();
+            
+            // Assert
             Assert.AreEqual(3, pattern.Count);
+        }
+
+        [TestMethod]
+        public void TestMathingWithVirtualRoot()
+        {
+            // Arrange
+            var nav = CreateNode("NAV", NodeState.Grayed);
+            var a = CreateRootNode("A");
+            var text = CreateNode("TEXT", NodeState.Checked);
+            a.Nodes.Add(text);
+            nav.Nodes.Add(a);
+            var extraction = new ExtractionPattern(nav);
+            var nodes = CreateDomNodes();
+            PatternExecutor pattern = new PatternExecutor(extraction, nodes);
+
+            // Act
+            pattern.FindMatches();
+
+            // Assert
+            Assert.AreEqual(3, pattern.Count);
+        }
+
+        public TreeNodeCollection CreateDomNodes()
+        {
+            var body = CreateNode("BODY", NodeState.Grayed);
+            var div = CreateNode("DIV", NodeState.Grayed);
+            var resources = CreateNode("DIV", NodeState.Grayed);
+            var nav = CreateNode("NAV", NodeState.Grayed);
+            var a1 = CreateNode("A", NodeState.Grayed);
+            var a1Text = CreateNode("TEXT", NodeState.Checked);
+            a1.Nodes.Add(a1Text);
+            var a2 = CreateNode("A", NodeState.Grayed);
+            var a2Text = CreateNode("TEXT", NodeState.Checked);
+            a2.Nodes.Add(a2Text);
+            var a3 = CreateNode("A", NodeState.Grayed);
+            var a3Text = CreateNode("TEXT", NodeState.Checked);
+            a3.Nodes.Add(a3Text);
+
+            body.Nodes.Add(div);
+            div.Nodes.Add(resources);
+            resources.Nodes.Add(nav);
+            AddNodesTo(nav, a1, a2, a3);
+
+            var a4 = CreateNode("A", NodeState.Grayed);
+            var a4Text = CreateNode("TEXT", NodeState.Checked);
+            a4.Nodes.Add(a4Text);
+            var a5 = CreateNode("A", NodeState.Grayed);
+            var a5Text = CreateNode("TEXT", NodeState.Checked);
+            a5.Nodes.Add(a5Text);
+            var a6 = CreateNode("A", NodeState.Grayed);
+            var a6Text = CreateNode("TEXT", NodeState.Checked);
+            a6.Nodes.Add(a6Text);
+            var a7 = CreateNode("A", NodeState.Grayed);
+            var a7Text = CreateNode("TEXT", NodeState.Checked);
+            a7.Nodes.Add(a7Text);
+            AddNodesTo(div, a4, a5, a6);
+
+            return body.Nodes;
         }
 
         private void AddNodesTo(TreeNode node, params TreeNode[] nodes)
