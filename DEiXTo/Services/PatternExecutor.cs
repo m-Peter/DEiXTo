@@ -67,13 +67,11 @@ namespace DEiXTo.Services
             }
 
             // Extract the tree above the virtual root node.
-            var ancestors = new TreeNode(_pattern.RootNode.Text);
-            BuiltAncestorsTree(_pattern.RootNode.Nodes, ancestors);
+            var upperTree = _pattern.GetUpperTree();
 
-            TreeNode vRoot = null;
-            FindRoot(_pattern.RootNode.Nodes, ref vRoot);
+            TreeNode vRoot = _pattern.FindVirtualRoot();
 
-            MatchSplit(vRoot, _domNodes, ancestors);
+            MatchSplit(vRoot, _domNodes, upperTree);
         }
 
         /// <summary>
@@ -204,45 +202,6 @@ namespace DEiXTo.Services
             for (int i = 0; i < count; i++)
             {
                 yield return _results[i];
-            }
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="nodes"></param>
-        /// <param name="root"></param>
-        private void FindRoot(TreeNodeCollection nodes, ref TreeNode root)
-        {
-            foreach (TreeNode node in nodes)
-            {
-                if (node.IsRoot())
-                {
-                    root = node.GetClone();
-                    return;
-                }
-
-                FindRoot(node.Nodes, ref root);
-            }
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="nodes"></param>
-        /// <param name="root"></param>
-        private void BuiltAncestorsTree(TreeNodeCollection nodes, TreeNode root)
-        {
-            foreach (TreeNode node in nodes)
-            {
-                if (node.IsRoot())
-                {
-                    return;
-                }
-
-                var newNode = new TreeNode(node.Text);
-                root.Nodes.Add(newNode);
-                BuiltAncestorsTree(node.Nodes, newNode);
             }
         }
 

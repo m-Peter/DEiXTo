@@ -22,6 +22,53 @@ namespace DEiXTo.Models
             get { return _rootNode; }
         }
 
+        public TreeNode FindVirtualRoot()
+        {
+            var vRoot = new TreeNode();
+            FindRoot(_rootNode.Nodes, ref vRoot);
+            
+            return vRoot;
+        }
+
+        public TreeNode GetUpperTree()
+        {
+            var upperNode = new TreeNode(_rootNode.Text);
+            upperNode.Tag = _rootNode.Tag;
+            BuiltUpperTree(_rootNode.Nodes, upperNode);
+
+            return upperNode;
+        }
+
+        private void BuiltUpperTree(TreeNodeCollection nodes, TreeNode root)
+        {
+            foreach (TreeNode node in nodes)
+            {
+                if (node.IsRoot())
+                {
+                    return;
+                }
+
+                var newNode = new TreeNode(node.Text);
+                newNode.Tag = node.Tag;
+                root.Nodes.Add(newNode);
+                BuiltUpperTree(node.Nodes, newNode);
+            }
+        }
+
+        private void FindRoot(TreeNodeCollection nodes, ref TreeNode root)
+        {
+            foreach (TreeNode node in nodes)
+            {
+                if (node.IsRoot())
+                {
+                    root = node.GetClone();
+                    return;
+                }
+
+                FindRoot(node.Nodes, ref root);
+            }
+        }
+
         public int CountOutputVariables()
         {
             int outputVariables = 0;
