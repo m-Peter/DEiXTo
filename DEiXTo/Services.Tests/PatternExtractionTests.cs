@@ -17,37 +17,17 @@ namespace DEiXTo.Services.Tests
             //           text
             //    p
             //       text
-            var section = new TreeNode("section");
-            section.Tag = new NodeInfo();
-            section.SetAsRoot();
-            section.SetState(NodeState.Grayed);
-            
-            var a = new TreeNode("A");
-            a.Tag = new NodeInfo();
-            a.SetState(NodeState.Grayed);
+            var section = CreateRootNode("SECTION");
+            var a = CreateNode("A", NodeState.Grayed);
+            var img = CreateNode("IMG", NodeState.Grayed);
+            var h2 = CreateNode("H2", NodeState.Grayed);
+            var text = CreateNode("TEXT", NodeState.Checked);
+            var p = CreateNode("P", NodeState.Grayed);
 
-            var img = new TreeNode("IMG");
-            img.Tag = new NodeInfo();
-            img.SetState(NodeState.Grayed);
-            
-            var h2 = new TreeNode("H2");
-            h2.Tag = new NodeInfo();
-            h2.SetState(NodeState.Grayed);
-            
-            var text = new TreeNode("TEXT");
-            text.Tag = new NodeInfo();
-            text.SetState(NodeState.Checked);
-            
-            var p = new TreeNode("P");
-            p.Tag = new NodeInfo();
-            p.SetState(NodeState.Grayed);
-            
-            section.AddNode(a);
+            AddNodesTo(section, a, h2, p);
             a.AddNode(img);
-            section.AddNode(h2);
             h2.AddNode(a);
             a.AddNode(text);
-            section.AddNode(p);
             p.AddNode(text);
 
             return section;
@@ -63,36 +43,17 @@ namespace DEiXTo.Services.Tests
             //          text
             //    p
             //       text
-            var section = new TreeNode("section");
-            section.Tag = new NodeInfo();
-            section.SetState(NodeState.Grayed);
-            
-            var a = new TreeNode("A");
-            a.Tag = new NodeInfo();
-            a.SetState(NodeState.Grayed);
-            
-            var img = new TreeNode("IMG");
-            img.Tag = new NodeInfo();
-            img.SetState(NodeState.Grayed);
-            
-            var h2 = new TreeNode("H2");
-            h2.Tag = new NodeInfo();
-            h2.SetState(NodeState.Grayed);
-            
-            var text = new TreeNode("TEXT");
-            text.Tag = new NodeInfo();
-            text.SetState(NodeState.Checked);
-            
-            var p = new TreeNode("P");
-            p.Tag = new NodeInfo();
-            p.SetState(NodeState.Grayed);
+            var section = CreateNode("SECTION", NodeState.Grayed);
+            var a = CreateNode("A", NodeState.Grayed);
+            var img = CreateNode("IMG", NodeState.Grayed);
+            var h2 = CreateNode("H2", NodeState.Grayed);
+            var text = CreateNode("TEXT", NodeState.Checked);
+            var p = CreateNode("P", NodeState.Grayed);
 
-            section.AddNode(a);
+            AddNodesTo(section, a, h2, p);
             a.AddNode(img);
-            section.AddNode(h2);
             h2.AddNode(a);
             a.AddNode(text);
-            section.AddNode(p);
             p.AddNode(text);
 
             return section;
@@ -108,36 +69,17 @@ namespace DEiXTo.Services.Tests
             //          text
             //    p
             //       text
-            var section = new TreeNode("section");
-            section.Tag = new NodeInfo();
-            section.SetState(NodeState.Grayed);
+            var section = CreateNode("SECTION", NodeState.Grayed);
+            var a = CreateNode("A", NodeState.Grayed);
+            var img = CreateNode("IMG", NodeState.Grayed);
+            var h2 = CreateNode("H2", NodeState.Grayed);
+            var text = CreateNode("TEXT", NodeState.Checked);
+            var p = CreateNode("P", NodeState.GrayedImplied);
 
-            var a = new TreeNode("A");
-            a.Tag = new NodeInfo();
-            a.SetState(NodeState.Grayed);
-
-            var img = new TreeNode("IMG");
-            img.Tag = new NodeInfo();
-            img.SetState(NodeState.Grayed);
-
-            var h2 = new TreeNode("H2");
-            h2.Tag = new NodeInfo();
-            h2.SetState(NodeState.Grayed);
-
-            var text = new TreeNode("TEXT");
-            text.Tag = new NodeInfo();
-            text.SetState(NodeState.Grayed);
-
-            var p = new TreeNode("P");
-            p.Tag = new NodeInfo();
-            p.SetState(NodeState.GrayedImplied);
-
-            section.AddNode(a);
+            AddNodesTo(section, a, h2, p);
             a.AddNode(img);
-            section.AddNode(h2);
             h2.AddNode(a);
             a.AddNode(text);
-            section.AddNode(p);
             p.AddNode(text);
 
             return section;
@@ -153,44 +95,19 @@ namespace DEiXTo.Services.Tests
             //       text
             //    p
             //       text
-            var section = new TreeNode("section");
-            section.Tag = new NodeInfo();
-            section.SetState(NodeState.Grayed);
-            
-            var header = new TreeNode("header");
-            header.Tag = new NodeInfo();
-            header.SetState(NodeState.Grayed);
+            var section = CreateNode("SECTION", NodeState.Grayed);
+            var header = CreateNode("HEADER", NodeState.Grayed);
+            var h2 = CreateNode("H2", NodeState.Grayed);
+            var text = CreateNode("TEXT", NodeState.Checked);
+            var p = CreateNode("P", NodeState.Unchecked);
+            var text1 = CreateNode("TEXT", NodeState.Unchecked);
+            var p1 = CreateNode("P", NodeState.Unchecked);
+            var text2 = CreateNode("TEXT", NodeState.Unchecked);
 
-            var h2 = new TreeNode("h2");
-            h2.Tag = new NodeInfo();
-            h2.SetState(NodeState.Grayed);
-            
-            var text = new TreeNode("text");
-            text.Tag = new NodeInfo();
-            text.SetState(NodeState.Checked);
-
-            var p = new TreeNode("p");
-            p.Tag = new NodeInfo();
-            p.SetState(NodeState.Unchecked);
-
-            var text1 = new TreeNode("text");
-            text1.Tag = new NodeInfo();
-            text1.SetState(NodeState.Unchecked);
-            
-            var p1 = new TreeNode("p");
-            p1.Tag = new NodeInfo();
-            p1.SetState(NodeState.Unchecked);
-
-            var text2 = new TreeNode("text");
-            text2.Tag = new NodeInfo();
-            text2.SetState(NodeState.Unchecked);
-
-            section.AddNode(header);
+            AddNodesTo(section, header, p, p1);
             header.AddNode(h2);
             h2.AddNode(text);
-            section.AddNode(p);
             p.AddNode(text1);
-            section.AddNode(p1);
             p1.AddNode(text2);
 
             return section;
@@ -206,45 +123,19 @@ namespace DEiXTo.Services.Tests
             //       text
             //    p
             //       text
-            var section = new TreeNode("section");
-            section.Tag = new NodeInfo();
-            section.SetAsRoot();
-            section.SetState(NodeState.Grayed);
+            var section = CreateRootNode("SECTION");
+            var header = CreateNode("HEADER", NodeState.Grayed);
+            var h2 = CreateNode("H2", NodeState.Grayed);
+            var text = CreateNode("TEXT", NodeState.Checked);
+            var p = CreateNode("P", NodeState.Grayed);
+            var text1 = CreateNode("TEXT", NodeState.Checked);
+            var p1 = CreateNode("P", NodeState.Grayed);
+            var text2 = CreateNode("TEXT", NodeState.Checked);
 
-            var header = new TreeNode("header");
-            header.Tag = new NodeInfo();
-            header.SetState(NodeState.Grayed);
-
-            var h2 = new TreeNode("h2");
-            h2.Tag = new NodeInfo();
-            h2.SetState(NodeState.Grayed);
-
-            var text = new TreeNode("text");
-            text.Tag = new NodeInfo();
-            text.SetState(NodeState.Checked);
-
-            var p = new TreeNode("p");
-            p.Tag = new NodeInfo();
-            p.SetState(NodeState.Grayed);
-
-            var text1 = new TreeNode("text");
-            text1.Tag = new NodeInfo();
-            text1.SetState(NodeState.Checked);
-
-            var p1 = new TreeNode("p");
-            p1.Tag = new NodeInfo();
-            p1.SetState(NodeState.Grayed);
-
-            var text2 = new TreeNode("text");
-            text2.Tag = new NodeInfo();
-            text2.SetState(NodeState.Checked);
-
-            section.AddNode(header);
+            AddNodesTo(section, header, p, p1);
             header.AddNode(h2);
             h2.AddNode(text);
-            section.AddNode(p);
             p.AddNode(text1);
-            section.AddNode(p1);
             p1.AddNode(text2);
 
             return section;
@@ -252,8 +143,8 @@ namespace DEiXTo.Services.Tests
 
         private TreeNodeCollection getDOMNodes(int instances, bool isOptional=false)
         {
-            var body = new TreeNode("body");
-            var div = new TreeNode("div");
+            var body = new TreeNode("BODY");
+            var div = new TreeNode("DIV");
             body.AddNode(div);
             
             for (int i = 0; i < instances; i++)
@@ -332,6 +223,30 @@ namespace DEiXTo.Services.Tests
             PatternExecutor pattern = new PatternExecutor(extraction, body.Nodes);
             pattern.FindMatches();
             Assert.AreEqual(3, pattern.Count);
+        }
+
+        private void AddNodesTo(TreeNode node, params TreeNode[] nodes)
+        {
+            for (int i = 0; i < nodes.Length; i++)
+            {
+                node.Nodes.Add(nodes[i]);
+            }
+        }
+
+        private TreeNode CreateRootNode(string tag)
+        {
+            var root = new TreeNode(tag);
+            root.Tag = new NodeInfo.Builder().SetRoot(true).SetState(NodeState.Grayed).Build();
+
+            return root;
+        }
+
+        private TreeNode CreateNode(string text, NodeState state, string label = null)
+        {
+            var node = new TreeNode(text);
+            node.Tag = new NodeInfo.Builder().SetLabel(label).SetState(state).Build();
+
+            return node;
         }
     }
 }
