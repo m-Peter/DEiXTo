@@ -164,7 +164,8 @@ namespace DEiXTo.Services
 
         public IExtraction Execute(TreeNode pattern, TreeNodeCollection domNodes)
         {
-            _executor = new PatternExecutor(pattern, domNodes);
+            var extractionPattern = new ExtractionPattern(pattern);
+            _executor = new PatternExecutor(extractionPattern, domNodes);
             _executor.FindMatches();
 
             var result = new ExtractionResult();

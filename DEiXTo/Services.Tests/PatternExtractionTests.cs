@@ -273,9 +273,10 @@ namespace DEiXTo.Services.Tests
         public void TestFindSingleMatch()
         {
             var root = getRootTree();
+            var extraction = new ExtractionPattern(root);
             var domNodes = getDOMNodes(1);
 
-            PatternExecutor pattern = new PatternExecutor(root, domNodes);
+            PatternExecutor pattern = new PatternExecutor(extraction, domNodes);
             pattern.FindMatches();
             Assert.AreEqual(1, pattern.Count);
         }
@@ -284,9 +285,10 @@ namespace DEiXTo.Services.Tests
         public void TestTwoMatches()
         {
             var root = getRootTree();
+            var extraction = new ExtractionPattern(root);
             var domNodes = getDOMNodes(2);
 
-            PatternExecutor pattern = new PatternExecutor(root, domNodes);
+            PatternExecutor pattern = new PatternExecutor(extraction, domNodes);
             pattern.FindMatches();
             Assert.AreEqual(2, pattern.Count);
         }
@@ -295,9 +297,10 @@ namespace DEiXTo.Services.Tests
         public void TestManyMatches()
         {
             var root = getRootTree();
+            var extraction = new ExtractionPattern(root);
             var domNodes = getDOMNodes(11);
 
-            PatternExecutor pattern = new PatternExecutor(root, domNodes);
+            PatternExecutor pattern = new PatternExecutor(extraction, domNodes);
             pattern.FindMatches();
             Assert.AreEqual(11, pattern.Count);
         }
@@ -306,9 +309,10 @@ namespace DEiXTo.Services.Tests
         public void TestManyMatchesWithOneOptionalNode()
         {
             var root = getRootTree();
+            var extraction = new ExtractionPattern(root);
             var domNodes = getDOMNodes(10, true);
 
-            PatternExecutor pattern = new PatternExecutor(root, domNodes);
+            PatternExecutor pattern = new PatternExecutor(extraction, domNodes);
             pattern.FindMatches();
             Assert.AreEqual(11, pattern.Count);
         }
@@ -317,6 +321,7 @@ namespace DEiXTo.Services.Tests
         public void TestDOMWithUnchecked()
         {
             var root = GetRootWithChecked();
+            var extraction = new ExtractionPattern(root);
             var body = new TreeNode("BODY");
             var div = new TreeNode("DIV");
             div.AddNode(root);
@@ -324,7 +329,7 @@ namespace DEiXTo.Services.Tests
             div.AddNode(root);
             body.AddNode(div);
 
-            PatternExecutor pattern = new PatternExecutor(root, body.Nodes);
+            PatternExecutor pattern = new PatternExecutor(extraction, body.Nodes);
             pattern.FindMatches();
             Assert.AreEqual(3, pattern.Count);
         }

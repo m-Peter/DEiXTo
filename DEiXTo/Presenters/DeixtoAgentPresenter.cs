@@ -190,9 +190,10 @@ namespace DEiXTo.Presenters
             // TODO REMOVE DEPENDENCIES
             // Grab the Extraction Pattern
             var pattern = View.GetExtractionPattern();
+            var extraction = new ExtractionPattern(pattern);
 
             // Search for the tree structure in the Extraction Pattern
-            _executor = new PatternExecutor(pattern, View.GetDOMTreeNodes());
+            _executor = new PatternExecutor(extraction, View.GetDOMTreeNodes());
             var matchedNode = _executor.ScanTree(View.GetDOMTreeNodes(), pattern);
             matchedNode.Tag = pattern.Tag;
             var font = new Font(FontFamily.GenericSansSerif, 8.25f);

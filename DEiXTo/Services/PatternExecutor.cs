@@ -10,47 +10,25 @@ namespace DEiXTo.Services
     /// </summary>
     public class PatternExecutor
     {
-        private TreeNode _pattern;
+        private ExtractionPattern _pattern;
         private TreeNodeCollection _domNodes;
         private List<Result> _results;
 
-        public PatternExecutor(TreeNode pattern, TreeNodeCollection domNodes)
+        public PatternExecutor(ExtractionPattern pattern, TreeNodeCollection domNodes)
         {
             _pattern = pattern;
             _domNodes = domNodes;
             _results = new List<Result>();
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <returns></returns>
         public int CountOutputVariables()
         {
-            int outputVariables = 0;
-
-            if (_pattern.IsOutputVariable())
-            {
-                outputVariables += 1;
-            }
-
-            countVariables(_pattern.Nodes, ref outputVariables);
-
-            return outputVariables;
+            return _pattern.CountOutputVariables();
         }
 
         public List<string> OutputVariableLabels()
         {
-            List<string> labels = new List<string>();
-
-            if (_pattern.HasLabel())
-            {
-                labels.Add(_pattern.GetLabel());
-            }
-            
-            CollectVariableLabels(_pattern.Nodes, labels);
-
-            return labels;
+            return _pattern.OutputVariableLabels();
         }
 
         public TreeNode ScanTree(TreeNodeCollection nodes, TreeNode pattern)
@@ -73,82 +51,6 @@ namespace DEiXTo.Services
             return null;
         }
 
-        private void CollectVariableLabels(TreeNodeCollection nodes, List<string> labels)
-        {
-            foreach (TreeNode node in nodes)
-            {
-                if (node.HasLabel())
-                {
-                    labels.Add(node.GetLabel());
-                }
-
-                CollectVariableLabels(node.Nodes, labels);
-            }
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="nodes"></param>
-        /// <param name="counter"></param>
-        private void countVariables(TreeNodeCollection nodes, ref int counter)
-        {
-            foreach (TreeNode node in nodes)
-            {
-                if (node.IsOutputVariable())
-                {
-                    counter += 1;
-                }
-
-                countVariables(node.Nodes, ref counter);
-            }
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="pattern"></param>
-        /// <param name="filtered"></param>
-        public TreeNode TrimUncheckedNodes(TreeNode pattern)
-        {
-            var rootNode = new TreeNode(pattern.Text);
-            rootNode.Tag = pattern.Tag;
-            rootNode.ImageIndex = pattern.ImageIndex;
-            rootNode.SelectedImageIndex = pattern.SelectedImageIndex;
-            rootNode.NodeFont = pattern.NodeFont;
-
-            FilterUncheckedNodes(pattern.Nodes, rootNode);
-
-            return rootNode;
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="nodes"></param>
-        /// <param name="filtered"></param>
-        private void FilterUncheckedNodes(TreeNodeCollection nodes, TreeNode filtered)
-        {
-            foreach (TreeNode node in nodes)
-            {
-                var state = node.GetState();
-
-                if (state != NodeState.Unchecked)
-                {
-                    var newNode = new TreeNode(node.Text);
-                    newNode.Tag = node.Tag;
-                    newNode.ImageIndex = node.ImageIndex;
-                    newNode.SelectedImageIndex = node.SelectedImageIndex;
-                    filtered.Nodes.Add(newNode);
-                    FilterUncheckedNodes(node.Nodes, newNode);
-                }
-                else
-                {
-                    FilterUncheckedNodes(node.Nodes, filtered);
-                }
-            }
-        }
-
         /// <summary>
         /// 
         /// </summary>
@@ -156,20 +58,20 @@ namespace DEiXTo.Services
         {
             _results = new List<Result>();
 
-            if (_pattern.IsRoot())
+            if (_pattern.RootNode.IsRoot())
             {
                 int counter = 0;
-                var pattern = TrimUncheckedNodes(_pattern);
-                Match(pattern, _domNodes, ref counter);
+                _pattern.TrimUncheckedNodes();
+                Match(_pattern.RootNode, _domNodes, ref counter);
                 return;
             }
 
             // Extract the tree above the virtual root node.
-            var ancestors = new TreeNode(_pattern.Text);
-            BuiltAncestorsTree(_pattern.Nodes, ancestors);
+            var ancestors = new TreeNode(_pattern.RootNode.Text);
+            BuiltAncestorsTree(_pattern.RootNode.Nodes, ancestors);
 
             TreeNode vRoot = null;
-            FindRoot(_pattern.Nodes, ref vRoot);
+            FindRoot(_pattern.RootNode.Nodes, ref vRoot);
 
             MatchSplit(vRoot, _domNodes, ancestors);
         }

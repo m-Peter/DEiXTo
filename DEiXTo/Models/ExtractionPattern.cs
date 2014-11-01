@@ -17,6 +17,11 @@ namespace DEiXTo.Models
             _rootNode = rootNode;
         }
 
+        public TreeNode RootNode
+        {
+            get { return _rootNode; }
+        }
+
         public int CountOutputVariables()
         {
             int outputVariables = 0;
