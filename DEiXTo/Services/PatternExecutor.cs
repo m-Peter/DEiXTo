@@ -122,18 +122,7 @@ namespace DEiXTo.Services
             {
                 if (CompareRecursiveTree(pattern, node, result))
                 {
-                    /*string fw = "";
-                    int count = 0;
-                    traverse(upper, ref fw, ref count);
-                    string bw = "";
-                    int counter = 0;
-                    backward(node.Parent, ref bw, count, ref counter);
-
-                    if (fw != bw)
-                    {
-                        return;
-                    }*/
-                    bool match = CheckUpper(upper, node);
+                    bool match = CheckUpper(upper, node, result);
 
                     if (!match)
                     {
@@ -149,7 +138,7 @@ namespace DEiXTo.Services
             }
         }
 
-        private bool CheckUpper(TreeNode pattern, TreeNode instance)
+        private bool CheckUpper(TreeNode pattern, TreeNode instance, Result result)
         {
             if (pattern.Text != instance.Text)
             {
@@ -169,22 +158,24 @@ namespace DEiXTo.Services
                 return false;
             }
 
-            if (!CompareTrees(leftParent, rightParent))
+            if (!CompareTrees(leftParent, rightParent, result))
             {
                 return false;
             }
 
-            CheckUpper(leftParent, rightParent);
+            CheckUpper(leftParent, rightParent, result);
 
             return true;
         }
 
-        private bool CompareTrees(TreeNode left, TreeNode right)
+        private bool CompareTrees(TreeNode left, TreeNode right, Result result)
         {
             if (left.Text != right.Text)
             {
                 return false;
             }
+
+            AddContentFromInstance(left.GetState(), right, result);
 
             for (int i = 0; i < left.Nodes.Count; i++)
             {
@@ -198,40 +189,13 @@ namespace DEiXTo.Services
 
                 var nextRight = right.Nodes[i];
 
-                if (!CompareTrees(nextLeft, nextRight))
+                if (!CompareTrees(nextLeft, nextRight, result))
                 {
                     return false;
                 }
             }
 
             return true;
-        }
-
-        private void traverse(TreeNode t, ref string format, ref int count)
-        {
-            for (int i = t.Nodes.Count - 1; i >= 0; i--)
-            {
-                traverse(t.Nodes[i], ref format, ref count);
-            }
-
-            count += 1;
-            format += (t.Text);
-        }
-
-        private void backward(TreeNode t, ref string format, int limit, ref int count)
-        {
-            if (limit == count)
-            {
-                return;
-            }
-
-            format += t.Text;
-
-            if (t.Parent != null)
-            {
-                count += 1;
-                backward(t.Parent, ref format, limit, ref count);
-            }
         }
 
         /// <summary>
