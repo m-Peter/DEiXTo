@@ -34,23 +34,14 @@ namespace DEiXTo.Models
         {
             var upperNode = new TreeNode(_rootNode.Text);
             upperNode.Tag = _rootNode.Tag;
-            BuiltUpperTree(_rootNode.Nodes, upperNode);
-
-            return upperNode;
-        }
-
-        public TreeNode GetUpperTreeInc()
-        {
-            var upperNode = new TreeNode(_rootNode.Text);
-            upperNode.Tag = _rootNode.Tag;
             var leafNode = new TreeNode();
 
-            BuiltUpperTreeInc(_rootNode.Nodes, upperNode, ref leafNode);
+            BuiltUpperTree(_rootNode.Nodes, upperNode, ref leafNode);
 
             return leafNode;
         }
 
-        private void BuiltUpperTreeInc(TreeNodeCollection nodes, TreeNode root, ref TreeNode leafNode)
+        private void BuiltUpperTree(TreeNodeCollection nodes, TreeNode root, ref TreeNode leafNode)
         {
             foreach (TreeNode node in nodes)
             {
@@ -65,23 +56,7 @@ namespace DEiXTo.Models
                     return;
                 }
 
-                BuiltUpperTree(node.Nodes, newNode);
-            }
-        }
-
-        private void BuiltUpperTree(TreeNodeCollection nodes, TreeNode root)
-        {
-            foreach (TreeNode node in nodes)
-            {
-                if (node.IsRoot())
-                {
-                    return;
-                }
-
-                var newNode = new TreeNode(node.Text);
-                newNode.Tag = node.Tag;
-                root.Nodes.Add(newNode);
-                BuiltUpperTree(node.Nodes, newNode);
+                BuiltUpperTree(node.Nodes, newNode, ref leafNode);
             }
         }
 

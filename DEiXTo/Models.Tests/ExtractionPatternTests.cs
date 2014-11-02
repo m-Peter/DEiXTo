@@ -156,11 +156,8 @@ namespace DEiXTo.Models.Tests
             var upperTree = pattern.GetUpperTree();
 
             // Assert
-            Assert.AreEqual("DIV", upperTree.Text);
+            Assert.AreEqual("A", upperTree.Text);
             Assert.AreEqual(NodeState.Grayed, upperTree.GetState());
-            Assert.AreEqual(1, upperTree.Nodes.Count);
-            Assert.AreEqual("NAV", upperTree.Nodes[0].Text);
-            Assert.AreEqual(NodeState.Grayed, upperTree.Nodes[0].GetState());
         }
 
         private void AddNodesTo(TreeNode node, params TreeNode[] nodes)

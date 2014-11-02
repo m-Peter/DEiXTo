@@ -302,27 +302,8 @@ namespace DEiXTo.Services.Tests
             // Assert
             Assert.AreEqual("H2", vRoot.Text);
             Assert.AreEqual(NodeState.Grayed, vRoot.GetState());
-            Assert.AreEqual("SECTION", upperTree.Text);
+            Assert.AreEqual("H2", upperTree.Text);
             Assert.AreEqual(NodeState.Grayed, upperTree.GetState());
-
-            // Act
-            string backwards = "";
-            traverseBackwards(upperTree, ref backwards);
-            Assert.AreEqual("-TEXT-P-IMG-A-SECTION", backwards);
-        }
-
-        [TestMethod]
-        public void TestCompareTrees()
-        {
-            // Arrange
-            var left = GetLeftTree();
-            var right = GetRightTree();
-
-            // Act
-            var match = CompareTrees(left, right);
-
-            // Assert
-            Assert.IsTrue(match);
         }
 
         [TestMethod]
@@ -355,7 +336,7 @@ namespace DEiXTo.Services.Tests
 
             // Act
             var vRoot = pattern.FindVirtualRoot();
-            var leaf = pattern.GetUpperTreeInc();
+            var leaf = pattern.GetUpperTree();
 
             // Assert
             Assert.AreEqual("H2", vRoot.Text);
@@ -393,13 +374,11 @@ namespace DEiXTo.Services.Tests
 
             // Act
             var vRoot = pattern.FindVirtualRoot();
-            var leafNode = pattern.GetUpperTreeInc();
+            var leafNode = pattern.GetUpperTree();
 
             // Assert
-            Assert.IsTrue(CompareTrees(h2, vRoot));
             Assert.AreEqual("H2", leafNode.Text);
             Assert.AreEqual("SECTION", leafNode.Parent.Text);
-            Assert.IsTrue(CheckUpper(leafNode, h2));
         }
 
         [TestMethod]
@@ -424,12 +403,7 @@ namespace DEiXTo.Services.Tests
 
             // Act
             var vRoot = pattern.FindVirtualRoot();
-            var leafNode = pattern.GetUpperTreeInc();
-
-            // Assert
-            var instance = GetUnmatchingInstance();
-            var match = CheckUpper(leafNode, instance);
-            Assert.IsFalse(match);
+            var leafNode = pattern.GetUpperTree();
         }
 
         private TreeNode GetUnmatchingInstance()
@@ -439,8 +413,6 @@ namespace DEiXTo.Services.Tests
             var img = CreateNode("IMG", NodeState.Grayed);
             a.AddNode(img);
             var p = CreateNode("P", NodeState.Grayed);
-            //var pText = CreateNode("TEXT", NodeState.Checked);
-            //p.AddNode(pText);
             var h2 = CreateRootNode("H2");
             var h2A = CreateNode("A", NodeState.Grayed);
             h2.AddNode(h2A);
@@ -450,79 +422,6 @@ namespace DEiXTo.Services.Tests
             AddNodesTo(section, a, p, h2);
 
             return h2;
-        }
-
-        private bool CheckUpper(TreeNode pattern, TreeNode instance)
-        {
-            if (pattern.Text != instance.Text)
-            {
-                return false;
-            }
-
-            var leftParent = pattern.Parent;
-            var rightParent = instance.Parent;
-
-            if (leftParent == null)
-            {
-                return true;
-            }
-
-            if (rightParent == null)
-            {
-                return false;
-            }
-
-            if (!CompareTrees(leftParent, rightParent))
-            {
-                return false;
-            }
-
-            CheckUpper(leftParent, rightParent);
-
-            return true;
-        }
-
-        private bool CompareTrees(TreeNode left, TreeNode right)
-        {
-            if (left.Text != right.Text)
-            {
-                return false;
-            }
-
-            for (int i = 0; i < left.Nodes.Count; i++)
-            {
-                var nextLeft = left.Nodes[i];
-                bool hasNode = HasNextNode(right, i);
-
-                if (hasNode)
-                {
-                    return false;
-                }
-
-                var nextRight = right.Nodes[i];
-
-                if (!CompareTrees(nextLeft, nextRight))
-                {
-                    return false;
-                }
-            }
-
-            return true;
-        }
-
-        private bool HasNextNode(TreeNode node, int index)
-        {
-            return node.Nodes.Count <= index;
-        }
-
-        private void traverse(TreeNode node, Stack<TreeNode> stack)
-        {
-            stack.Push(node);
-
-            foreach (TreeNode n in node.Nodes)
-            {
-                traverse(n, stack);
-            }
         }
 
         private TreeNode GetLeftTree()
@@ -563,25 +462,6 @@ namespace DEiXTo.Services.Tests
             AddNodesTo(section, a, p, h2);
 
             return section;
-        }
-
-        private void traverseBackwards(TreeNode node, Stack<TreeNode> stack)
-        {
-            for (int i = node.Nodes.Count - 1; i >= 0; i--)
-            {
-                traverseBackwards(node.Nodes[i], stack);
-            }
-            stack.Push(node);
-        }
-
-        private void traverseBackwards(TreeNode root, ref string format)
-        {
-            for (int i = root.Nodes.Count - 1; i >= 0; i--)
-            {
-                traverseBackwards(root.Nodes[i], ref format);
-            }
-
-            format += string.Format("-{0}", root.Text);
         }
 
         public TreeNodeCollection CreateDomNodes()
