@@ -38,6 +38,28 @@ namespace DEiXTo.Services
             return null;
         }
 
+        public static AttributeConstraint GetAttrConstraint(this TreeNode node)
+        {
+            NodeInfo pInfo = GetPointerInfo(node);
+
+            if (pInfo != null)
+            {
+                return pInfo.AttrConstraint;
+            }
+
+            return null;
+        }
+
+        public static void SetAttrConstraint(this TreeNode node, AttributeConstraint constraint)
+        {
+            NodeInfo pInfo = GetPointerInfo(node);
+
+            if (pInfo != null)
+            {
+                pInfo.AttrConstraint = constraint;
+            }
+        }
+
         public static bool IsOutputVariable(this TreeNode node)
         {
             var state = GetPointerInfo(node).State;

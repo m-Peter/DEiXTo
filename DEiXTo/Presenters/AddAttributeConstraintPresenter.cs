@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using DEiXTo.Services;
+using DEiXTo.Models;
 
 namespace DEiXTo.Presenters
 {
@@ -27,6 +28,9 @@ namespace DEiXTo.Presenters
         public void AddConstraint()
         {
             string constraint = View.Constraint;
+            var attrConstraint = new AttributeConstraint { Attribute = "class", Value = constraint };
+            _node.SetAttrConstraint(attrConstraint);
+            View.Exit();
         }
     }
 }

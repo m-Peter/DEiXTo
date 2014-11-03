@@ -26,6 +26,11 @@ namespace DEiXTo.Views
             set { AddConstraintTextBox.Text = value; }
         }
 
+        public void Exit()
+        {
+            Close();
+        }
+
         private void OKButton_Click(object sender, EventArgs e)
         {
             Presenter.AddConstraint();

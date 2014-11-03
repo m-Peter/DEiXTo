@@ -11,5 +11,6 @@ namespace DEiXTo.Views
     {
         AddAttributeConstraintPresenter Presenter { get; set; }
         string Constraint { get; set; }
+        void Exit();
     }
 }
