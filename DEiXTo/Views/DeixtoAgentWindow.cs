@@ -1419,5 +1419,11 @@ namespace DEiXTo.Views
         {
             Presenter.RunInAutoMode();
         }
+
+        private void AddAttributeConstraintMenuItem_Click(object sender, EventArgs e)
+        {
+            AddAttributeConstraintWindow form = new AddAttributeConstraintWindow();
+            form.ShowDialog();
+        }
     }
 }

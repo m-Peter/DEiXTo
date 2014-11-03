@@ -163,6 +163,9 @@
             this.AddRegexMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.RemoveRegExMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
+            this.AddAttributeConstraintMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.RemoveAttributeConstraintMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator11 = new System.Windows.Forms.ToolStripSeparator();
             this.EnterRemoveLabelMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.NewLabelMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.popularLabelsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -1569,6 +1572,9 @@
             this.AddRegexMenuItem,
             this.RemoveRegExMenuItem,
             this.toolStripSeparator3,
+            this.AddAttributeConstraintMenuItem,
+            this.RemoveAttributeConstraintMenuItem,
+            this.toolStripSeparator11,
             this.EnterRemoveLabelMenuItem,
             this.toolStripSeparator4,
             this.EnterFSONMenuItem,
@@ -1583,7 +1589,7 @@
             this.toolStripSeparator8,
             this.DeleteNodeMenuItem});
             this.AdjustpatternMenuStrip.Name = "AdjustpatternMenuStrip";
-            this.AdjustpatternMenuStrip.Size = new System.Drawing.Size(239, 398);
+            this.AdjustpatternMenuStrip.Size = new System.Drawing.Size(239, 470);
             // 
             // CheckedMenuItem
             // 
@@ -1651,6 +1657,24 @@
             // 
             this.toolStripSeparator3.Name = "toolStripSeparator3";
             this.toolStripSeparator3.Size = new System.Drawing.Size(235, 6);
+            // 
+            // AddAttributeConstraintMenuItem
+            // 
+            this.AddAttributeConstraintMenuItem.Name = "AddAttributeConstraintMenuItem";
+            this.AddAttributeConstraintMenuItem.Size = new System.Drawing.Size(238, 22);
+            this.AddAttributeConstraintMenuItem.Text = "Enter Attribute Constraint";
+            this.AddAttributeConstraintMenuItem.Click += new System.EventHandler(this.AddAttributeConstraintMenuItem_Click);
+            // 
+            // RemoveAttributeConstraintMenuItem
+            // 
+            this.RemoveAttributeConstraintMenuItem.Name = "RemoveAttributeConstraintMenuItem";
+            this.RemoveAttributeConstraintMenuItem.Size = new System.Drawing.Size(238, 22);
+            this.RemoveAttributeConstraintMenuItem.Text = "Remove Attribute Constraint";
+            // 
+            // toolStripSeparator11
+            // 
+            this.toolStripSeparator11.Name = "toolStripSeparator11";
+            this.toolStripSeparator11.Size = new System.Drawing.Size(235, 6);
             // 
             // EnterRemoveLabelMenuItem
             // 
@@ -2178,5 +2202,8 @@
         private System.Windows.Forms.ColumnHeader DescriptionColumn;
         private System.Windows.Forms.ColumnHeader ExampleColumn;
         private System.Windows.Forms.Button SaveToDiskButton;
+        private System.Windows.Forms.ToolStripMenuItem AddAttributeConstraintMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem RemoveAttributeConstraintMenuItem;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator11;
     }
 }

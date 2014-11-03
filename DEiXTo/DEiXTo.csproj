@@ -130,6 +130,12 @@
     <Compile Include="Services\WriteWrapper.cs" />
     <Compile Include="Services\XmlDialogBuilder.cs" />
     <Compile Include="Services\XmlRecordsWriter.cs" />
+    <Compile Include="Views\AddAttributeConstraintWindow.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Views\AddAttributeConstraintWindow.Designer.cs">
+      <DependentUpon>AddAttributeConstraintWindow.cs</DependentUpon>
+    </Compile>
     <Compile Include="Views\AddLabelWindow.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -174,6 +180,9 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <EmbeddedResource Include="Views\AddAttributeConstraintWindow.resx">
+      <DependentUpon>AddAttributeConstraintWindow.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Views\AddLabelWindow.resx">
       <DependentUpon>AddLabelWindow.cs</DependentUpon>
     </EmbeddedResource>
