@@ -26,6 +26,18 @@ namespace DEiXTo.Services
             return "";
         }
 
+        public static bool HasAttrConstraint(this TreeNode node)
+        {
+            NodeInfo pInfo = GetPointerInfo(node);
+
+            if (pInfo != null)
+            {
+                return pInfo.AttrConstraint != null;
+            }
+
+            return false;
+        }
+
         public static NodeAttributes GetAttributes(this TreeNode node)
         {
             NodeInfo pInfo = GetPointerInfo(node);

@@ -333,6 +333,21 @@ namespace DEiXTo.Services
                 }
             }
 
+            if (left.HasAttrConstraint())
+            {
+                var constraint = left.GetAttrConstraint();
+                string attr = constraint.Attribute;
+                string value = constraint.Value;
+
+                var attributes = right.GetAttributes();
+                string klass = attributes.Klass;
+
+                if (value != klass)
+                {
+                    return false;
+                }
+            }
+
             AddContentFromInstance(left.GetState(), right, result);
 
             int childNodes = left.Nodes.Count;
