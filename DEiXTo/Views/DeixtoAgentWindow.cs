@@ -1422,8 +1422,8 @@ namespace DEiXTo.Views
 
         private void AddAttributeConstraintMenuItem_Click(object sender, EventArgs e)
         {
-            AddAttributeConstraintWindow form = new AddAttributeConstraintWindow();
-            form.ShowDialog();
+            var node = WorkingPatternTreeView.SelectedNode;
+            Presenter.AddAttributeConstraint(node);
         }
     }
 }

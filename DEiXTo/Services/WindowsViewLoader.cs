@@ -75,6 +75,18 @@ namespace DEiXTo.Services
         /// <summary>
         /// 
         /// </summary>
+        /// <param name="node"></param>
+        public void LoadAddAttributeConstraintView(TreeNode node)
+        {
+            AddAttributeConstraintWindow window = new AddAttributeConstraintWindow();
+            AddAttributeConstraintPresenter presenter = new AddAttributeConstraintPresenter(window, node);
+
+            window.ShowDialog();
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
         public Form LastLoadedView
         {
             get { return _lastLoadedView; }

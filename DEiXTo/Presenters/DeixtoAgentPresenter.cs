@@ -252,6 +252,11 @@ namespace DEiXTo.Presenters
             _loader.LoadAddSiblingOrderView(node);
         }
 
+        public void AddAttributeConstraint(TreeNode node)
+        {
+            _loader.LoadAddAttributeConstraintView(node);
+        }
+
         /// <summary>
         /// 
         /// </summary>

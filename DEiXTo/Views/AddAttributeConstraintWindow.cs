@@ -10,7 +10,7 @@ using System.Windows.Forms;
 
 namespace DEiXTo.Views
 {
-    public partial class AddAttributeConstraintWindow : Form
+    public partial class AddAttributeConstraintWindow : Form, IAddAttributeConstraintView
     {
         public AddAttributeConstraintWindow()
         {

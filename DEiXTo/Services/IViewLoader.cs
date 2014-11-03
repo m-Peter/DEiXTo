@@ -13,5 +13,6 @@ namespace DEiXTo.Services
         void LoadAddLabelView(TreeNode node);
         void LoadRegexBuilderView(TreeNode node);
         void LoadAddSiblingOrderView(TreeNode node);
+        void LoadAddAttributeConstraintView(TreeNode node);
     }
 }
