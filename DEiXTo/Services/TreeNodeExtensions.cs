@@ -26,6 +26,18 @@ namespace DEiXTo.Services
             return "";
         }
 
+        public static NodeAttributes GetAttributes(this TreeNode node)
+        {
+            NodeInfo pInfo = GetPointerInfo(node);
+
+            if (pInfo != null)
+            {
+                return pInfo.Attributes;
+            }
+
+            return null;
+        }
+
         public static bool IsOutputVariable(this TreeNode node)
         {
             var state = GetPointerInfo(node).State;

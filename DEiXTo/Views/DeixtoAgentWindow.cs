@@ -325,6 +325,19 @@ namespace DEiXTo.Views
             URLComboBox.Text = WebBrowser.Document.Url.ToString();
         }
 
+        public void ClearAttributes()
+        {
+            AttributesListView.Items.Clear();
+        }
+
+        public void SetNodeAttributes(NodeAttributes attributes)
+        {
+            string id = (String.IsNullOrWhiteSpace(attributes.Id)) ? "None" : attributes.Id;
+            string klass = (String.IsNullOrWhiteSpace(attributes.Klass)) ? "None" : attributes.Klass;
+            AttributesListView.Items.Add(new ListViewItem(new[] { "id", id }));
+            AttributesListView.Items.Add(new ListViewItem(new[] { "class", klass }));
+        }
+
         /// <summary>
         /// 
         /// </summary>
@@ -672,7 +685,7 @@ namespace DEiXTo.Views
             TargetURLsListBox.Items.AddRange(urls);
         }
 
-        
+
 
         /// <summary>
         /// Clear all the URLs from the TargetURLs collection.
@@ -863,7 +876,7 @@ namespace DEiXTo.Views
             get { return BrowserMenuStrip.Enabled; }
         }
 
-        
+
 
         /// <summary>
         /// 

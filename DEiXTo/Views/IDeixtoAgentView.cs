@@ -12,6 +12,8 @@ namespace DEiXTo.Views
     {
         DeixtoAgentPresenter Presenter { get; set; }
 
+        void ClearAttributes();
+        void SetNodeAttributes(NodeAttributes attributes);
         string[] IgnoredTags { get; set; }
         string[] TargetUrls { get; set; }
         OutputMode OutputMode { get; set; }

@@ -50,7 +50,7 @@
             this.AttributesTabControl = new System.Windows.Forms.TabControl();
             this.Attributes = new System.Windows.Forms.TabPage();
             this.AttributesListView = new System.Windows.Forms.ListView();
-            this.AttributeHeader = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.NameHeader = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.ValueHeader = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.Auxiliary = new System.Windows.Forms.TabPage();
             this.AuxiliaryTreeView = new System.Windows.Forms.TreeView();
@@ -522,7 +522,7 @@
             // AttributesListView
             // 
             this.AttributesListView.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
-            this.AttributeHeader,
+            this.NameHeader,
             this.ValueHeader});
             this.AttributesListView.Dock = System.Windows.Forms.DockStyle.Fill;
             this.AttributesListView.Location = new System.Drawing.Point(3, 3);
@@ -532,10 +532,10 @@
             this.AttributesListView.UseCompatibleStateImageBehavior = false;
             this.AttributesListView.View = System.Windows.Forms.View.Details;
             // 
-            // AttributeHeader
+            // NameHeader
             // 
-            this.AttributeHeader.Text = "Attribute";
-            this.AttributeHeader.Width = 100;
+            this.NameHeader.Text = "Name";
+            this.NameHeader.Width = 100;
             // 
             // ValueHeader
             // 
@@ -2026,7 +2026,7 @@
         private System.Windows.Forms.TabControl AttributesTabControl;
         private System.Windows.Forms.TabPage Attributes;
         private System.Windows.Forms.ListView AttributesListView;
-        private System.Windows.Forms.ColumnHeader AttributeHeader;
+        private System.Windows.Forms.ColumnHeader NameHeader;
         private System.Windows.Forms.ColumnHeader ValueHeader;
         private System.Windows.Forms.TabPage Auxiliary;
         private System.Windows.Forms.TreeView AuxiliaryTreeView;

@@ -58,6 +58,7 @@
     <Compile Include="Models\ExtractionResult.cs" />
     <Compile Include="Models\Format.cs" />
     <Compile Include="Models\IExtraction.cs" />
+    <Compile Include="Models\NodeAttributes.cs" />
     <Compile Include="Models\NodeState.cs" />
     <Compile Include="Models\NodeInfo.cs" />
     <Compile Include="Models\OutputFormat.cs" />
