@@ -42,6 +42,7 @@
             this.OKButton.TabIndex = 0;
             this.OKButton.Text = "OK";
             this.OKButton.UseVisualStyleBackColor = true;
+            this.OKButton.Click += new System.EventHandler(this.OKButton_Click);
             // 
             // CancelButton
             // 
@@ -68,7 +69,7 @@
             this.AddConstraintTextBox.Size = new System.Drawing.Size(212, 20);
             this.AddConstraintTextBox.TabIndex = 3;
             // 
-            // AddAttributeConstraint
+            // AddAttributeConstraintWindow
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -79,7 +80,7 @@
             this.Controls.Add(this.OKButton);
             this.MaximizeBox = false;
             this.MinimizeBox = false;
-            this.Name = "AddAttributeConstraint";
+            this.Name = "AddAttributeConstraintWindow";
             this.Text = "AddAttributeConstraint";
             this.ResumeLayout(false);
             this.PerformLayout();

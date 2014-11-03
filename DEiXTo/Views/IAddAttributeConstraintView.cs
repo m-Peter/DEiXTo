@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DEiXTo.Presenters;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,5 +9,7 @@ namespace DEiXTo.Views
 {
     public interface IAddAttributeConstraintView
     {
+        AddAttributeConstraintPresenter Presenter { get; set; }
+        string Constraint { get; set; }
     }
 }

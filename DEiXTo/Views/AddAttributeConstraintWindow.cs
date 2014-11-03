@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DEiXTo.Presenters;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -15,6 +16,19 @@ namespace DEiXTo.Views
         public AddAttributeConstraintWindow()
         {
             InitializeComponent();
+        }
+
+        public AddAttributeConstraintPresenter Presenter { get; set; }
+
+        public string Constraint
+        {
+            get { return AddConstraintTextBox.Text; }
+            set { AddConstraintTextBox.Text = value; }
+        }
+
+        private void OKButton_Click(object sender, EventArgs e)
+        {
+            Presenter.AddConstraint();
         }
     }
 }
