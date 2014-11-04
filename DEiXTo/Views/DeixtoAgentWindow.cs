@@ -708,9 +708,7 @@ namespace DEiXTo.Views
                 return;
             }
 
-            node.EnsureVisible();
             HtmlTreeView.SelectedNode = node;
-            HtmlTreeView.Focus();
         }
 
         /// <summary>
