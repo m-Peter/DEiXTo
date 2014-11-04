@@ -5,6 +5,7 @@ using System.Windows.Forms;
 using DEiXTo.Models;
 using DEiXTo.Presenters;
 using mshtml;
+using System.Collections.Generic;
 
 namespace DEiXTo.Views
 {
@@ -330,12 +331,12 @@ namespace DEiXTo.Views
             AttributesListView.Items.Clear();
         }
 
-        public void SetNodeAttributes(AttributeCollection attributes)
+        public void LoadNodeAttributes(List<TagAttribute> attributes)
         {
-            string id = (String.IsNullOrWhiteSpace(attributes.Id)) ? "None" : attributes.Id;
-            string klass = (String.IsNullOrWhiteSpace(attributes.Klass)) ? "None" : attributes.Klass;
-            AttributesListView.Items.Add(new ListViewItem(new[] { "id", id }));
-            AttributesListView.Items.Add(new ListViewItem(new[] { "class", klass }));
+            foreach (TagAttribute tag in attributes)
+            {
+                AttributesListView.Items.Add(new ListViewItem(new[] {tag.Name, tag.Value}));
+            }
         }
 
         /// <summary>

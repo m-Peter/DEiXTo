@@ -1,6 +1,7 @@
 ﻿using DEiXTo.Models;
 using DEiXTo.Presenters;
 using System;
+using System.Collections.Generic;
 using System.Windows.Forms;
 
 namespace DEiXTo.Views
@@ -13,7 +14,7 @@ namespace DEiXTo.Views
         DeixtoAgentPresenter Presenter { get; set; }
 
         void ClearAttributes();
-        void SetNodeAttributes(AttributeCollection attributes);
+        void LoadNodeAttributes(List<TagAttribute> attributes);
         string[] IgnoredTags { get; set; }
         string[] TargetUrls { get; set; }
         OutputMode OutputMode { get; set; }

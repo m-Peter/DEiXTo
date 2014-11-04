@@ -538,12 +538,11 @@
             // NameHeader
             // 
             this.NameHeader.Text = "Name";
-            this.NameHeader.Width = 100;
             // 
             // ValueHeader
             // 
             this.ValueHeader.Text = "Value";
-            this.ValueHeader.Width = 100;
+            this.ValueHeader.Width = 140;
             // 
             // Auxiliary
             // 
@@ -1589,7 +1588,7 @@
             this.toolStripSeparator8,
             this.DeleteNodeMenuItem});
             this.AdjustpatternMenuStrip.Name = "AdjustpatternMenuStrip";
-            this.AdjustpatternMenuStrip.Size = new System.Drawing.Size(239, 470);
+            this.AdjustpatternMenuStrip.Size = new System.Drawing.Size(239, 448);
             // 
             // CheckedMenuItem
             // 

@@ -29,8 +29,5 @@ namespace DEiXTo.Models
         {
             return _attributes.Find(attribute => attribute.Name == attributeName);
         }
-
-        public string Id { get; set; }
-        public string Klass { get; set; }
     }
 }

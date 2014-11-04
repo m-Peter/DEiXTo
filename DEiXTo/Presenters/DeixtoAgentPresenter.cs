@@ -839,6 +839,17 @@ namespace DEiXTo.Presenters
         /// <param name="button"></param>
         public void WorkingPatternNodeClick(TreeNode node, MouseButtons button)
         {
+            if (node.IsTextNode())
+            {
+                View.ClearAttributes();
+            }
+            else
+            {
+                View.ClearAttributes();
+                var attributes = node.GetAttributes().All;
+                View.LoadNodeAttributes(attributes);
+            }
+
             if (RightButtonPressed(button))
             {
                 View.SetAdjustContextMenuFor(node);
