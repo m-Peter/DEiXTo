@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace DEiXTo.Models
 {
-    public class NodeAttributes
+    public class TagAttribute
     {
-        public string Id { get; set; }
-        public string Klass { get; set; }
+        public string Name { get; set; }
+        public string Value { get; set; }
     }
 }

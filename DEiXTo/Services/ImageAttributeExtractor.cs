@@ -1,0 +1,49 @@
+﻿using DEiXTo.Models;
+using mshtml;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace DEiXTo.Services
+{
+    public class ImageAttributeExtractor : AttributeExtractor
+    {
+        public ImageAttributeExtractor(IHTMLElement element)
+        {
+            _element = element;
+        }
+
+        public override AttributeCollection Attributes()
+        {
+            var attributes = base.Attributes();
+            attributes.Add(Src);
+            attributes.Add(Alt);
+
+            return attributes;
+        }
+
+        private TagAttribute Src
+        {
+            get
+            {
+                var src = _element.getAttribute("src");
+                var tag = new TagAttribute { Name = "src", Value = src };
+
+                return tag;
+            }
+        }
+
+        private TagAttribute Alt
+        {
+            get
+            {
+                var alt = _element.getAttribute("alt");
+                var tag = new TagAttribute { Name = "alt", Value = alt };
+
+                return tag;
+            }
+        }
+    }
+}

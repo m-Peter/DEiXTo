@@ -330,7 +330,7 @@ namespace DEiXTo.Views
             AttributesListView.Items.Clear();
         }
 
-        public void SetNodeAttributes(NodeAttributes attributes)
+        public void SetNodeAttributes(AttributeCollection attributes)
         {
             string id = (String.IsNullOrWhiteSpace(attributes.Id)) ? "None" : attributes.Id;
             string klass = (String.IsNullOrWhiteSpace(attributes.Klass)) ? "None" : attributes.Klass;

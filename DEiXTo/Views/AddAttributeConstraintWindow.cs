@@ -1,4 +1,5 @@
-﻿using DEiXTo.Presenters;
+﻿using DEiXTo.Models;
+using DEiXTo.Presenters;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -16,6 +17,13 @@ namespace DEiXTo.Views
         public AddAttributeConstraintWindow()
         {
             InitializeComponent();
+            var attributes = new List<TagAttribute>();
+            attributes.Add(new TagAttribute { Name = "id", Value = "github-link" });
+            attributes.Add(new TagAttribute { Name = "href", Value = "www.github.com" });
+            attributes.Add(new TagAttribute { Name = "alt", Value = "Move to GitHub" });
+            AttributesComboBox.DataSource = attributes;
+            AttributesComboBox.DisplayMember = "Name";
+            AttributesComboBox.ValueMember = "Value";
         }
 
         public AddAttributeConstraintPresenter Presenter { get; set; }

@@ -67,7 +67,6 @@ namespace DEiXTo.Services
             }
 
             // Extract the tree above the virtual root node.
-            //var upperTree = _pattern.GetUpperTree();
             var upperTree = _pattern.GetUpperTree();
             TreeNode vRoot = _pattern.FindVirtualRoot();
             MatchSplit(vRoot, _domNodes, upperTree);

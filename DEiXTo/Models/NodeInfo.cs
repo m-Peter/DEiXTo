@@ -17,7 +17,7 @@
         public bool CareAboutSiblingOrder { get; set; }
         public int SiblingOrderStart { get; set; }
         public int SiblingOrderStep { get; set; }
-        public NodeAttributes Attributes { get; set; }
+        public AttributeCollection Attributes { get; set; }
         public AttributeConstraint AttrConstraint { get; set; }
 
         public class Builder

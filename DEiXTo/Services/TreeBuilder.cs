@@ -238,9 +238,12 @@ namespace DEiXTo.Services
         private void SetNodeInfo(TreeNode newNode, IHTMLDOMNode element, NodeInfo pInfo, TreeNode node)
         {
             var tmpElem = (IHTMLElement)element;
-            var id = tmpElem.getAttribute("id");
-            var klass = tmpElem.getAttribute("className");
-            pInfo.Attributes = new NodeAttributes { Id = id, Klass = klass};
+            //var id = tmpElem.getAttribute("id");
+            //var klass = tmpElem.getAttribute("className");
+            //pInfo.Attributes = new NodeAttributes { Id = id, Klass = klass};
+            pInfo.Attributes = AttributeExtractionFactory.GetExtractorFor(tmpElem).Attributes();
+
+
             pInfo.SourceIndex = tmpElem.sourceIndex;
             pInfo.Path = ComputePath(node, tmpElem);
             pInfo.Content = ContentExtractionFactory.GetExtractorFor(tmpElem).ExtractContent();
