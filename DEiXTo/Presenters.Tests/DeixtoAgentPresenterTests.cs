@@ -875,6 +875,11 @@ namespace DEiXTo.Presenters.Tests
         {
             // Arrange
             var node = new TreeNode("DIV");
+            NodeInfo nInfo = new NodeInfo();
+            var attributes = new AttributeCollection();
+            attributes.Add(new TagAttribute { Name = "id", Value = "main-wrapper" });
+            nInfo.Attributes = attributes;
+            node.Tag = nInfo;
             var domNode = new TreeNode("DIV");
             var element = CreateHtmlElement();
             _screen.Setup(s => s.GetElementFromNode(node)).Returns(element);
@@ -896,6 +901,11 @@ namespace DEiXTo.Presenters.Tests
         {
             // Arrange
             var node = new TreeNode("DIV");
+            NodeInfo nInfo = new NodeInfo();
+            var attributes = new AttributeCollection();
+            attributes.Add(new TagAttribute { Name = "id", Value = "main-wrapper" });
+            nInfo.Attributes = attributes;
+            node.Tag = nInfo;
             var domNode = new TreeNode("DIV");
             var element = CreateHtmlElement();
             _screen.Setup(s => s.GetElementFromNode(node)).Returns(element);

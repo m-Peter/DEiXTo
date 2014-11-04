@@ -28,6 +28,12 @@ namespace DEiXTo.Services
             get
             {
                 var name = _element.getAttribute("name");
+
+                if (string.IsNullOrWhiteSpace(name))
+                {
+                    return null;
+                }
+
                 var tag = new TagAttribute { Name = "name", Value = name };
 
                 return tag;

@@ -28,6 +28,12 @@ namespace DEiXTo.Services
             get
             {
                 var href = _element.getAttribute("href");
+
+                if (string.IsNullOrWhiteSpace(href))
+                {
+                    return null;
+                }
+
                 var tag = new TagAttribute { Name = "href", Value = href };
 
                 return tag;

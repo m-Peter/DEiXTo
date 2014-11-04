@@ -29,6 +29,12 @@ namespace DEiXTo.Services
             get
             {
                 var src = _element.getAttribute("src");
+
+                if (string.IsNullOrWhiteSpace(src))
+                {
+                    return null;
+                }
+
                 var tag = new TagAttribute { Name = "src", Value = src };
 
                 return tag;
@@ -40,6 +46,12 @@ namespace DEiXTo.Services
             get
             {
                 var alt = _element.getAttribute("alt");
+
+                if (string.IsNullOrWhiteSpace(alt))
+                {
+                    return null;
+                }
+
                 var tag = new TagAttribute { Name = "alt", Value = alt };
 
                 return tag;

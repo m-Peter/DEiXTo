@@ -22,6 +22,11 @@ namespace DEiXTo.Models
 
         public void Add(TagAttribute tagAttribute)
         {
+            if (tagAttribute == null)
+            {
+                return;
+            }
+
             _attributes.Add(tagAttribute);
         }
 
