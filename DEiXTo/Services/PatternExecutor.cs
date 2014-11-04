@@ -339,7 +339,7 @@ namespace DEiXTo.Services
                 string value = constraint.Value;
 
                 var attributes = right.GetAttributes();
-                string klass = attributes.Klass;
+                var klass = attributes.GetByName(attr).Value;
 
                 if (value != klass)
                 {

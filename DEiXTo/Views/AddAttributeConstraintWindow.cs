@@ -41,7 +41,8 @@ namespace DEiXTo.Views
 
         private void OKButton_Click(object sender, EventArgs e)
         {
-            Presenter.AddConstraint();
+            var tag = AttributesComboBox.SelectedItem as TagAttribute;
+            Presenter.AddConstraint(tag.Name);
         }
 
         private void AttributesComboBox_SelectedIndexChanged(object sender, EventArgs e)

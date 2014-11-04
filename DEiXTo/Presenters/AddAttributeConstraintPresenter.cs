@@ -30,10 +30,10 @@ namespace DEiXTo.Presenters
             View.Constraint = tagAttribute.Value;
         }
 
-        public void AddConstraint()
+        public void AddConstraint(string attributeName)
         {
             string constraint = View.Constraint;
-            var attrConstraint = new AttributeConstraint { Attribute = "class", Value = constraint };
+            var attrConstraint = new AttributeConstraint { Attribute = attributeName, Value = constraint };
             _node.SetAttrConstraint(attrConstraint);
             View.Exit();
         }
