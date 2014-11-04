@@ -35,8 +35,8 @@ namespace DEiXTo.Presenters.Tests
         {
             // Arrange
             _view.Setup(m => m.CareAboutSiblingOrder).Returns(true);
-            _view.Setup(m => m.GetStartIndex).Returns(0);
-            _view.Setup(m => m.GetStepValue).Returns(2);
+            _view.Setup(m => m.StartIndex).Returns(0);
+            _view.Setup(m => m.StepValue).Returns(2);
 
             // Act
             _presenter.AddSiblingOrder();

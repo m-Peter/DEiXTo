@@ -22,6 +22,13 @@ namespace DEiXTo.Presenters
             View = view;
             _node = node;
             View.Presenter = this;
+
+            if (_node.GetCareAboutSiblingOrder())
+            {
+                View.StartIndex = _node.GetStartIndex();
+                View.StepValue = _node.GetStepValue();
+                View.CareAboutSiblingOrder = true;
+            }
         }
         #endregion
 
@@ -35,8 +42,8 @@ namespace DEiXTo.Presenters
                 return;
             }
 
-            int startIndex = View.GetStartIndex;
-            int stepValue = View.GetStepValue;
+            int startIndex = View.StartIndex;
+            int stepValue = View.StepValue;
             bool careAboutSO = View.CareAboutSiblingOrder;
 
             _node.SetCareAboutSiblingOrder(careAboutSO);

@@ -36,7 +36,7 @@ namespace DEiXTo.Views
         /// <summary>
         /// 
         /// </summary>
-        public int GetStartIndex
+        public int StartIndex
         {
             get { return (int)StartIndexNUD.Value; }
             set { StartIndexNUD.Value = value; }
@@ -45,7 +45,7 @@ namespace DEiXTo.Views
         /// <summary>
         /// 
         /// </summary>
-        public int GetStepValue
+        public int StepValue
         {
             get { return (int)StepValueNUD.Value; }
             set { StepValueNUD.Value = value; }

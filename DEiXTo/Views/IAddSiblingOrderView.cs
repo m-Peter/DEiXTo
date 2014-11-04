@@ -12,8 +12,8 @@ namespace DEiXTo.Views
         AddSiblingOrderPresenter Presenter { get; set; }
 
         void ApplyVisibilityStateInOrdering(bool checkedState);
-        int GetStartIndex { get; set; }
-        int GetStepValue { get; set; }
+        int StartIndex { get; set; }
+        int StepValue { get; set; }
         bool CareAboutSiblingOrder { get; set; }
         void Exit();
     }
