@@ -338,6 +338,7 @@ namespace DEiXTo.Services
                 {
                     return false;
                 }
+                right.SetContent(match.Value);
             }
 
             if (left.HasAttrConstraint())
