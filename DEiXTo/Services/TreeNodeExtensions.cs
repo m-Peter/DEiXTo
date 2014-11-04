@@ -463,6 +463,18 @@ namespace DEiXTo.Services
             }
         }
 
+        public static int GetStartIndex(this TreeNode node)
+        {
+            NodeInfo pInfo = GetPointerInfo(node);
+
+            if (pInfo != null)
+            {
+                return pInfo.SiblingOrderStart;
+            }
+
+            return -1;
+        }
+
         /// <summary>
         /// 
         /// </summary>

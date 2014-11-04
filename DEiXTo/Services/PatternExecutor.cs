@@ -80,6 +80,8 @@ namespace DEiXTo.Services
         private void Match(TreeNode pattern, TreeNodeCollection nodes, ref int counter)
         {
             var result = new Result();
+            int start = pattern.GetStartIndex();
+            int step = pattern.GetStepValue();
 
             foreach (TreeNode node in nodes)
             {
@@ -87,9 +89,15 @@ namespace DEiXTo.Services
                 {
                     // this is where the matching has succeeded and node
                     // is a instance that matched.
-                    int step = pattern.GetStepValue();
 
-                    if (step != 0 && (counter % step != 0))
+                    if (counter < start)
+                    {
+                        counter++;
+                        result = new Result();
+                        continue;
+                    }
+
+                    if ((step != 0) && (counter % step != 0))
                     {
                         counter++;
                         result = new Result();
