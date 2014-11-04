@@ -21,7 +21,14 @@ namespace DEiXTo.Presenters
             View.Presenter = this;
             _eventHub = eventHub;
 
-            View.RegexText = node.GetContent();
+            if (node.HasRegex())
+            {
+                View.RegexText = node.GetRegex();
+            }
+            else
+            {
+                View.RegexText = node.GetContent();
+            }
         }
         #endregion
 
