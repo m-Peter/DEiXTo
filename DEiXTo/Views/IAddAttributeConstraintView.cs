@@ -12,6 +12,7 @@ namespace DEiXTo.Views
     {
         AddAttributeConstraintPresenter Presenter { get; set; }
         void LoadAttributes(List<TagAttribute> attributes);
+        void SelectAttribute(TagAttribute attribute);
         string Constraint { get; set; }
         void Exit();
     }

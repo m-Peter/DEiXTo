@@ -19,8 +19,30 @@ namespace DEiXTo.Presenters
             View = view;
             _node = node;
             View.Presenter = this;
+
             var attributes = _node.GetAttributes();
             View.LoadAttributes(attributes.All);
+
+            if (_node.HasAttrConstraint())
+            {
+                var constraint = _node.GetAttrConstraint();
+                var selectedTag = GetSelectedAttribute(attributes.All, constraint.Attribute);
+                
+                View.SelectAttribute(selectedTag);
+            }
+        }
+
+        private TagAttribute GetSelectedAttribute(List<TagAttribute> attributes, string tagAttribute)
+        {
+            foreach (var tag in attributes)
+            {
+                if (tag.Name == tagAttribute)
+                {
+                    return tag;
+                }
+            }
+
+            return null;
         }
 
         public IAddAttributeConstraintView View { get; set; }

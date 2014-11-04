@@ -28,6 +28,11 @@ namespace DEiXTo.Views
             AttributesComboBox.DataSource = attributes;
         }
 
+        public void SelectAttribute(TagAttribute tagAttribute)
+        {
+            AttributesComboBox.SelectedItem = tagAttribute;
+        }
+
         public string Constraint
         {
             get { return AddConstraintTextBox.Text; }
