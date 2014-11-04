@@ -79,6 +79,7 @@
             this.AttributesComboBox.Name = "AttributesComboBox";
             this.AttributesComboBox.Size = new System.Drawing.Size(121, 21);
             this.AttributesComboBox.TabIndex = 4;
+            this.AttributesComboBox.SelectedIndexChanged += new System.EventHandler(this.AttributesComboBox_SelectedIndexChanged);
             // 
             // ChooseAttributeLabel
             // 

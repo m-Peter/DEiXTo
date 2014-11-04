@@ -15,6 +15,11 @@ namespace DEiXTo.Models
             _attributes = new List<TagAttribute>();
         }
 
+        public List<TagAttribute> All
+        {
+            get { return _attributes; }
+        }
+
         public void Add(TagAttribute tagAttribute)
         {
             _attributes.Add(tagAttribute);

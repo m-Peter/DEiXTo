@@ -1,4 +1,5 @@
-﻿using DEiXTo.Presenters;
+﻿using DEiXTo.Models;
+using DEiXTo.Presenters;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,6 +11,7 @@ namespace DEiXTo.Views
     public interface IAddAttributeConstraintView
     {
         AddAttributeConstraintPresenter Presenter { get; set; }
+        void LoadAttributes(List<TagAttribute> attributes);
         string Constraint { get; set; }
         void Exit();
     }

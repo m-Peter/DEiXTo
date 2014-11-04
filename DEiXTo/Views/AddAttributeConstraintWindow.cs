@@ -17,16 +17,16 @@ namespace DEiXTo.Views
         public AddAttributeConstraintWindow()
         {
             InitializeComponent();
-            var attributes = new List<TagAttribute>();
-            attributes.Add(new TagAttribute { Name = "id", Value = "github-link" });
-            attributes.Add(new TagAttribute { Name = "href", Value = "www.github.com" });
-            attributes.Add(new TagAttribute { Name = "alt", Value = "Move to GitHub" });
-            AttributesComboBox.DataSource = attributes;
             AttributesComboBox.DisplayMember = "Name";
             AttributesComboBox.ValueMember = "Value";
         }
 
         public AddAttributeConstraintPresenter Presenter { get; set; }
+
+        public void LoadAttributes(List<TagAttribute> attributes)
+        {
+            AttributesComboBox.DataSource = attributes;
+        }
 
         public string Constraint
         {
@@ -42,6 +42,12 @@ namespace DEiXTo.Views
         private void OKButton_Click(object sender, EventArgs e)
         {
             Presenter.AddConstraint();
+        }
+
+        private void AttributesComboBox_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            var tag = AttributesComboBox.SelectedItem as TagAttribute;
+            Presenter.AttributeChanged(tag);
         }
     }
 }

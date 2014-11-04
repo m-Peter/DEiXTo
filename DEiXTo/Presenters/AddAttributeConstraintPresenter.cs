@@ -19,11 +19,16 @@ namespace DEiXTo.Presenters
             View = view;
             _node = node;
             View.Presenter = this;
-            var constraint = _node.GetAttributes().Klass;
-            View.Constraint = constraint;
+            var attributes = _node.GetAttributes();
+            View.LoadAttributes(attributes.All);
         }
 
         public IAddAttributeConstraintView View { get; set; }
+
+        public void AttributeChanged(TagAttribute tagAttribute)
+        {
+            View.Constraint = tagAttribute.Value;
+        }
 
         public void AddConstraint()
         {
