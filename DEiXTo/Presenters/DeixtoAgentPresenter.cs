@@ -470,7 +470,7 @@ namespace DEiXTo.Presenters
 
             if (View.CanAutoScroll)
             {
-                element.ScrollIntoView(false);
+                element.ScrollIntoView(true);
             }
         }
 
@@ -777,7 +777,7 @@ namespace DEiXTo.Presenters
 
             if (View.CanAutoScroll)
             {
-                element.ScrollIntoView(false);
+                element.ScrollIntoView(true);
             }
         }
 
@@ -874,7 +874,7 @@ namespace DEiXTo.Presenters
 
             if (View.CanAutoScroll)
             {
-                element.ScrollIntoView(false);
+                element.ScrollIntoView(true);
             }
         }
 
@@ -933,7 +933,7 @@ namespace DEiXTo.Presenters
 
             if (View.CanAutoScroll)
             {
-                element.ScrollIntoView(false);
+                element.ScrollIntoView(true);
             }
         }
 
