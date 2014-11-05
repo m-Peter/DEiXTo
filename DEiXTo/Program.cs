@@ -18,7 +18,7 @@ namespace DEiXTo
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
 
-            WindowsViewLoader viewLoader = new WindowsViewLoader();
+            IViewLoader viewLoader = new WindowsViewLoader();
             viewLoader.LoadMainView();
             Application.Run(viewLoader.LastLoadedView);
         }

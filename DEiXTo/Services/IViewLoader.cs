@@ -14,5 +14,7 @@ namespace DEiXTo.Services
         void LoadRegexBuilderView(TreeNode node);
         void LoadAddSiblingOrderView(TreeNode node);
         void LoadAddAttributeConstraintView(TreeNode node);
+
+        Form LastLoadedView { get; }
     }
 }
