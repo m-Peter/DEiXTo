@@ -1960,6 +1960,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1008, 602);
             this.Controls.Add(this.splitContainer1);
+            this.MinimumSize = new System.Drawing.Size(1024, 640);
             this.Name = "DeixtoAgentWindow";
             this.Text = "DeixtoAgentWindow";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.DeixtoAgentWindow_FormClosing);
