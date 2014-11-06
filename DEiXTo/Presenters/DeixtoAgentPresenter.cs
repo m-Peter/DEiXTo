@@ -194,7 +194,7 @@ namespace DEiXTo.Presenters
 
             // Search for the tree structure in the Extraction Pattern
             _executor = new PatternExecutor(extraction, View.GetDOMTreeNodes());
-            var matchedNode = _executor.ScanTree(View.GetDOMTreeNodes(), pattern);
+            var matchedNode = _screen.ScanDomTree(pattern);
             matchedNode.Tag = pattern.Tag;
             var font = new Font(FontFamily.GenericSansSerif, 8.25f);
             matchedNode.NodeFont = new Font(font, FontStyle.Bold);

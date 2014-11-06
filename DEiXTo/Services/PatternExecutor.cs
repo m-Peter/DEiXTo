@@ -31,26 +31,6 @@ namespace DEiXTo.Services
             return _pattern.OutputVariableLabels();
         }
 
-        public TreeNode ScanTree(TreeNodeCollection nodes, TreeNode pattern)
-        {
-            foreach (TreeNode node in nodes)
-            {
-                if (CompareRecursiveTree(node, pattern, new Result()))
-                {
-                    return node.GetClone();
-                }
-
-                TreeNode candidate = ScanTree(node.Nodes, pattern);
-
-                if (candidate != null)
-                {
-                    return candidate;
-                }
-            }
-
-            return null;
-        }
-
         /// <summary>
         /// 
         /// </summary>

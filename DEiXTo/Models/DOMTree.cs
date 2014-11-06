@@ -1,6 +1,7 @@
 ﻿using mshtml;
 using System.Collections.Generic;
 using System.Windows.Forms;
+using DEiXTo.Services;
 
 namespace DEiXTo.Models
 {
@@ -45,6 +46,21 @@ namespace DEiXTo.Models
             return _DOMTree.ContainsKey(key);
         }
 
+        public TreeNode ScanTree(TreeNode pattern)
+        {
+            var nodes = _DOMTree.Values;
+            
+            foreach (var node in nodes)
+            {
+                if (CompareTrees(node, pattern))
+                {
+                    return node.GetClone();
+                }
+            }
+
+            return null;
+        }
+
         /// <summary>
         /// 
         /// </summary>
@@ -85,5 +101,38 @@ namespace DEiXTo.Models
             _DOMTree.Clear();
         }
         #endregion
+
+        private bool CompareTrees(TreeNode left, TreeNode right)
+        {
+            if (left.Text != right.Text)
+            {
+                return false;
+            }
+
+            for (int i = 0; i < left.Nodes.Count; i++)
+            {
+                var nextLeft = left.Nodes[i];
+                bool hasNode = HasNextNode(right, i);
+
+                if (hasNode)
+                {
+                    return false;
+                }
+
+                var nextRight = right.Nodes[i];
+
+                if (!CompareTrees(nextLeft, nextRight))
+                {
+                    return false;
+                }
+            }
+
+            return true;
+        }
+
+        private bool HasNextNode(TreeNode node, int index)
+        {
+            return node.Nodes.Count <= index;
+        }
     }
 }

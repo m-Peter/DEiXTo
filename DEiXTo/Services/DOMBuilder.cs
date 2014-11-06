@@ -17,6 +17,7 @@ namespace DEiXTo.Services
         /// </summary>
         /// <param name="element">The root HtmlElement</param>
         /// <returns>The DOMTreeStructure representation</returns>
+        
         public DOMTree BuildDOMTree(HtmlElement element)
         {
             var domNode = element.DomElement as IHTMLDOMNode;
@@ -33,6 +34,7 @@ namespace DEiXTo.Services
         /// <param name="element"></param>
         /// <param name="ignoredTags"></param>
         /// <returns></returns>
+        
         public DOMTree BuildSimplifiedDOMTree(HtmlElement element, string[] ignoredTags)
         {
             var domNode = element.DomElement as IHTMLDOMNode;

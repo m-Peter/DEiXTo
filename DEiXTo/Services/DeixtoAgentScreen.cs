@@ -50,6 +50,13 @@ namespace DEiXTo.Services
             return element;
         }
 
+        public TreeNode ScanDomTree(TreeNode pattern)
+        {
+            var node = _domTree.ScanTree(pattern);
+
+            return node;
+        }
+
         public TreeNode GetNodeFromElement(HtmlElement element)
         {
             var node = _domTree.GetNodeFor(element);
