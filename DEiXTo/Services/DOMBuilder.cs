@@ -10,7 +10,7 @@ namespace DEiXTo.Services
     /// This class builds the DOM tree structure from a page and maps HtmlElements
     /// to TreeNodes.
     /// </summary>
-    public class TreeBuilder
+    public class DOMBuilder
     {
         /// <summary>
         /// Build the DOMTreeStructure for the given HtmlElement.
@@ -238,17 +238,14 @@ namespace DEiXTo.Services
         private void SetNodeInfo(TreeNode newNode, IHTMLDOMNode element, NodeInfo pInfo, TreeNode node)
         {
             var tmpElem = (IHTMLElement)element;
-            //var id = tmpElem.getAttribute("id");
-            //var klass = tmpElem.getAttribute("className");
-            //pInfo.Attributes = new NodeAttributes { Id = id, Klass = klass};
+
             pInfo.Attributes = AttributeExtractionFactory.GetExtractorFor(tmpElem).Attributes();
-
-
             pInfo.SourceIndex = tmpElem.sourceIndex;
             pInfo.Path = ComputePath(node, tmpElem);
             pInfo.Content = ContentExtractionFactory.GetExtractorFor(tmpElem).ExtractContent();
             pInfo.State = NodeState.Grayed;
             pInfo.Source = tmpElem.outerHTML;
+            
             newNode.Tag = pInfo;
             newNode.ToolTipText = GetTooltipFor(tmpElem);
         }

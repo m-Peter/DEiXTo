@@ -11,9 +11,6 @@ namespace DEiXTo.Services
     {
         private Form _lastLoadedView;
 
-        /// <summary>
-        /// 
-        /// </summary>
         public void LoadMainView()
         {
             MainWindow window = new MainWindow();
@@ -22,16 +19,12 @@ namespace DEiXTo.Services
             LoadView(window);
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="title"></param>
-        /// <param name="parent"></param>
         public void LoadAgentView(string title, IMainView parent)
         {
             DeixtoAgentWindow window = new DeixtoAgentWindow();
             DeixtoAgentScreen screen = new DeixtoAgentScreen();
-            DeixtoAgentPresenter presenter = new DeixtoAgentPresenter(window, this, EventHub.Instance, screen);
+            DeixtoAgentPresenter presenter = 
+                new DeixtoAgentPresenter(window, this, EventHub.Instance, screen);
             
             window.Text = title;
             window.MdiParent = (Form)parent;
@@ -39,9 +32,6 @@ namespace DEiXTo.Services
             LoadView(window);
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
         public void LoadAddLabelView(TreeNode node)
         {
             AddLabelWindow window = new AddLabelWindow();
@@ -50,52 +40,38 @@ namespace DEiXTo.Services
             window.ShowDialog();
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
         public void LoadRegexBuilderView(TreeNode node)
         {
             RegexBuilderWindow window = new RegexBuilderWindow();
-            RegexBuilderPresenter presenter = new RegexBuilderPresenter(window, node, EventHub.Instance);
+            RegexBuilderPresenter presenter =
+                new RegexBuilderPresenter(window, node, EventHub.Instance);
 
             window.ShowDialog();
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
         public void LoadAddSiblingOrderView(TreeNode node)
         {
             AddSiblingOrderWindow window = new AddSiblingOrderWindow();
-            AddSiblingOrderPresenter presenter = new AddSiblingOrderPresenter(window, node);
+            AddSiblingOrderPresenter presenter =
+                new AddSiblingOrderPresenter(window, node);
 
             window.ShowDialog();
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="node"></param>
         public void LoadAddAttributeConstraintView(TreeNode node)
         {
             AddAttributeConstraintWindow window = new AddAttributeConstraintWindow();
-            AddAttributeConstraintPresenter presenter = new AddAttributeConstraintPresenter(window, node);
+            AddAttributeConstraintPresenter presenter =
+                new AddAttributeConstraintPresenter(window, node);
 
             window.ShowDialog();
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
         public Form LastLoadedView
         {
             get { return _lastLoadedView; }
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="view"></param>
         private void LoadView(Form view)
         {
             view.Show();

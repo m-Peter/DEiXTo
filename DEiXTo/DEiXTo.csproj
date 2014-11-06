@@ -124,7 +124,7 @@
     <Compile Include="Services\StateToImageMapper.cs" />
     <Compile Include="Services\TagContentExtractor.cs" />
     <Compile Include="Services\TextDialogBuilder.cs" />
-    <Compile Include="Services\TreeBuilder.cs" />
+    <Compile Include="Services\DOMBuilder.cs" />
     <Compile Include="Services\ElementStyling.cs" />
     <Compile Include="Services\IDocumentValidator.cs" />
     <Compile Include="Services\IViewLoader.cs" />

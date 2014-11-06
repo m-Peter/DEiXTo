@@ -11,47 +11,30 @@ namespace DEiXTo.Services
     public class DocumentQuery
     {
         private HtmlDocument _htmlDocument;
+        private HtmlElementCollection _elements;
 
         public DocumentQuery(HtmlDocument document)
         {
             _htmlDocument = document;
+            _elements = _htmlDocument.All;
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="index"></param>
-        /// <returns></returns>
         public HtmlElement GetElementByIndex(int index)
         {
-            return _htmlDocument.All[index];
+            return _elements[index];
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="input"></param>
-        /// <param name="term"></param>
         public void FillInput(HtmlElement input, string term)
         {
             var domInput = input.DomElement as IHTMLInputElement;
             domInput.value = term;
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="form"></param>
         public void SubmitForm(HtmlElement form)
         {
             form.InvokeMember("submit");
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="formName"></param>
-        /// <returns></returns>
         public HtmlElement GetForm(string formName)
         {
             var forms = _htmlDocument.Forms;
@@ -67,12 +50,6 @@ namespace DEiXTo.Services
             return forms[0];
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="form"></param>
-        /// <param name="inputName"></param>
-        /// <returns></returns>
         public HtmlElement GetInputFor(HtmlElement form, string inputName)
         {
             foreach (HtmlElement input in form.All)
@@ -105,11 +82,6 @@ namespace DEiXTo.Services
             return _htmlDocument.GetElementFromPoint(point);
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="link"></param>
-        /// <returns></returns>
         public HtmlElement GetLinkToFollow(string mylink)
         {
             var links = _htmlDocument.Links;
@@ -126,12 +98,6 @@ namespace DEiXTo.Services
             return link;
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="element"></param>
-        /// <param name="link"></param>
-        /// <returns></returns>
         private bool Matches(HtmlElement element, string link)
         {
             if (element.InnerText != null && element.InnerText.Equals(link))

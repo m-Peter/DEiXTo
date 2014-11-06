@@ -52,7 +52,8 @@ namespace DEiXTo.Services
 
             if (subscriberInfoList != null)
             {
-                subscriberInfoList.RemoveAll((subscriberInfo) => ReferenceEquals(subscriberInfo.Subscriber, subscriber));
+                subscriberInfoList.RemoveAll((subscriberInfo) =>
+                    ReferenceEquals(subscriberInfo.Subscriber, subscriber));
             }
         }
 

@@ -12,7 +12,7 @@ namespace DEiXTo.Services
     public class DeixtoAgentScreen : IDeixtoAgentScreen
     {
         private ElementStyling _styling;
-        private TreeBuilder _builder;
+        private DOMBuilder _builder;
         private DocumentQuery _document;
         private StatesImageLoader _imageLoader;
         private DOMTree _domTree;
@@ -26,7 +26,7 @@ namespace DEiXTo.Services
         public DeixtoAgentScreen()
         {
             _styling = new ElementStyling();
-            _builder = new TreeBuilder();
+            _builder = new DOMBuilder();
             _imageLoader = new StatesImageLoader();
             _loader = new WindowsViewLoader();
             _readTargetUrls = new ReadTargetUrls();
