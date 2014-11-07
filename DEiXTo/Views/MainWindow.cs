@@ -94,5 +94,15 @@ namespace DEiXTo.Views
             Presenter.WindowClosing(e);
         }
         #endregion
+
+        private void UpdateBrowserVersionMenuItem_Click(object sender, EventArgs e)
+        {
+            Presenter.UpdateBrowserVersion();
+        }
+
+        private void ResetToDefaultMenuItem_Click(object sender, EventArgs e)
+        {
+            Presenter.ResetBrowserVersion();
+        }
     }
 }

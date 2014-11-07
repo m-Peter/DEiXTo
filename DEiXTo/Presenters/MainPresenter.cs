@@ -15,6 +15,7 @@ namespace DEiXTo.Presenters
         private readonly IEventHub _eventHub;
         // count the number of childs contained in the associated View
         private int _formCounter = 0;
+        private readonly IBrowserVersionManager _browserManager;
         #endregion
 
         #region Constructors
@@ -23,6 +24,7 @@ namespace DEiXTo.Presenters
             View = view;
             _viewLoader = viewLoader;
             _eventHub = eventHub;
+            _browserManager = new BrowserVersionManager();
             View.Presenter = this;
 
             eventHub.Subscribe<EventArgs>(this);
@@ -91,6 +93,23 @@ namespace DEiXTo.Presenters
             }
 
             args.Cancel = false;
+        }
+
+        /// <summary>
+        /// Updates the version of the installed browser to the
+        /// largest possible number (up until 10).
+        /// </summary>
+        public void UpdateBrowserVersion()
+        {
+            _browserManager.UpdateBrowserVersion();
+        }
+
+        /// <summary>
+        /// Resets the version of the browser to default.
+        /// </summary>
+        public void ResetBrowserVersion()
+        {
+            _browserManager.ResetBrowserVersion();
         }
 
         /// <summary>

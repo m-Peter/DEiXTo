@@ -27,10 +27,6 @@ namespace DEiXTo.Services
             _elementStyles.Clear();
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="element"></param>
         public void Style(HtmlElement element)
         {
             string style;
@@ -48,10 +44,6 @@ namespace DEiXTo.Services
 
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="element"></param>
         public void Unstyle(HtmlElement element)
         {
             if (containsKey(element))
@@ -60,9 +52,6 @@ namespace DEiXTo.Services
             }
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
         public void UnstyleElements()
         {
             foreach (var item in _elementStyles)

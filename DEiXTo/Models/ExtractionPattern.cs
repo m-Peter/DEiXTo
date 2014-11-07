@@ -30,6 +30,20 @@ namespace DEiXTo.Models
             return vRoot;
         }
 
+        private void FindRoot(TreeNodeCollection nodes, ref TreeNode root)
+        {
+            foreach (TreeNode node in nodes)
+            {
+                if (node.IsRoot())
+                {
+                    root = node.GetClone();
+                    return;
+                }
+
+                FindRoot(node.Nodes, ref root);
+            }
+        }
+
         public TreeNode GetUpperTree()
         {
             var upperNode = new TreeNode(_rootNode.Text);
@@ -41,7 +55,8 @@ namespace DEiXTo.Models
             return leafNode;
         }
 
-        private void BuiltUpperTree(TreeNodeCollection nodes, TreeNode root, ref TreeNode leafNode)
+        private void BuiltUpperTree(TreeNodeCollection nodes, TreeNode root,
+            ref TreeNode leafNode)
         {
             foreach (TreeNode node in nodes)
             {
@@ -60,20 +75,6 @@ namespace DEiXTo.Models
             }
         }
 
-        private void FindRoot(TreeNodeCollection nodes, ref TreeNode root)
-        {
-            foreach (TreeNode node in nodes)
-            {
-                if (node.IsRoot())
-                {
-                    root = node.GetClone();
-                    return;
-                }
-
-                FindRoot(node.Nodes, ref root);
-            }
-        }
-
         public int CountOutputVariables()
         {
             int outputVariables = 0;
@@ -88,6 +89,19 @@ namespace DEiXTo.Models
             return outputVariables;
         }
 
+        private void countVariables(TreeNodeCollection nodes, ref int counter)
+        {
+            foreach (TreeNode node in nodes)
+            {
+                if (node.IsOutputVariable())
+                {
+                    counter += 1;
+                }
+
+                countVariables(node.Nodes, ref counter);
+            }
+        }
+
         public List<string> OutputVariableLabels()
         {
             List<string> labels = new List<string>();
@@ -100,6 +114,20 @@ namespace DEiXTo.Models
             CollectVariableLabels(_rootNode.Nodes, labels);
 
             return labels;
+        }
+
+        private void CollectVariableLabels(TreeNodeCollection nodes,
+            List<string> labels)
+        {
+            foreach (TreeNode node in nodes)
+            {
+                if (node.HasLabel())
+                {
+                    labels.Add(node.GetLabel());
+                }
+
+                CollectVariableLabels(node.Nodes, labels);
+            }
         }
 
         public void TrimUncheckedNodes()
@@ -119,32 +147,6 @@ namespace DEiXTo.Models
                 }
 
                 FilterUncheckedNodes(node.Nodes);
-            }
-        }
-
-        private void countVariables(TreeNodeCollection nodes, ref int counter)
-        {
-            foreach (TreeNode node in nodes)
-            {
-                if (node.IsOutputVariable())
-                {
-                    counter += 1;
-                }
-
-                countVariables(node.Nodes, ref counter);
-            }
-        }
-
-        private void CollectVariableLabels(TreeNodeCollection nodes, List<string> labels)
-        {
-            foreach (TreeNode node in nodes)
-            {
-                if (node.HasLabel())
-                {
-                    labels.Add(node.GetLabel());
-                }
-
-                CollectVariableLabels(node.Nodes, labels);
             }
         }
     }

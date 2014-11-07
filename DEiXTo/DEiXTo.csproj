@@ -106,6 +106,7 @@
     <Compile Include="Services.Tests\TagContentExtractorTests.cs" />
     <Compile Include="Services\AttributeExtractionFactory.cs" />
     <Compile Include="Services\AttributeExtractor.cs" />
+    <Compile Include="Services\BrowserVersionManager.cs" />
     <Compile Include="Services\ContentExtractionFactory.cs" />
     <Compile Include="Services\DeixtoAgentScreen.cs" />
     <Compile Include="Services\DialogBuilderFactory.cs" />
@@ -116,6 +117,7 @@
     <Compile Include="Services\FormAttributeExtractor.cs" />
     <Compile Include="Services\FormContentExtractor.cs" />
     <Compile Include="Services\GenericContentExtractor.cs" />
+    <Compile Include="Services\IBrowserVersionManager.cs" />
     <Compile Include="Services\IDeixtoAgentScreen.cs" />
     <Compile Include="Services\IDialogBuilder.cs" />
     <Compile Include="Services\IEventHub.cs" />

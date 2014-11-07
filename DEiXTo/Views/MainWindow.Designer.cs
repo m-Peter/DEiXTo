@@ -35,6 +35,9 @@
             this.cascadeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.closeAllToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.floatAllToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.SettingsMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.UpdateBrowserVersionMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.ResetToDefaultMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.TopMenu.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -42,7 +45,8 @@
             // 
             this.TopMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.AgentsMenuItem,
-            this.WindowsMenuItem});
+            this.WindowsMenuItem,
+            this.SettingsMenuItem});
             this.TopMenu.Location = new System.Drawing.Point(0, 0);
             this.TopMenu.MdiWindowListItem = this.WindowsMenuItem;
             this.TopMenu.Name = "TopMenu";
@@ -96,6 +100,29 @@
             this.floatAllToolStripMenuItem.Text = "Float All";
             this.floatAllToolStripMenuItem.Click += new System.EventHandler(this.floatAllToolStripMenuItem_Click);
             // 
+            // SettingsMenuItem
+            // 
+            this.SettingsMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.UpdateBrowserVersionMenuItem,
+            this.ResetToDefaultMenuItem});
+            this.SettingsMenuItem.Name = "SettingsMenuItem";
+            this.SettingsMenuItem.Size = new System.Drawing.Size(61, 20);
+            this.SettingsMenuItem.Text = "Settings";
+            // 
+            // UpdateBrowserVersionMenuItem
+            // 
+            this.UpdateBrowserVersionMenuItem.Name = "UpdateBrowserVersionMenuItem";
+            this.UpdateBrowserVersionMenuItem.Size = new System.Drawing.Size(198, 22);
+            this.UpdateBrowserVersionMenuItem.Text = "Update browser version";
+            this.UpdateBrowserVersionMenuItem.Click += new System.EventHandler(this.UpdateBrowserVersionMenuItem_Click);
+            // 
+            // ResetToDefaultMenuItem
+            // 
+            this.ResetToDefaultMenuItem.Name = "ResetToDefaultMenuItem";
+            this.ResetToDefaultMenuItem.Size = new System.Drawing.Size(198, 22);
+            this.ResetToDefaultMenuItem.Text = "Reset to default";
+            this.ResetToDefaultMenuItem.Click += new System.EventHandler(this.ResetToDefaultMenuItem_Click);
+            // 
             // MainWindow
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -123,5 +150,8 @@
         private System.Windows.Forms.ToolStripMenuItem closeAllToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem floatAllToolStripMenuItem;
         public System.Windows.Forms.ToolStripMenuItem WindowsMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem SettingsMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem UpdateBrowserVersionMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem ResetToDefaultMenuItem;
     }
 }
