@@ -29,6 +29,7 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(DeixtoAgentWindow));
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.splitContainer2 = new System.Windows.Forms.SplitContainer();
             this.BrowserGroupBox = new System.Windows.Forms.GroupBox();
@@ -396,22 +397,22 @@
             // SimplifyDOMButton
             // 
             this.SimplifyDOMButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.SimplifyDOMButton.Image = ((System.Drawing.Image)(resources.GetObject("SimplifyDOMButton.Image")));
             this.SimplifyDOMButton.Location = new System.Drawing.Point(272, 180);
             this.SimplifyDOMButton.Name = "SimplifyDOMButton";
             this.SimplifyDOMButton.Size = new System.Drawing.Size(32, 23);
             this.SimplifyDOMButton.TabIndex = 5;
-            this.SimplifyDOMButton.Text = "Simplify DOM";
             this.SimplifyDOMButton.UseVisualStyleBackColor = true;
             this.SimplifyDOMButton.Click += new System.EventHandler(this.SimplifyDOMButton_Click);
             // 
             // RebuildDOMButton
             // 
             this.RebuildDOMButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.RebuildDOMButton.Image = ((System.Drawing.Image)(resources.GetObject("RebuildDOMButton.Image")));
             this.RebuildDOMButton.Location = new System.Drawing.Point(239, 181);
             this.RebuildDOMButton.Name = "RebuildDOMButton";
             this.RebuildDOMButton.Size = new System.Drawing.Size(32, 23);
             this.RebuildDOMButton.TabIndex = 4;
-            this.RebuildDOMButton.Text = "Rebuild DOM";
             this.RebuildDOMButton.UseVisualStyleBackColor = true;
             this.RebuildDOMButton.Click += new System.EventHandler(this.RebuildDOMButton_Click);
             // 
@@ -431,11 +432,11 @@
             // StopExecutionButton
             // 
             this.StopExecutionButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.StopExecutionButton.Image = ((System.Drawing.Image)(resources.GetObject("StopExecutionButton.Image")));
             this.StopExecutionButton.Location = new System.Drawing.Point(310, 180);
             this.StopExecutionButton.Name = "StopExecutionButton";
             this.StopExecutionButton.Size = new System.Drawing.Size(34, 23);
             this.StopExecutionButton.TabIndex = 2;
-            this.StopExecutionButton.Text = "Stop";
             this.StopExecutionButton.UseVisualStyleBackColor = true;
             // 
             // AttributesCheckBox
@@ -568,66 +569,66 @@
             // ExecuteButton
             // 
             this.ExecuteButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.ExecuteButton.Image = ((System.Drawing.Image)(resources.GetObject("ExecuteButton.Image")));
             this.ExecuteButton.Location = new System.Drawing.Point(215, 366);
             this.ExecuteButton.Name = "ExecuteButton";
             this.ExecuteButton.Size = new System.Drawing.Size(32, 23);
             this.ExecuteButton.TabIndex = 6;
-            this.ExecuteButton.Text = "Execute";
             this.ExecuteButton.UseVisualStyleBackColor = true;
             this.ExecuteButton.Click += new System.EventHandler(this.ExecuteButton_Click);
             // 
             // LevelDownButton
             // 
             this.LevelDownButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.LevelDownButton.Image = ((System.Drawing.Image)(resources.GetObject("LevelDownButton.Image")));
             this.LevelDownButton.Location = new System.Drawing.Point(177, 366);
             this.LevelDownButton.Name = "LevelDownButton";
             this.LevelDownButton.Size = new System.Drawing.Size(32, 23);
             this.LevelDownButton.TabIndex = 5;
-            this.LevelDownButton.Text = "Down";
             this.LevelDownButton.UseVisualStyleBackColor = true;
             this.LevelDownButton.Click += new System.EventHandler(this.LevelDownButton_Click);
             // 
             // LevelUpButton
             // 
             this.LevelUpButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.LevelUpButton.Image = ((System.Drawing.Image)(resources.GetObject("LevelUpButton.Image")));
             this.LevelUpButton.Location = new System.Drawing.Point(139, 366);
             this.LevelUpButton.Name = "LevelUpButton";
             this.LevelUpButton.Size = new System.Drawing.Size(32, 23);
             this.LevelUpButton.TabIndex = 4;
-            this.LevelUpButton.Text = "Up";
             this.LevelUpButton.UseVisualStyleBackColor = true;
             this.LevelUpButton.Click += new System.EventHandler(this.LevelUpButton_Click);
             // 
             // SavePatternButton
             // 
             this.SavePatternButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.SavePatternButton.Image = ((System.Drawing.Image)(resources.GetObject("SavePatternButton.Image")));
             this.SavePatternButton.Location = new System.Drawing.Point(81, 366);
             this.SavePatternButton.Name = "SavePatternButton";
             this.SavePatternButton.Size = new System.Drawing.Size(32, 23);
             this.SavePatternButton.TabIndex = 3;
-            this.SavePatternButton.Text = "Save Pattern";
             this.SavePatternButton.UseVisualStyleBackColor = true;
             this.SavePatternButton.Click += new System.EventHandler(this.SavePatternButton_Click);
             // 
             // ClearTreeViewsButton
             // 
             this.ClearTreeViewsButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.ClearTreeViewsButton.Image = ((System.Drawing.Image)(resources.GetObject("ClearTreeViewsButton.Image")));
             this.ClearTreeViewsButton.Location = new System.Drawing.Point(44, 366);
             this.ClearTreeViewsButton.Name = "ClearTreeViewsButton";
             this.ClearTreeViewsButton.Size = new System.Drawing.Size(32, 23);
             this.ClearTreeViewsButton.TabIndex = 2;
-            this.ClearTreeViewsButton.Text = "Clear";
             this.ClearTreeViewsButton.UseVisualStyleBackColor = true;
             this.ClearTreeViewsButton.Click += new System.EventHandler(this.ClearTreeViewsButton_Click);
             // 
             // CreateSnapshotButton
             // 
             this.CreateSnapshotButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.CreateSnapshotButton.Image = ((System.Drawing.Image)(resources.GetObject("CreateSnapshotButton.Image")));
             this.CreateSnapshotButton.Location = new System.Drawing.Point(6, 366);
             this.CreateSnapshotButton.Name = "CreateSnapshotButton";
             this.CreateSnapshotButton.Size = new System.Drawing.Size(32, 23);
             this.CreateSnapshotButton.TabIndex = 1;
-            this.CreateSnapshotButton.Text = "Create Snapshot";
             this.CreateSnapshotButton.UseVisualStyleBackColor = true;
             this.CreateSnapshotButton.Click += new System.EventHandler(this.CreateSnapshotButton_Click);
             // 
