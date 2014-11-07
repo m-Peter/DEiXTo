@@ -400,7 +400,7 @@
             this.SimplifyDOMButton.Name = "SimplifyDOMButton";
             this.SimplifyDOMButton.Size = new System.Drawing.Size(32, 23);
             this.SimplifyDOMButton.TabIndex = 5;
-            this.SimplifyDOMButton.Text = "button7";
+            this.SimplifyDOMButton.Text = "Simplify DOM";
             this.SimplifyDOMButton.UseVisualStyleBackColor = true;
             this.SimplifyDOMButton.Click += new System.EventHandler(this.SimplifyDOMButton_Click);
             // 
@@ -411,7 +411,7 @@
             this.RebuildDOMButton.Name = "RebuildDOMButton";
             this.RebuildDOMButton.Size = new System.Drawing.Size(32, 23);
             this.RebuildDOMButton.TabIndex = 4;
-            this.RebuildDOMButton.Text = "button7";
+            this.RebuildDOMButton.Text = "Rebuild DOM";
             this.RebuildDOMButton.UseVisualStyleBackColor = true;
             this.RebuildDOMButton.Click += new System.EventHandler(this.RebuildDOMButton_Click);
             // 
@@ -572,7 +572,7 @@
             this.ExecuteButton.Name = "ExecuteButton";
             this.ExecuteButton.Size = new System.Drawing.Size(32, 23);
             this.ExecuteButton.TabIndex = 6;
-            this.ExecuteButton.Text = "btn";
+            this.ExecuteButton.Text = "Execute";
             this.ExecuteButton.UseVisualStyleBackColor = true;
             this.ExecuteButton.Click += new System.EventHandler(this.ExecuteButton_Click);
             // 
@@ -583,7 +583,7 @@
             this.LevelDownButton.Name = "LevelDownButton";
             this.LevelDownButton.Size = new System.Drawing.Size(32, 23);
             this.LevelDownButton.TabIndex = 5;
-            this.LevelDownButton.Text = "btn";
+            this.LevelDownButton.Text = "Down";
             this.LevelDownButton.UseVisualStyleBackColor = true;
             this.LevelDownButton.Click += new System.EventHandler(this.LevelDownButton_Click);
             // 
@@ -594,7 +594,7 @@
             this.LevelUpButton.Name = "LevelUpButton";
             this.LevelUpButton.Size = new System.Drawing.Size(32, 23);
             this.LevelUpButton.TabIndex = 4;
-            this.LevelUpButton.Text = "btn";
+            this.LevelUpButton.Text = "Up";
             this.LevelUpButton.UseVisualStyleBackColor = true;
             this.LevelUpButton.Click += new System.EventHandler(this.LevelUpButton_Click);
             // 
@@ -605,7 +605,7 @@
             this.SavePatternButton.Name = "SavePatternButton";
             this.SavePatternButton.Size = new System.Drawing.Size(32, 23);
             this.SavePatternButton.TabIndex = 3;
-            this.SavePatternButton.Text = "btn";
+            this.SavePatternButton.Text = "Save Pattern";
             this.SavePatternButton.UseVisualStyleBackColor = true;
             this.SavePatternButton.Click += new System.EventHandler(this.SavePatternButton_Click);
             // 
@@ -616,7 +616,7 @@
             this.ClearTreeViewsButton.Name = "ClearTreeViewsButton";
             this.ClearTreeViewsButton.Size = new System.Drawing.Size(32, 23);
             this.ClearTreeViewsButton.TabIndex = 2;
-            this.ClearTreeViewsButton.Text = "btn";
+            this.ClearTreeViewsButton.Text = "Clear";
             this.ClearTreeViewsButton.UseVisualStyleBackColor = true;
             this.ClearTreeViewsButton.Click += new System.EventHandler(this.ClearTreeViewsButton_Click);
             // 
@@ -627,7 +627,7 @@
             this.CreateSnapshotButton.Name = "CreateSnapshotButton";
             this.CreateSnapshotButton.Size = new System.Drawing.Size(32, 23);
             this.CreateSnapshotButton.TabIndex = 1;
-            this.CreateSnapshotButton.Text = "btn";
+            this.CreateSnapshotButton.Text = "Create Snapshot";
             this.CreateSnapshotButton.UseVisualStyleBackColor = true;
             this.CreateSnapshotButton.Click += new System.EventHandler(this.CreateSnapshotButton_Click);
             // 
