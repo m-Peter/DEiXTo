@@ -16,16 +16,26 @@ namespace DEiXTo.Presenters
             _node = node;
             View.Presenter = this;
 
+            populateAttributes();
+        }
+
+        private void populateAttributes()
+        {
             var attributes = _node.GetAttributes();
             View.LoadAttributes(attributes.All);
 
             if (_node.HasAttrConstraint())
             {
-                var constraint = _node.GetAttrConstraint();
-                var selectedTag = GetSelectedAttribute(attributes.All, constraint.Attribute);
-                
-                View.SelectAttribute(selectedTag);
+                selectNodeConstraint(attributes.All);
             }
+        }
+
+        private void selectNodeConstraint(List<TagAttribute> attributes)
+        {
+            var constraint = _node.GetAttrConstraint();
+            var selectedTag = GetSelectedAttribute(attributes, constraint.Attribute);
+
+            View.SelectAttribute(selectedTag);
         }
 
         private TagAttribute GetSelectedAttribute(List<TagAttribute> attributes, string tagAttribute)
