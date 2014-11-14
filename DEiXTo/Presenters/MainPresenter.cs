@@ -8,7 +8,7 @@ namespace DEiXTo.Presenters
     /// <summary>
     /// 
     /// </summary>
-    public class MainPresenter : ISubscriber<EventArgs>
+    public class MainPresenter : ISubscriber<DeixtoAgentClosed>
     {
         #region Instance Variables
         private readonly IViewLoader _viewLoader;
@@ -27,7 +27,7 @@ namespace DEiXTo.Presenters
             _browserManager = new BrowserVersionManager();
             View.Presenter = this;
 
-            eventHub.Subscribe<EventArgs>(this);
+            eventHub.Subscribe<DeixtoAgentClosed>(this);
         }
         #endregion
 
@@ -116,7 +116,7 @@ namespace DEiXTo.Presenters
         /// 
         /// </summary>
         /// <param name="subject"></param>
-        public void Receive(EventArgs subject)
+        public void Receive(DeixtoAgentClosed subject)
         {
             _formCounter--;
         }

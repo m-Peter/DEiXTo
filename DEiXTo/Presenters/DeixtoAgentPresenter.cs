@@ -422,7 +422,7 @@ namespace DEiXTo.Presenters
         /// <param name="e"></param>
         public void windowClosing()
         {
-            _eventHub.Publish(new EventArgs());
+            _eventHub.Publish(new DeixtoAgentClosed());
         }
 
         /// <summary>

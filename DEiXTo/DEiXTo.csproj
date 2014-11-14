@@ -108,6 +108,7 @@
     <Compile Include="Services\AttributeExtractor.cs" />
     <Compile Include="Services\BrowserVersionManager.cs" />
     <Compile Include="Services\ContentExtractionFactory.cs" />
+    <Compile Include="Services\DeixtoAgentClosed.cs" />
     <Compile Include="Services\DeixtoAgentScreen.cs" />
     <Compile Include="Services\DialogBuilderFactory.cs" />
     <Compile Include="Services\DocumentQuery.cs" />
