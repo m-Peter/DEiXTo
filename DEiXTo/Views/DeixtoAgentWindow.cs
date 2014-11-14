@@ -1128,7 +1128,8 @@ namespace DEiXTo.Views
             splitContainer3.SplitterDistance += 200;
         }
 
-        private void WebBrowser_DocumentCompleted(object sender, WebBrowserDocumentCompletedEventArgs e)
+        private void WebBrowser_DocumentCompleted(object sender,
+            WebBrowserDocumentCompletedEventArgs e)
         {
             if (e.Url.Equals(WebBrowser.Url))
             {

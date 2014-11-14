@@ -12,23 +12,27 @@ namespace DEiXTo.Services
 {
     public class BrowserVersionManager : IBrowserVersionManager
     {
-
         public void UpdateBrowserVersion()
         {
             // FeatureControl settings are per-process
-            var fileName = Path.GetFileName(Process.GetCurrentProcess().MainModule.FileName);
+            var fileName = Path.GetFileName(Process.GetCurrentProcess().
+                MainModule.FileName);
 
-            SetBrowserFeatureControlKey("FEATURE_BROWSER_EMULATION", fileName, GetBrowserEmulationMode());
+            SetBrowserFeatureControlKey("FEATURE_BROWSER_EMULATION",
+                fileName, GetBrowserEmulationMode());
         }
 
         public void ResetBrowserVersion()
         {
-            var fileName = Path.GetFileName(Process.GetCurrentProcess().MainModule.FileName);
+            var fileName = Path.GetFileName(Process.GetCurrentProcess().
+                MainModule.FileName);
             UInt32 defaultVersion = 7000;
-            SetBrowserFeatureControlKey("FEATURE_BROWSER_EMULATION", fileName, 7000);
+            SetBrowserFeatureControlKey("FEATURE_BROWSER_EMULATION",
+                fileName, defaultVersion);
         }
 
-        private static void SetBrowserFeatureControlKey(string feature, string appName, uint value)
+        private static void SetBrowserFeatureControlKey(string feature,
+            string appName, uint value)
         {
             using (var key = Registry.CurrentUser.CreateSubKey(
                 String.Concat(@"Software\Microsoft\Internet Explorer\Main\FeatureControl\", feature),
