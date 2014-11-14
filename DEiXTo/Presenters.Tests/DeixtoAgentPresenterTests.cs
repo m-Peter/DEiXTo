@@ -873,7 +873,7 @@ namespace DEiXTo.Presenters.Tests
             // Arrange
             var node = new TreeNode("DIV");
             NodeInfo nInfo = new NodeInfo();
-            var attributes = new AttributeCollection();
+            var attributes = new TagAttributeCollection();
             attributes.Add(new TagAttribute { Name = "id", Value = "main-wrapper" });
             nInfo.Attributes = attributes;
             node.Tag = nInfo;
@@ -899,7 +899,7 @@ namespace DEiXTo.Presenters.Tests
             // Arrange
             var node = new TreeNode("DIV");
             NodeInfo nInfo = new NodeInfo();
-            var attributes = new AttributeCollection();
+            var attributes = new TagAttributeCollection();
             attributes.Add(new TagAttribute { Name = "id", Value = "main-wrapper" });
             nInfo.Attributes = attributes;
             node.Tag = nInfo;

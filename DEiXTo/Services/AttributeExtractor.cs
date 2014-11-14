@@ -51,9 +51,9 @@ namespace DEiXTo.Services
             }
         }
 
-        public virtual AttributeCollection Attributes()
+        public virtual TagAttributeCollection Attributes()
         {
-            var attributes = new AttributeCollection();
+            var attributes = new TagAttributeCollection();
             attributes.Add(Id);
             attributes.Add(Klass);
 

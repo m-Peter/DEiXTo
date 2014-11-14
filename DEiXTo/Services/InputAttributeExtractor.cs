@@ -10,7 +10,7 @@ namespace DEiXTo.Services
             _element = element;
         }
 
-        public override AttributeCollection Attributes()
+        public override TagAttributeCollection Attributes()
         {
             var attributes = base.Attributes();
             attributes.Add(Name);

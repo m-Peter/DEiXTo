@@ -2,11 +2,11 @@
 
 namespace DEiXTo.Models
 {
-    public class AttributeCollection
+    public class TagAttributeCollection
     {
         private List<TagAttribute> _attributes;
 
-        public AttributeCollection()
+        public TagAttributeCollection()
         {
             _attributes = new List<TagAttribute>();
         }

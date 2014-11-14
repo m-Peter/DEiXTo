@@ -38,7 +38,7 @@ namespace DEiXTo.Services
             return false;
         }
 
-        public static AttributeCollection GetAttributes(this TreeNode node)
+        public static TagAttributeCollection GetAttributes(this TreeNode node)
         {
             NodeInfo pInfo = GetPointerInfo(node);
 
