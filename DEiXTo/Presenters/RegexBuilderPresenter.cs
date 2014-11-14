@@ -21,18 +21,22 @@ namespace DEiXTo.Presenters
             View.Presenter = this;
             _eventHub = eventHub;
 
-            if (node.HasRegex())
-            {
-                View.RegexText = node.GetRegex();
-            }
-            else
-            {
-                View.RegexText = node.GetContent();
-            }
+            populateRegex();
         }
         #endregion
 
         public IRegexBuilderView View { get; set; }
+
+        private void populateRegex()
+        {
+            if (_node.HasRegex())
+            {
+                View.RegexText = _node.GetRegex();
+                return;
+            }
+
+            View.RegexText = _node.GetContent();
+        }
 
         public void AddRegex()
         {

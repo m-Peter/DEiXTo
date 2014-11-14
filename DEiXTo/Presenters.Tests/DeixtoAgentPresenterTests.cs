@@ -290,7 +290,7 @@ namespace DEiXTo.Presenters.Tests
             _presenter.windowClosing();
             
             // Assert
-            _eventHub.Verify(e => e.Publish(It.IsAny<EventArgs>()));
+            _eventHub.Verify(e => e.Publish(It.IsAny<DeixtoAgentClosed>()));
         }
 
         [TestMethod]
