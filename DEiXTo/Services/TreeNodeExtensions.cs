@@ -50,7 +50,7 @@ namespace DEiXTo.Services
             return null;
         }
 
-        public static AttributeConstraint GetAttrConstraint(this TreeNode node)
+        public static TagAttributeConstraint GetAttrConstraint(this TreeNode node)
         {
             NodeInfo pInfo = GetPointerInfo(node);
 
@@ -62,7 +62,7 @@ namespace DEiXTo.Services
             return null;
         }
 
-        public static void SetAttrConstraint(this TreeNode node, AttributeConstraint constraint)
+        public static void SetAttrConstraint(this TreeNode node, TagAttributeConstraint constraint)
         {
             NodeInfo pInfo = GetPointerInfo(node);
 

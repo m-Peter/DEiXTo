@@ -1,6 +1,6 @@
 ﻿namespace DEiXTo.Models
 {
-    public class AttributeConstraint
+    public class TagAttributeConstraint
     {
         public string Attribute { get; set; }
         public string Value { get; set; }

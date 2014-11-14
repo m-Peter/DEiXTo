@@ -18,7 +18,7 @@
         public int SiblingOrderStart { get; set; }
         public int SiblingOrderStep { get; set; }
         public TagAttributeCollection Attributes { get; set; }
-        public AttributeConstraint AttrConstraint { get; set; }
+        public TagAttributeConstraint AttrConstraint { get; set; }
 
         public class Builder
         {
