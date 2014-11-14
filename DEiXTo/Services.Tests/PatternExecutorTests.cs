@@ -1,7 +1,5 @@
 ﻿using DEiXTo.Models;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System.Collections;
-using System.Collections.Generic;
 using System.Windows.Forms;
 
 namespace DEiXTo.Services.Tests

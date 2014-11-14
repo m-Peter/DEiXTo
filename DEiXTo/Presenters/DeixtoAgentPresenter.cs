@@ -7,7 +7,6 @@ using DEiXTo.Models;
 using System.Drawing;
 using System.Collections.Generic;
 using mshtml;
-using System.Text;
 
 namespace DEiXTo.Presenters
 {
