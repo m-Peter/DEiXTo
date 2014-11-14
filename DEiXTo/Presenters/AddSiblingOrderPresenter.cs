@@ -18,16 +18,21 @@ namespace DEiXTo.Presenters
             _node = node;
             View.Presenter = this;
 
-            if (_node.GetCareAboutSiblingOrder())
-            {
-                View.StartIndex = _node.GetStartIndex();
-                View.StepValue = _node.GetStepValue();
-                View.CareAboutSiblingOrder = true;
-            }
+            populateSiblingOrder();
         }
         #endregion
 
         public IAddSiblingOrderView View { get; set; }
+
+        private void populateSiblingOrder()
+        {
+            if (_node.GetCareAboutSiblingOrder())
+            {
+                View.CareAboutSiblingOrder = true;
+                View.StartIndex = _node.GetStartIndex();
+                View.StepValue = _node.GetStepValue();
+            }
+        }
 
         public void AddSiblingOrder()
         {
