@@ -26,6 +26,11 @@ namespace DEiXTo.Models
             _attributes.Add(tagAttribute);
         }
 
+        public int Count
+        {
+            get { return _attributes.Count; }
+        }
+
         public TagAttribute GetByName(string attributeName)
         {
             return _attributes.Find(attribute => attribute.Name == attributeName);

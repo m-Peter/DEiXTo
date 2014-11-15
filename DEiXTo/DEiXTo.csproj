@@ -81,6 +81,7 @@
     <Compile Include="Models\OutputMode.cs" />
     <Compile Include="Models\Result.cs" />
     <Compile Include="Models\TagAttribute.cs" />
+    <Compile Include="Presenters.Tests\AddAttributeConstraintPresenterTests.cs" />
     <Compile Include="Presenters.Tests\AddLabelPresenterTests.cs" />
     <Compile Include="Presenters.Tests\AddSiblingOrderPresenterTests.cs" />
     <Compile Include="Presenters.Tests\DeixtoAgentPresenterTests.cs" />
