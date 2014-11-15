@@ -492,6 +492,12 @@ namespace DEiXTo.Views
         public bool HighlightModeEnabled
         {
             get { return HighlightModeCheckBox.Checked; }
+            set { HighlightModeCheckBox.Checked = value; }
+        }
+
+        public void ShowHighlightContextMenu()
+        {
+            EnableHighlightMenuStrip.Show(Cursor.Position);
         }
 
         /// <summary>
@@ -864,6 +870,7 @@ namespace DEiXTo.Views
         public void ShowBrowserMenu()
         {
             BrowserMenuStrip.Show(Cursor.Position);
+            BrowserMenuStrip.Enabled = true;
         }
 
         /// <summary>
@@ -875,7 +882,11 @@ namespace DEiXTo.Views
             get { return BrowserMenuStrip.Enabled; }
         }
 
-
+        public void EnableHighlighting()
+        {
+            BrowserMenuStrip.Enabled = true;
+            HighlightModeEnabled = true;
+        }
 
         /// <summary>
         /// 
@@ -975,6 +986,12 @@ namespace DEiXTo.Views
         public TreeNodeCollection GetDOMTreeNodes()
         {
             return HtmlTreeView.Nodes;
+        }
+
+        public void DisableHighlighting()
+        {
+            BrowserMenuStrip.Enabled = false;
+            HighlightModeEnabled = false;
         }
 
         /// <summary>
@@ -1424,6 +1441,16 @@ namespace DEiXTo.Views
         {
             var node = WorkingPatternTreeView.SelectedNode;
             Presenter.AddAttributeConstraint(node);
+        }
+
+        private void DisableHighlightingMenuItem_Click(object sender, EventArgs e)
+        {
+            Presenter.DisableHighlighting();
+        }
+
+        private void EnableHighlightingMenuItem_Click(object sender, EventArgs e)
+        {
+            Presenter.EnableHighlighting();
         }
     }
 }

@@ -208,6 +208,8 @@
             this.SetAsRootMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator8 = new System.Windows.Forms.ToolStripSeparator();
             this.DeleteNodeMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.EnableHighlightMenuStrip = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.EnableHighlightingMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
@@ -251,6 +253,7 @@
             this.BrowserMenuStrip.SuspendLayout();
             this.SnapshotsMenuStrip.SuspendLayout();
             this.AdjustpatternMenuStrip.SuspendLayout();
+            this.EnableHighlightMenuStrip.SuspendLayout();
             this.SuspendLayout();
             // 
             // splitContainer1
@@ -1536,6 +1539,7 @@
             this.DisableHighlightingMenuItem.Name = "DisableHighlightingMenuItem";
             this.DisableHighlightingMenuItem.Size = new System.Drawing.Size(194, 22);
             this.DisableHighlightingMenuItem.Text = "Disable Highlighting";
+            this.DisableHighlightingMenuItem.Click += new System.EventHandler(this.DisableHighlightingMenuItem_Click);
             // 
             // SnapshotsMenuStrip
             // 
@@ -1955,6 +1959,20 @@
             this.DeleteNodeMenuItem.Text = "Delete Node";
             this.DeleteNodeMenuItem.Click += new System.EventHandler(this.DeleteNodeMenuItem_Click);
             // 
+            // EnableHighlightMenuStrip
+            // 
+            this.EnableHighlightMenuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.EnableHighlightingMenuItem});
+            this.EnableHighlightMenuStrip.Name = "EnableHighlightMenuStrip";
+            this.EnableHighlightMenuStrip.Size = new System.Drawing.Size(180, 48);
+            // 
+            // EnableHighlightingMenuItem
+            // 
+            this.EnableHighlightingMenuItem.Name = "EnableHighlightingMenuItem";
+            this.EnableHighlightingMenuItem.Size = new System.Drawing.Size(179, 22);
+            this.EnableHighlightingMenuItem.Text = "Enable Highlighting";
+            this.EnableHighlightingMenuItem.Click += new System.EventHandler(this.EnableHighlightingMenuItem_Click);
+            // 
             // DeixtoAgentWindow
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -2022,6 +2040,7 @@
             this.BrowserMenuStrip.ResumeLayout(false);
             this.SnapshotsMenuStrip.ResumeLayout(false);
             this.AdjustpatternMenuStrip.ResumeLayout(false);
+            this.EnableHighlightMenuStrip.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -2206,5 +2225,7 @@
         private System.Windows.Forms.ToolStripMenuItem AddAttributeConstraintMenuItem;
         private System.Windows.Forms.ToolStripMenuItem RemoveAttributeConstraintMenuItem;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator11;
+        private System.Windows.Forms.ContextMenuStrip EnableHighlightMenuStrip;
+        private System.Windows.Forms.ToolStripMenuItem EnableHighlightingMenuItem;
     }
 }

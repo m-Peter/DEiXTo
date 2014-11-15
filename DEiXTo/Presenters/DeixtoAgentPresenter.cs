@@ -222,6 +222,16 @@ namespace DEiXTo.Presenters
             View.OutputFileName = filename;
         }
 
+        public void DisableHighlighting()
+        {
+            View.DisableHighlighting();
+        }
+
+        public void EnableHighlighting()
+        {
+            View.EnableHighlighting();
+        }
+
         /// <summary>
         /// 
         /// </summary>
@@ -808,6 +818,12 @@ namespace DEiXTo.Presenters
 
             if (CustomMenuCanBeShown(e))
             {
+                return;
+            }
+
+            if (!View.BrowserContextMenuEnabled)
+            {
+                View.ShowHighlightContextMenu();
                 return;
             }
 

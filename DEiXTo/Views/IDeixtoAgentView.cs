@@ -12,6 +12,9 @@ namespace DEiXTo.Views
     {
         DeixtoAgentPresenter Presenter { get; set; }
 
+        void ShowHighlightContextMenu();
+        void DisableHighlighting();
+        void EnableHighlighting();
         void ClearAttributes();
         void LoadNodeAttributes(List<TagAttribute> attributes);
         string[] IgnoredTags { get; set; }
@@ -34,7 +37,7 @@ namespace DEiXTo.Views
 
         string Url { get; }
         HtmlElement CurrentElement { get; set; }
-        bool HighlightModeEnabled { get; }
+        bool HighlightModeEnabled { get; set; }
         bool CrawlingEnabled { get; }
         bool CanAutoScroll { get; }
         bool BrowserContextMenuEnabled { get; }
