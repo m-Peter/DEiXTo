@@ -11,12 +11,8 @@ namespace DEiXTo.Views
 {
     public partial class DeixtoAgentWindow : Form, IDeixtoAgentView
     {
-
-        #region Instance Variables
         private HtmlElement _currentElement;
-        #endregion
 
-        #region Constructors
         public DeixtoAgentWindow()
         {
             InitializeComponent();
@@ -88,9 +84,6 @@ namespace DEiXTo.Views
             OutputFileFormatComboBox.Items.AddRange(GetOutputFormats());
             OutputFileFormatComboBox.SelectedIndex = 0;
         }
-        #endregion
-
-        #region Public Methods
 
         public string[] TargetUrls
         {
@@ -114,10 +107,6 @@ namespace DEiXTo.Views
             }
         }
 
-        /// <summary>
-        /// Collects all the tags from the ListBox that are checked.
-        /// </summary>
-        /// <returns>An string array with the checked tags.</returns>
         public string[] IgnoredTags
         {
             get
@@ -274,9 +263,6 @@ namespace DEiXTo.Views
             set { HTMLLinkTextBox.Text = value; }
         }
 
-        /// <summary>
-        /// Get the URL specified by the user
-        /// </summary>
         public string Url
         {
             get { return URLComboBox.Text; }
@@ -284,43 +270,27 @@ namespace DEiXTo.Views
 
         public DeixtoAgentPresenter Presenter { get; set; }
 
-        /// <summary>
-        /// 
-        /// </summary>
         public string TargetURLsFile
         {
             get { return URLsFileTextBox.Text; }
             set { URLsFileTextBox.Text = value; }
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
         public bool ExtractionPatternSpecified
         {
             get { return ExtractionPatternTreeView.Nodes.Count > 0; }
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
         public bool TargetURLSpecified
         {
             get { return TargetURLsListBox.Items.Count > 0; }
         }
 
-        /// <summary>
-        /// Return the URL of the WebBrowser's HtmlDocument.
-        /// </summary>
-        /// <returns></returns>
         public String GetDocumentUrl()
         {
             return WebBrowser.Document.Url.ToString();
         }
 
-        /// <summary>
-        /// Set the WebBrowser's document Url as the URLComboBox text.
-        /// </summary>
         public void UpdateDocumentUrl()
         {
             URLComboBox.Text = WebBrowser.Document.Url.ToString();
@@ -339,62 +309,39 @@ namespace DEiXTo.Views
             }
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
         public void ClearExtractedOutputs()
         {
             OutputListView.Clear();
             ExtractedResultsCountLabel.Enabled = false;
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
         public void FocusAuxiliaryTabPage()
         {
             AttributesTabControl.SelectedTab = Auxiliary;
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
         public void FocusOutputTabPage()
         {
             SettingsTabControl.SelectedTab = Output;
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="node"></param>
-        /// <param name="imageIndex"></param>
         public void ApplyStateToNode(TreeNode node, int imageIndex)
         {
             node.ImageIndex = imageIndex;
             node.SelectedImageIndex = imageIndex;
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
         public HtmlElement CurrentElement
         {
             get { return _currentElement; }
             set { _currentElement = value; }
         }
 
-        /// <summary>
-        /// Shows a warning message when the URL is empty.
-        /// </summary>
         public void ShowSpecifyURLMessage()
         {
             MessageBox.Show("Please specify URL!", "DEiXTo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
         public void ShowSpecifyInputSourceMessage()
         {
             MessageBox.Show("Please specify target URLs or input file.", "DEiXTo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
@@ -405,90 +352,56 @@ namespace DEiXTo.Views
             MessageBox.Show("Please select just one input source", "DEiXTo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
         public void ShowSpecifyExtractionPatternMessage()
         {
             MessageBox.Show("Please specify extraction pattern.", "DEiXTo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
         public void ShowSpecifyTargetURLMessage()
         {
             MessageBox.Show("Please specify a URL", "DEiXTo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
         public void ShowSpecifyPatternMessage()
         {
             MessageBox.Show("Please specify pattern to search for.", "DEiXTo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
         public void ShowEmptyLinkMessage()
         {
             MessageBox.Show("Please specify text contained by link.", "DEiXTo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
         public void ShowInvalidDepthMessage()
         {
             MessageBox.Show("Max crawl depth is a positive integer!", "DEiXTo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
         }
 
-        /// <summary>
-        /// Shows an error message when the URL is not found.
-        /// </summary>
         public void ShowRequestNotFoundMessage()
         {
             MessageBox.Show("Request resource is not found", "Microsoft Internet Explorer", MessageBoxButtons.OK, MessageBoxIcon.Error);
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
         public void ShowEnterURLToAddMessage()
         {
             MessageBox.Show("Please enter URL to add.", "DEiXTo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
         public void ShowSelectURLMessage()
         {
             MessageBox.Show("Please select URL entry to remove.", "DEiXTo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
         }
 
-        /// <summary>
-        /// Shows a warning message when no tag is selected from the ListBox.
-        /// </summary>
         public void ShowNoTagSelectedMessage()
         {
             MessageBox.Show("At least one HTML tag type should be selected", "DEiXTo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
         public void ShowCannotDeleteRootMessage()
         {
             MessageBox.Show("Cannot remove the root of the pattern", "DEiXTo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
         }
 
-        /// <summary>
-        /// Returns whether the Highlight Mode checkbox is enabled.
-        /// </summary>
-        /// <returns></returns>
         public bool HighlightModeEnabled
         {
             get { return HighlightModeCheckBox.Checked; }
@@ -500,56 +413,32 @@ namespace DEiXTo.Views
             EnableHighlightMenuStrip.Show(Cursor.Position);
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <returns></returns>
         public bool CrawlingEnabled
         {
             get { return CrawlingCheckBox.Checked; }
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <returns></returns>
         public int CrawlingDepth()
         {
             int depth = (int)CrawlingDepthNUD.Value;
             return depth;
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <returns></returns>
         public string HtmlLink()
         {
             return HTMLLinkTextBox.Text;
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
         public void ClearAddURLInput()
         {
             AddURLTextBox.Clear();
         }
 
-        /// <summary>
-        /// Returns whether the AutoScroll option is enabled.
-        /// </summary>
-        /// <returns></returns>
         public bool CanAutoScroll
         {
             get { return AutoScrollCheckBox.Checked; }
         }
 
-        /// <summary>
-        /// Fill the element info tab page with the element's information.
-        /// </summary>
-        /// <param name="element"></param>
-        /// <param name="path"></param>
         public void FillElementInfo(TreeNode node, string outerHtml)
         {
             OuterHtmlTextBox.Text = outerHtml;
@@ -558,10 +447,6 @@ namespace DEiXTo.Views
             RegularExpressionTextBox.Text = node.GetRegex();
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="node"></param>
         public void FillTextNodeElementInfo(TreeNode node)
         {
             OuterHtmlTextBox.Text = "This is an artificial text node.";
@@ -569,9 +454,6 @@ namespace DEiXTo.Views
             HtmlPathTextBox.Text = node.GetPath();
         }
 
-        /// <summary>
-        /// Clear the element info tab page.
-        /// </summary>
         public void ClearElementInfo()
         {
             OuterHtmlTextBox.Text = String.Empty;
@@ -579,36 +461,21 @@ namespace DEiXTo.Views
             HtmlPathTextBox.Text = String.Empty;
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="imageList"></param>
         public void AddWorkingPatternImages(ImageList imageList)
         {
             WorkingPatternTreeView.ImageList = imageList;
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="imageList"></param>
         public void AddExtractionTreeImages(ImageList imageList)
         {
             ExtractionPatternTreeView.ImageList = imageList;
         }
 
-        /// <summary>
-        /// Clear the TreeNodes of the Snapshot TreeView.
-        /// </summary>
         public void ClearSnapshotTree()
         {
             SnapshotsTreeView.Nodes.Clear();
         }
 
-        /// <summary>
-        /// Navigates the WebBrowser to the given URL.
-        /// </summary>
-        /// <param name="url"></param>
         public void NavigateTo(string url)
         {
             WebBrowser.Navigate(url);
@@ -618,27 +485,16 @@ namespace DEiXTo.Views
             }
         }
 
-        /// <summary>
-        /// Navigates forward the WebBrowser's document.
-        /// </summary>
         public void NavigateForward()
         {
             WebBrowser.GoForward();
         }
 
-        /// <summary>
-        /// Navigates back the WebBrowser's document.
-        /// </summary>
         public void NavigateBack()
         {
             WebBrowser.GoBack();
         }
 
-        /// <summary>
-        /// Changes the visibility of the AutoFill fields according
-        /// to the CheckBox state
-        /// </summary>
-        /// <param name="state"></param>
         public void ApplyVisibilityStateInAutoFill(bool state)
         {
             FormNameTextBox.Enabled = state;
@@ -646,30 +502,17 @@ namespace DEiXTo.Views
             SearchQueryTextBox.Enabled = state;
         }
 
-        /// <summary>
-        /// Changes the visibility of the Crawling fields according
-        /// to the CheckBox state
-        /// </summary>
-        /// <param name="state"></param>
         public void ApplyVisibilityStateInCrawling(bool state)
         {
             CrawlingDepthNUD.Enabled = state;
             HTMLLinkTextBox.Enabled = state;
         }
 
-        /// <summary>
-        /// Retrieve the HtmlDocument of the current page.
-        /// </summary>
-        /// <returns></returns>
         public HtmlDocument GetHtmlDocument()
         {
             return WebBrowser.Document;
         }
 
-        /// <summary>
-        /// Fill the Html TreeView with the given node.
-        /// </summary>
-        /// <param name="node"></param>
         public void FillDomTree(TreeNode node)
         {
             HtmlTreeView.BeginUpdate();
@@ -678,10 +521,6 @@ namespace DEiXTo.Views
             HtmlTreeView.EndUpdate();
         }
 
-        /// <summary>
-        /// Append the given URL to the collection of TargetURLs.
-        /// </summary>
-        /// <param name="url"></param>
         public void AppendTargetUrl(string url)
         {
             TargetURLsListBox.Items.Add(url);
@@ -692,21 +531,11 @@ namespace DEiXTo.Views
             TargetURLsListBox.Items.AddRange(urls);
         }
 
-
-
-        /// <summary>
-        /// Clear all the URLs from the TargetURLs collection.
-        /// </summary>
         public void ClearTargetURLs()
         {
             TargetURLsListBox.Items.Clear();
         }
 
-        /// <summary>
-        /// Select the given TreeNode and scroll the TreeView to its
-        /// position
-        /// </summary>
-        /// <param name="node"></param>
         public void SelectDOMNode(TreeNode node)
         {
             if (node == null)
@@ -717,9 +546,6 @@ namespace DEiXTo.Views
             HtmlTreeView.SelectedNode = node;
         }
 
-        /// <summary>
-        /// Clear the TreeNodes of the WorkingPattern TreeView.
-        /// </summary>
         public void ClearPatternTree()
         {
             WorkingPatternTreeView.BeginUpdate();
@@ -727,9 +553,6 @@ namespace DEiXTo.Views
             WorkingPatternTreeView.EndUpdate();
         }
 
-        /// <summary>
-        /// Clear the TreeNodes of the Auxiliary TreeView.
-        /// </summary>
         public void ClearAuxiliaryTree()
         {
             AuxiliaryTreeView.BeginUpdate();
@@ -737,9 +560,6 @@ namespace DEiXTo.Views
             AuxiliaryTreeView.EndUpdate();
         }
 
-        /// <summary>
-        /// Clear the TreeNodes of the Html TreeView.
-        /// </summary>
         public void ClearDOMTree()
         {
             HtmlTreeView.BeginUpdate();
@@ -747,46 +567,27 @@ namespace DEiXTo.Views
             HtmlTreeView.EndUpdate();
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="node"></param>
         public void FillPatternTree(TreeNode node)
         {
             WorkingPatternTreeView.Nodes.Add(node);
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="node"></param>
         public void SetNodeFont(TreeNode node)
         {
             node.NodeFont = new Font(WorkingPatternTreeView.Font, FontStyle.Bold);
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="node"></param>
         public void FillAuxiliaryTree(TreeNode node)
         {
             AuxiliaryTreeView.Nodes.Add(node);
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="node"></param>
         public void FillSnapshotTree(TreeNode node)
         {
             node.ContextMenuStrip = SnapshotsMenuStrip;
             SnapshotsTreeView.Nodes.Insert(0, node);
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
         public void ExpandPatternTree()
         {
             WorkingPatternTreeView.BeginUpdate();
@@ -794,9 +595,6 @@ namespace DEiXTo.Views
             WorkingPatternTreeView.EndUpdate();
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
         public void ExpandAuxiliaryTree()
         {
             AuxiliaryTreeView.BeginUpdate();
@@ -804,19 +602,11 @@ namespace DEiXTo.Views
             AuxiliaryTreeView.EndUpdate();
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="node"></param>
         public void SetContextMenuFor(TreeNode node)
         {
             node.ContextMenuStrip = CreatePatternsMenuStrip;
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="node"></param>
         public void SetAdjustContextMenuFor(TreeNode node)
         {
             node.ContextMenuStrip = AdjustpatternMenuStrip;
@@ -864,19 +654,12 @@ namespace DEiXTo.Views
             }
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
         public void ShowBrowserMenu()
         {
             BrowserMenuStrip.Show(Cursor.Position);
             BrowserMenuStrip.Enabled = true;
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <returns></returns>
         public bool BrowserContextMenuEnabled
         {
             get { return BrowserMenuStrip.Enabled; }
@@ -888,36 +671,21 @@ namespace DEiXTo.Views
             HighlightModeEnabled = true;
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="url"></param>
         public void SetURLInput(string url)
         {
             AddURLTextBox.Text = url;
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="url"></param>
         public void RemoveTargetURL(string url)
         {
             TargetURLsListBox.Items.Remove(url);
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <returns></returns>
         public string TargetURLToAdd()
         {
             return AddURLTextBox.Text;
         }
 
-        /// <summary>
-        /// Attach the necessary events to the WebBrowser's document.
-        /// </summary>
         public void AttachDocumentEvents()
         {
             WebBrowser.Document.MouseOver += Document_MouseOver;
@@ -925,19 +693,11 @@ namespace DEiXTo.Views
             WebBrowser.Document.ContextMenuShowing += Document_ContextMenuShowing;
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="node"></param>
         public void DeleteSnapshotInstance(TreeNode node)
         {
             SnapshotsTreeView.Nodes.Remove(node);
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <returns></returns>
         public bool AskUserToClearTreeViews()
         {
             var result = MessageBox.Show("Are you sure you want to clear the treeviews?", "DEiXTo", MessageBoxButtons.YesNo);
@@ -945,10 +705,6 @@ namespace DEiXTo.Views
             return result == DialogResult.Yes;
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <returns></returns>
         public bool AskUserToRemoveURL()
         {
             var result = MessageBox.Show("Are you sure you want to remove the selected URL(s)?", "Confirm", MessageBoxButtons.YesNo, MessageBoxIcon.Information);
@@ -956,10 +712,6 @@ namespace DEiXTo.Views
             return result == DialogResult.Yes;
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <returns></returns>
         public TreeNode GetWorkingPattern()
         {
             if (WorkingPatternTreeView.GetNodeCount(false) > 0)
@@ -970,19 +722,11 @@ namespace DEiXTo.Views
             return null;
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <returns></returns>
         public TreeNode GetAuxiliaryInstance()
         {
             return AuxiliaryTreeView.Nodes[0];
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <returns></returns>
         public TreeNodeCollection GetDOMTreeNodes()
         {
             return HtmlTreeView.Nodes;
@@ -994,18 +738,11 @@ namespace DEiXTo.Views
             HighlightModeEnabled = false;
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="node"></param>
         public void FillExtractionPattern(TreeNode node)
         {
             ExtractionPatternTreeView.Nodes.Add(node);
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
         public void ExpandExtractionTree()
         {
             ExtractionPatternTreeView.BeginUpdate();
@@ -1013,27 +750,16 @@ namespace DEiXTo.Views
             ExtractionPatternTreeView.EndUpdate();
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <returns></returns>
         public TreeNodeCollection GetBodyTreeNodes()
         {
             return HtmlTreeView.Nodes[0].Nodes[1].Nodes;
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="node"></param>
         public void DeletePatternNode(TreeNode node)
         {
             WorkingPatternTreeView.Nodes.Remove(node);
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
         public bool OutputFileSpecified
         {
             get
@@ -1043,19 +769,11 @@ namespace DEiXTo.Views
             }
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="columnHeader"></param>
         public void AddOutputColumn(string columnHeader)
         {
             OutputListView.Columns.Add(columnHeader);
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="contents"></param>
         public void AddOutputItem(string[] contents, TreeNode node)
         {
             ListViewItem item = new ListViewItem(contents);
@@ -1063,19 +781,12 @@ namespace DEiXTo.Views
             OutputListView.Items.Add(item);
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="count"></param>
         public void WritePageResults(string message)
         {
             ExtractionResultsLabel.Enabled = true;
             ExtractionResultsLabel.Text = message;
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
         public string FirstTargetURL
         {
             get
@@ -1085,19 +796,11 @@ namespace DEiXTo.Views
             }
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <returns></returns>
         public TreeNodeCollection GetPatternTreeNodes()
         {
             return WorkingPatternTreeView.Nodes;
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <returns></returns>
         public TreeNode GetExtractionPattern()
         {
             return ExtractionPatternTreeView.Nodes[0];
@@ -1107,9 +810,7 @@ namespace DEiXTo.Views
         {
             return ExtractionPatternTreeView.Nodes;
         }
-        #endregion
 
-        #region Private Methods
         private object[] GetOutputFormats()
         {
             return new object[]
@@ -1119,9 +820,7 @@ namespace DEiXTo.Views
                 new OutputFormat(Format.RSS, "RSS (*.rss)")
             };
         }
-        #endregion
 
-        #region Private Events
         private void BrowseToURLButton_Click(object sender, EventArgs e)
         {
             Presenter.BrowseToUrl();
@@ -1420,7 +1119,6 @@ namespace DEiXTo.Views
         {
             Presenter.LoadURLsFromFile();
         }
-        #endregion
 
         private void SaveWrapperButton_Click(object sender, EventArgs e)
         {

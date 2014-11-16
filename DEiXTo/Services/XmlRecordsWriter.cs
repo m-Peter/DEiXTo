@@ -13,10 +13,6 @@ namespace DEiXTo.Services
             _filename = filename;
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="results"></param>
         public override void Write(IEnumerable<Result> results)
         {
             XmlWriterSettings settings = new XmlWriterSettings();
@@ -34,10 +30,6 @@ namespace DEiXTo.Services
             }
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="results"></param>
         private void WriteItems(IEnumerable<Result> results)
         {
             _writer.WriteStartElement("items"); // Write the items element
@@ -50,11 +42,6 @@ namespace DEiXTo.Services
             _writer.WriteEndElement(); // Close items element
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="writer"></param>
-        /// <param name="result"></param>
         private void WriteItem(Result result)
         {
             _writer.WriteStartElement("item"); // Write the item element
@@ -64,11 +51,6 @@ namespace DEiXTo.Services
             _writer.WriteEndElement(); // Close the item element
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="writer"></param>
-        /// <param name="result"></param>
         private void WriteVariables(Result result)
         {
             int i = 0;

@@ -3,25 +3,15 @@ using System.Windows.Forms;
 
 namespace DEiXTo.Services
 {
-    /// <summary>
-    /// 
-    /// </summary>
     public class ElementStyling
     {
         private IDictionary<HtmlElement, string> _elementStyles = new Dictionary<HtmlElement, string>();
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <returns></returns>
         public int Count()
         {
             return _elementStyles.Count;
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
         public void Clear()
         {
             _elementStyles.Clear();
@@ -60,11 +50,6 @@ namespace DEiXTo.Services
             }
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="key"></param>
-        /// <param name="value"></param>
         private void add(HtmlElement key, string value)
         {
             if (containsKey(key))
@@ -75,11 +60,6 @@ namespace DEiXTo.Services
             _elementStyles.Add(key, value);
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="key"></param>
-        /// <returns></returns>
         private bool containsKey(HtmlElement key)
         {
             return _elementStyles.ContainsKey(key);

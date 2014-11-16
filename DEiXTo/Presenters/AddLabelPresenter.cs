@@ -7,18 +7,14 @@ namespace DEiXTo.Presenters
 {
     public class AddLabelPresenter
     {
-        #region Instance Variables
         private TreeNode _node;
-        #endregion
 
-        #region Constructors
         public AddLabelPresenter(IAddLabelView view, TreeNode node)
         {
             View = view;
             _node = node;
             View.Presenter = this;
         }
-        #endregion
 
         public IAddLabelView View { get; set; }
 
@@ -47,16 +43,9 @@ namespace DEiXTo.Presenters
             }
         }
 
-        #region Private Methods
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="key"></param>
-        /// <returns></returns>
         private bool EnterPressed(Keys key)
         {
             return key == Keys.Enter;
         }
-        #endregion
     }
 }

@@ -1,7 +1,4 @@
-﻿/// <summary>
-/// 
-/// </summary>
-public enum NodeState
+﻿public enum NodeState
 {
     Checked, // Match and Extract Content - REQUIRED
     CheckedSource, // Match and Extract Source - REQUIRED

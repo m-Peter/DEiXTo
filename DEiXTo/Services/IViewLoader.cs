@@ -3,9 +3,6 @@ using System.Windows.Forms;
 
 namespace DEiXTo.Services
 {
-    /// <summary>
-    /// 
-    /// </summary>
     public interface IViewLoader
     {
         void LoadMainView();

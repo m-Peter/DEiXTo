@@ -13,10 +13,6 @@ namespace DEiXTo.Services
             _filename = filename;
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="results"></param>
         public override void Write(IEnumerable<Result> results)
         {
             using (_file = new StreamWriter(@_filename))
@@ -25,10 +21,6 @@ namespace DEiXTo.Services
             }
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="results"></param>
         private void WriteResults(IEnumerable<Result> results)
         {
             foreach (Result record in results)
@@ -39,10 +31,6 @@ namespace DEiXTo.Services
             }
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="record"></param>
         private void WriteContent(Result record)
         {
             foreach (string content in record.Contents())

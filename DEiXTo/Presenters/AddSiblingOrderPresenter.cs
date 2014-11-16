@@ -7,11 +7,8 @@ namespace DEiXTo.Presenters
 {
     public class AddSiblingOrderPresenter
     {
-        #region Instance Variables
         private TreeNode _node;
-        #endregion
 
-        #region Constructors
         public AddSiblingOrderPresenter(IAddSiblingOrderView view, TreeNode node)
         {
             View = view;
@@ -20,7 +17,6 @@ namespace DEiXTo.Presenters
 
             populateSiblingOrder();
         }
-        #endregion
 
         public IAddSiblingOrderView View { get; set; }
 

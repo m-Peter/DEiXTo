@@ -2,16 +2,8 @@
 
 namespace DEiXTo.Services
 {
-    /// <summary>
-    /// 
-    /// </summary>
     public class DocumentValidatorFactory
     {
-        /// <summary>
-        /// Create the corresponding document validator for the address.
-        /// </summary>
-        /// <param name="address">An address that specifies a HTML resource.</param>
-        /// <returns>The corresponding document validator for the address</returns>
         public IDocumentValidator CreateValidator(string address)
         {
             try
@@ -47,21 +39,11 @@ namespace DEiXTo.Services
             throw new ArgumentException("No Validator found for this URL");
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="address"></param>
-        /// <returns></returns>
         private bool IsFileAddress(string address)
         {
             return address.StartsWith("file:///");
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="address"></param>
-        /// <returns></returns>
         private bool IsWebAddress(string address)
         {
             return address.StartsWith("www");

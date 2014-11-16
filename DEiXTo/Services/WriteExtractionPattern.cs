@@ -3,16 +3,8 @@ using System.Xml;
 
 namespace DEiXTo.Services
 {
-    /// <summary>
-    /// 
-    /// </summary>
     public class WriteExtractionPattern
     {
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="filename"></param>
-        /// <param name="nodes"></param>
         public void write(string filename, TreeNodeCollection nodes)
         {
             XmlWriterSettings settings = new XmlWriterSettings();
@@ -30,12 +22,6 @@ namespace DEiXTo.Services
             }
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="writer"></param>
-        /// <param name="nodes"></param>
-        /// <param name="isRoot"></param>
         private void writeNodes(XmlWriter writer, TreeNodeCollection nodes)
         {
             foreach (TreeNode node in nodes)
@@ -65,11 +51,6 @@ namespace DEiXTo.Services
             }
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="imageKey"></param>
-        /// <returns></returns>
         private string getStateIndex(int imageKey)
         {
             var state = "";

@@ -6,18 +6,8 @@ using System.Windows.Forms;
 
 namespace DEiXTo.Services
 {
-    /// <summary>
-    /// This class builds the DOM tree structure from a page and maps HtmlElements
-    /// to TreeNodes.
-    /// </summary>
     public class DOMBuilder
     {
-        /// <summary>
-        /// Build the DOMTreeStructure for the given HtmlElement.
-        /// </summary>
-        /// <param name="element">The root HtmlElement</param>
-        /// <returns>The DOMTreeStructure representation</returns>
-        
         public DOMTree BuildDOMTree(HtmlElement element)
         {
             var domNode = element.DomElement as IHTMLDOMNode;
@@ -28,13 +18,6 @@ namespace DEiXTo.Services
             return domTree;
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="element"></param>
-        /// <param name="ignoredTags"></param>
-        /// <returns></returns>
-        
         public DOMTree BuildSimplifiedDOMTree(HtmlElement element, string[] ignoredTags)
         {
             var domNode = element.DomElement as IHTMLDOMNode;
@@ -45,12 +28,6 @@ namespace DEiXTo.Services
             return domTree;
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="element"></param>
-        /// <param name="ignoredTags"></param>
-        /// <returns></returns>
         private bool IsIgnoredTag(IHTMLDOMNode element, string[] ignoredTags)
         {
             string tag = "<" + element.nodeName.ToUpper() + ">";
@@ -63,14 +40,6 @@ namespace DEiXTo.Services
             return node != null && node.Text == "TEXT";
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="element"></param>
-        /// <param name="node"></param>
-        /// <param name="domTree"></param>
-        /// <param name="ignoredTags"></param>
-        /// <param name="pInfo"></param>
         private void AddTextNode(IHTMLDOMNode element, TreeNode node, DOMTree domTree, string[] ignoredTags, NodeInfo pInfo)
         {
             IHTMLDOMChildrenCollection childrenElements = element.childNodes as IHTMLDOMChildrenCollection;
@@ -114,13 +83,6 @@ namespace DEiXTo.Services
             }
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="element"></param>
-        /// <param name="node"></param>
-        /// <param name="domTree"></param>
-        /// <param name="ignoredTags"></param>
         private void BuildSimpliefiedDOMTreeRec(IHTMLDOMNode element, TreeNode node, DOMTree domTree, string[] ignoredTags)
         {
             // P
@@ -163,14 +125,6 @@ namespace DEiXTo.Services
             InsertChildNodesIgnored(element, pInfo, tmpNode, domTree, ignoredTags);
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="element"></param>
-        /// <param name="pInfo"></param>
-        /// <param name="tmpNode"></param>
-        /// <param name="domTree"></param>
-        /// <param name="ignoredTags"></param>
         private void InsertChildNodesIgnored(IHTMLDOMNode element, NodeInfo pInfo, TreeNode tmpNode, DOMTree domTree, string[] ignoredTags)
         {
             IHTMLDOMChildrenCollection childrenElements = element.childNodes as IHTMLDOMChildrenCollection;
@@ -201,22 +155,11 @@ namespace DEiXTo.Services
             }
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="element"></param>
-        /// <returns></returns>
         private bool IgnoredElement(IHTMLDOMNode element)
         {
             return element.nodeName == "#text" || element.nodeName == "#comment";
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="element"></param>
-        /// <param name="node"></param>
-        /// <param name="domTree"></param>
         private TreeNode InsertNode(IHTMLDOMNode element, TreeNode node, DOMTree domTree)
         {
             var newNode = node.Nodes.Add(element.nodeName);
@@ -225,18 +168,12 @@ namespace DEiXTo.Services
             return newNode;
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
         private void ApplyGrayedState(TreeNode node)
         {
             node.ImageIndex = 3;
             node.SelectedImageIndex = 3;
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
         private void SetNodeInfo(TreeNode newNode, IHTMLDOMNode element, NodeInfo pInfo, TreeNode node)
         {
             var tmpElem = (IHTMLElement)element;
@@ -252,9 +189,6 @@ namespace DEiXTo.Services
             newNode.ToolTipText = GetTooltipFor(tmpElem);
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
         private void InsertChildNodes(IHTMLDOMNode element, NodeInfo pInfo, TreeNode newNode, DOMTree domTree)
         {
             IHTMLDOMChildrenCollection childrenElements = element.childNodes as IHTMLDOMChildrenCollection;
@@ -276,12 +210,6 @@ namespace DEiXTo.Services
             }
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="curElement"></param>
-        /// <param name="pInfo"></param>
-        /// <param name="newNode"></param>
         private void SetChildNodeInfo(IHTMLDOMNode curElement, NodeInfo pInfo, TreeNode newNode)
         {
             var txtNode = new TreeNode("TEXT");
@@ -297,23 +225,11 @@ namespace DEiXTo.Services
             newNode.Nodes.Add(txtNode);
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="element"></param>
-        /// <param name="value"></param>
-        /// <returns></returns>
         private bool IsTextNode(IHTMLDOMNode element, string value)
         {
             return element.nodeName == "#text" && !String.IsNullOrWhiteSpace(value);
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="element"></param>
-        /// <param name="node"></param>
-        /// <param name="domTree"></param>
         private void BuildDOMTreeRec(IHTMLDOMNode element, TreeNode node, DOMTree domTree)
         {
             if (IgnoredElement(element))
@@ -331,12 +247,6 @@ namespace DEiXTo.Services
             InsertChildNodes(element, pInfo, newNode, domTree);
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="node"></param>
-        /// <param name="element"></param>
-        /// <returns></returns>
         public string ComputePath(TreeNode node, IHTMLElement element)
         {
             TreeNode bro;
@@ -369,11 +279,6 @@ namespace DEiXTo.Services
             return path;
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="element"></param>
-        /// <returns></returns>
         private string GetTooltipFor(IHTMLElement element)
         {
             var tagName = element.tagName;

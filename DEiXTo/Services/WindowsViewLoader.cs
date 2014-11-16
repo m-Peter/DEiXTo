@@ -4,9 +4,6 @@ using System.Windows.Forms;
 
 namespace DEiXTo.Services
 {
-    /// <summary>
-    /// 
-    /// </summary>
     public class WindowsViewLoader : IViewLoader
     {
         private Form _lastLoadedView;

@@ -6,7 +6,6 @@ namespace DEiXTo.Views
 {
     public partial class AddLabelWindow : Form, IAddLabelView
     {
-        #region Constructors
         public AddLabelWindow()
         {
             InitializeComponent();
@@ -14,9 +13,6 @@ namespace DEiXTo.Views
             this.KeyPreview = true;
             this.KeyDown += AddLabelWindow_KeyDown;
         }
-        #endregion
-
-        #region Public Methods
 
         public string LabelText
         {
@@ -26,24 +22,16 @@ namespace DEiXTo.Views
 
         public AddLabelPresenter Presenter { get; set; }
 
-        /// <summary>
-        /// 
-        /// </summary>
         public void ShowInvalidLabelMessage()
         {
             MessageBox.Show("Invalid empty label!", "DEiXTo", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
         public void Exit()
         {
             this.Close();
         }
-        #endregion
 
-        #region Private Events
         private void OkButton_Click(object sender, EventArgs e)
         {
             Presenter.AddLabel();
@@ -58,6 +46,5 @@ namespace DEiXTo.Views
         {
             Presenter.KeyDownPress(e.KeyCode);
         }
-        #endregion
     }
 }

@@ -2,9 +2,6 @@
 
 namespace DEiXTo.Services
 {
-    /// <summary>
-    /// 
-    /// </summary>
     public abstract class TagContentExtractor
     {
         protected IHTMLElement _element;

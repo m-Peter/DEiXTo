@@ -2,9 +2,6 @@
 
 namespace DEiXTo.Services
 {
-    /// <summary>
-    /// 
-    /// </summary>
     public class ImageContentExtractor : TagContentExtractor
     {
         public ImageContentExtractor(IHTMLElement element)
@@ -12,10 +9,6 @@ namespace DEiXTo.Services
             _element = element;
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <returns></returns>
         public override string ExtractContent()
         {
             return _element.getAttribute("src");

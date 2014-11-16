@@ -8,11 +8,6 @@ namespace DEiXTo.Services
 {
     public class ReadExtractionPattern
     {
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="filename"></param>
-        /// <returns></returns>
         public TreeNode read(string filename)
         {
             var rootNode = new TreeNode();
@@ -28,11 +23,6 @@ namespace DEiXTo.Services
             return rootNode;
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="reader"></param>
-        /// <param name="rootNode"></param>
         private void ReadPatternElement(XmlReader reader, TreeNode rootNode)
         {
             if (IsPatternElement(reader))
@@ -44,31 +34,16 @@ namespace DEiXTo.Services
             }
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="reader"></param>
-        /// <returns></returns>
         private bool IsPatternElement(XmlReader reader)
         {
             return reader.NodeType == XmlNodeType.Element && reader.LocalName == "Pattern";
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="node"></param>
-        /// <returns></returns>
         private bool IsNodeElement(XmlNode node)
         {
             return node.NodeType == XmlNodeType.Element && node.Name == "Node";
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="node"></param>
-        /// <param name="pInfo"></param>
         private string ReadTagAttribute(XmlNode node, NodeInfo pInfo, TreeNode treeNode)
         {
             string tagValue = node.Attributes["tag"].Value;
@@ -81,11 +56,6 @@ namespace DEiXTo.Services
             return tagValue;
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="node"></param>
-        /// <param name="pInfo"></param>
         private void ReadIsRootAttribute(XmlNode node, NodeInfo pInfo, TreeNode treeNode)
         {
             var isRoot = node.Attributes["IsRoot"];
@@ -98,9 +68,6 @@ namespace DEiXTo.Services
             }
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
         private void ReadRegexAttribute(XmlNode node, NodeInfo pInfo, TreeNode treeNode)
         {
             var regexpr = node.Attributes["regexpr"];
@@ -113,11 +80,6 @@ namespace DEiXTo.Services
             }
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="node"></param>
-        /// <param name="treeNode"></param>
         private void ReadStateAttribute(XmlNode node, NodeInfo nInfo, TreeNode treeNode)
         {
             var state = node.Attributes["stateIndex"].Value;
@@ -127,11 +89,6 @@ namespace DEiXTo.Services
             treeNode.ImageIndex = getStateIndex(state);
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="nodes"></param>
-        /// <param name="tNode"></param>
         private void createPattern(XmlNodeList nodes, TreeNode treeNode)
         {
             foreach (XmlNode node in nodes)
@@ -178,21 +135,11 @@ namespace DEiXTo.Services
             }
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="tagValue"></param>
-        /// <returns></returns>
         private bool hasLabel(string tagValue)
         {
             return tagValue.Contains(":");
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="tagValue"></param>
-        /// <returns></returns>
         private string getLabel(string tagValue)
         {
             var result = tagValue.Split(':');
@@ -228,11 +175,6 @@ namespace DEiXTo.Services
             return nState;
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="state"></param>
-        /// <returns></returns>
         private int getStateIndex(string state)
         {
             int index = -1;

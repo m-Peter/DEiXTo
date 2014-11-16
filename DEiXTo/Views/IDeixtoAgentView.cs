@@ -5,9 +5,6 @@ using System.Windows.Forms;
 
 namespace DEiXTo.Views
 {
-    /// <summary>
-    /// 
-    /// </summary>
     public interface IDeixtoAgentView
     {
         DeixtoAgentPresenter Presenter { get; set; }

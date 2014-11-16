@@ -14,26 +14,18 @@ namespace DEiXTo.Presenters
     public delegate void DOMBuilted();
     public delegate void FormSubmitted();
 
-    /// <summary>
-    /// 
-    /// </summary>
     public class DeixtoAgentPresenter : ISubscriber<RegexAdded>
     {
-        #region Instance Variables
         private IViewLoader _loader;
         private IEventHub _eventHub;
         private PatternExecutor _executor;
         private IDeixtoAgentScreen _screen;
-        #endregion
 
-        #region Public Events
         public event DOMBuilted DomBuilted;
         public event FormSubmitted FormSubmitted;
-        #endregion
 
         public IDeixtoAgentView View { get; set; }
 
-        #region Constructors
         public DeixtoAgentPresenter(IDeixtoAgentView view, IViewLoader loader, IEventHub eventHub, IDeixtoAgentScreen screen)
         {
             View = view;
@@ -48,13 +40,7 @@ namespace DEiXTo.Presenters
             View.AddWorkingPatternImages(imagesList);
             View.AddExtractionTreeImages(imagesList);
         }
-        #endregion
 
-        #region Public Methods
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="subject"></param>
         public void Receive(RegexAdded subject)
         {
             TreeNode node = subject.Node;
@@ -62,14 +48,7 @@ namespace DEiXTo.Presenters
 
             View.FillElementInfo(node, element.OuterHtml);
         }
-        #endregion
 
-        #region Private Methods
-        
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="nodes"></param>
         private void applyUncheckedToSubtree(TreeNodeCollection nodes)
         {
             foreach (TreeNode node in nodes)
@@ -80,61 +59,31 @@ namespace DEiXTo.Presenters
             }
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="e"></param>
-        /// <returns></returns>
         private bool CustomMenuCanBeShown(HtmlElementEventArgs e)
         {
             return e.CtrlKeyPressed && View.BrowserContextMenuEnabled;
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="e"></param>
-        /// <returns></returns>
         private bool AltPressed(KeyEventArgs e)
         {
             return e.Alt;
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="e"></param>
-        /// <returns></returns>
         private bool EnterPressed(KeyEventArgs e)
         {
             return e.KeyCode == Keys.Enter;
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="button"></param>
-        /// <returns></returns>
         private bool RightButtonPressed(MouseButtons button)
         {
             return button == MouseButtons.Right;
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="answer"></param>
-        /// <returns></returns>
         private bool Negative(DialogResult answer)
         {
             return answer != DialogResult.OK;
         }
-        #endregion
 
-        #region Private Events
-        /// <summary>
-        /// 
-        /// </summary>
         public void LoadURLsFromFile()
         {
             string filter = "Text Files (*.txt)|";
@@ -153,9 +102,6 @@ namespace DEiXTo.Presenters
             View.TargetURLsFile = filename;
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
         public void TunePattern()
         {
             // Check if the Extraction Pattern is specified
@@ -181,9 +127,6 @@ namespace DEiXTo.Presenters
             View.NavigateTo(url);
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
         void DeixtoAgentPresenter_DomBuilted()
         {
             // TODO REMOVE DEPENDENCIES
@@ -203,9 +146,6 @@ namespace DEiXTo.Presenters
             View.ExpandPatternTree();
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
         public void SelectOutputFile()
         {
             var format = View.OutputFileFormat;
@@ -232,9 +172,6 @@ namespace DEiXTo.Presenters
             View.EnableHighlighting();
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
         public void SaveToDisk()
         {
             string filter = "Text Files (*.txt)|";
@@ -252,10 +189,6 @@ namespace DEiXTo.Presenters
             _screen.WriteExtractedRecords(filename);
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="node"></param>
         public void AddSiblingOrder(TreeNode node)
         {
             _loader.LoadAddSiblingOrderView(node);
@@ -266,10 +199,6 @@ namespace DEiXTo.Presenters
             _loader.LoadAddAttributeConstraintView(node);
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="node"></param>
         public void AddNextSibling(TreeNode node)
         {
             var parent = node.Parent;
@@ -285,10 +214,6 @@ namespace DEiXTo.Presenters
             parent.Nodes.Insert(++indx, nextNode.GetClone());
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="node"></param>
         public void AddPreviousSibling(TreeNode node)
         {
             var parent = node.Parent;
@@ -303,18 +228,11 @@ namespace DEiXTo.Presenters
             parent.Nodes.Insert(0, prevNode.GetClone());
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="node"></param>
         public void DeleteNode(TreeNode node)
         {
             View.DeletePatternNode(node);
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
         public void LoadExtractionPattern()
         {
             var dialog = _screen.GetOpenFileDialog("XML Files (*.xml)|");
@@ -331,9 +249,6 @@ namespace DEiXTo.Presenters
             View.ExpandExtractionTree();
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
         public void SaveExtractionPattern()
         {
             string filter = "XML Files (*.xml)|";
@@ -350,18 +265,11 @@ namespace DEiXTo.Presenters
             _screen.SaveExtractionPattern(filename, View.GetPatternTreeNodes());
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="url"></param>
         public void TargetURLSelected(string url)
         {
             View.SetURLInput(url);
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
         public void RemoveURLFromTargetURLs()
         {
             // retrieve the select URL from the TargetURLs list
@@ -382,9 +290,6 @@ namespace DEiXTo.Presenters
             }
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
         public void AddURLToTargetURLs()
         {
             // fetch the user-entered url
@@ -403,10 +308,6 @@ namespace DEiXTo.Presenters
             View.ClearAddURLInput();
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="node"></param>
         public void RemoveRegex(TreeNode node)
         {
             var font = node.NodeFont;
@@ -414,10 +315,6 @@ namespace DEiXTo.Presenters
             node.SetRegex(null);
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="node"></param>
         public void RemoveLabel(TreeNode node)
         {
             string text = node.Text;
@@ -426,38 +323,21 @@ namespace DEiXTo.Presenters
             node.SetLabel(null);
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="e"></param>
         public void windowClosing()
         {
             _eventHub.Publish(new DeixtoAgentClosed());
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="node"></param>
         public void AddRegex(TreeNode node)
         {
             _loader.LoadRegexBuilderView(node);
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="node"></param>
         public void AddNewLabel(TreeNode node)
         {
             _loader.LoadAddLabelView(node);
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="selected"></param>
-        /// <param name="node"></param>
         public void OutputResultSelected(bool selected, TreeNode node)
         {
             if (!selected)
@@ -483,11 +363,6 @@ namespace DEiXTo.Presenters
             }
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="node"></param>
-        /// <param name="state"></param>
         public void NodeStateChanged(TreeNode node, NodeState state)
         {
             int imageIndex = new StateToImageMapper().GetImageFromState(state);
@@ -500,10 +375,6 @@ namespace DEiXTo.Presenters
             }
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="node"></param>
         public void LevelDownWorkingPattern(TreeNode node)
         {
             if (node.IsRoot())
@@ -519,10 +390,6 @@ namespace DEiXTo.Presenters
             View.ExpandPatternTree();
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="node"></param>
         public void LevelUpWorkingPattern(TreeNode node)
         {
             // Translate the given node to its opposite DOM node
@@ -550,9 +417,6 @@ namespace DEiXTo.Presenters
             View.ExpandPatternTree();
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
         public void ExecuteRule()
         {
             var pattern = View.GetWorkingPattern();
@@ -674,18 +538,11 @@ namespace DEiXTo.Presenters
             }
         }
 
-        /// <summary>
-        /// Reconstructs the DOM tree structure.
-        /// </summary>
         public void RebuildDOM()
         {
             BrowserCompleted();
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="nodesCount"></param>
         public void ClearTreeViews(int nodesCount)
         {
             if (nodesCount == 0)
@@ -703,10 +560,6 @@ namespace DEiXTo.Presenters
             }
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="node"></param>
         public void MakeWorkingPatternFromSnapshot(TreeNode node)
         {
             View.ClearPatternTree();
@@ -714,19 +567,11 @@ namespace DEiXTo.Presenters
             View.ExpandPatternTree();
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="node"></param>
         public void DeleteSnapshot(TreeNode node)
         {
             View.DeleteSnapshotInstance(node);
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="node"></param>
         public void CreateSnapshot(TreeNode node)
         {
             TreeNode root = new TreeNode("SNAP " + string.Format("{0:hh:mm:ss tt}", DateTime.Now));
@@ -734,12 +579,6 @@ namespace DEiXTo.Presenters
             View.FillSnapshotTree(root);
         }
 
-        /// <summary>
-        /// Simplifies the DOM tree structure by ignoring the user-specified tags.
-        /// 
-        /// PRECONDITIONS: At least one tag is selected.
-        /// POSTCONDITIONS: Clears all the TreeViews and the TargetURLs list.
-        /// </summary>
         public void SimplifyDOMTree()
         {
             var ignoredTags = View.IgnoredTags;
@@ -764,10 +603,6 @@ namespace DEiXTo.Presenters
             View.AppendTargetUrl(View.Url);
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="node"></param>
         public void AuxiliaryPatternNodeClick(TreeNode node)
         {
             if (node.IsTextNode())
@@ -790,10 +625,6 @@ namespace DEiXTo.Presenters
             }
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="element"></param>
         public void CreateAuxiliaryPatternFromDocument(HtmlElement element)
         {
             View.FocusAuxiliaryTabPage();
@@ -805,11 +636,6 @@ namespace DEiXTo.Presenters
             View.ExpandAuxiliaryTree();
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
         public void ShowBrowserContextMenu(object sender, HtmlElementEventArgs e)
         {
             // TODO REMOVE DEPENDENCIES
@@ -831,10 +657,6 @@ namespace DEiXTo.Presenters
             View.ShowBrowserMenu();
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="element"></param>
         public void CreateWorkingPatternFromDocument(HtmlElement element)
         {
             View.ClearPatternTree();
@@ -847,11 +669,6 @@ namespace DEiXTo.Presenters
             View.ExpandPatternTree();
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="node"></param>
-        /// <param name="button"></param>
         public void WorkingPatternNodeClick(TreeNode node, MouseButtons button)
         {
             if (node.IsTextNode())
@@ -893,10 +710,6 @@ namespace DEiXTo.Presenters
             }
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="node"></param>
         public void CreateAuxiliaryPattern(TreeNode node)
         {
             View.FocusAuxiliaryTabPage();
@@ -907,10 +720,6 @@ namespace DEiXTo.Presenters
             View.ExpandAuxiliaryTree();
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="node"></param>
         public void CreateWorkingPattern(TreeNode node)
         {
             View.ClearPatternTree();
@@ -923,11 +732,6 @@ namespace DEiXTo.Presenters
             View.ExpandPatternTree();
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="node"></param>
-        /// <param name="button"></param>
         public void DOMNodeClick(TreeNode node, MouseButtons button)
         {
             if (RightButtonPressed(button))
@@ -952,14 +756,6 @@ namespace DEiXTo.Presenters
             }
         }
 
-        /// <summary>
-        /// Removes the styling of the HtmlDocument's element, when the mouse
-        /// moves away from it.
-        /// 
-        /// PRECONDITION: Highlight mode is enabled.
-        /// POSTCONDITION: The ElementInfo TabPage is cleared.
-        /// </summary>
-        /// <param name="element">The HtmlElement the mouse is leaving from.</param>
         public void DocumentMouseLeave(HtmlElement element)
         {
             if (View.HighlightModeEnabled)
@@ -970,14 +766,6 @@ namespace DEiXTo.Presenters
             View.ClearElementInfo();
         }
 
-        /// <summary>
-        /// Highlights the HtmlDocument's element, when the mouse is over it.
-        /// 
-        /// PRECONDITION: Highlight mode is enabled.
-        /// POSTCONDITION: The ElementInfo TabPage is populated and corresponding
-        /// DOM TreeNode is selected.
-        /// </summary>
-        /// <param name="element"></param>
         public void DocumentMouseOver(HtmlElement element)
         {
             var node = _screen.GetNodeFromElement(element);
@@ -992,32 +780,16 @@ namespace DEiXTo.Presenters
             View.FillElementInfo(node, element.OuterHtml);
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="state"></param>
         public void CrawlingChanged(bool state)
         {
             View.ApplyVisibilityStateInCrawling(state);
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="state"></param>
         public void AutoFillChanged(bool state)
         {
             View.ApplyVisibilityStateInAutoFill(state);
         }
 
-        /// <summary>
-        /// Analyzes the keys pressed by the user. If the combination of
-        /// Alt+Right Arrow is detected, the WebBrowser's document is navigated
-        /// forward. If the detected combination is Alt+Left Arrow, the document
-        /// is navigated back. If the user simply pressed Enter, the WebBrowser
-        /// navigates to the specified URL.
-        /// </summary>
-        /// <param name="e">Information arguments from the KeyDown event.</param>
         public void KeyDownPress(KeyEventArgs e)
         {
             if (EnterPressed(e))
@@ -1041,16 +813,6 @@ namespace DEiXTo.Presenters
             }
         }
 
-        /// <summary>
-        /// Navigates the WebBrowser to the user specified URL. The URL can also
-        /// refer to a local HTML document. If the navigation to document fails for
-        /// some reason, a message describing the error is shown.
-        /// 
-        /// PRECONDITIONS: The URL cannot be null or whitespace and it has to refer
-        /// to a resource that exists.
-        /// POSTCONDITIONS: All the TreeViews and TargetURLs are cleared and the WebBrowser is
-        /// navigated to the HTML document.
-        /// </summary>
         public void BrowseToUrl()
         {
             var url = View.Url;
@@ -1081,13 +843,6 @@ namespace DEiXTo.Presenters
             View.NavigateTo(documentValidator.Url());
         }
 
-        /// <summary>
-        /// Builds the DOM tree structure for the WebBrowser's current HtmlDocument.
-        /// 
-        /// PRECONDITIONS: The HtmlDocument has been builted.
-        /// POSTCONDITIONS: The document's URL is inserted to the TargetURLs list. Clears
-        /// all the TreeViews.
-        /// </summary>
         public void BrowserCompleted()
         {
             _screen.ClearStyling();
@@ -1267,6 +1022,5 @@ namespace DEiXTo.Presenters
         {
             ExecutePattern();
         }
-        #endregion
     }
 }

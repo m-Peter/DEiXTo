@@ -4,16 +4,8 @@ using System.Windows.Forms;
 
 namespace DEiXTo.Services
 {
-    /// <summary>
-    /// 
-    /// </summary>
     public static class TreeNodeExtensions
     {
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="node"></param>
-        /// <returns></returns>
         public static string GetSource(this TreeNode node)
         {
             NodeInfo pInfo = GetPointerInfo(node);
@@ -120,11 +112,6 @@ namespace DEiXTo.Services
             return false;
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="node"></param>
-        /// <param name="label"></param>
         public static void SetLabel(this TreeNode node, string label)
         {
             NodeInfo pInfo = GetPointerInfo(node);
@@ -135,11 +122,6 @@ namespace DEiXTo.Services
             }
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="node"></param>
-        /// <returns></returns>
         public static string GetRegex(this TreeNode node)
         {
             NodeInfo pInfo = GetPointerInfo(node);
@@ -152,11 +134,6 @@ namespace DEiXTo.Services
             return "";
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="node"></param>
-        /// <param name="regex"></param>
         public static void SetRegex(this TreeNode node, string regex)
         {
             NodeInfo pInfo = GetPointerInfo(node);
@@ -167,11 +144,6 @@ namespace DEiXTo.Services
             }
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="node"></param>
-        /// <returns></returns>
         public static string GetLabel(this TreeNode node)
         {
             NodeInfo pInfo = GetPointerInfo(node);
@@ -184,11 +156,6 @@ namespace DEiXTo.Services
             return "";
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="node"></param>
-        /// <returns></returns>
         public static bool HasLabel(this TreeNode node)
         {
             NodeInfo pInfo = GetPointerInfo(node);
@@ -203,11 +170,6 @@ namespace DEiXTo.Services
             return true;
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="node"></param>
-        /// <returns></returns>
         public static bool HasRegex(this TreeNode node)
         {
             NodeInfo pInfo = GetPointerInfo(node);
@@ -222,11 +184,6 @@ namespace DEiXTo.Services
             return true;
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="node"></param>
-        /// <returns></returns>
         public static NodeState GetState(this TreeNode node)
         {
             NodeInfo pInfo = GetPointerInfo(node);
@@ -239,11 +196,6 @@ namespace DEiXTo.Services
             return NodeState.Undefined;
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="node"></param>
-        /// <param name="state"></param>
         public static void SetState(this TreeNode node, NodeState state)
         {
             NodeInfo pInfo = GetPointerInfo(node); ;
@@ -254,40 +206,21 @@ namespace DEiXTo.Services
             }
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="node"></param>
-        /// <returns></returns>
         public static bool HasSiblings(this TreeNode node)
         {
             return (node.PrevNode != null || node.NextNode != null);
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="node"></param>
-        /// <returns></returns>
         public static bool CanBeVRoot(this TreeNode node)
         {
             return !HasSiblings(node);
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="node"></param>
-        /// <returns></returns>
         public static TreeNode GetClone(this TreeNode node)
         {
             return (TreeNode)node.Clone();
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="node"></param>
         public static void SetAsRoot(this TreeNode node)
         {
             NodeInfo pInfo = GetPointerInfo(node);
@@ -298,11 +231,6 @@ namespace DEiXTo.Services
             }
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="node"></param>
-        /// <returns></returns>
         public static bool IsRoot(this TreeNode node)
         {
             NodeInfo pInfo = GetPointerInfo(node);
@@ -315,31 +243,16 @@ namespace DEiXTo.Services
             return false;
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="node"></param>
-        /// <returns></returns>
         public static bool IsTextNode(this TreeNode node)
         {
             return node.Text == "TEXT";
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="node"></param>
-        /// <param name="newNode"></param>
         public static void AddNode(this TreeNode node, TreeNode newNode)
         {
             node.Nodes.Add(newNode);
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="node"></param>
-        /// <returns></returns>
         public static int SourceIndex(this TreeNode node)
         {
             NodeInfo pInfo = GetPointerInfo(node);
@@ -352,11 +265,6 @@ namespace DEiXTo.Services
             return -1;
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="node"></param>
-        /// <returns></returns>
         public static string GetPath(this TreeNode node)
         {
             NodeInfo pInfo = GetPointerInfo(node);
@@ -369,11 +277,6 @@ namespace DEiXTo.Services
             return "";
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="node"></param>
-        /// <returns></returns>
         public static string GetContent(this TreeNode node)
         {
             NodeInfo pInfo = GetPointerInfo(node);
@@ -386,11 +289,6 @@ namespace DEiXTo.Services
             return "";
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="node"></param>
-        /// <param name="content"></param>
         public static void SetContent(this TreeNode node, string content)
         {
             NodeInfo pInfo = GetPointerInfo(node);
@@ -401,11 +299,6 @@ namespace DEiXTo.Services
             }
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="node"></param>
-        /// <param name="value"></param>
         public static void SetCareAboutSiblingOrder(this TreeNode node, bool value)
         {
             NodeInfo pInfo = GetPointerInfo(node);
@@ -416,11 +309,6 @@ namespace DEiXTo.Services
             }
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="node"></param>
-        /// <returns></returns>
         public static bool GetCareAboutSiblingOrder(this TreeNode node)
         {
             NodeInfo pInfo = GetPointerInfo(node);
@@ -433,11 +321,6 @@ namespace DEiXTo.Services
             return false;
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="node"></param>
-        /// <param name="startIndex"></param>
         public static void SetStartIndex(this TreeNode node, int startIndex)
         {
             NodeInfo pInfo = GetPointerInfo(node);
@@ -448,11 +331,6 @@ namespace DEiXTo.Services
             }
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="node"></param>
-        /// <param name="stepValue"></param>
         public static void SetStepValue(this TreeNode node, int stepValue)
         {
             NodeInfo pInfo = GetPointerInfo(node);
@@ -475,10 +353,6 @@ namespace DEiXTo.Services
             return -1;
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="node"></param>
         public static int GetStepValue(this TreeNode node)
         {
             NodeInfo pInfo = GetPointerInfo(node);
@@ -491,11 +365,6 @@ namespace DEiXTo.Services
             return -1;
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="node"></param>
-        /// <returns></returns>
         private static NodeInfo GetPointerInfo(this TreeNode node)
         {
             return node.Tag as NodeInfo;

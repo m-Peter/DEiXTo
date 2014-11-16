@@ -2,16 +2,8 @@
 
 namespace DEiXTo.Services
 {
-    /// <summary>
-    /// 
-    /// </summary>
     public class ContentExtractionFactory
     {
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="element"></param>
-        /// <returns></returns>
         public static TagContentExtractor GetExtractorFor(IHTMLElement element)
         {
             string tagName = element.tagName;

@@ -8,11 +8,6 @@ namespace DEiXTo.Services
 {
     public class ReadWrapperSettings
     {
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="filename"></param>
-        /// <returns></returns>
         public DeixtoWrapper read(string filename)
         {
             DeixtoWrapper wrapper = new DeixtoWrapper();
@@ -151,11 +146,6 @@ namespace DEiXTo.Services
             return wrapper;
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="nodes"></param>
-        /// <param name="tNode"></param>
         private void createPattern1(XmlNodeList nodes, TreeNode tNode)
         {
             foreach (XmlNode node in nodes)

@@ -1,8 +1,5 @@
 ﻿namespace DEiXTo.Models
 {
-    /// <summary>
-    /// Maintains various necessary properties for a TreeNode of DOM Tree.
-    /// </summary>
     public class NodeInfo
     {
         #region Properties

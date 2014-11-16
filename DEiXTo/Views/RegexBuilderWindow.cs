@@ -6,7 +6,6 @@ namespace DEiXTo.Views
 {
     public partial class RegexBuilderWindow : Form , IRegexBuilderView
     {
-        #region Constructors
         public RegexBuilderWindow()
         {
             InitializeComponent();
@@ -32,9 +31,6 @@ namespace DEiXTo.Views
             this.KeyPreview = true;
             this.KeyDown += RegexBuilderWindow_KeyDown;
         }
-        #endregion
-
-        #region Public Methods
 
         public string RegexText
         {
@@ -49,25 +45,16 @@ namespace DEiXTo.Views
 
         public RegexBuilderPresenter Presenter { get; set; }
 
-
-        /// <summary>
-        /// 
-        /// </summary>
         public void ShowInvalidRegexMessage()
         {
             MessageBox.Show("Invalid EMPTY regular expression!", "DEiXTo", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
         public void Exit()
         {
             this.Close();
         }
-        #endregion
 
-        #region Private Events
         private void OKButton_Click(object sender, EventArgs e)
         {
             Presenter.AddRegex();
@@ -82,6 +69,5 @@ namespace DEiXTo.Views
         {
             Presenter.KeyDownPress(e.KeyCode);
         }
-        #endregion
     }
 }

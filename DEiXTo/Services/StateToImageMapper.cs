@@ -1,15 +1,7 @@
 ﻿namespace DEiXTo.Services
 {
-    /// <summary>
-    /// 
-    /// </summary>
     public class StateToImageMapper
     {
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="state"></param>
-        /// <returns></returns>
         public int GetImageFromState(NodeState state)
         {
             int imageIndex = -1;

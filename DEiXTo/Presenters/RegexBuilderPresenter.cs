@@ -8,12 +8,9 @@ namespace DEiXTo.Presenters
 {
     public class RegexBuilderPresenter
     {
-        #region Instance Variables
         private TreeNode _node;
         private IEventHub _eventHub;
-        #endregion
 
-        #region Constructors
         public RegexBuilderPresenter(IRegexBuilderView view, TreeNode node, IEventHub eventHub)
         {
             View = view;
@@ -23,7 +20,6 @@ namespace DEiXTo.Presenters
 
             populateRegex();
         }
-        #endregion
 
         public IRegexBuilderView View { get; set; }
 
@@ -73,16 +69,9 @@ namespace DEiXTo.Presenters
             }
         }
 
-        #region Private Methods
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="key"></param>
-        /// <returns></returns>
         private bool EnterPressed(Keys key)
         {
             return key == Keys.Enter;
         }
-        #endregion
     }
 }
