@@ -823,15 +823,6 @@ namespace DEiXTo.Presenters
                 return;
             }
 
-            var documentValidator = _screen.CreateValidator(url);
-
-            if (!documentValidator.IsValid())
-            {
-                View.ShowRequestNotFoundMessage();
-                return;
-            }
-
-            // If the resource described by the URL exists, then proceed with the navigation
             View.ClearAuxiliaryTree();
 
             if (!View.CrawlingEnabled)
@@ -840,7 +831,7 @@ namespace DEiXTo.Presenters
             }
 
             View.ClearSnapshotTree();
-            View.NavigateTo(documentValidator.Url());
+            View.NavigateTo(url);
         }
 
         public void BrowserCompleted()
