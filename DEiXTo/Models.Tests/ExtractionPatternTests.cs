@@ -8,19 +8,6 @@ namespace DEiXTo.Models.Tests
     public class ExtractionPatternTests
     {
         [TestMethod]
-        public void TestCreateNewExtractionPattern()
-        {
-            // Arrange
-            var node = CreateRootNode();
-            
-            // Act
-            var pattern = new ExtractionPattern(node);
-
-            // Assert
-            Assert.IsInstanceOfType(pattern, typeof(ExtractionPattern));
-        }
-
-        [TestMethod]
         public void TestRetrieveRootNode()
         {
             // Arrange
@@ -37,18 +24,18 @@ namespace DEiXTo.Models.Tests
         public void TestCountOutputVariables()
         {
             // Arrange
-            var node = CreateRootNode();
+            var div = CreateRootNode();
             var h2 = CreateNode("H2", NodeState.Grayed);
             var h2Text = CreateNode("TEXT", NodeState.Checked);
             h2.Nodes.Add(h2Text);
             var p = CreateNode("P", NodeState.Grayed);
-            var pText = CreateNode("TEXT", NodeState.Checked);
+            var pText = CreateNode("TEXT", NodeState.CheckedImplied);
             p.Nodes.Add(pText);
             var p1 = CreateNode("P", NodeState.Grayed);
-            var p1Text = CreateNode("TEXT", NodeState.Checked);
+            var p1Text = CreateNode("TEXT", NodeState.CheckedSource);
             p1.Nodes.Add(p1Text);
-            AddNodesTo(node, h2, p, p1);
-            var pattern = new ExtractionPattern(node);
+            AddNodesTo(div, h2, p, p1);
+            var pattern = new ExtractionPattern(div);
 
             // Act
             int variables = pattern.CountOutputVariables();
@@ -63,8 +50,8 @@ namespace DEiXTo.Models.Tests
             // Arrange
             var node = CreateRootNode();
             var h2 = CreateNode("H2", NodeState.Checked);
-            var p = CreateNode("P", NodeState.Checked);
-            var p1 = CreateNode("P", NodeState.Checked);
+            var p = CreateNode("P", NodeState.CheckedImplied);
+            var p1 = CreateNode("P", NodeState.CheckedSource);
             AddNodesTo(node, h2, p, p1);
             var pattern = new ExtractionPattern(node);
 
@@ -82,18 +69,12 @@ namespace DEiXTo.Models.Tests
         public void TestCollectOutputVariablesWithCustomLabels()
         {
             // Arrange
-            var node = CreateRootNode();
-            var h2 = CreateNode("H2", NodeState.Grayed);
-            var h2Text = CreateNode("TEXT", NodeState.Checked, "HEADER");
-            h2.Nodes.Add(h2Text);
-            var p = CreateNode("P", NodeState.Grayed);
-            var pText = CreateNode("TEXT", NodeState.Checked, "SYNOPSIS");
-            p.Nodes.Add(pText);
-            var p1 = CreateNode("P", NodeState.Grayed);
-            var p1Text = CreateNode("TEXT", NodeState.Checked, "CONTENT");
-            p1.Nodes.Add(p1Text);
-            AddNodesTo(node, h2, p, p1);
-            var pattern = new ExtractionPattern(node);
+            var div = CreateRootNode();
+            var h2 = CreateNode("H2", NodeState.Checked, "HEADER");
+            var p = CreateNode("P", NodeState.CheckedImplied, "SYNOPSIS");
+            var p1 = CreateNode("P", NodeState.CheckedSource, "CONTENT");
+            AddNodesTo(div, h2, p, p1);
+            var pattern = new ExtractionPattern(div);
 
             // Act
             var labels = pattern.OutputVariableLabels();
@@ -109,18 +90,12 @@ namespace DEiXTo.Models.Tests
         public void TestCollectOutputVariablesWithDefaultAndCustomLabels()
         {
             // Arrange
-            var node = CreateRootNode();
-            var h2 = CreateNode("H2", NodeState.Grayed);
-            var h2Text = CreateNode("TEXT", NodeState.Checked, "HEADER");
-            h2.Nodes.Add(h2Text);
-            var p = CreateNode("P", NodeState.Grayed);
-            var pText = CreateNode("TEXT", NodeState.Checked);
-            p.Nodes.Add(pText);
-            var p1 = CreateNode("P", NodeState.Grayed);
-            var p1Text = CreateNode("TEXT", NodeState.Checked, "CONTENT");
-            p1.Nodes.Add(p1Text);
-            AddNodesTo(node, h2, p, p1);
-            var pattern = new ExtractionPattern(node);
+            var div = CreateRootNode();
+            var h2 = CreateNode("H2", NodeState.Checked, "HEADER");
+            var p = CreateNode("P", NodeState.CheckedImplied);
+            var p1 = CreateNode("P", NodeState.CheckedSource, "CONTENT");
+            AddNodesTo(div, h2, p, p1);
+            var pattern = new ExtractionPattern(div);
 
             // Act
             var labels = pattern.OutputVariableLabels();
@@ -136,53 +111,48 @@ namespace DEiXTo.Models.Tests
         public void TestTrimUncheckedNodesFromPattern()
         {
             // Arrange
-            var node = CreateRootNode();
+            var div = CreateRootNode();
             var h2 = CreateNode("H2", NodeState.Grayed);
-            var h2Text = CreateNode("TEXT", NodeState.Checked, "HEADER");
-            h2.Nodes.Add(h2Text);
             var p = CreateNode("P", NodeState.Grayed);
-            var pText = CreateNode("TEXT", NodeState.Checked, "SYNOPSIS");
-            p.Nodes.Add(pText);
             var p1 = CreateNode("P", NodeState.Unchecked);
-            var p1Text = CreateNode("TEXT", NodeState.Checked, "CONTENT");
-            p1.Nodes.Add(p1Text);
-            AddNodesTo(node, h2, p, p1);
-            var pattern = new ExtractionPattern(node);
+            AddNodesTo(div, h2, p, p1);
+            var pattern = new ExtractionPattern(div);
 
             // Act
             pattern.TrimUncheckedNodes();
 
             // Assert
-            Assert.AreEqual(2, node.Nodes.Count);
-            Assert.AreEqual(h2, node.Nodes[0]);
-            Assert.AreEqual(p, node.Nodes[1]);
+            Assert.AreEqual(2, div.Nodes.Count);
+            Assert.AreEqual(h2, div.Nodes[0]);
+            Assert.AreEqual(p, div.Nodes[1]);
         }
 
         [TestMethod]
-        public void TestCreatePatternWithVirtualRoot()
+        public void TestRetrieveVirtualRootFromExtractionPattern()
         {
             // Arrange
-            var node = CreateNode("NAV", NodeState.Grayed);
+            var nav = CreateNode("NAV", NodeState.Grayed);
             var a = CreateNode("A", NodeState.Grayed);
             a.SetAsRoot();
             var aText = CreateNode("TEXT", NodeState.Checked);
             a.Nodes.Add(aText);
-            AddNodesTo(node, a);
-            var pattern = new ExtractionPattern(node);
+            AddNodesTo(nav, a);
+            var pattern = new ExtractionPattern(nav);
 
             // Act
             var vRoot = pattern.FindVirtualRoot();
 
             // Assert
-            Assert.IsFalse(node.IsRoot());
+            Assert.IsFalse(nav.IsRoot());
             Assert.IsTrue(vRoot.IsRoot());
             Assert.AreEqual("A", vRoot.Text);
             Assert.AreEqual(NodeState.Grayed, vRoot.GetState());
             Assert.AreEqual(1, vRoot.Nodes.Count);
+            Assert.AreEqual("TEXT", vRoot.Nodes[0].Text);
         }
 
         [TestMethod]
-        public void TestRetrieveUpperTreeWhenHavingVirtualRoot()
+        public void TestRetrieveUpperTreeFromExtractionPattern()
         {
             // Arrange
             var div = CreateNode("DIV", NodeState.Grayed);
@@ -201,6 +171,8 @@ namespace DEiXTo.Models.Tests
             // Assert
             Assert.AreEqual("A", upperTree.Text);
             Assert.AreEqual(NodeState.Grayed, upperTree.GetState());
+            Assert.AreEqual("NAV", upperTree.Parent.Text);
+            Assert.AreEqual("DIV", upperTree.Parent.Parent.Text);
         }
 
         private void AddNodesTo(TreeNode node, params TreeNode[] nodes)
