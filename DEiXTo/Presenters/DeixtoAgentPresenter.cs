@@ -500,15 +500,10 @@ namespace DEiXTo.Presenters
         {
             var labels = extraction.OutputVariableLabels;
 
-            if (labels.Count == 0)
+            foreach (string label in labels)
             {
-                int columns = extraction.VariablesCount;
-                AddDefaultColumns(columns);
-
-                return;
+                View.AddOutputColumn(label);
             }
-
-            AddLabeledColumns(labels);
         }
 
         private void AddOutputResults(IExtraction extraction)
@@ -516,26 +511,6 @@ namespace DEiXTo.Presenters
             foreach (var item in extraction.ExtractedRecords)
             {
                 View.AddOutputItem(item.ToStringArray(), item.Node);
-            }
-        }
-
-        private void AddDefaultColumns(int columns)
-        {
-            var columnFormat = "VAR";
-
-            for (int i = 0; i < columns; i++)
-            {
-                View.AddOutputColumn(columnFormat + (i + 1));
-            }
-        }
-
-        private void AddLabeledColumns(List<string> labels)
-        {
-            int columns = labels.Count;
-
-            for (int i = 0; i < columns; i++)
-            {
-                View.AddOutputColumn(labels[i]);
             }
         }
 

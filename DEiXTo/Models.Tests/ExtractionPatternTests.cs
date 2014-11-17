@@ -85,6 +85,33 @@ namespace DEiXTo.Models.Tests
         }
 
         [TestMethod]
+        public void TestCollectVariableLabels()
+        {
+            // Arrange
+            var node = CreateRootNode();
+            var h2 = CreateNode("H2", NodeState.Grayed);
+            var h2Text = CreateNode("TEXT", NodeState.Checked, "HEADER");
+            h2.Nodes.Add(h2Text);
+            var p = CreateNode("P", NodeState.Grayed);
+            var pText = CreateNode("TEXT", NodeState.Checked);
+            p.Nodes.Add(pText);
+            var p1 = CreateNode("P", NodeState.Grayed);
+            var p1Text = CreateNode("TEXT", NodeState.Checked, "CONTENT");
+            p1.Nodes.Add(p1Text);
+            AddNodesTo(node, h2, p, p1);
+            var pattern = new ExtractionPattern(node);
+
+            // Act
+            var labels = pattern.OutputVariableLabels();
+
+            // Assert
+            Assert.AreEqual(3, labels.Count);
+            Assert.IsTrue(labels.Contains("HEADER"));
+            Assert.IsTrue(labels.Contains("VAR2"));
+            Assert.IsTrue(labels.Contains("CONTENT"));
+        }
+
+        [TestMethod]
         public void TestTrimUncheckedNodesFromPattern()
         {
             // Arrange

@@ -106,14 +106,19 @@ namespace DEiXTo.Models
             {
                 labels.Add(_rootNode.GetLabel());
             }
+            else if (!_rootNode.HasLabel() && _rootNode.IsOutputVariable())
+            {
+                labels.Add("VAR1");
+            }
 
-            CollectVariableLabels(_rootNode.Nodes, labels);
+            int counter = 2;
+            CollectVariableLabels(_rootNode.Nodes, labels, ref counter);
 
             return labels;
         }
 
         private void CollectVariableLabels(TreeNodeCollection nodes,
-            List<string> labels)
+            List<string> labels, ref int counter)
         {
             foreach (TreeNode node in nodes)
             {
@@ -121,8 +126,13 @@ namespace DEiXTo.Models
                 {
                     labels.Add(node.GetLabel());
                 }
-
-                CollectVariableLabels(node.Nodes, labels);
+                else if (!node.HasLabel() && node.IsOutputVariable())
+                {
+                    labels.Add("VAR" + counter);
+                    counter++;
+                }
+                
+                CollectVariableLabels(node.Nodes, labels, ref counter);
             }
         }
 
