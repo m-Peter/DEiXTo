@@ -192,13 +192,6 @@ namespace DEiXTo.Services
             return wrapper;
         }
 
-        public IDocumentValidator CreateValidator(string url)
-        {
-            var documentValidator = new DocumentValidatorFactory().CreateValidator(url);
-
-            return documentValidator;
-        }
-
         public void SubmitForm(string formName, string inputName, string term)
         {
             var form = _document.GetForm(formName);

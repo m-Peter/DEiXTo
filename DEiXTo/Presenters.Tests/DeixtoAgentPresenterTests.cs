@@ -486,13 +486,9 @@ namespace DEiXTo.Presenters.Tests
         public void TestBrowsesToUrlWhenEnterPressed()
         {
             // Arrange
-            var validator = new Mock<IDocumentValidator>();
             var args = new KeyEventArgs(Keys.Enter);
             var url = "http://www.google.gr/";
             _view.Setup(v => v.Url).Returns(url);
-            _screen.Setup(s => s.CreateValidator(url)).Returns(validator.Object);
-            validator.Setup(v => v.IsValid()).Returns(true);
-            validator.Setup(v => v.Url()).Returns(url);
 
             // Act
             _presenter.KeyDownPress(args);

@@ -99,7 +99,6 @@
     <Compile Include="Services.Tests\DialogBuilderFactoryTests.cs" />
     <Compile Include="Services.Tests\DialogBuilderTests.cs" />
     <Compile Include="Services.Tests\DocumentQueryTests.cs" />
-    <Compile Include="Services.Tests\DocumentValidatorFactoryTests.cs" />
     <Compile Include="Services.Tests\ElementStylingTests.cs" />
     <Compile Include="Services.Tests\NodeBuilderTests.cs" />
     <Compile Include="Services.Tests\PatternExecutorTests.cs" />
@@ -113,7 +112,6 @@
     <Compile Include="Services\DeixtoAgentScreen.cs" />
     <Compile Include="Services\DialogBuilderFactory.cs" />
     <Compile Include="Services\DocumentQuery.cs" />
-    <Compile Include="Services\DocumentValidatorFactory.cs" />
     <Compile Include="Services\EventHub.cs" />
     <Compile Include="Services\ExtractedRecordsWriter.cs" />
     <Compile Include="Services\FormAttributeExtractor.cs" />
@@ -145,13 +143,10 @@
     <Compile Include="Services\TextDialogBuilder.cs" />
     <Compile Include="Services\DOMBuilder.cs" />
     <Compile Include="Services\ElementStyling.cs" />
-    <Compile Include="Services\IDocumentValidator.cs" />
     <Compile Include="Services\IViewLoader.cs" />
-    <Compile Include="Services\LocalDocumentValidator.cs" />
     <Compile Include="Services\PatternExecutor.cs" />
     <Compile Include="Services\StatesImageLoader.cs" />
     <Compile Include="Services\TreeNodeExtensions.cs" />
-    <Compile Include="Services\WebDocumentValidator.cs" />
     <Compile Include="Services\WindowsViewLoader.cs" />
     <Compile Include="Services\TextRecordsWriter.cs" />
     <Compile Include="Services\WriteExtractionPattern.cs" />
