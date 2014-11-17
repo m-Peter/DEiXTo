@@ -2,7 +2,6 @@
 {
     public class NodeInfo
     {
-        #region Properties
         public int SourceIndex { get; set; }
         public string Path { get; set; }
         public string Content { get; set; }
@@ -182,6 +181,5 @@
             SiblingOrderStart = builder.StartIndex;
             SiblingOrderStep = builder.StepValue;
         }
-        #endregion
     }
 }

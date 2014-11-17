@@ -581,6 +581,11 @@ namespace DEiXTo.Views
             HtmlTreeView.EndUpdate();
         }
 
+        public void ClearExtractionPattern()
+        {
+            ExtractionPatternTreeView.Nodes.Clear();
+        }
+
         public void FillPatternTree(TreeNode node)
         {
             WorkingPatternTreeView.Nodes.Add(node);

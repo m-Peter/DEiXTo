@@ -420,6 +420,7 @@ namespace DEiXTo.Presenters
         public void ExecuteRule()
         {
             var pattern = View.GetWorkingPattern();
+            View.ClearExtractionPattern();
 
             if (pattern == null)
             {

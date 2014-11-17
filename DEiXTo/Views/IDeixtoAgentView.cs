@@ -83,6 +83,7 @@ namespace DEiXTo.Views
         void FillElementInfo(TreeNode node, string outerHtml);
         void ClearElementInfo();
         void ClearPatternTree();
+        void ClearExtractionPattern();
         void ClearDOMTree();
         void ClearSnapshotTree();
         void FillPatternTree(TreeNode node);
