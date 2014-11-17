@@ -83,6 +83,20 @@ namespace DEiXTo.Views
 
             OutputFileFormatComboBox.Items.AddRange(GetOutputFormats());
             OutputFileFormatComboBox.SelectedIndex = 0;
+
+            SHDocVw.WebBrowser xInstance = (SHDocVw.WebBrowser)WebBrowser.ActiveXInstance;
+            xInstance.NavigateError += xInstance_NavigateError;
+        }
+
+        void xInstance_NavigateError(object pDisp, ref object URL, ref object Frame, ref object StatusCode, ref bool Cancel)
+        {
+            Presenter.NavigationFailed(StatusCode);
+            Cancel = true;
+        }
+
+        public void ShowNavigationErrorMessage(string message)
+        {
+            MessageBox.Show(message, "Microsoft Internet Explorer", MessageBoxButtons.OK, MessageBoxIcon.Error);
         }
 
         public string[] TargetUrls

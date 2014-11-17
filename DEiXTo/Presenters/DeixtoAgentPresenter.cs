@@ -813,6 +813,27 @@ namespace DEiXTo.Presenters
             }
         }
 
+        public void NavigationFailed(object StatusCode)
+        {
+            string status = StatusCode.ToString();
+            string message = string.Empty;
+
+            if (status == "404")
+            {
+                message = "Object not found.";
+            }
+            else if (status == "-2146697211")
+            {
+                message = "Requested resource not found.";
+            }
+            else
+            {
+                message = status;
+            }
+
+            View.ShowNavigationErrorMessage(message);
+        }
+
         public void BrowseToUrl()
         {
             var url = View.Url;

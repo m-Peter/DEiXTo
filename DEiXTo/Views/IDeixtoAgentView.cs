@@ -46,6 +46,7 @@ namespace DEiXTo.Views
         string GetDocumentUrl();
         string TargetURLToAdd();
         void ShowEnterURLToAddMessage();
+        void ShowNavigationErrorMessage(string message);
         void SetURLInput(string url);
         void ClearAddURLInput();
         void ShowSelectURLMessage();
