@@ -58,7 +58,28 @@ namespace DEiXTo.Models.Tests
         }
 
         [TestMethod]
-        public void TestCollectOutputVariableLabes()
+        public void TestCollectOutputVariablesWithDefaultFormat()
+        {
+            // Arrange
+            var node = CreateRootNode();
+            var h2 = CreateNode("H2", NodeState.Checked);
+            var p = CreateNode("P", NodeState.Checked);
+            var p1 = CreateNode("P", NodeState.Checked);
+            AddNodesTo(node, h2, p, p1);
+            var pattern = new ExtractionPattern(node);
+
+            // Act
+            var labels = pattern.OutputVariableLabels();
+
+            // Assert
+            Assert.AreEqual(3, labels.Count);
+            Assert.AreEqual("VAR1", labels[0]);
+            Assert.AreEqual("VAR2", labels[1]);
+            Assert.AreEqual("VAR3", labels[2]);
+        }
+
+        [TestMethod]
+        public void TestCollectOutputVariablesWithCustomLabels()
         {
             // Arrange
             var node = CreateRootNode();
@@ -79,13 +100,13 @@ namespace DEiXTo.Models.Tests
 
             // Assert
             Assert.AreEqual(3, labels.Count);
-            Assert.IsTrue(labels.Contains("HEADER"));
-            Assert.IsTrue(labels.Contains("SYNOPSIS"));
-            Assert.IsTrue(labels.Contains("CONTENT"));
+            Assert.AreEqual("HEADER", labels[0]);
+            Assert.AreEqual("SYNOPSIS", labels[1]);
+            Assert.AreEqual("CONTENT", labels[2]);
         }
 
         [TestMethod]
-        public void TestCollectVariableLabels()
+        public void TestCollectOutputVariablesWithDefaultAndCustomLabels()
         {
             // Arrange
             var node = CreateRootNode();
@@ -106,9 +127,9 @@ namespace DEiXTo.Models.Tests
 
             // Assert
             Assert.AreEqual(3, labels.Count);
-            Assert.IsTrue(labels.Contains("HEADER"));
-            Assert.IsTrue(labels.Contains("VAR2"));
-            Assert.IsTrue(labels.Contains("CONTENT"));
+            Assert.AreEqual("HEADER", labels[0]);
+            Assert.AreEqual("VAR2", labels[1]);
+            Assert.AreEqual("CONTENT", labels[2]);
         }
 
         [TestMethod]

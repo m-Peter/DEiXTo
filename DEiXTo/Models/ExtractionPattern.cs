@@ -101,17 +101,19 @@ namespace DEiXTo.Models
         public List<string> OutputVariableLabels()
         {
             List<string> labels = new List<string>();
+            int counter = 1;
 
             if (_rootNode.HasLabel())
             {
                 labels.Add(_rootNode.GetLabel());
+                counter++;
             }
             else if (!_rootNode.HasLabel() && _rootNode.IsOutputVariable())
             {
-                labels.Add("VAR1");
+                labels.Add("VAR" + counter);
+                counter++;
             }
 
-            int counter = 2;
             CollectVariableLabels(_rootNode.Nodes, labels, ref counter);
 
             return labels;
@@ -125,6 +127,7 @@ namespace DEiXTo.Models
                 if (node.HasLabel())
                 {
                     labels.Add(node.GetLabel());
+                    counter++;
                 }
                 else if (!node.HasLabel() && node.IsOutputVariable())
                 {
