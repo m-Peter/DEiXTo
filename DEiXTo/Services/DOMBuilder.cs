@@ -55,7 +55,7 @@ namespace DEiXTo.Services
                 value = curElement.nodeValue as string;
                 var content = first.GetContent();
                 first.SetContent(content + value);
-                first.ToolTipText += value;
+                first.ToolTipText += value.Trim();
 
                 return;
             }
@@ -68,7 +68,7 @@ namespace DEiXTo.Services
                 if (curElement.nodeName == "#text" && !String.IsNullOrWhiteSpace(value))
                 {
                     var txtNode = new TreeNode("TEXT");
-                    txtNode.ToolTipText = curElement.nodeValue;
+                    txtNode.ToolTipText = value.Trim();
                     NodeInfo pointer = new NodeInfo();
                     pointer.Path = pInfo.Path + ".TEXT";
                     pointer.Content = curElement.nodeValue;
@@ -140,7 +140,7 @@ namespace DEiXTo.Services
                 if (IsTextNode(curElement, value))
                 {
                     var txtNode = new TreeNode("TEXT");
-                    txtNode.ToolTipText = curElement.nodeValue;
+                    txtNode.ToolTipText = value.Trim();
                     NodeInfo pointer = new NodeInfo();
                     pointer.Path = pInfo.Path + ".TEXT";
                     pointer.Content = curElement.nodeValue;
@@ -213,7 +213,8 @@ namespace DEiXTo.Services
         private void SetChildNodeInfo(IHTMLDOMNode curElement, NodeInfo pInfo, TreeNode newNode)
         {
             var txtNode = new TreeNode("TEXT");
-            txtNode.ToolTipText = curElement.nodeValue;
+            string value = curElement.nodeValue as string;
+            txtNode.ToolTipText = value.Trim();
             NodeInfo pointer = new NodeInfo();
             pointer.Path = pInfo.Path + ".TEXT";
             pointer.Content = curElement.nodeValue;
