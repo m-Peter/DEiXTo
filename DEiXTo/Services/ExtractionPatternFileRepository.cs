@@ -19,7 +19,7 @@ namespace DEiXTo.Services
 
         public void Save(ExtractionPattern pattern)
         {
-            using (var stream = new FileStream(_filename, FileMode.Open))
+            using (var stream = new FileStream(_filename, FileMode.CreateNew))
             {
                 var writer = new ExtractionPatternWriter();
                 writer.Write(stream, pattern);

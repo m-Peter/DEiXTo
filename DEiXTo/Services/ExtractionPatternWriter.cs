@@ -5,14 +5,6 @@ using System.Xml;
 
 namespace DEiXTo.Services
 {
-    // I want to create a repository for loading/saving extraction patterns
-    // interface IExtractionPatternRepository
-    // - ExtractionPattern Load()
-    // - void Save(ExtractionPattern pattern)
-    // Then implement this interface for loading/saving on XML files.
-    // The Save(ExtractionPattern pattern) method will receive an object of
-    // ExtractionPattern type and will save it to an XML file, using the
-    // WriteExtractionPattern class.
     public class ExtractionPatternWriter
     {
         public void Write(Stream stream, ExtractionPattern pattern)
@@ -24,55 +16,34 @@ namespace DEiXTo.Services
             {
                 writer.WriteStartDocument(); // Write the first line
                 writer.WriteStartElement("Pattern"); // Write Pattern element
-                writeNodes(writer, pattern.RootNode.Nodes);
+                writePattern(writer, pattern.RootNode);
                 writer.WriteEndElement(); // Close Pattern element
             }
         }
 
-        public void write(string filename, TreeNodeCollection nodes)
+        private void writePattern(XmlWriter writer, TreeNode node)
         {
-            XmlWriterSettings settings = new XmlWriterSettings();
-            settings.Indent = true;
+            writer.WriteStartElement("Node"); // Write Node Element
+            writer.WriteAttributeString("tag", node.Text); // Write tag attribute
+            string stateIndex = getStateIndex(node.SelectedImageIndex);
+            writer.WriteAttributeString("stateIndex", stateIndex); // Write stateIndex attribute
 
-            using (XmlWriter writer = XmlWriter.Create(filename, settings))
+            if (node.HasRegex())
             {
-                writer.WriteStartDocument(); // Write the first line
-
-                writer.WriteStartElement("Pattern"); // Write Pattern element
-
-                writeNodes(writer, nodes);
-
-                writer.WriteEndElement(); // Close Pattern element
+                writer.WriteAttributeString("regexpr", node.GetRegex());
             }
-        }
 
-        private void writeNodes(XmlWriter writer, TreeNodeCollection nodes)
-        {
-            foreach (TreeNode node in nodes)
+            if (node.IsRoot())
             {
-                if (node.IsSkipped())
-                {
-                    continue;
-                }
-
-                writer.WriteStartElement("Node"); // Write Node element
-                writer.WriteAttributeString("tag", node.Text); // Write tag attribute
-                string stateIndex = getStateIndex(node.SelectedImageIndex);
-                writer.WriteAttributeString("stateIndex", stateIndex); // Write stateIndex attribute
-
-                if (node.HasRegex())
-                {
-                    writer.WriteAttributeString("regexpr", node.GetRegex());
-                }
-
-                if (node.IsRoot())
-                {
-                    writer.WriteAttributeString("IsRoot", "true");
-                }
-
-                writeNodes(writer, node.Nodes);
-                writer.WriteEndElement(); // Close Node Element
+                writer.WriteAttributeString("IsRoot", "true");
             }
+
+            foreach (TreeNode n in node.Nodes)
+            {
+                writePattern(writer, n);
+            }
+
+            writer.WriteEndElement(); // Close Node Element
         }
 
         private string getStateIndex(int imageKey)

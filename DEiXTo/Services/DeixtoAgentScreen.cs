@@ -17,6 +17,7 @@ namespace DEiXTo.Services
         private PatternExecutor _executor;
         private ReadTargetUrls _readTargetUrls;
         private TextRecordsWriter _recordsWriter;
+        private IExtractionPatternRepository _patternRepository;
 
         public DeixtoAgentScreen()
         {
@@ -118,8 +119,9 @@ namespace DEiXTo.Services
 
         public void SaveExtractionPattern(string filename, TreeNodeCollection nodes)
         {
-            var writer = new ExtractionPatternWriter();
-            writer.write(filename, nodes);
+            _patternRepository = new ExtractionPatternFileRepository(filename);
+            ExtractionPattern pattern = new ExtractionPattern(nodes[0]);
+            _patternRepository.Save(pattern);
         }
 
         public void HighlightElement(HtmlElement element)
