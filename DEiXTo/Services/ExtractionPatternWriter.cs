@@ -1,10 +1,34 @@
-﻿using System.Windows.Forms;
+﻿using DEiXTo.Models;
+using System.IO;
+using System.Windows.Forms;
 using System.Xml;
 
 namespace DEiXTo.Services
 {
-    public class WriteExtractionPattern
+    // I want to create a repository for loading/saving extraction patterns
+    // interface IExtractionPatternRepository
+    // - ExtractionPattern Load()
+    // - void Save(ExtractionPattern pattern)
+    // Then implement this interface for loading/saving on XML files.
+    // The Save(ExtractionPattern pattern) method will receive an object of
+    // ExtractionPattern type and will save it to an XML file, using the
+    // WriteExtractionPattern class.
+    public class ExtractionPatternWriter
     {
+        public void Write(Stream stream, ExtractionPattern pattern)
+        {
+            XmlWriterSettings settings = new XmlWriterSettings();
+            settings.Indent = true;
+
+            using (var writer = XmlWriter.Create(stream, settings))
+            {
+                writer.WriteStartDocument(); // Write the first line
+                writer.WriteStartElement("Pattern"); // Write Pattern element
+                writeNodes(writer, pattern.RootNode.Nodes);
+                writer.WriteEndElement(); // Close Pattern element
+            }
+        }
+
         public void write(string filename, TreeNodeCollection nodes)
         {
             XmlWriterSettings settings = new XmlWriterSettings();

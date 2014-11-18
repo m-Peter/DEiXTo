@@ -118,7 +118,7 @@ namespace DEiXTo.Services
 
         public void SaveExtractionPattern(string filename, TreeNodeCollection nodes)
         {
-            var writer = new WriteExtractionPattern();
+            var writer = new ExtractionPatternWriter();
             writer.write(filename, nodes);
         }
 
