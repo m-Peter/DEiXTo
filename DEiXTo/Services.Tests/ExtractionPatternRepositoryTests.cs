@@ -17,7 +17,11 @@ namespace DEiXTo.Services.Tests
             var div = CreateRootNode();
             var h2 = CreateNode("H2", NodeState.Checked);
             var p = CreateNode("P", NodeState.CheckedImplied);
+            p.SetRegex("[a|b]");
             var p1 = CreateNode("P", NodeState.CheckedSource);
+            p1.SetCareAboutSiblingOrder(true);
+            p1.SetStartIndex(2);
+            p1.SetStepValue(4);
             AddNodesTo(div, h2, p, p1);
             var pattern = new ExtractionPattern(div);
             var loader = new Mock<IFileLoader>();
@@ -33,10 +37,26 @@ namespace DEiXTo.Services.Tests
             // Assert
             var root = loaded.RootNode;
             Assert.AreEqual("DIV", root.Text);
+            Assert.IsTrue(root.IsRoot());
+            Assert.AreEqual(NodeState.Grayed, root.GetState());
+
             Assert.AreEqual(3, root.Nodes.Count);
-            Assert.AreEqual("H2", root.Nodes[0].Text);
-            Assert.AreEqual("P", root.Nodes[1].Text);
-            Assert.AreEqual("P", root.Nodes[2].Text);
+
+            var loadedH2 = root.Nodes[0];
+            Assert.AreEqual("H2", loadedH2.Text);
+            Assert.AreEqual(NodeState.Checked, loadedH2.GetState());
+
+            var loadedP = root.Nodes[1];
+            Assert.AreEqual("P", loadedP.Text);
+            Assert.AreEqual("[a|b]", loadedP.GetRegex());
+            Assert.AreEqual(NodeState.CheckedImplied, loadedP.GetState());
+
+            var loadedP1 = root.Nodes[2];
+            Assert.AreEqual("P", loadedP1.Text);
+            Assert.IsTrue(loadedP1.GetCareAboutSiblingOrder());
+            Assert.AreEqual(2, loadedP1.GetStartIndex());
+            Assert.AreEqual(4, loadedP1.GetStepValue());
+            Assert.AreEqual(NodeState.CheckedSource, loadedP1.GetState());
         }
 
 

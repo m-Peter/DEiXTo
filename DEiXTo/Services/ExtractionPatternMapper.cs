@@ -81,9 +81,31 @@ namespace DEiXTo.Services
         {
             var state = node.Attributes["stateIndex"].Value;
 
+            var st = getState(state);
+            if (st == NodeState.Undefined)
+            {
+                throw new ArgumentException("The value: " + state + " returned: " + st );
+            }
+
             nInfo.State = getState(state);
             treeNode.SelectedImageIndex = getStateIndex(state);
             treeNode.ImageIndex = getStateIndex(state);
+        }
+
+        private void ReadCareAboutSOAttribute(XmlNode node, NodeInfo nInfo, TreeNode treeNode)
+        {
+            var careAboutSO = node.Attributes["CareAboutSO"];
+            if (careAboutSO == null)
+            {
+                return;
+            }
+
+            if (careAboutSO.Value == "1")
+            {
+                nInfo.CareAboutSiblingOrder = true;
+                nInfo.SiblingOrderStart = Int32.Parse(node.Attributes["so_start"].Value);
+                nInfo.SiblingOrderStep = Int32.Parse(node.Attributes["so_step"].Value);
+            }
         }
 
         private void createPattern(XmlNodeList nodes, TreeNode treeNode)
@@ -97,35 +119,30 @@ namespace DEiXTo.Services
                     if (treeNode.Text == String.Empty)
                     {
                         NodeInfo pInfo = new NodeInfo();
-
                         string tag = ReadTagAttribute(node, pInfo, treeNode);
                         treeNode.Text = tag;
 
                         ReadIsRootAttribute(node, pInfo, treeNode);
-
                         ReadRegexAttribute(node, pInfo, treeNode);
-
-                        treeNode.Tag = pInfo;
-
                         ReadStateAttribute(node, pInfo, treeNode);
+                        ReadCareAboutSOAttribute(node, pInfo, treeNode);
+                        treeNode.Tag = pInfo;
 
                         createPattern(node.ChildNodes, treeNode);
                     }
                     else
                     {
                         NodeInfo pInfo = new NodeInfo();
-
                         string tag = ReadTagAttribute(node, pInfo, treeNode);
                         tempNode = treeNode.Nodes.Add(tag);
-
+                        
                         ReadIsRootAttribute(node, pInfo, tempNode);
-
                         ReadRegexAttribute(node, pInfo, tempNode);
+                        ReadStateAttribute(node, pInfo, tempNode);
+                        ReadCareAboutSOAttribute(node, pInfo, tempNode);
 
                         tempNode.Tag = pInfo;
-
-                        ReadStateAttribute(node, pInfo, tempNode);
-
+                        
                         createPattern(node.ChildNodes, tempNode);
                     }
                 }
@@ -145,31 +162,31 @@ namespace DEiXTo.Services
 
         private NodeState getState(string state)
         {
-            NodeState nState = NodeState.Undefined;
+            //NodeState nState = NodeState.Undefined;
 
             switch (state)
             {
                 case "checked":
-                    nState = NodeState.Checked;
-                    break;
+                    return NodeState.Checked;
+                    //break;
                 case "checked_implied":
-                    nState = NodeState.CheckedImplied;
-                    break;
+                    return NodeState.CheckedImplied;
+                    //break;
                 case "checked_source":
-                    nState = NodeState.CheckedSource;
-                    break;
+                    return NodeState.CheckedSource;
+                    //break;
                 case "grayed":
-                    nState = NodeState.Grayed;
-                    break;
+                    return NodeState.Grayed;
+                    //break;
                 case "grayed_implied":
-                    nState = NodeState.GrayedImplied;
-                    break;
+                    return NodeState.GrayedImplied;
+                    //break;
                 case "dont_care":
-                    nState = NodeState.Unchecked;
-                    break;
+                    return NodeState.Unchecked;
+                    //break;
             }
 
-            return nState;
+            return NodeState.Undefined;
         }
 
         private int getStateIndex(string state)

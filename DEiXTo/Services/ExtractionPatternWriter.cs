@@ -25,17 +25,25 @@ namespace DEiXTo.Services
         {
             writer.WriteStartElement("Node"); // Write Node Element
             writer.WriteAttributeString("tag", node.Text); // Write tag attribute
-            string stateIndex = getStateIndex(node.SelectedImageIndex);
+            //string stateIndex = getStateIndex(node.SelectedImageIndex);
+            string stateIndex = getStringState(node.GetState());
             writer.WriteAttributeString("stateIndex", stateIndex); // Write stateIndex attribute
+
+            if (node.IsRoot())
+            {
+                writer.WriteAttributeString("IsRoot", "true");
+            }
 
             if (node.HasRegex())
             {
                 writer.WriteAttributeString("regexpr", node.GetRegex());
             }
 
-            if (node.IsRoot())
+            if (node.GetCareAboutSiblingOrder())
             {
-                writer.WriteAttributeString("IsRoot", "true");
+                writer.WriteAttributeString("CareAboutSO", "1");
+                writer.WriteAttributeString("so_start", node.GetStartIndex().ToString());
+                writer.WriteAttributeString("so_step", node.GetStepValue().ToString());
             }
 
             foreach (TreeNode n in node.Nodes)
@@ -46,33 +54,33 @@ namespace DEiXTo.Services
             writer.WriteEndElement(); // Close Node Element
         }
 
-        private string getStateIndex(int imageKey)
+        private string getStringState(NodeState state)
         {
-            var state = "";
+            var stringState = "";
 
-            switch (imageKey)
+            switch (state)
             {
-                case 0:
-                    state = "checked";
+                case NodeState.Checked:
+                    stringState = "checked";
                     break;
-                case 1:
-                    state = "checked_implied";
+                case NodeState.CheckedImplied:
+                    stringState = "checked_implied";
                     break;
-                case 2:
-                    state = "checked_source";
+                case NodeState.CheckedSource:
+                    stringState = "checked_source";
                     break;
-                case 3:
-                    state = "grayed";
+                case NodeState.Grayed:
+                    stringState = "grayed";
                     break;
-                case 4:
-                    state = "grayed_implied";
+                case NodeState.GrayedImplied:
+                    stringState = "grayed_implied";
                     break;
-                case 5:
-                    state = "dont_care";
+                case NodeState.Unchecked:
+                    stringState = "dont_care";
                     break;
             }
 
-            return state;
+            return stringState;
         }
     }
 }
