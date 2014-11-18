@@ -14,7 +14,11 @@ namespace DEiXTo.Services
 
         public ExtractionPattern Load()
         {
-            return null;
+            using (var stream = new FileStream(_filename, FileMode.Open))
+            {
+                var reader = new ReadExtractionPattern();
+                return reader.Read(stream);
+            }
         }
 
         public void Save(ExtractionPattern pattern)

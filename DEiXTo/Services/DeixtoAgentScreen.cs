@@ -71,10 +71,8 @@ namespace DEiXTo.Services
 
         public TreeNode LoadExtractionPattern(string filename)
         {
-            var reader = new ReadExtractionPattern();
-            var node = reader.read(filename);
-
-            return node;
+            _patternRepository = new ExtractionPatternFileRepository(filename);
+            return _patternRepository.Load().RootNode;
         }
 
         public IOpenFileDialog GetOpenFileDialog(string filter)

@@ -1,6 +1,7 @@
 ﻿using DEiXTo.Models;
 using System;
 using System.Drawing;
+using System.IO;
 using System.Windows.Forms;
 using System.Xml;
 
@@ -8,11 +9,11 @@ namespace DEiXTo.Services
 {
     public class ReadExtractionPattern
     {
-        public TreeNode read(string filename)
+        public ExtractionPattern Read(Stream stream)
         {
             var rootNode = new TreeNode();
 
-            using (XmlReader reader = XmlReader.Create(filename))
+            using (XmlReader reader = XmlReader.Create(stream))
             {
                 while (reader.Read())
                 {
@@ -20,7 +21,7 @@ namespace DEiXTo.Services
                 }
             }
 
-            return rootNode;
+            return new ExtractionPattern(rootNode);
         }
 
         private void ReadPatternElement(XmlReader reader, TreeNode rootNode)
