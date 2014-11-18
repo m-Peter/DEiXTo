@@ -22,8 +22,48 @@ namespace DEiXTo.Models
         {
             var vRoot = new TreeNode();
             FindRoot(_rootNode.Nodes, ref vRoot);
-            
+
             return vRoot;
+        }
+
+        public TreeNode GetUpperTree()
+        {
+            var upperNode = new TreeNode(_rootNode.Text);
+            upperNode.Tag = _rootNode.Tag;
+            var leafNode = new TreeNode();
+
+            BuiltUpperTree(_rootNode.Nodes, upperNode, ref leafNode);
+
+            return leafNode;
+        }
+
+        public int CountOutputVariables()
+        {
+            int outputVariables = 0;
+
+            if (_rootNode.IsOutputVariable())
+            {
+                outputVariables += 1;
+            }
+
+            countVariables(_rootNode.Nodes, ref outputVariables);
+
+            return outputVariables;
+        }
+
+        public List<string> OutputVariableLabels()
+        {
+            List<string> labels = new List<string>();
+            int counter = 1;
+
+            CollectVariableLabels(_rootNode, labels, ref counter);
+
+            return labels;
+        }
+
+        public void TrimUncheckedNodes()
+        {
+            FilterUncheckedNodes(_rootNode.Nodes);
         }
 
         private void FindRoot(TreeNodeCollection nodes, ref TreeNode root)
@@ -38,17 +78,6 @@ namespace DEiXTo.Models
 
                 FindRoot(node.Nodes, ref root);
             }
-        }
-
-        public TreeNode GetUpperTree()
-        {
-            var upperNode = new TreeNode(_rootNode.Text);
-            upperNode.Tag = _rootNode.Tag;
-            var leafNode = new TreeNode();
-
-            BuiltUpperTree(_rootNode.Nodes, upperNode, ref leafNode);
-
-            return leafNode;
         }
 
         private void BuiltUpperTree(TreeNodeCollection nodes, TreeNode root,
@@ -71,20 +100,6 @@ namespace DEiXTo.Models
             }
         }
 
-        public int CountOutputVariables()
-        {
-            int outputVariables = 0;
-
-            if (_rootNode.IsOutputVariable())
-            {
-                outputVariables += 1;
-            }
-
-            countVariables(_rootNode.Nodes, ref outputVariables);
-
-            return outputVariables;
-        }
-
         private void countVariables(TreeNodeCollection nodes, ref int counter)
         {
             foreach (TreeNode node in nodes)
@@ -98,50 +113,29 @@ namespace DEiXTo.Models
             }
         }
 
-        public List<string> OutputVariableLabels()
+        private void CollectVariableLabels(TreeNode node, List<string> labels, ref int counter)
         {
-            List<string> labels = new List<string>();
-            int counter = 1;
-
-            if (_rootNode.HasLabel())
+            if (node.IsOutputVariable())
             {
-                labels.Add(_rootNode.GetLabel());
-                counter++;
-            }
-            else if (!_rootNode.HasLabel() && _rootNode.IsOutputVariable())
-            {
-                labels.Add("VAR" + counter);
+                AddNodeLabel(node, labels, counter);
                 counter++;
             }
 
-            CollectVariableLabels(_rootNode.Nodes, labels, ref counter);
-
-            return labels;
-        }
-
-        private void CollectVariableLabels(TreeNodeCollection nodes,
-            List<string> labels, ref int counter)
-        {
-            foreach (TreeNode node in nodes)
+            foreach (TreeNode n in node.Nodes)
             {
-                if (node.HasLabel())
-                {
-                    labels.Add(node.GetLabel());
-                    counter++;
-                }
-                else if (!node.HasLabel() && node.IsOutputVariable())
-                {
-                    labels.Add("VAR" + counter);
-                    counter++;
-                }
-                
-                CollectVariableLabels(node.Nodes, labels, ref counter);
+                CollectVariableLabels(n, labels, ref counter);
             }
         }
 
-        public void TrimUncheckedNodes()
+        private void AddNodeLabel(TreeNode node, List<string> labels, int counter)
         {
-            FilterUncheckedNodes(_rootNode.Nodes);
+            if (node.HasLabel())
+            {
+                labels.Add(node.GetLabel());
+                return;
+            }
+
+            labels.Add("VAR" + counter);
         }
 
         private void FilterUncheckedNodes(TreeNodeCollection nodes)

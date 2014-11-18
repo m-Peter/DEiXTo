@@ -45,7 +45,7 @@ namespace DEiXTo.Models.Tests
         }
 
         [TestMethod]
-        public void TestCollectOutputVariablesWithDefaultFormat()
+        public void TestCollectOutputVariablesWithDefaultLabel()
         {
             // Arrange
             var node = CreateRootNode();
