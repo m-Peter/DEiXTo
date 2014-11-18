@@ -8,31 +8,30 @@ namespace DEiXTo.Services
     public class ExtractionPatternFileRepository : IExtractionPatternRepository
     {
         private readonly string _filename;
+        private readonly IFileLoader _loader;
         private readonly IExtractionPatternMapper _mapper;
 
-        public ExtractionPatternFileRepository(string filename)
+        public ExtractionPatternFileRepository(string filename, IFileLoader loader)
         {
             _filename = filename;
+            _loader = loader;
             _mapper = new ExtractionPatternMapper();
         }
 
         public ExtractionPattern Load()
         {
-            using (var stream = new FileStream(_filename, FileMode.Open))
-            {
-                XmlReader reader = XmlReader.Create(stream);
+            var stream = _loader.Load(_filename, FileMode.Open);
+            var reader = XmlReader.Create(stream);
 
-                return _mapper.Map(reader);
-            }
+            return _mapper.Map(reader);
         }
 
         public void Save(ExtractionPattern pattern)
         {
-            using (var stream = new FileStream(_filename, FileMode.CreateNew))
-            {
-                var writer = new ExtractionPatternWriter();
-                writer.Write(stream, pattern);
-            }
+            var stream = _loader.Load(_filename, FileMode.CreateNew);
+            var writer = new ExtractionPatternWriter();
+
+            writer.Write(stream, pattern);
         }
     }
 }

@@ -71,7 +71,7 @@ namespace DEiXTo.Services
 
         public TreeNode LoadExtractionPattern(string filename)
         {
-            _patternRepository = new ExtractionPatternFileRepository(filename);
+            _patternRepository = new ExtractionPatternFileRepository(filename, new FileLoader());
             return _patternRepository.Load().RootNode;
         }
 
@@ -117,7 +117,7 @@ namespace DEiXTo.Services
 
         public void SaveExtractionPattern(string filename, TreeNodeCollection nodes)
         {
-            _patternRepository = new ExtractionPatternFileRepository(filename);
+            _patternRepository = new ExtractionPatternFileRepository(filename, new FileLoader());
             ExtractionPattern pattern = new ExtractionPattern(nodes[0]);
             _patternRepository.Save(pattern);
         }
