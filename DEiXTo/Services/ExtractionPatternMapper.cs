@@ -6,21 +6,18 @@ using System.Xml;
 
 namespace DEiXTo.Services
 {
-    public class ReadExtractionPattern
+    public class ExtractionPatternMapper : IExtractionPatternMapper
     {
-        public TreeNode read(string filename)
+        public ExtractionPattern Map(XmlReader reader)
         {
             var rootNode = new TreeNode();
-
-            using (XmlReader reader = XmlReader.Create(filename))
+            
+            while (reader.Read())
             {
-                while (reader.Read())
-                {
-                    ReadPatternElement(reader, rootNode);
-                }
+                ReadPatternElement(reader, rootNode);
             }
 
-            return rootNode;
+            return new ExtractionPattern(rootNode);
         }
 
         private void ReadPatternElement(XmlReader reader, TreeNode rootNode)

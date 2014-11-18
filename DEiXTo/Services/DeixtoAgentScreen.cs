@@ -17,6 +17,7 @@ namespace DEiXTo.Services
         private PatternExecutor _executor;
         private ReadTargetUrls _readTargetUrls;
         private TextRecordsWriter _recordsWriter;
+        private IExtractionPatternRepository _patternRepository;
 
         public DeixtoAgentScreen()
         {
@@ -70,10 +71,8 @@ namespace DEiXTo.Services
 
         public TreeNode LoadExtractionPattern(string filename)
         {
-            var reader = new ReadExtractionPattern();
-            var node = reader.read(filename);
-
-            return node;
+            _patternRepository = new ExtractionPatternFileRepository(filename, new FileLoader());
+            return _patternRepository.Load().RootNode;
         }
 
         public IOpenFileDialog GetOpenFileDialog(string filter)
@@ -118,8 +117,9 @@ namespace DEiXTo.Services
 
         public void SaveExtractionPattern(string filename, TreeNodeCollection nodes)
         {
-            var writer = new WriteExtractionPattern();
-            writer.write(filename, nodes);
+            _patternRepository = new ExtractionPatternFileRepository(filename, new FileLoader());
+            ExtractionPattern pattern = new ExtractionPattern(nodes[0]);
+            _patternRepository.Save(pattern);
         }
 
         public void HighlightElement(HtmlElement element)

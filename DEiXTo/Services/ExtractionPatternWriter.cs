@@ -1,54 +1,49 @@
-﻿using System.Windows.Forms;
+﻿using DEiXTo.Models;
+using System.IO;
+using System.Windows.Forms;
 using System.Xml;
 
 namespace DEiXTo.Services
 {
-    public class WriteExtractionPattern
+    public class ExtractionPatternWriter
     {
-        public void write(string filename, TreeNodeCollection nodes)
+        public void Write(Stream stream, ExtractionPattern pattern)
         {
             XmlWriterSettings settings = new XmlWriterSettings();
             settings.Indent = true;
 
-            using (XmlWriter writer = XmlWriter.Create(filename, settings))
+            using (var writer = XmlWriter.Create(stream, settings))
             {
                 writer.WriteStartDocument(); // Write the first line
-
                 writer.WriteStartElement("Pattern"); // Write Pattern element
-
-                writeNodes(writer, nodes);
-
+                writePattern(writer, pattern.RootNode);
                 writer.WriteEndElement(); // Close Pattern element
             }
         }
 
-        private void writeNodes(XmlWriter writer, TreeNodeCollection nodes)
+        private void writePattern(XmlWriter writer, TreeNode node)
         {
-            foreach (TreeNode node in nodes)
+            writer.WriteStartElement("Node"); // Write Node Element
+            writer.WriteAttributeString("tag", node.Text); // Write tag attribute
+            string stateIndex = getStateIndex(node.SelectedImageIndex);
+            writer.WriteAttributeString("stateIndex", stateIndex); // Write stateIndex attribute
+
+            if (node.HasRegex())
             {
-                if (node.IsSkipped())
-                {
-                    continue;
-                }
-
-                writer.WriteStartElement("Node"); // Write Node element
-                writer.WriteAttributeString("tag", node.Text); // Write tag attribute
-                string stateIndex = getStateIndex(node.SelectedImageIndex);
-                writer.WriteAttributeString("stateIndex", stateIndex); // Write stateIndex attribute
-
-                if (node.HasRegex())
-                {
-                    writer.WriteAttributeString("regexpr", node.GetRegex());
-                }
-
-                if (node.IsRoot())
-                {
-                    writer.WriteAttributeString("IsRoot", "true");
-                }
-
-                writeNodes(writer, node.Nodes);
-                writer.WriteEndElement(); // Close Node Element
+                writer.WriteAttributeString("regexpr", node.GetRegex());
             }
+
+            if (node.IsRoot())
+            {
+                writer.WriteAttributeString("IsRoot", "true");
+            }
+
+            foreach (TreeNode n in node.Nodes)
+            {
+                writePattern(writer, n);
+            }
+
+            writer.WriteEndElement(); // Close Node Element
         }
 
         private string getStateIndex(int imageKey)
