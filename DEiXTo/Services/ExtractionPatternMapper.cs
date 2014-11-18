@@ -1,24 +1,20 @@
 ﻿using DEiXTo.Models;
 using System;
 using System.Drawing;
-using System.IO;
 using System.Windows.Forms;
 using System.Xml;
 
 namespace DEiXTo.Services
 {
-    public class ReadExtractionPattern
+    public class ExtractionPatternMapper : IExtractionPatternMapper
     {
-        public ExtractionPattern Read(Stream stream)
+        public ExtractionPattern Map(XmlReader reader)
         {
             var rootNode = new TreeNode();
-
-            using (XmlReader reader = XmlReader.Create(stream))
+            
+            while (reader.Read())
             {
-                while (reader.Read())
-                {
-                    ReadPatternElement(reader, rootNode);
-                }
+                ReadPatternElement(reader, rootNode);
             }
 
             return new ExtractionPattern(rootNode);

@@ -115,6 +115,7 @@
     <Compile Include="Services\EventHub.cs" />
     <Compile Include="Services\ExtractedRecordsWriter.cs" />
     <Compile Include="Services\ExtractionPatternFileRepository.cs" />
+    <Compile Include="Services\ExtractionPatternMapper.cs" />
     <Compile Include="Services\FormAttributeExtractor.cs" />
     <Compile Include="Services\FormContentExtractor.cs" />
     <Compile Include="Services\GenericContentExtractor.cs" />
@@ -122,6 +123,7 @@
     <Compile Include="Services\IDeixtoAgentScreen.cs" />
     <Compile Include="Services\IDialogBuilder.cs" />
     <Compile Include="Services\IEventHub.cs" />
+    <Compile Include="Services\IExtractionPatternMapper.cs" />
     <Compile Include="Services\IExtractionPatternRepository.cs" />
     <Compile Include="Services\ImageAttributeExtractor.cs" />
     <Compile Include="Services\ImageContentExtractor.cs" />
@@ -133,7 +135,6 @@
     <Compile Include="Services\LinkAttributeExtractor.cs" />
     <Compile Include="Services\LinkContentExtractor.cs" />
     <Compile Include="Services\OpenFileDialogWrapper.cs" />
-    <Compile Include="Services\ReadExtractionPattern.cs" />
     <Compile Include="Services\ReadTargetUrls.cs" />
     <Compile Include="Services\ReadWrapperSettings.cs" />
     <Compile Include="Services\RecordsWriterFactory.cs" />
