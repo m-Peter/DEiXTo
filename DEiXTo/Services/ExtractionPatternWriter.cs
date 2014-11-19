@@ -11,6 +11,7 @@ namespace DEiXTo.Services
         {
             XmlWriterSettings settings = new XmlWriterSettings();
             settings.Indent = true;
+            pattern.TrimUncheckedNodes();
 
             using (var writer = XmlWriter.Create(stream, settings))
             {

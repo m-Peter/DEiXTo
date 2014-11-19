@@ -9,6 +9,140 @@ namespace DEiXTo.Services.Tests
     [TestClass]
     public class ExtractionPatternRepositoryTests
     {
+        private string _filename = "pattern.xml";
+        private Mock<IFileLoader> _loader;
+        private MemoryStream _stream;
+
+        [TestInitialize]
+        public void SetUp()
+        {
+            _loader = new Mock<IFileLoader>();
+            _stream = new MemoryStream();
+        }
+
+        [TestMethod]
+        public void TestSaveAndLoadCheckedNode()
+        {
+            // Arrange
+            var div = CreateNode("DIV", NodeState.Checked);
+            var pattern = new ExtractionPattern(div);
+            _loader.Setup(l => l.Load(_filename, It.IsAny<FileMode>())).Returns(_stream);
+            var repository = new ExtractionPatternFileRepository(_filename, _loader.Object);
+
+            // Act
+            repository.Save(pattern);
+            _stream.Position = 0;
+            var loaded = repository.Load();
+
+            // Assert
+            var root = loaded.RootNode;
+            Assert.AreEqual("DIV", root.Text);
+            Assert.AreEqual(NodeState.Checked, root.GetState());
+        }
+
+        [TestMethod]
+        public void TestSaveAndLoadCheckedImpliedNode()
+        {
+            // Arrange
+            var a = CreateNode("A", NodeState.CheckedImplied);
+            var pattern = new ExtractionPattern(a);
+            _loader.Setup(l => l.Load(_filename, It.IsAny<FileMode>())).Returns(_stream);
+            var repository = new ExtractionPatternFileRepository(_filename, _loader.Object);
+
+            // Act
+            repository.Save(pattern);
+            _stream.Position = 0;
+            var loaded = repository.Load();
+
+            // Assert
+            var root = loaded.RootNode;
+            Assert.AreEqual("A", root.Text);
+            Assert.AreEqual(NodeState.CheckedImplied, root.GetState());
+        }
+
+        [TestMethod]
+        public void TestSaveAndLoadCheckedSourceNode()
+        {
+            // Arrange
+            var img = CreateNode("IMG", NodeState.CheckedSource);
+            var pattern = new ExtractionPattern(img);
+            _loader.Setup(l => l.Load(_filename, It.IsAny<FileMode>())).Returns(_stream);
+            var repository = new ExtractionPatternFileRepository(_filename, _loader.Object);
+
+            // Act
+            repository.Save(pattern);
+            _stream.Position = 0;
+            var loaded = repository.Load();
+
+            // Assert
+            var root = loaded.RootNode;
+            Assert.AreEqual("IMG", root.Text);
+            Assert.AreEqual(NodeState.CheckedSource, root.GetState());
+        }
+
+        [TestMethod]
+        public void TestSaveAndLoadGrayedNode()
+        {
+            // Arrange
+            var p = CreateNode("P", NodeState.Grayed);
+            var pattern = new ExtractionPattern(p);
+            _loader.Setup(l => l.Load(_filename, It.IsAny<FileMode>())).Returns(_stream);
+            var repository = new ExtractionPatternFileRepository(_filename, _loader.Object);
+
+            // Act
+            repository.Save(pattern);
+            _stream.Position = 0;
+            var loaded = repository.Load();
+
+            // Assert
+            var root = loaded.RootNode;
+            Assert.AreEqual("P", root.Text);
+            Assert.AreEqual(NodeState.Grayed, root.GetState());
+        }
+
+        [TestMethod]
+        public void TestSaveAndLoadGrayedImpliedNode()
+        {
+            // Arrange
+            var h1 = CreateNode("H1", NodeState.GrayedImplied);
+            var pattern = new ExtractionPattern(h1);
+            _loader.Setup(l => l.Load(_filename, It.IsAny<FileMode>())).Returns(_stream);
+            var repository = new ExtractionPatternFileRepository(_filename, _loader.Object);
+
+            // Act
+            repository.Save(pattern);
+            _stream.Position = 0;
+            var loaded = repository.Load();
+
+            // Assert
+            var root = loaded.RootNode;
+            Assert.AreEqual("H1", root.Text);
+            Assert.AreEqual(NodeState.GrayedImplied, root.GetState());
+        }
+
+        [TestMethod]
+        public void TestDoesNotSaveUncheckedNode()
+        {
+            // Arrange
+            var div = CreateNode("DIV", NodeState.Grayed);
+            var input = CreateNode("INPUT", NodeState.Unchecked);
+            div.AddNode(input);
+            var pattern = new ExtractionPattern(div);
+            _loader.Setup(l => l.Load(_filename, It.IsAny<FileMode>())).Returns(_stream);
+            var repository = new ExtractionPatternFileRepository(_filename, _loader.Object);
+
+            // Act
+            repository.Save(pattern);
+            _stream.Position = 0;
+            var loaded = repository.Load();
+
+            // Assert
+            var root = loaded.RootNode;
+            Assert.AreEqual("DIV", root.Text);
+            Assert.AreEqual(NodeState.Grayed, root.GetState());
+            Assert.AreEqual(0, root.Nodes.Count);
+        }
+
         [TestMethod]
         public void TestSaveAndLoadExtractionPattern()
         {
