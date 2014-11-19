@@ -100,7 +100,7 @@ namespace DEiXTo.Services.Tests
         public void TestSaveAndLoadInputFile()
         {
             // Arrange
-            _wrapper.InputFile = "some_file.txt";
+            _wrapper.InputFile = "input_file.txt";
 
             // Act
             _repository.Save(_wrapper, _stream);
@@ -108,7 +108,24 @@ namespace DEiXTo.Services.Tests
             var loaded = _repository.Load(_stream);
 
             // Assert
-            Assert.AreEqual("some_file.txt", loaded.InputFile);
+            Assert.AreEqual("input_file.txt", loaded.InputFile);
+        }
+
+        [TestMethod]
+        public void TestSaveAndLoadOutputFileFields()
+        {
+            // Arrange
+            _wrapper.OutputFileName = "output_file.xml";
+            _wrapper.OutputFormat = Format.XML;
+
+            // Act
+            _repository.Save(_wrapper, _stream);
+            _stream.Position = 0;
+            var loaded = _repository.Load(_stream);
+
+            // Assert
+            Assert.AreEqual("output_file.xml", loaded.OutputFileName);
+            Assert.AreEqual(Format.XML, loaded.OutputFormat);
         }
     }
 }

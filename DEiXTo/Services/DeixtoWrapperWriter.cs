@@ -141,7 +141,7 @@ namespace DEiXTo.Services
                 writeSubmitForm();
                 //writeExtractionPattern(_wrapper.ExtractionPattern.Nodes);
                 //writeIgnoredTags();
-                //writeOutputFile();
+                writeOutputFile();
 
                 _writer.WriteEndElement(); // Close Project element
                 _writer.WriteEndDocument(); // Close the document
