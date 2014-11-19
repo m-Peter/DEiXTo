@@ -135,7 +135,7 @@ namespace DEiXTo.Services
 
                 //writeInputFile();
                 //writeTargetUrls();
-                //writeMultiPage();
+                writeMultiPage();
                 writeMaxHits();
                 writeExtractPageUrl();
                 writeSubmitForm();

@@ -76,5 +76,24 @@ namespace DEiXTo.Services.Tests
             // Assert
             Assert.AreEqual(3, loaded.NumberOfHits);
         }
+
+        [TestMethod]
+        public void TestSaveAndLoadMultiPageFields()
+        {
+            // Arrange
+            _wrapper.MultiPageCrawling = true;
+            _wrapper.HtmlNextLink = "Next";
+            _wrapper.MaxCrawlingDepth = 5;
+
+            // Act
+            _repository.Save(_wrapper, _stream);
+            _stream.Position = 0;
+            var loaded = _repository.Load(_stream);
+
+            // Assert
+            Assert.IsTrue(loaded.MultiPageCrawling);
+            Assert.AreEqual("Next", loaded.HtmlNextLink);
+            Assert.AreEqual(5, loaded.MaxCrawlingDepth);
+        }
     }
 }
