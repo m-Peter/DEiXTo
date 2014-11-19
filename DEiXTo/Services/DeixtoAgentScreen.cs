@@ -191,16 +191,32 @@ namespace DEiXTo.Services
 
         public void SaveWrapper(DeixtoWrapper wrapper, TreeNodeCollection nodes, string filename)
         {
-            var writer = new WriteWrapper(wrapper);
-            writer.write(filename, nodes);
+            var wrapperRepository = new DeixtoWrapperFileRepository(filename);
+            var loader = new FileLoader();
+
+            using (var stream = loader.Load(filename, FileMode.CreateNew))
+            {
+                wrapperRepository.Save(wrapper, stream);
+            }
+
+            //var writer = new WriteWrapper(wrapper);
+            //writer.write(filename, nodes);
         }
 
         public DeixtoWrapper LoadWrapper(string filename)
         {
-            var reader = new ReadWrapperSettings();
-            var wrapper = reader.read(filename);
+            var wrapperRepository = new DeixtoWrapperFileRepository(filename);
+            var loader = new FileLoader();
 
-            return wrapper;
+            using (var stream = loader.Load(filename, FileMode.Open))
+            {
+                return wrapperRepository.Load(stream);
+            }
+
+            //var reader = new ReadWrapperSettings();
+            //var wrapper = reader.read(filename);
+
+            //return wrapper;
         }
 
         public void SubmitForm(string formName, string inputName, string term)

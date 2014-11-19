@@ -1,15 +1,16 @@
 ﻿using DEiXTo.Models;
+using System.IO;
 using System.Windows.Forms;
 using System.Xml;
 
 namespace DEiXTo.Services
 {
-    public class WriteWrapper
+    public class DeixtoWrapperWriter
     {
         private DeixtoWrapper _wrapper;
         private XmlWriter _writer;
 
-        public WriteWrapper(DeixtoWrapper wrapper)
+        public DeixtoWrapperWriter(DeixtoWrapper wrapper)
         {
             _wrapper = wrapper;
         }
@@ -118,6 +119,33 @@ namespace DEiXTo.Services
             _writer.WriteAttributeString("Format", format); // Write Format attribute
             _writer.WriteAttributeString("FileMode", _wrapper.OutputMode.ToString()); // Write FileMode attribute
             _writer.WriteEndElement(); // Close OutputFile element
+        }
+
+        public void Write(Stream stream)
+        {
+            XmlWriterSettings settings = new XmlWriterSettings();
+            settings.Indent = true;
+
+            using (_writer = XmlWriter.Create(stream, settings))
+            {
+                _writer.WriteStartDocument(); // Write the first line
+                _writer.WriteDocType("Project", null, "wpf.dtd", null); // Write the DOCTYPE
+
+                _writer.WriteStartElement("Project"); // Write Project element
+
+                //writeInputFile();
+                //writeTargetUrls();
+                //writeMultiPage();
+                //writeMaxHits();
+                //writeExtractPageUrl();
+                writeSubmitForm();
+                //writeExtractionPattern(_wrapper.ExtractionPattern.Nodes);
+                //writeIgnoredTags();
+                //writeOutputFile();
+
+                _writer.WriteEndElement(); // Close Project element
+                _writer.WriteEndDocument(); // Close the document
+            }
         }
 
         public void write(string filename, TreeNodeCollection nodes)

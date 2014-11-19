@@ -96,12 +96,17 @@
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services.Tests\ContentExtractionFactoryTests.cs" />
+    <Compile Include="Services.Tests\DeixtoWrapperRepositoryTests.cs" />
     <Compile Include="Services.Tests\DialogBuilderFactoryTests.cs" />
     <Compile Include="Services.Tests\DialogBuilderTests.cs" />
     <Compile Include="Services.Tests\DocumentQueryTests.cs" />
     <Compile Include="Services.Tests\ElementStylingTests.cs" />
     <Compile Include="Services.Tests\ExtractionPatternRepositoryTests.cs" />
     <Compile Include="Services.Tests\NodeBuilderTests.cs" />
+    <Compile Include="Services\DeixtoWrapperFileRepository.cs" />
+    <Compile Include="Services\DeixtoWrapperMapper.cs" />
+    <Compile Include="Services\IDeixtoWrapperMapper.cs" />
+    <Compile Include="Services\IDeixtoWrapperRepository.cs" />
     <Compile Include="Services\NodeStateTranslator.cs" />
     <Compile Include="Services.Tests\PatternExecutorTests.cs" />
     <Compile Include="Services.Tests\RecordsWriterFactoryTests.cs" />
@@ -156,7 +161,7 @@
     <Compile Include="Services\WindowsViewLoader.cs" />
     <Compile Include="Services\TextRecordsWriter.cs" />
     <Compile Include="Services\ExtractionPatternWriter.cs" />
-    <Compile Include="Services\WriteWrapper.cs" />
+    <Compile Include="Services\DeixtoWrapperWriter.cs" />
     <Compile Include="Services\XmlDialogBuilder.cs" />
     <Compile Include="Services\XmlRecordsWriter.cs" />
     <Compile Include="Views\AddAttributeConstraintWindow.cs">
