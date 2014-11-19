@@ -136,7 +136,7 @@ namespace DEiXTo.Services
                 //writeInputFile();
                 //writeTargetUrls();
                 //writeMultiPage();
-                //writeMaxHits();
+                writeMaxHits();
                 writeExtractPageUrl();
                 writeSubmitForm();
                 //writeExtractionPattern(_wrapper.ExtractionPattern.Nodes);

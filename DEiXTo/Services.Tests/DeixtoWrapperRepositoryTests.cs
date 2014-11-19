@@ -61,5 +61,22 @@ namespace DEiXTo.Services.Tests
             // Assert
             Assert.IsTrue(loaded.ExtractNativeUrl);
         }
+
+        [TestMethod]
+        public void TestSaveAndLoadMaxHits()
+        {
+            // Arrange
+            var wrapper = new DeixtoWrapper();
+            wrapper.NumberOfHits = 3;
+            var repository = new DeixtoWrapperFileRepository(_filename);
+
+            // Act
+            repository.Save(wrapper, _stream);
+            _stream.Position = 0;
+            var loaded = repository.Load(_stream);
+
+            // Assert
+            Assert.AreEqual(3, loaded.NumberOfHits);
+        }
     }
 }
