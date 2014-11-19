@@ -1,4 +1,5 @@
 ﻿using DEiXTo.Models;
+using DEiXTo.Services;
 using System;
 using System.Drawing;
 using System.Windows.Forms;
@@ -83,15 +84,10 @@ namespace DEiXTo.Services
         {
             var state = node.Attributes["stateIndex"].Value;
 
-            var st = getState(state);
-            if (st == NodeState.Undefined)
-            {
-                throw new ArgumentException("The value: " + state + " returned: " + st);
-            }
-
-            nInfo.State = getState(state);
-            treeNode.SelectedImageIndex = getStateIndex(state);
-            treeNode.ImageIndex = getStateIndex(state);
+            nInfo.State = NodeStateTranslator.StringToState(state);
+            int imageIndex = NodeStateTranslator.StringToImageIndex(state);
+            treeNode.SelectedImageIndex = imageIndex;
+            treeNode.ImageIndex = imageIndex;
         }
 
         private void ReadCareAboutSOAttribute(XmlNode node, NodeInfo nInfo, TreeNode treeNode)
@@ -160,56 +156,6 @@ namespace DEiXTo.Services
         {
             var result = tagValue.Split(':');
             return result[1];
-        }
-
-        private NodeState getState(string state)
-        {
-            switch (state)
-            {
-                case "checked":
-                    return NodeState.Checked;
-                case "checked_implied":
-                    return NodeState.CheckedImplied;
-                case "checked_source":
-                    return NodeState.CheckedSource;
-                case "grayed":
-                    return NodeState.Grayed;
-                case "grayed_implied":
-                    return NodeState.GrayedImplied;
-                case "dont_care":
-                    return NodeState.Unchecked;
-            }
-
-            return NodeState.Undefined;
-        }
-
-        private int getStateIndex(string state)
-        {
-            int index = -1;
-
-            switch (state)
-            {
-                case "checked":
-                    index = 0;
-                    break;
-                case "checked_implied":
-                    index = 1;
-                    break;
-                case "checked_source":
-                    index = 2;
-                    break;
-                case "grayed":
-                    index = 3;
-                    break;
-                case "grayed_implied":
-                    index = 4;
-                    break;
-                case "dont_care":
-                    index = 5;
-                    break;
-            }
-
-            return index;
         }
     }
 }

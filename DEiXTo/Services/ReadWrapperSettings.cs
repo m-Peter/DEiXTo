@@ -167,11 +167,12 @@ namespace DEiXTo.Services
                         }
 
                         var state = node.Attributes["stateIndex"].Value;
-                        pInfo.State = getState(state);
+                        pInfo.State = NodeStateTranslator.StringToState(state);
                         tNode.Tag = pInfo;
 
-                        tNode.SelectedImageIndex = getStateIndex(state);
-                        tNode.ImageIndex = getStateIndex(state);
+                        var imageIndex = NodeStateTranslator.StringToImageIndex(state);
+                        tNode.SelectedImageIndex = imageIndex;
+                        tNode.ImageIndex = imageIndex;
                         createPattern1(node.ChildNodes, tNode);
                     }
                     else
@@ -188,73 +189,16 @@ namespace DEiXTo.Services
                         }
 
                         var state = node.Attributes["stateIndex"].Value;
-                        pInfo.State = getState(state);
+                        pInfo.State = NodeStateTranslator.StringToState(state);
                         temp.Tag = pInfo;
 
-                        temp.SelectedImageIndex = getStateIndex(state);
-                        temp.ImageIndex = getStateIndex(state);
+                        var imageIndex = NodeStateTranslator.StringToImageIndex(state);
+                        temp.SelectedImageIndex = imageIndex;
+                        temp.ImageIndex = imageIndex;
                         createPattern1(node.ChildNodes, temp);
                     }
                 }
             }
-        }
-
-        private NodeState getState(string state)
-        {
-            NodeState nState = NodeState.Undefined;
-
-            switch (state)
-            {
-                case "checked":
-                    nState = NodeState.Checked;
-                    break;
-                case "checked_implied":
-                    nState = NodeState.CheckedImplied;
-                    break;
-                case "checked_source":
-                    nState = NodeState.CheckedSource;
-                    break;
-                case "grayed":
-                    nState = NodeState.Grayed;
-                    break;
-                case "grayed_implied":
-                    nState = NodeState.GrayedImplied;
-                    break;
-                case "dont_care":
-                    nState = NodeState.Unchecked;
-                    break;
-            }
-
-            return nState;
-        }
-
-        private int getStateIndex(string state)
-        {
-            int index = -1;
-
-            switch (state)
-            {
-                case "checked":
-                    index = 0;
-                    break;
-                case "checked_implied":
-                    index = 1;
-                    break;
-                case "checked_source":
-                    index = 2;
-                    break;
-                case "grayed":
-                    index = 3;
-                    break;
-                case "grayed_implied":
-                    index = 4;
-                    break;
-                case "dont_care":
-                    index = 5;
-                    break;
-            }
-
-            return index;
         }
     }
 }

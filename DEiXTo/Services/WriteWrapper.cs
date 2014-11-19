@@ -158,7 +158,7 @@ namespace DEiXTo.Services
 
                 _writer.WriteStartElement("Node"); // Write Node element
                 _writer.WriteAttributeString("tag", node.Text); // Write tag attribute
-                string stateIndex = getStateIndex1(node.SelectedImageIndex);
+                string stateIndex = NodeStateTranslator.StateToString(node.GetState());
                 _writer.WriteAttributeString("stateIndex", stateIndex); // Write stateIndex attribute
 
                 if (isRoot)
@@ -169,35 +169,6 @@ namespace DEiXTo.Services
                 writeNodes1(node.Nodes, false);
                 _writer.WriteEndElement(); // Close Node Element
             }
-        }
-
-        private string getStateIndex1(int imageKey)
-        {
-            var state = "";
-
-            switch (imageKey)
-            {
-                case 0:
-                    state = "checked";
-                    break;
-                case 1:
-                    state = "checked_implied";
-                    break;
-                case 2:
-                    state = "checked_source";
-                    break;
-                case 3:
-                    state = "grayed";
-                    break;
-                case 4:
-                    state = "grayed_implied";
-                    break;
-                case 5:
-                    state = "dont_care";
-                    break;
-            }
-
-            return state;
         }
     }
 }

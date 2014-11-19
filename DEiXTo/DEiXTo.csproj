@@ -102,6 +102,7 @@
     <Compile Include="Services.Tests\ElementStylingTests.cs" />
     <Compile Include="Services.Tests\ExtractionPatternRepositoryTests.cs" />
     <Compile Include="Services.Tests\NodeBuilderTests.cs" />
+    <Compile Include="Services\NodeStateTranslator.cs" />
     <Compile Include="Services.Tests\PatternExecutorTests.cs" />
     <Compile Include="Services.Tests\RecordsWriterFactoryTests.cs" />
     <Compile Include="Services.Tests\TagContentExtractorTests.cs" />
