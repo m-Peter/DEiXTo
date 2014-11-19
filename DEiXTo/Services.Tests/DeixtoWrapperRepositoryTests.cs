@@ -44,5 +44,22 @@ namespace DEiXTo.Services.Tests
             Assert.AreEqual("query", loaded.FormInputName);
             Assert.AreEqual("rails", loaded.FormTerm);
         }
+
+        [TestMethod]
+        public void TestSaveAndLoadExtractUrl()
+        {
+            // Arrange
+            var wrapper = new DeixtoWrapper();
+            wrapper.ExtractNativeUrl = true;
+            var repository = new DeixtoWrapperFileRepository(_filename);
+            
+            // Act
+            repository.Save(wrapper, _stream);
+            _stream.Position = 0;
+            var loaded = repository.Load(_stream);
+            
+            // Assert
+            Assert.IsTrue(loaded.ExtractNativeUrl);
+        }
     }
 }
