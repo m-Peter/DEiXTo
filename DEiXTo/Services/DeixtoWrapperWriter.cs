@@ -84,6 +84,10 @@ namespace DEiXTo.Services
 
         private void writeIgnoredTags()
         {
+            if (_wrapper.IgnoredTags == null)
+            {
+                return;
+            }
             _writer.WriteStartElement("IgnoredTagsList"); // Write IgnoredTagsList element
 
             foreach (var tag in _wrapper.IgnoredTags)
@@ -140,7 +144,7 @@ namespace DEiXTo.Services
                 writeExtractPageUrl();
                 writeSubmitForm();
                 //writeExtractionPattern(_wrapper.ExtractionPattern.Nodes);
-                //writeIgnoredTags();
+                writeIgnoredTags();
                 writeOutputFile();
 
                 _writer.WriteEndElement(); // Close Project element

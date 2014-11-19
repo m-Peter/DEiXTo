@@ -180,5 +180,28 @@ namespace DEiXTo.Services.Tests
             Assert.AreEqual("http://www.teilar.gr", loadedUrls[1]);
             Assert.AreEqual("http://www.petrmarkou.com", loadedUrls[2]);
         }
+
+        [TestMethod]
+        public void TestSaveAndLoadIgnoredTags()
+        {
+            // Arrange
+            string[] tags = new string[3];
+            tags[0] = "<B>";
+            tags[1] = "<SPAN>";
+            tags[2] = "<EM>";
+            _wrapper.IgnoredTags = tags;
+
+            // Act
+            _repository.Save(_wrapper, _stream);
+            _stream.Position = 0;
+            var loaded = _repository.Load(_stream);
+
+            // Assert
+            var loadedTags = loaded.IgnoredTags;
+            Assert.AreEqual(3, loadedTags.Length);
+            Assert.AreEqual("<B>", loadedTags[0]);
+            Assert.AreEqual("<SPAN>", loadedTags[1]);
+            Assert.AreEqual("<EM>", loadedTags[2]);
+        }
     }
 }
