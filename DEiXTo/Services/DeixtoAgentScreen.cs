@@ -1,5 +1,6 @@
 ﻿using DEiXTo.Models;
 using System.Drawing;
+using System.IO;
 using System.Windows.Forms;
 
 namespace DEiXTo.Services
@@ -71,8 +72,13 @@ namespace DEiXTo.Services
 
         public TreeNode LoadExtractionPattern(string filename)
         {
-            _patternRepository = new ExtractionPatternFileRepository(filename, new FileLoader());
-            return _patternRepository.Load().RootNode;
+            _patternRepository = new ExtractionPatternFileRepository(filename);
+            var loader = new FileLoader();
+
+            using (var stream = loader.Load(filename, FileMode.Open))
+            {
+                return _patternRepository.Load(stream).RootNode;
+            }
         }
 
         public IOpenFileDialog GetOpenFileDialog(string filter)
@@ -117,9 +123,14 @@ namespace DEiXTo.Services
 
         public void SaveExtractionPattern(string filename, TreeNodeCollection nodes)
         {
-            _patternRepository = new ExtractionPatternFileRepository(filename, new FileLoader());
+            _patternRepository = new ExtractionPatternFileRepository(filename);
             ExtractionPattern pattern = new ExtractionPattern(nodes[0]);
-            _patternRepository.Save(pattern);
+            var loader = new FileLoader();
+            
+            using (var stream = loader.Load(filename, FileMode.CreateNew))
+            {
+                _patternRepository.Save(pattern, stream);
+            }
         }
 
         public void HighlightElement(HtmlElement element)

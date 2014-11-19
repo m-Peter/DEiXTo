@@ -11,24 +11,35 @@ namespace DEiXTo.Services
         private readonly IFileLoader _loader;
         private readonly IExtractionPatternMapper _mapper;
 
-        public ExtractionPatternFileRepository(string filename, IFileLoader loader)
+        public ExtractionPatternFileRepository(string filename)
         {
             _filename = filename;
-            _loader = loader;
+            //_loader = loader;
             _mapper = new ExtractionPatternMapper();
         }
 
-        public ExtractionPattern Load()
+        public ExtractionPattern Load(Stream stream)
         {
-            var stream = _loader.Load(_filename, FileMode.Open);
+            /*using (var stream = _loader.Load(_filename, FileMode.Open))
+            {
+                var reader = XmlReader.Create(stream);
+
+                return _mapper.Map(reader);
+            }*/
             var reader = XmlReader.Create(stream);
 
             return _mapper.Map(reader);
         }
 
-        public void Save(ExtractionPattern pattern)
+        public void Save(ExtractionPattern pattern, Stream stream)
         {
-            var stream = _loader.Load(_filename, FileMode.CreateNew);
+            /*using (var stream = _loader.Load(_filename, FileMode.CreateNew))
+            {
+                var writer = new ExtractionPatternWriter();
+
+                writer.Write(stream, pattern);
+            }*/
+
             var writer = new ExtractionPatternWriter();
 
             writer.Write(stream, pattern);
