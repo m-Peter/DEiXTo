@@ -9,11 +9,15 @@ namespace DEiXTo.Services.Tests
     {
         private string _filename = "wrapper.xml";
         private MemoryStream _stream;
+        private DeixtoWrapper _wrapper;
+        private DeixtoWrapperFileRepository _repository;
 
         [TestInitialize]
         public void SetUp()
         {
             _stream = new MemoryStream();
+            _wrapper = new DeixtoWrapper();
+            _repository = new DeixtoWrapperFileRepository(_filename);
         }
 
         [TestCleanup]
@@ -26,17 +30,15 @@ namespace DEiXTo.Services.Tests
         public void TestSaveAndLoadSubmitFormFields()
         {
             // Arrange
-            var wrapper = new DeixtoWrapper();
-            wrapper.AutoFill = true;
-            wrapper.FormName = "search-repo";
-            wrapper.FormInputName = "query";
-            wrapper.FormTerm = "rails";
-            var repository = new DeixtoWrapperFileRepository(_filename);
+            _wrapper.AutoFill = true;
+            _wrapper.FormName = "search-repo";
+            _wrapper.FormInputName = "query";
+            _wrapper.FormTerm = "rails";
 
             // Act
-            repository.Save(wrapper, _stream);
+            _repository.Save(_wrapper, _stream);
             _stream.Position = 0;
-            var loaded = repository.Load(_stream);
+            var loaded = _repository.Load(_stream);
 
             // Assert
             Assert.IsTrue(loaded.AutoFill);
@@ -49,14 +51,12 @@ namespace DEiXTo.Services.Tests
         public void TestSaveAndLoadExtractUrl()
         {
             // Arrange
-            var wrapper = new DeixtoWrapper();
-            wrapper.ExtractNativeUrl = true;
-            var repository = new DeixtoWrapperFileRepository(_filename);
+            _wrapper.ExtractNativeUrl = true;
             
             // Act
-            repository.Save(wrapper, _stream);
+            _repository.Save(_wrapper, _stream);
             _stream.Position = 0;
-            var loaded = repository.Load(_stream);
+            var loaded = _repository.Load(_stream);
             
             // Assert
             Assert.IsTrue(loaded.ExtractNativeUrl);
@@ -66,14 +66,12 @@ namespace DEiXTo.Services.Tests
         public void TestSaveAndLoadMaxHits()
         {
             // Arrange
-            var wrapper = new DeixtoWrapper();
-            wrapper.NumberOfHits = 3;
-            var repository = new DeixtoWrapperFileRepository(_filename);
+            _wrapper.NumberOfHits = 3;
 
             // Act
-            repository.Save(wrapper, _stream);
+            _repository.Save(_wrapper, _stream);
             _stream.Position = 0;
-            var loaded = repository.Load(_stream);
+            var loaded = _repository.Load(_stream);
 
             // Assert
             Assert.AreEqual(3, loaded.NumberOfHits);
