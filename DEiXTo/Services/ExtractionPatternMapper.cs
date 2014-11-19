@@ -162,28 +162,20 @@ namespace DEiXTo.Services
 
         private NodeState getState(string state)
         {
-            //NodeState nState = NodeState.Undefined;
-
             switch (state)
             {
                 case "checked":
                     return NodeState.Checked;
-                    //break;
                 case "checked_implied":
                     return NodeState.CheckedImplied;
-                    //break;
                 case "checked_source":
                     return NodeState.CheckedSource;
-                    //break;
                 case "grayed":
                     return NodeState.Grayed;
-                    //break;
                 case "grayed_implied":
                     return NodeState.GrayedImplied;
-                    //break;
                 case "dont_care":
                     return NodeState.Unchecked;
-                    //break;
             }
 
             return NodeState.Undefined;

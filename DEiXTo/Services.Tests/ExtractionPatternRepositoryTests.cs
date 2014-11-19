@@ -144,11 +144,95 @@ namespace DEiXTo.Services.Tests
         }
 
         [TestMethod]
+        public void TestSaveAndLoadRootNode()
+        {
+            // Arrange
+            var div = CreateRootNode("DIV");
+            var pattern = new ExtractionPattern(div);
+            _loader.Setup(l => l.Load(_filename, It.IsAny<FileMode>())).Returns(_stream);
+            var repository = new ExtractionPatternFileRepository(_filename, _loader.Object);
+
+            // Act
+            repository.Save(pattern);
+            _stream.Position = 0;
+            var loaded = repository.Load();
+
+            // Assert
+            var root = loaded.RootNode;
+            Assert.IsTrue(root.IsRoot());
+        }
+
+        [TestMethod]
+        public void TestSaveAndLoadNodeWithRegex()
+        {
+            // Arrange
+            var p = CreateNode("P", NodeState.Checked);
+            p.SetRegex("[a|b]");
+            var pattern = new ExtractionPattern(p);
+            _loader.Setup(l => l.Load(_filename, It.IsAny<FileMode>())).Returns(_stream);
+            var repository = new ExtractionPatternFileRepository(_filename, _loader.Object);
+
+            // Act
+            repository.Save(pattern);
+            _stream.Position = 0;
+            var loaded = repository.Load();
+
+            // Assert
+            var root = loaded.RootNode;
+            Assert.AreEqual("[a|b]", root.GetRegex());
+        }
+
+        [TestMethod]
+        public void TestSaveAndLoadNodeWithCustomLabel()
+        {
+            // Arrange
+            var img = CreateNode("IMG:ProductImage", NodeState.CheckedSource);
+            img.SetLabel("ProductImage");
+            var pattern = new ExtractionPattern(img);
+            _loader.Setup(l => l.Load(_filename, It.IsAny<FileMode>())).Returns(_stream);
+            var repository = new ExtractionPatternFileRepository(_filename, _loader.Object);
+
+            // Act
+            repository.Save(pattern);
+            _stream.Position = 0;
+            var loaded = repository.Load();
+
+            // Assert
+            var root = loaded.RootNode;
+            Assert.AreEqual("IMG:ProductImage", root.Text);
+            Assert.AreEqual("ProductImage", root.GetLabel());
+        }
+
+        [TestMethod]
+        public void TestSaveAndLoadNodeWithSiblingOrder()
+        {
+            // Arrange
+            var div = CreateNode("DIV", NodeState.Checked);
+            div.SetCareAboutSiblingOrder(true);
+            div.SetStartIndex(1);
+            div.SetStepValue(3);
+            var pattern = new ExtractionPattern(div);
+            _loader.Setup(l => l.Load(_filename, It.IsAny<FileMode>())).Returns(_stream);
+            var repository = new ExtractionPatternFileRepository(_filename, _loader.Object);
+
+            // Act
+            repository.Save(pattern);
+            _stream.Position = 0;
+            var loaded = repository.Load();
+
+            // Assert
+            var root = loaded.RootNode;
+            Assert.IsTrue(root.GetCareAboutSiblingOrder());
+            Assert.AreEqual(1, root.GetStartIndex());
+            Assert.AreEqual(3, root.GetStepValue());
+        }
+
+        [TestMethod]
         public void TestSaveAndLoadExtractionPattern()
         {
             // Arrange
             string filename = "pattern.xml";
-            var div = CreateRootNode();
+            var div = CreateRootNode("DIV");
             var h2 = CreateNode("H2", NodeState.Checked);
             var p = CreateNode("P", NodeState.CheckedImplied);
             p.SetRegex("[a|b]");
@@ -202,9 +286,9 @@ namespace DEiXTo.Services.Tests
             }
         }
 
-        private TreeNode CreateRootNode()
+        private TreeNode CreateRootNode(string text)
         {
-            var root = new TreeNode("DIV");
+            var root = new TreeNode(text);
             root.Tag = new NodeInfo.Builder().SetRoot(true).SetState(NodeState.Grayed).Build();
 
             return root;

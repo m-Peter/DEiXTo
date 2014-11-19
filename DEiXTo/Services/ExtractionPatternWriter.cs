@@ -26,7 +26,6 @@ namespace DEiXTo.Services
         {
             writer.WriteStartElement("Node"); // Write Node Element
             writer.WriteAttributeString("tag", node.Text); // Write tag attribute
-            //string stateIndex = getStateIndex(node.SelectedImageIndex);
             string stateIndex = getStringState(node.GetState());
             writer.WriteAttributeString("stateIndex", stateIndex); // Write stateIndex attribute
 
