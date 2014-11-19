@@ -365,7 +365,7 @@ namespace DEiXTo.Presenters
 
         public void NodeStateChanged(TreeNode node, NodeState state)
         {
-            int imageIndex = new StateToImageMapper().GetImageFromState(state);
+            int imageIndex = NodeStateTranslator.StateToImageIndex(state);
             View.ApplyStateToNode(node, imageIndex);
             node.SetState(state);
 

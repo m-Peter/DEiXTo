@@ -145,7 +145,6 @@
     <Compile Include="Services\RegexAdded.cs" />
     <Compile Include="Services\RssDialogBuilder.cs" />
     <Compile Include="Services\SaveFileDialogWrapper.cs" />
-    <Compile Include="Services\StateToImageMapper.cs" />
     <Compile Include="Services\TagContentExtractor.cs" />
     <Compile Include="Services\TextDialogBuilder.cs" />
     <Compile Include="Services\DOMBuilder.cs" />
