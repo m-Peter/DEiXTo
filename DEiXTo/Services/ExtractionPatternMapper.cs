@@ -11,7 +11,7 @@ namespace DEiXTo.Services
         public ExtractionPattern Map(XmlReader reader)
         {
             var rootNode = new TreeNode();
-            
+
             while (reader.Read())
             {
                 ReadPatternElement(reader, rootNode);
@@ -22,23 +22,25 @@ namespace DEiXTo.Services
 
         private void ReadPatternElement(XmlReader reader, TreeNode rootNode)
         {
-            if (IsPatternElement(reader))
+            if (NonPatternElement(reader))
             {
-                reader.ReadToFollowing("Node");
-                XmlDocument doc = new XmlDocument();
-                doc.Load(reader.ReadSubtree());
-                createPattern(doc.ChildNodes, rootNode);
+                return;
             }
+
+            reader.ReadToFollowing("Node");
+            XmlDocument doc = new XmlDocument();
+            doc.Load(reader.ReadSubtree());
+            createPattern(doc.ChildNodes, rootNode);
         }
 
-        private bool IsPatternElement(XmlReader reader)
+        private bool NonPatternElement(XmlReader reader)
         {
-            return reader.NodeType == XmlNodeType.Element && reader.LocalName == "Pattern";
+            return (reader.NodeType != XmlNodeType.Element) || (reader.Name != "Pattern");
         }
 
-        private bool IsNodeElement(XmlNode node)
+        private bool NonNodeElement(XmlNode node)
         {
-            return node.NodeType == XmlNodeType.Element && node.Name == "Node";
+            return (node.NodeType != XmlNodeType.Element) || (node.Name != "Node");
         }
 
         private string ReadTagAttribute(XmlNode node, NodeInfo pInfo, TreeNode treeNode)
@@ -84,7 +86,7 @@ namespace DEiXTo.Services
             var st = getState(state);
             if (st == NodeState.Undefined)
             {
-                throw new ArgumentException("The value: " + state + " returned: " + st );
+                throw new ArgumentException("The value: " + state + " returned: " + st);
             }
 
             nInfo.State = getState(state);
@@ -112,40 +114,40 @@ namespace DEiXTo.Services
         {
             foreach (XmlNode node in nodes)
             {
-                TreeNode tempNode;
-
-                if (IsNodeElement(node))
+                if (NonNodeElement(node))
                 {
-                    if (treeNode.Text == String.Empty)
-                    {
-                        NodeInfo pInfo = new NodeInfo();
-                        string tag = ReadTagAttribute(node, pInfo, treeNode);
-                        treeNode.Text = tag;
-
-                        ReadIsRootAttribute(node, pInfo, treeNode);
-                        ReadRegexAttribute(node, pInfo, treeNode);
-                        ReadStateAttribute(node, pInfo, treeNode);
-                        ReadCareAboutSOAttribute(node, pInfo, treeNode);
-                        treeNode.Tag = pInfo;
-
-                        createPattern(node.ChildNodes, treeNode);
-                    }
-                    else
-                    {
-                        NodeInfo pInfo = new NodeInfo();
-                        string tag = ReadTagAttribute(node, pInfo, treeNode);
-                        tempNode = treeNode.Nodes.Add(tag);
-                        
-                        ReadIsRootAttribute(node, pInfo, tempNode);
-                        ReadRegexAttribute(node, pInfo, tempNode);
-                        ReadStateAttribute(node, pInfo, tempNode);
-                        ReadCareAboutSOAttribute(node, pInfo, tempNode);
-
-                        tempNode.Tag = pInfo;
-                        
-                        createPattern(node.ChildNodes, tempNode);
-                    }
+                    continue;
                 }
+
+                NodeInfo pInfo = new NodeInfo();
+                string tag = ReadTagAttribute(node, pInfo, treeNode);
+
+                if (treeNode.Text == String.Empty)
+                {
+                    treeNode.Text = tag;
+
+                    ReadIsRootAttribute(node, pInfo, treeNode);
+                    ReadRegexAttribute(node, pInfo, treeNode);
+                    ReadStateAttribute(node, pInfo, treeNode);
+                    ReadCareAboutSOAttribute(node, pInfo, treeNode);
+
+                    treeNode.Tag = pInfo;
+
+                    createPattern(node.ChildNodes, treeNode);
+                    return;
+                }
+                
+                TreeNode tempNode;
+                tempNode = treeNode.Nodes.Add(tag);
+
+                ReadIsRootAttribute(node, pInfo, tempNode);
+                ReadRegexAttribute(node, pInfo, tempNode);
+                ReadStateAttribute(node, pInfo, tempNode);
+                ReadCareAboutSOAttribute(node, pInfo, tempNode);
+
+                tempNode.Tag = pInfo;
+
+                createPattern(node.ChildNodes, tempNode);
             }
         }
 
