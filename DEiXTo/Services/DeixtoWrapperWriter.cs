@@ -134,7 +134,7 @@ namespace DEiXTo.Services
                 _writer.WriteStartElement("Project"); // Write Project element
 
                 writeInputFile();
-                //writeTargetUrls();
+                writeTargetUrls();
                 writeMultiPage();
                 writeMaxHits();
                 writeExtractPageUrl();

@@ -157,5 +157,28 @@ namespace DEiXTo.Services.Tests
             // Assert
             Assert.AreEqual(OutputMode.Overwrite, loaded.OutputMode);
         }
+
+        [TestMethod]
+        public void TestSaveAndLoadTargetUrls()
+        {
+            // Arrange
+            string[] urls = new string[3];
+            urls[0] = "http://www.cs.teilar.gr";
+            urls[1] = "http://www.teilar.gr";
+            urls[2] = "http://www.petrmarkou.com";
+            _wrapper.TargetUrls = urls;
+
+            // Act
+            _repository.Save(_wrapper, _stream);
+            _stream.Position = 0;
+            var loaded = _repository.Load(_stream);
+
+            // Assert
+            var loadedUrls = loaded.TargetUrls;
+            Assert.AreEqual(3, loadedUrls.Length);
+            Assert.AreEqual("http://www.cs.teilar.gr", loadedUrls[0]);
+            Assert.AreEqual("http://www.teilar.gr", loadedUrls[1]);
+            Assert.AreEqual("http://www.petrmarkou.com", loadedUrls[2]);
+        }
     }
 }
