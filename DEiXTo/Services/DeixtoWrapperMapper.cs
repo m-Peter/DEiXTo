@@ -136,7 +136,7 @@ namespace DEiXTo.Services
                     XmlDocument doc = new XmlDocument();
                     doc.Load(reader.ReadSubtree());
                     createPattern1(doc.ChildNodes, rootNode);
-                    wrapper.ExtractionPattern = rootNode;
+                    wrapper.ExtractionPattern = new ExtractionPattern(rootNode);
                 }
             }
 

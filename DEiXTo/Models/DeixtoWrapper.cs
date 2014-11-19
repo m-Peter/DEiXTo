@@ -17,7 +17,7 @@ namespace DEiXTo.Models
         public string FormInputName { get; set; }
         public string FormTerm { get; set; }
         public OutputMode OutputMode { get; set; }
-        public TreeNode ExtractionPattern { get; set; }
+        public ExtractionPattern ExtractionPattern { get; set; }
         public int NumberOfHits { get; set; }
         public int Delay { get; set; }
         public bool ExtractNativeUrl { get; set; }

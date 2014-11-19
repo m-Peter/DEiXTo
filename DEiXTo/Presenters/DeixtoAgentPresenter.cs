@@ -902,7 +902,7 @@ namespace DEiXTo.Presenters
                 wrapper.InputFile = inputFile;
             }
 
-            wrapper.ExtractionPattern = View.ExtractionPattern;
+            wrapper.ExtractionPattern = new ExtractionPattern(View.ExtractionPattern);
             wrapper.AutoFill = View.AutoFill;
             wrapper.Delay = View.Delay;
             wrapper.ExtractNativeUrl = View.ExtractNativeUrl;
@@ -952,7 +952,7 @@ namespace DEiXTo.Presenters
             var wrapper = _screen.LoadWrapper(filename);
             View.AutoFill = wrapper.AutoFill;
             View.Delay = wrapper.Delay;
-            View.ExtractionPattern = wrapper.ExtractionPattern;
+            View.ExtractionPattern = wrapper.ExtractionPattern.RootNode;
             View.ExtractNativeUrl = wrapper.ExtractNativeUrl;
             View.FormInputName = wrapper.FormInputName;
             View.FormName = wrapper.FormName;

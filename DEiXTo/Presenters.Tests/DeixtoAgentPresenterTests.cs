@@ -1209,7 +1209,7 @@ namespace DEiXTo.Presenters.Tests
             // Assert
             _view.VerifySet(v => v.AutoFill = wrapper.AutoFill);
             _view.VerifySet(v => v.Delay = wrapper.Delay);
-            _view.VerifySet(v => v.ExtractionPattern = wrapper.ExtractionPattern);
+            _view.VerifySet(v => v.ExtractionPattern = wrapper.ExtractionPattern.RootNode);
             _view.VerifySet(v => v.ExtractNativeUrl = wrapper.ExtractNativeUrl);
             _view.VerifySet(v => v.FormInputName = wrapper.FormInputName);
             _view.VerifySet(v => v.FormName = wrapper.FormName);
@@ -1234,7 +1234,7 @@ namespace DEiXTo.Presenters.Tests
 
             wrapper.AutoFill = true;
             wrapper.Delay = 2;
-            wrapper.ExtractionPattern = new TreeNode("DIV");
+            wrapper.ExtractionPattern = new ExtractionPattern(new TreeNode("DIV"));
             wrapper.ExtractNativeUrl = true;
             wrapper.FormInputName = "repo";
             wrapper.FormName = "q";

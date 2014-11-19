@@ -75,11 +75,49 @@ namespace DEiXTo.Services
             _writer.WriteEndElement(); // Close SubmitForm element
         }
 
-        private void writeExtractionPattern(TreeNodeCollection nodes)
+        private void writeExtractionPattern()
         {
+            if (_wrapper.ExtractionPattern == null)
+            {
+                return;
+            }
+
             _writer.WriteStartElement("ExtractionPattern"); // Write ExtractionPattern element
-            writeNodes1(nodes, true);
+            _wrapper.ExtractionPattern.TrimUncheckedNodes();
+            writePattern(_writer, _wrapper.ExtractionPattern.RootNode);
             _writer.WriteEndElement(); // Close ExtractionPattern element
+        }
+
+        private void writePattern(XmlWriter writer, TreeNode node)
+        {
+            writer.WriteStartElement("Node"); // Write Node Element
+            writer.WriteAttributeString("tag", node.Text); // Write tag attribute
+            string stateIndex = NodeStateTranslator.StateToString(node.GetState());
+            writer.WriteAttributeString("stateIndex", stateIndex); // Write stateIndex attribute
+
+            if (node.IsRoot())
+            {
+                writer.WriteAttributeString("IsRoot", "true");
+            }
+
+            if (node.HasRegex())
+            {
+                writer.WriteAttributeString("regexpr", node.GetRegex());
+            }
+
+            if (node.GetCareAboutSiblingOrder())
+            {
+                writer.WriteAttributeString("CareAboutSO", "1");
+                writer.WriteAttributeString("so_start", node.GetStartIndex().ToString());
+                writer.WriteAttributeString("so_step", node.GetStepValue().ToString());
+            }
+
+            foreach (TreeNode n in node.Nodes)
+            {
+                writePattern(writer, n);
+            }
+
+            writer.WriteEndElement(); // Close Node Element
         }
 
         private void writeIgnoredTags()
@@ -143,7 +181,7 @@ namespace DEiXTo.Services
                 writeMaxHits();
                 writeExtractPageUrl();
                 writeSubmitForm();
-                //writeExtractionPattern(_wrapper.ExtractionPattern.Nodes);
+                writeExtractionPattern();
                 writeIgnoredTags();
                 writeOutputFile();
 
@@ -170,7 +208,7 @@ namespace DEiXTo.Services
                 writeMaxHits();
                 writeExtractPageUrl();
                 writeSubmitForm();
-                writeExtractionPattern(nodes);
+                //writeExtractionPattern(nodes);
                 writeIgnoredTags();
                 writeOutputFile();
 

@@ -1,6 +1,7 @@
 ﻿using DEiXTo.Models;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.IO;
+using System.Windows.Forms;
 
 namespace DEiXTo.Services.Tests
 {
@@ -202,6 +203,68 @@ namespace DEiXTo.Services.Tests
             Assert.AreEqual("<B>", loadedTags[0]);
             Assert.AreEqual("<SPAN>", loadedTags[1]);
             Assert.AreEqual("<EM>", loadedTags[2]);
+        }
+
+        [TestMethod]
+        public void TestSaveAndLoadExtractionPattern()
+        {
+            // Arrange
+            var div = CreateRootNode("DIV");
+            var h2 = CreateNode("H2", NodeState.Checked);
+            var p = CreateNode("P", NodeState.CheckedImplied);
+            var p1 = CreateNode("P", NodeState.CheckedSource);
+            AddNodesTo(div, h2, p, p1);
+            var pattern = new ExtractionPattern(div);
+            _wrapper.ExtractionPattern = pattern;
+
+            // Act
+            _repository.Save(_wrapper, _stream);
+            _stream.Position = 0;
+            var loaded = _repository.Load(_stream);
+
+            // Assert
+            var root = loaded.ExtractionPattern.RootNode;
+            Assert.AreEqual("DIV", root.Text);
+            Assert.IsTrue(root.IsRoot());
+            Assert.AreEqual(NodeState.Grayed, root.GetState());
+
+            Assert.AreEqual(3, root.Nodes.Count);
+
+            var loadedH2 = root.Nodes[0];
+            Assert.AreEqual("H2", loadedH2.Text);
+            Assert.AreEqual(NodeState.Checked, loadedH2.GetState());
+
+            var loadedP = root.Nodes[1];
+            Assert.AreEqual("P", loadedP.Text);
+            Assert.AreEqual(NodeState.CheckedImplied, loadedP.GetState());
+
+            var loadedP1 = root.Nodes[2];
+            Assert.AreEqual("P", loadedP1.Text);
+            Assert.AreEqual(NodeState.CheckedSource, loadedP1.GetState());
+        }
+
+        private void AddNodesTo(TreeNode node, params TreeNode[] nodes)
+        {
+            for (int i = 0; i < nodes.Length; i++)
+            {
+                node.Nodes.Add(nodes[i]);
+            }
+        }
+
+        private TreeNode CreateRootNode(string text)
+        {
+            var root = new TreeNode(text);
+            root.Tag = new NodeInfo.Builder().SetRoot(true).SetState(NodeState.Grayed).Build();
+
+            return root;
+        }
+
+        private TreeNode CreateNode(string text, NodeState state, string label = null)
+        {
+            var node = new TreeNode(text);
+            node.Tag = new NodeInfo.Builder().SetLabel(label).SetState(state).Build();
+
+            return node;
         }
     }
 }
