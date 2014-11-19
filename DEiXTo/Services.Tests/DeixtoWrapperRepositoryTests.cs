@@ -127,5 +127,35 @@ namespace DEiXTo.Services.Tests
             Assert.AreEqual("output_file.xml", loaded.OutputFileName);
             Assert.AreEqual(Format.XML, loaded.OutputFormat);
         }
+
+        [TestMethod]
+        public void TestSaveAndLoadAppendMode()
+        {
+            // Arrange
+            _wrapper.OutputMode = OutputMode.Append;
+
+            // Act
+            _repository.Save(_wrapper, _stream);
+            _stream.Position = 0;
+            var loaded = _repository.Load(_stream);
+
+            // Assert
+            Assert.AreEqual(OutputMode.Append, loaded.OutputMode);
+        }
+
+        [TestMethod]
+        public void TestSaveAndLoadOverwriteMode()
+        {
+            // Arrange
+            _wrapper.OutputMode = OutputMode.Overwrite;
+
+            // Act
+            _repository.Save(_wrapper, _stream);
+            _stream.Position = 0;
+            var loaded = _repository.Load(_stream);
+
+            // Assert
+            Assert.AreEqual(OutputMode.Overwrite, loaded.OutputMode);
+        }
     }
 }
