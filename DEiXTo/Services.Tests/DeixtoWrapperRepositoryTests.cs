@@ -95,5 +95,20 @@ namespace DEiXTo.Services.Tests
             Assert.AreEqual("Next", loaded.HtmlNextLink);
             Assert.AreEqual(5, loaded.MaxCrawlingDepth);
         }
+
+        [TestMethod]
+        public void TestSaveAndLoadInputFile()
+        {
+            // Arrange
+            _wrapper.InputFile = "some_file.txt";
+
+            // Act
+            _repository.Save(_wrapper, _stream);
+            _stream.Position = 0;
+            var loaded = _repository.Load(_stream);
+
+            // Assert
+            Assert.AreEqual("some_file.txt", loaded.InputFile);
+        }
     }
 }

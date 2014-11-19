@@ -133,7 +133,7 @@ namespace DEiXTo.Services
 
                 _writer.WriteStartElement("Project"); // Write Project element
 
-                //writeInputFile();
+                writeInputFile();
                 //writeTargetUrls();
                 writeMultiPage();
                 writeMaxHits();
