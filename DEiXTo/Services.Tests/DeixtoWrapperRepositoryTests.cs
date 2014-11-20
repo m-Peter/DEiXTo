@@ -251,6 +251,87 @@ namespace DEiXTo.Services.Tests
             Assert.AreEqual(NodeState.CheckedSource, loadedP1.GetState());
         }
 
+        [TestMethod]
+        public void TestSaveAndLoadTargetUrlsAndExtractionPattern()
+        {
+            // Arrange
+            var div = CreateRootNode("DIV");
+            var h2 = CreateNode("H2", NodeState.Grayed);
+            var p = CreateNode("P", NodeState.Grayed);
+            var p1 = CreateNode("P", NodeState.Grayed);
+            AddNodesTo(div, h2, p, p1);
+            var pattern = new ExtractionPattern(div);
+            var targetUrls = new string[] { "http://www.cs.teilar.gr" };
+            _wrapper.ExtractionPattern = pattern;
+            _wrapper.TargetUrls = targetUrls;
+
+            // Act
+            _repository.Save(_wrapper, _stream);
+            _stream.Position = 0;
+            var loaded = _repository.Load(_stream);
+
+            // Assert
+            var loadedUrls = loaded.TargetUrls;
+            var loadedPattern = loaded.ExtractionPattern.RootNode;
+
+            Assert.AreEqual(1, loadedUrls.Length);
+            Assert.AreEqual("http://www.cs.teilar.gr", loadedUrls[0]);
+
+            Assert.AreEqual("DIV", loadedPattern.Text);
+            Assert.AreEqual(3, loadedPattern.Nodes.Count);
+
+            var loadedH2 = loadedPattern.Nodes[0];
+            Assert.AreEqual("H2", loadedH2.Text);
+            Assert.AreEqual(NodeState.Grayed, loadedH2.GetState());
+
+            var loadedP = loadedPattern.Nodes[1];
+            Assert.AreEqual("P", loadedP.Text);
+            Assert.AreEqual(NodeState.Grayed, loadedP.GetState());
+
+            var loadedP1 = loadedPattern.Nodes[2];
+            Assert.AreEqual("P", loadedP1.Text);
+            Assert.AreEqual(NodeState.Grayed, loadedP1.GetState());
+        }
+
+        [TestMethod]
+        public void TestSaveAndLoadInputFileAndExtractionPattern()
+        {
+            // Arrange
+            var div = CreateRootNode("DIV");
+            var h2 = CreateNode("H2", NodeState.Grayed);
+            var p = CreateNode("P", NodeState.Grayed);
+            var p1 = CreateNode("P", NodeState.Grayed);
+            AddNodesTo(div, h2, p, p1);
+            var pattern = new ExtractionPattern(div);
+            var inputFile = "input_file.txt";
+            _wrapper.InputFile = inputFile;
+            _wrapper.ExtractionPattern = pattern;
+
+            // Act
+            _repository.Save(_wrapper, _stream);
+            _stream.Position = 0;
+            var loaded = _repository.Load(_stream);
+
+            // Assert
+            Assert.AreEqual("input_file.txt", loaded.InputFile);
+            var loadedPattern = loaded.ExtractionPattern.RootNode;
+
+            Assert.AreEqual("DIV", loadedPattern.Text);
+            Assert.AreEqual(3, loadedPattern.Nodes.Count);
+
+            var loadedH2 = loadedPattern.Nodes[0];
+            Assert.AreEqual("H2", loadedH2.Text);
+            Assert.AreEqual(NodeState.Grayed, loadedH2.GetState());
+
+            var loadedP = loadedPattern.Nodes[1];
+            Assert.AreEqual("P", loadedP.Text);
+            Assert.AreEqual(NodeState.Grayed, loadedP.GetState());
+
+            var loadedP1 = loadedPattern.Nodes[2];
+            Assert.AreEqual("P", loadedP1.Text);
+            Assert.AreEqual(NodeState.Grayed, loadedP1.GetState());
+        }
+
         private void AddNodesTo(TreeNode node, params TreeNode[] nodes)
         {
             for (int i = 0; i < nodes.Length; i++)

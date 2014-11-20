@@ -4,9 +4,9 @@ namespace DEiXTo.Services
 {
     public class FileLoader : IFileLoader
     {
-        public Stream Load(string filename, FileMode mode)
+        public Stream Load(string filename)
         {
-            return new FileStream(filename, mode);
+            return new FileStream(filename, FileMode.Open);
         }
     }
 }

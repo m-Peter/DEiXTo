@@ -4,6 +4,6 @@ namespace DEiXTo.Services
 {
     public interface IFileLoader
     {
-        Stream Load(string filename, FileMode mode);
+        Stream Load(string filename);
     }
 }
