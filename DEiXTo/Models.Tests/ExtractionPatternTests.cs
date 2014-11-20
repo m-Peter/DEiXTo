@@ -1,13 +1,13 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System.Windows.Forms;
+﻿using System.Windows.Forms;
 using DEiXTo.Services;
+using NUnit.Framework;
 
 namespace DEiXTo.Models.Tests
 {
-    [TestClass]
+    [TestFixture]
     public class ExtractionPatternTests
     {
-        [TestMethod]
+        [Test]
         public void TestRetrieveRootNode()
         {
             // Arrange
@@ -20,7 +20,7 @@ namespace DEiXTo.Models.Tests
             Assert.AreEqual(node, pattern.RootNode);
         }
 
-        [TestMethod]
+        [Test]
         public void TestCountOutputVariables()
         {
             // Arrange
@@ -44,7 +44,7 @@ namespace DEiXTo.Models.Tests
             Assert.AreEqual(3, variables);
         }
 
-        [TestMethod]
+        [Test]
         public void TestCollectOutputVariablesWithDefaultLabel()
         {
             // Arrange
@@ -65,7 +65,7 @@ namespace DEiXTo.Models.Tests
             Assert.AreEqual("VAR3", labels[2]);
         }
 
-        [TestMethod]
+        [Test]
         public void TestCollectOutputVariablesWithCustomLabels()
         {
             // Arrange
@@ -86,7 +86,7 @@ namespace DEiXTo.Models.Tests
             Assert.AreEqual("CONTENT", labels[2]);
         }
 
-        [TestMethod]
+        [Test]
         public void TestCollectOutputVariablesWithDefaultAndCustomLabels()
         {
             // Arrange
@@ -107,7 +107,7 @@ namespace DEiXTo.Models.Tests
             Assert.AreEqual("CONTENT", labels[2]);
         }
 
-        [TestMethod]
+        [Test]
         public void TestTrimUncheckedNodesFromPattern()
         {
             // Arrange
@@ -127,7 +127,7 @@ namespace DEiXTo.Models.Tests
             Assert.AreEqual(p, div.Nodes[1]);
         }
 
-        [TestMethod]
+        [Test]
         public void TestRetrieveVirtualRootFromExtractionPattern()
         {
             // Arrange
@@ -151,7 +151,7 @@ namespace DEiXTo.Models.Tests
             Assert.AreEqual("TEXT", vRoot.Nodes[0].Text);
         }
 
-        [TestMethod]
+        [Test]
         public void TestRetrieveUpperTreeFromExtractionPattern()
         {
             // Arrange
