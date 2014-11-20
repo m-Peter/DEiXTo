@@ -818,6 +818,11 @@
             this.DelayNUD.Name = "DelayNUD";
             this.DelayNUD.Size = new System.Drawing.Size(66, 20);
             this.DelayNUD.TabIndex = 3;
+            this.DelayNUD.Value = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
             // 
             // DelayLabel
             // 
@@ -1964,7 +1969,7 @@
             this.EnableHighlightMenuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.EnableHighlightingMenuItem});
             this.EnableHighlightMenuStrip.Name = "EnableHighlightMenuStrip";
-            this.EnableHighlightMenuStrip.Size = new System.Drawing.Size(180, 48);
+            this.EnableHighlightMenuStrip.Size = new System.Drawing.Size(180, 26);
             // 
             // EnableHighlightingMenuItem
             // 

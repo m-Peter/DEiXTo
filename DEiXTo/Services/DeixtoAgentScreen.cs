@@ -75,7 +75,7 @@ namespace DEiXTo.Services
             _patternRepository = new ExtractionPatternFileRepository(filename);
             var loader = new FileLoader();
 
-            using (var stream = loader.Load(filename))
+            using (var stream = loader.Load(filename, FileMode.Open))
             {
                 return _patternRepository.Load(stream).RootNode;
             }
@@ -127,7 +127,7 @@ namespace DEiXTo.Services
             ExtractionPattern pattern = new ExtractionPattern(nodes[0]);
             var loader = new FileLoader();
             
-            using (var stream = loader.Load(filename))
+            using (var stream = loader.Load(filename, FileMode.Create))
             {
                 _patternRepository.Save(pattern, stream);
             }
@@ -194,7 +194,7 @@ namespace DEiXTo.Services
             var wrapperRepository = new DeixtoWrapperFileRepository(filename);
             var loader = new FileLoader();
 
-            using (var stream = loader.Load(filename))
+            using (var stream = loader.Load(filename, FileMode.Create))
             {
                 wrapperRepository.Save(wrapper, stream);
             }
@@ -205,7 +205,7 @@ namespace DEiXTo.Services
             var wrapperRepository = new DeixtoWrapperFileRepository(filename);
             var loader = new FileLoader();
 
-            using (var stream = loader.Load(filename))
+            using (var stream = loader.Load(filename, FileMode.Open))
             {
                 return wrapperRepository.Load(stream);
             }
