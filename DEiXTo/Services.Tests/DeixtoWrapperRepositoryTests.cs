@@ -212,7 +212,11 @@ namespace DEiXTo.Services.Tests
             var div = CreateRootNode("DIV");
             var h2 = CreateNode("H2", NodeState.Checked);
             var p = CreateNode("P", NodeState.CheckedImplied);
+            p.SetRegex("[a|b]");
             var p1 = CreateNode("P", NodeState.CheckedSource);
+            p1.SetCareAboutSiblingOrder(true);
+            p1.SetStartIndex(2);
+            p1.SetStepValue(4);
             AddNodesTo(div, h2, p, p1);
             var pattern = new ExtractionPattern(div);
             _wrapper.ExtractionPattern = pattern;
@@ -223,23 +227,27 @@ namespace DEiXTo.Services.Tests
             var loaded = _repository.Load(_stream);
 
             // Assert
-            var root = loaded.ExtractionPattern.RootNode;
-            Assert.AreEqual("DIV", root.Text);
-            Assert.IsTrue(root.IsRoot());
-            Assert.AreEqual(NodeState.Grayed, root.GetState());
+            var loadedPattern = loaded.ExtractionPattern.RootNode;
+            Assert.AreEqual("DIV", loadedPattern.Text);
+            Assert.IsTrue(loadedPattern.IsRoot());
+            Assert.AreEqual(NodeState.Grayed, loadedPattern.GetState());
 
-            Assert.AreEqual(3, root.Nodes.Count);
+            Assert.AreEqual(3, loadedPattern.Nodes.Count);
 
-            var loadedH2 = root.Nodes[0];
+            var loadedH2 = loadedPattern.Nodes[0];
             Assert.AreEqual("H2", loadedH2.Text);
             Assert.AreEqual(NodeState.Checked, loadedH2.GetState());
 
-            var loadedP = root.Nodes[1];
+            var loadedP = loadedPattern.Nodes[1];
             Assert.AreEqual("P", loadedP.Text);
+            Assert.AreEqual("[a|b]", loadedP.GetRegex());
             Assert.AreEqual(NodeState.CheckedImplied, loadedP.GetState());
 
-            var loadedP1 = root.Nodes[2];
+            var loadedP1 = loadedPattern.Nodes[2];
             Assert.AreEqual("P", loadedP1.Text);
+            Assert.IsTrue(loadedP1.GetCareAboutSiblingOrder());
+            Assert.AreEqual(2, loadedP1.GetStartIndex());
+            Assert.AreEqual(4, loadedP1.GetStepValue());
             Assert.AreEqual(NodeState.CheckedSource, loadedP1.GetState());
         }
 

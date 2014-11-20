@@ -217,7 +217,6 @@ namespace DEiXTo.Services.Tests
         public void TestSaveAndLoadExtractionPattern()
         {
             // Arrange
-            string filename = "pattern.xml";
             var div = CreateRootNode("DIV");
             var h2 = CreateNode("H2", NodeState.Checked);
             var p = CreateNode("P", NodeState.CheckedImplied);
