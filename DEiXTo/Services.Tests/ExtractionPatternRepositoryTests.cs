@@ -11,11 +11,13 @@ namespace DEiXTo.Services.Tests
     {
         private string _filename = "pattern.xml";
         private MemoryStream _stream;
+        private ExtractionPatternFileRepository _repository;
 
         [TestInitialize]
         public void SetUp()
         {
             _stream = new MemoryStream();
+            _repository = new ExtractionPatternFileRepository(_filename);
         }
 
         [TestCleanup]
@@ -30,12 +32,11 @@ namespace DEiXTo.Services.Tests
             // Arrange
             var div = CreateNode("DIV", NodeState.Checked);
             var pattern = new ExtractionPattern(div);
-            var repository = new ExtractionPatternFileRepository(_filename);
 
             // Act
-            repository.Save(pattern, _stream);
+            _repository.Save(pattern, _stream);
             _stream.Position = 0;
-            var loaded = repository.Load(_stream);
+            var loaded = _repository.Load(_stream);
 
             // Assert
             var root = loaded.RootNode;
@@ -49,12 +50,11 @@ namespace DEiXTo.Services.Tests
             // Arrange
             var a = CreateNode("A", NodeState.CheckedImplied);
             var pattern = new ExtractionPattern(a);
-            var repository = new ExtractionPatternFileRepository(_filename);
 
             // Act
-            repository.Save(pattern, _stream);
+            _repository.Save(pattern, _stream);
             _stream.Position = 0;
-            var loaded = repository.Load(_stream);
+            var loaded = _repository.Load(_stream);
 
             // Assert
             var root = loaded.RootNode;
@@ -68,12 +68,11 @@ namespace DEiXTo.Services.Tests
             // Arrange
             var img = CreateNode("IMG", NodeState.CheckedSource);
             var pattern = new ExtractionPattern(img);
-            var repository = new ExtractionPatternFileRepository(_filename);
 
             // Act
-            repository.Save(pattern, _stream);
+            _repository.Save(pattern, _stream);
             _stream.Position = 0;
-            var loaded = repository.Load(_stream);
+            var loaded = _repository.Load(_stream);
 
             // Assert
             var root = loaded.RootNode;
@@ -87,12 +86,11 @@ namespace DEiXTo.Services.Tests
             // Arrange
             var p = CreateNode("P", NodeState.Grayed);
             var pattern = new ExtractionPattern(p);
-            var repository = new ExtractionPatternFileRepository(_filename);
 
             // Act
-            repository.Save(pattern, _stream);
+            _repository.Save(pattern, _stream);
             _stream.Position = 0;
-            var loaded = repository.Load(_stream);
+            var loaded = _repository.Load(_stream);
 
             // Assert
             var root = loaded.RootNode;
@@ -106,12 +104,11 @@ namespace DEiXTo.Services.Tests
             // Arrange
             var h1 = CreateNode("H1", NodeState.GrayedImplied);
             var pattern = new ExtractionPattern(h1);
-            var repository = new ExtractionPatternFileRepository(_filename);
 
             // Act
-            repository.Save(pattern, _stream);
+            _repository.Save(pattern, _stream);
             _stream.Position = 0;
-            var loaded = repository.Load(_stream);
+            var loaded = _repository.Load(_stream);
 
             // Assert
             var root = loaded.RootNode;
@@ -127,12 +124,11 @@ namespace DEiXTo.Services.Tests
             var input = CreateNode("INPUT", NodeState.Unchecked);
             div.AddNode(input);
             var pattern = new ExtractionPattern(div);
-            var repository = new ExtractionPatternFileRepository(_filename);
 
             // Act
-            repository.Save(pattern, _stream);
+            _repository.Save(pattern, _stream);
             _stream.Position = 0;
-            var loaded = repository.Load(_stream);
+            var loaded = _repository.Load(_stream);
 
             // Assert
             var root = loaded.RootNode;
@@ -147,12 +143,11 @@ namespace DEiXTo.Services.Tests
             // Arrange
             var div = CreateRootNode("DIV");
             var pattern = new ExtractionPattern(div);
-            var repository = new ExtractionPatternFileRepository(_filename);
 
             // Act
-            repository.Save(pattern, _stream);
+            _repository.Save(pattern, _stream);
             _stream.Position = 0;
-            var loaded = repository.Load(_stream);
+            var loaded = _repository.Load(_stream);
 
             // Assert
             var root = loaded.RootNode;
@@ -166,12 +161,11 @@ namespace DEiXTo.Services.Tests
             var p = CreateNode("P", NodeState.Checked);
             p.SetRegex("[a|b]");
             var pattern = new ExtractionPattern(p);
-            var repository = new ExtractionPatternFileRepository(_filename);
 
             // Act
-            repository.Save(pattern, _stream);
+            _repository.Save(pattern, _stream);
             _stream.Position = 0;
-            var loaded = repository.Load(_stream);
+            var loaded = _repository.Load(_stream);
 
             // Assert
             var root = loaded.RootNode;
@@ -185,12 +179,11 @@ namespace DEiXTo.Services.Tests
             var img = CreateNode("IMG:ProductImage", NodeState.CheckedSource);
             img.SetLabel("ProductImage");
             var pattern = new ExtractionPattern(img);
-            var repository = new ExtractionPatternFileRepository(_filename);
 
             // Act
-            repository.Save(pattern, _stream);
+            _repository.Save(pattern, _stream);
             _stream.Position = 0;
-            var loaded = repository.Load(_stream);
+            var loaded = _repository.Load(_stream);
 
             // Assert
             var root = loaded.RootNode;
@@ -207,12 +200,11 @@ namespace DEiXTo.Services.Tests
             div.SetStartIndex(1);
             div.SetStepValue(3);
             var pattern = new ExtractionPattern(div);
-            var repository = new ExtractionPatternFileRepository(_filename);
 
             // Act
-            repository.Save(pattern, _stream);
+            _repository.Save(pattern, _stream);
             _stream.Position = 0;
-            var loaded = repository.Load(_stream);
+            var loaded = _repository.Load(_stream);
 
             // Assert
             var root = loaded.RootNode;
@@ -236,12 +228,11 @@ namespace DEiXTo.Services.Tests
             p1.SetStepValue(4);
             AddNodesTo(div, h2, p, p1);
             var pattern = new ExtractionPattern(div);
-            var repository = new ExtractionPatternFileRepository(filename);
 
             // Act
-            repository.Save(pattern, _stream);
+            _repository.Save(pattern, _stream);
             _stream.Position = 0;
-            var loaded = repository.Load(_stream);
+            var loaded = _repository.Load(_stream);
 
             // Assert
             var root = loaded.RootNode;
