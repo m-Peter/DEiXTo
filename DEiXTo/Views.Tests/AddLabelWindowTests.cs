@@ -14,13 +14,13 @@ namespace DEiXTo.Views.Tests
         private AddLabelPresenter presenter;
 
         [SetUp]
-        public void SetUp()
+        public void Init()
         {
             window = new AddLabelWindow();
         }
 
         [TearDown]
-        public override void TearDown()
+        public void Cleanup()
         {
             window.Close();
         }

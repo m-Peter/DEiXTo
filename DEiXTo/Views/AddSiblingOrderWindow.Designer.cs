@@ -129,12 +129,12 @@
 
         #endregion
 
-        private System.Windows.Forms.CheckBox SiblingOrderCheckBox;
+        public System.Windows.Forms.CheckBox SiblingOrderCheckBox;
         private System.Windows.Forms.Label StartIndexLabel;
         private System.Windows.Forms.Label StepValueLabel;
-        private System.Windows.Forms.NumericUpDown StartIndexNUD;
-        private System.Windows.Forms.NumericUpDown StepValueNUD;
-        private System.Windows.Forms.Button OKButton;
+        public System.Windows.Forms.NumericUpDown StartIndexNUD;
+        public System.Windows.Forms.NumericUpDown StepValueNUD;
+        public System.Windows.Forms.Button OKButton;
         private System.Windows.Forms.Button CancelButton;
     }
 }

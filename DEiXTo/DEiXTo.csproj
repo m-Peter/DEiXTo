@@ -171,6 +171,7 @@
     <Compile Include="Services\XmlDialogBuilder.cs" />
     <Compile Include="Services\XmlRecordsWriter.cs" />
     <Compile Include="Views.Tests\AddLabelWindowTests.cs" />
+    <Compile Include="Views.Tests\AddSiblingOrderWindowTests.cs" />
     <Compile Include="Views\AddAttributeConstraintWindow.cs">
       <SubType>Form</SubType>
     </Compile>
