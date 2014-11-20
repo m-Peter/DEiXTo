@@ -135,7 +135,7 @@ namespace DEiXTo.Services
                     reader.ReadToFollowing("Node");
                     XmlDocument doc = new XmlDocument();
                     doc.Load(reader.ReadSubtree());
-                    createPattern1(doc.ChildNodes, rootNode);
+                    createPattern(doc.ChildNodes, rootNode);
                     wrapper.ExtractionPattern = new ExtractionPattern(rootNode);
                 }
             }
@@ -143,58 +143,122 @@ namespace DEiXTo.Services
             return wrapper;
         }
 
-        private void createPattern1(XmlNodeList nodes, TreeNode tNode)
+        private bool NonNodeElement(XmlNode node)
+        {
+            return (node.NodeType != XmlNodeType.Element) || (node.Name != "Node");
+        }
+
+        private string ReadTagAttribute(XmlNode node, NodeInfo pInfo, TreeNode treeNode)
+        {
+            string tagValue = node.Attributes["tag"].Value;
+
+            if (hasLabel(tagValue))
+            {
+                pInfo.Label = getLabel(tagValue);
+            }
+
+            return tagValue;
+        }
+
+        private bool hasLabel(string tagValue)
+        {
+            return tagValue.Contains(":");
+        }
+
+        private string getLabel(string tagValue)
+        {
+            var result = tagValue.Split(':');
+            return result[1];
+        }
+
+        private void ReadRegexAttribute(XmlNode node, NodeInfo pInfo, TreeNode treeNode)
+        {
+            var regexpr = node.Attributes["regexpr"];
+
+            if (regexpr != null)
+            {
+                pInfo.Regex = regexpr.Value;
+                var font = new Font(FontFamily.GenericSansSerif, 8.25f);
+                treeNode.NodeFont = new Font(font, FontStyle.Underline);
+            }
+        }
+
+        private void ReadStateAttribute(XmlNode node, NodeInfo nInfo, TreeNode treeNode)
+        {
+            var state = node.Attributes["stateIndex"].Value;
+
+            nInfo.State = NodeStateTranslator.StringToState(state);
+            int imageIndex = NodeStateTranslator.StringToImageIndex(state);
+            treeNode.SelectedImageIndex = imageIndex;
+            treeNode.ImageIndex = imageIndex;
+        }
+
+        private void ReadCareAboutSOAttribute(XmlNode node, NodeInfo nInfo, TreeNode treeNode)
+        {
+            var careAboutSO = node.Attributes["CareAboutSO"];
+            if (careAboutSO == null)
+            {
+                return;
+            }
+
+            if (careAboutSO.Value == "1")
+            {
+                nInfo.CareAboutSiblingOrder = true;
+                nInfo.SiblingOrderStart = Int32.Parse(node.Attributes["so_start"].Value);
+                nInfo.SiblingOrderStep = Int32.Parse(node.Attributes["so_step"].Value);
+            }
+        }
+
+        private void ReadIsRootAttribute(XmlNode node, NodeInfo pInfo, TreeNode treeNode)
+        {
+            var isRoot = node.Attributes["IsRoot"];
+
+            if (isRoot != null && isRoot.Value == "true")
+            {
+                pInfo.IsRoot = true;
+                var font = new Font(FontFamily.GenericSansSerif, 8.25f);
+                treeNode.NodeFont = new Font(font, FontStyle.Bold);
+            }
+        }
+
+        private void createPattern(XmlNodeList nodes, TreeNode treeNode)
         {
             foreach (XmlNode node in nodes)
             {
-                TreeNode temp;
-                if (node.NodeType == XmlNodeType.Element && node.Name == "Node")
+                if (NonNodeElement(node))
                 {
-                    if (tNode.Text == String.Empty)
-                    {
-                        NodeInfo pInfo = new NodeInfo();
-                        tNode.Text = node.Attributes["tag"].Value;
-                        var isRoot = node.Attributes["IsRoot"];
-
-                        if (isRoot != null && isRoot.Value == "true")
-                        {
-                            pInfo.IsRoot = true;
-                            var font = new Font(FontFamily.GenericSansSerif, 8.25f);
-                            tNode.NodeFont = new Font(font, FontStyle.Bold);
-                        }
-
-                        var state = node.Attributes["stateIndex"].Value;
-                        pInfo.State = NodeStateTranslator.StringToState(state);
-                        tNode.Tag = pInfo;
-
-                        var imageIndex = NodeStateTranslator.StringToImageIndex(state);
-                        tNode.SelectedImageIndex = imageIndex;
-                        tNode.ImageIndex = imageIndex;
-                        createPattern1(node.ChildNodes, tNode);
-                    }
-                    else
-                    {
-                        NodeInfo pInfo = new NodeInfo();
-                        temp = tNode.Nodes.Add(node.Attributes["tag"].Value);
-                        var isRoot = node.Attributes["IsRoot"];
-
-                        if (isRoot != null && isRoot.Value == "true")
-                        {
-                            pInfo.IsRoot = true;
-                            var font = new Font(FontFamily.GenericSansSerif, 8.25f);
-                            temp.NodeFont = new Font(font, FontStyle.Bold);
-                        }
-
-                        var state = node.Attributes["stateIndex"].Value;
-                        pInfo.State = NodeStateTranslator.StringToState(state);
-                        temp.Tag = pInfo;
-
-                        var imageIndex = NodeStateTranslator.StringToImageIndex(state);
-                        temp.SelectedImageIndex = imageIndex;
-                        temp.ImageIndex = imageIndex;
-                        createPattern1(node.ChildNodes, temp);
-                    }
+                    continue;
                 }
+
+                NodeInfo pInfo = new NodeInfo();
+                string tag = ReadTagAttribute(node, pInfo, treeNode);
+
+                if (treeNode.Text == String.Empty)
+                {
+                    treeNode.Text = tag;
+
+                    ReadIsRootAttribute(node, pInfo, treeNode);
+                    ReadRegexAttribute(node, pInfo, treeNode);
+                    ReadStateAttribute(node, pInfo, treeNode);
+                    ReadCareAboutSOAttribute(node, pInfo, treeNode);
+
+                    treeNode.Tag = pInfo;
+
+                    createPattern(node.ChildNodes, treeNode);
+                    return;
+                }
+
+                TreeNode tempNode;
+                tempNode = treeNode.Nodes.Add(tag);
+
+                ReadIsRootAttribute(node, pInfo, tempNode);
+                ReadRegexAttribute(node, pInfo, tempNode);
+                ReadStateAttribute(node, pInfo, tempNode);
+                ReadCareAboutSOAttribute(node, pInfo, tempNode);
+
+                tempNode.Tag = pInfo;
+
+                createPattern(node.ChildNodes, tempNode);
             }
         }
     }
