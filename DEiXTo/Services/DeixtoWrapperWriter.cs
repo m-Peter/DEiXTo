@@ -190,55 +190,5 @@ namespace DEiXTo.Services
             }
         }
 
-        public void write(string filename, TreeNodeCollection nodes)
-        {
-            XmlWriterSettings settings = new XmlWriterSettings();
-            settings.Indent = true;
-
-            using (_writer = XmlWriter.Create(filename, settings))
-            {
-                _writer.WriteStartDocument(); // Write the first line
-                _writer.WriteDocType("Project", null, "wpf.dtd", null); // Write the DOCTYPE
-
-                _writer.WriteStartElement("Project"); // Write Project element
-
-                writeInputFile();
-                writeTargetUrls();
-                writeMultiPage();
-                writeMaxHits();
-                writeExtractPageUrl();
-                writeSubmitForm();
-                //writeExtractionPattern(nodes);
-                writeIgnoredTags();
-                writeOutputFile();
-
-                _writer.WriteEndElement(); // Close Project element
-                _writer.WriteEndDocument(); // Close the document
-            }
-        }
-
-        private void writeNodes1(TreeNodeCollection nodes, bool isRoot)
-        {
-            foreach (TreeNode node in nodes)
-            {
-                if (node.SelectedImageIndex == 5 || node.ImageIndex == 5)
-                {
-                    continue;
-                }
-
-                _writer.WriteStartElement("Node"); // Write Node element
-                _writer.WriteAttributeString("tag", node.Text); // Write tag attribute
-                string stateIndex = NodeStateTranslator.StateToString(node.GetState());
-                _writer.WriteAttributeString("stateIndex", stateIndex); // Write stateIndex attribute
-
-                if (isRoot)
-                {
-                    _writer.WriteAttributeString("IsRoot", "true");
-                }
-
-                writeNodes1(node.Nodes, false);
-                _writer.WriteEndElement(); // Close Node Element
-            }
-        }
     }
 }
