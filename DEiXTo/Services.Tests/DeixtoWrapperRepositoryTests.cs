@@ -113,7 +113,7 @@ namespace DEiXTo.Services.Tests
         }
 
         [TestMethod]
-        public void TestSaveAndLoadOutputFileFields()
+        public void TestSaveAndLoadXmlOutputFile()
         {
             // Arrange
             _wrapper.OutputFileName = "output_file.xml";
@@ -127,6 +127,40 @@ namespace DEiXTo.Services.Tests
             // Assert
             Assert.AreEqual("output_file.xml", loaded.OutputFileName);
             Assert.AreEqual(Format.XML, loaded.OutputFormat);
+        }
+
+        [TestMethod]
+        public void TestSaveAndLoadTextOutputFile()
+        {
+            // Arrange
+            _wrapper.OutputFileName = "output_file.txt";
+            _wrapper.OutputFormat = Format.Text;
+
+            // Act
+            _repository.Save(_wrapper, _stream);
+            _stream.Position = 0;
+            var loaded = _repository.Load(_stream);
+
+            // Assert
+            Assert.AreEqual("output_file.txt", loaded.OutputFileName);
+            Assert.AreEqual(Format.Text, loaded.OutputFormat);
+        }
+
+        [TestMethod]
+        public void TestSaveAndLoadRssOutputFile()
+        {
+            // Arrange
+            _wrapper.OutputFileName = "output_file.rss";
+            _wrapper.OutputFormat = Format.RSS;
+
+            // Act
+            _repository.Save(_wrapper, _stream);
+            _stream.Position = 0;
+            var loaded = _repository.Load(_stream);
+
+            // Assert
+            Assert.AreEqual("output_file.rss", loaded.OutputFileName);
+            Assert.AreEqual(Format.RSS, loaded.OutputFormat);
         }
 
         [TestMethod]
