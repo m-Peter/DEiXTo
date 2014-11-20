@@ -14,6 +14,11 @@ namespace DEiXTo.Presenters
             View = view;
             _node = node;
             View.Presenter = this;
+
+            if (node.HasLabel())
+            {
+                View.LabelText = node.GetLabel();
+            }
         }
 
         public IAddLabelView View { get; set; }

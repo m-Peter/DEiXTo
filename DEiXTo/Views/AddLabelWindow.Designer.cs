@@ -91,8 +91,8 @@
         #endregion
 
         private System.Windows.Forms.Label EnterLabelLabel;
-        private System.Windows.Forms.TextBox AddLabelTextBox;
-        private System.Windows.Forms.Button OkButton;
+        public System.Windows.Forms.TextBox AddLabelTextBox;
+        public System.Windows.Forms.Button OkButton;
         private System.Windows.Forms.Button CancelButton;
     }
 }
