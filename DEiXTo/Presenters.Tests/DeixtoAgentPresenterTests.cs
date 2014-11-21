@@ -796,6 +796,9 @@ namespace DEiXTo.Presenters.Tests
         {
             // Arrange
             var node = new TreeNode("TEXT");
+            NodeInfo nInfo = new NodeInfo();
+            nInfo.IsTextNode = true;
+            node.Tag = nInfo;
             
             // Act
             _presenter.AuxiliaryPatternNodeClick(node);
@@ -919,6 +922,9 @@ namespace DEiXTo.Presenters.Tests
         {
             // Arrange
             var node = new TreeNode("TEXT");
+            NodeInfo nInfo = new NodeInfo();
+            nInfo.IsTextNode = true;
+            node.Tag = nInfo;
 
             // Act
             _presenter.WorkingPatternNodeClick(node, MouseButtons.Left);
@@ -1003,6 +1009,9 @@ namespace DEiXTo.Presenters.Tests
             // Arrange
             var element = CreateHtmlElement();
             var node = new TreeNode("TEXT");
+            NodeInfo nInfo = new NodeInfo();
+            nInfo.IsTextNode = true;
+            node.Tag = nInfo;
             _screen.Setup(s => s.GetElementFromNode(node)).Returns(element);
             _view.Setup(v => v.CanAutoScroll).Returns(true);
 

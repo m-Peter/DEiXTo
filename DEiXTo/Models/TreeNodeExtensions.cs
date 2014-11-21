@@ -1,8 +1,7 @@
-﻿using DEiXTo.Models;
-using System;
+﻿using System;
 using System.Windows.Forms;
 
-namespace DEiXTo.Services
+namespace DEiXTo.Models
 {
     public static class TreeNodeExtensions
     {
@@ -245,7 +244,14 @@ namespace DEiXTo.Services
 
         public static bool IsTextNode(this TreeNode node)
         {
-            return node.Text == "TEXT";
+            NodeInfo pInfo = GetPointerInfo(node);
+
+            if (pInfo != null)
+            {
+                return pInfo.IsTextNode;
+            }
+
+            return false;
         }
 
         public static void AddNode(this TreeNode node, TreeNode newNode)

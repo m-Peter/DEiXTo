@@ -70,6 +70,7 @@ namespace DEiXTo.Services
                     var txtNode = new TreeNode("TEXT");
                     txtNode.ToolTipText = value.Trim();
                     NodeInfo pointer = new NodeInfo();
+                    pointer.IsTextNode = true;
                     pointer.Path = pInfo.Path + ".TEXT";
                     pointer.Content = curElement.nodeValue;
                     pointer.State = NodeState.Checked;
@@ -142,6 +143,7 @@ namespace DEiXTo.Services
                     var txtNode = new TreeNode("TEXT");
                     txtNode.ToolTipText = value.Trim();
                     NodeInfo pointer = new NodeInfo();
+                    pointer.IsTextNode = true;
                     pointer.Path = pInfo.Path + ".TEXT";
                     pointer.Content = curElement.nodeValue;
                     pointer.State = NodeState.Checked;
@@ -216,6 +218,7 @@ namespace DEiXTo.Services
             string value = curElement.nodeValue as string;
             txtNode.ToolTipText = value.Trim();
             NodeInfo pointer = new NodeInfo();
+            pointer.IsTextNode = true;
             pointer.Path = pInfo.Path + ".TEXT";
             pointer.Content = curElement.nodeValue;
             pointer.State = NodeState.Checked;

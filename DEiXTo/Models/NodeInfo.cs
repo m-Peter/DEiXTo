@@ -9,6 +9,7 @@
         public string Label { get; set; }
         public string Regex { get; set; }
         public bool IsRoot { get; set; }
+        public bool IsTextNode { get; set; }
         public NodeState State { get; set; }
         public bool CareAboutSiblingOrder { get; set; }
         public int SiblingOrderStart { get; set; }
