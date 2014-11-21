@@ -13,10 +13,15 @@ namespace DEiXTo.Views
 
         public AddSiblingOrderPresenter Presenter { get; set; }
 
-        public void ApplyVisibilityStateInOrdering(bool checkedState)
+        public void EnableSiblingOrderFields()
         {
-            StartIndexNUD.Enabled = checkedState;
-            StepValueNUD.Enabled = checkedState;
+            StartIndexNUD.Enabled = StepValueNUD.Enabled = true;
+        }
+
+        public void DisableSiblingOrderFields()
+        {
+            StartIndexNUD.Value = StepValueNUD.Value = 0;
+            StartIndexNUD.Enabled = StepValueNUD.Enabled = false;
         }
 
         public int StartIndex

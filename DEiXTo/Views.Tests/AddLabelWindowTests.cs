@@ -103,7 +103,6 @@ namespace DEiXTo.Views.Tests
             // Arrange
             node.SetLabel("Container");
             presenter = new AddLabelPresenter(window, node);
-            presenter.View = window;
 
             // Act
             window.Show();
@@ -119,7 +118,6 @@ namespace DEiXTo.Views.Tests
             node.SetLabel("Container");
             node.Text = "TEXT:Container";
             presenter = new AddLabelPresenter(window, node);
-            presenter.View = window;
 
             // Act
             window.Show();

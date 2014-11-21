@@ -3,6 +3,7 @@ using DEiXTo.Presenters;
 using NUnit.Framework;
 using System.Windows.Forms;
 using DEiXTo.Services;
+using System.Drawing;
 
 namespace DEiXTo.Views.Tests
 {
@@ -11,11 +12,17 @@ namespace DEiXTo.Views.Tests
     {
         private AddSiblingOrderWindow window;
         private AddSiblingOrderPresenter presenter;
+        private TreeNode node;
 
         [SetUp]
         public void Init()
         {
+            node = new TreeNode("DIV");
+            node.Tag = new NodeInfo();
             window = new AddSiblingOrderWindow();
+            presenter = new AddSiblingOrderPresenter(window, node);
+
+            window.Show();
         }
 
         [TearDown]
@@ -27,49 +34,30 @@ namespace DEiXTo.Views.Tests
         [Test]
         public void TestStartingState()
         {
-            // Arrange
-            presenter = new AddSiblingOrderPresenter(window, new TreeNode());
-            presenter.View = window;
-
-            // Act
-            window.Show();
-
-            // Assert
             Assert.IsFalse(window.SiblingOrderCheckBox.Checked);
             Assert.IsFalse(window.StartIndexNUD.Enabled);
             Assert.IsFalse(window.StepValueNUD.Enabled);
         }
 
         [Test]
-        public void TestCheckSiblingOrderCheckBox()
+        public void TestGetAndSetSiblingOrderFields()
         {
-            // Arrange
-            presenter = new AddSiblingOrderPresenter(window, new TreeNode());
-            presenter.View = window;
-
             // Act
-            window.Show();
             window.SiblingOrderCheckBox.Checked = true;
-
+            window.StartIndexNUD.Value = 1;
+            window.StepValueNUD.Value = 3;
             // Assert
-            Assert.IsTrue(window.SiblingOrderCheckBox.Checked);
-            Assert.IsTrue(window.StartIndexNUD.Enabled);
-            Assert.IsTrue(window.StepValueNUD.Enabled);
-        }
+            Assert.IsTrue(window.CareAboutSiblingOrder);
+            Assert.AreEqual(1, window.StartIndex);
+            Assert.AreEqual(3, window.StepValue);
 
-        [Test]
-        public void TestAssignSiblingOrderFields()
-        {
-            // Arrange
-            presenter = new AddSiblingOrderPresenter(window, new TreeNode());
-            presenter.View = window;
+            // Reset
+            window.SiblingOrderCheckBox.Checked = false;
 
             // Act
-            window.Show();
             window.CareAboutSiblingOrder = true;
             window.StartIndex = 2;
             window.StepValue = 4;
-
             // Assert
             Assert.IsTrue(window.SiblingOrderCheckBox.Checked);
             Assert.AreEqual(2, window.StartIndexNUD.Value);
@@ -77,48 +65,109 @@ namespace DEiXTo.Views.Tests
         }
 
         [Test]
+        public void TestEnableSiblingOrderFields()
+        {
+            // Act
+            window.SiblingOrderCheckBox.Checked = true;
+            // Assert
+            Assert.IsTrue(window.StartIndexNUD.Enabled);
+            Assert.IsTrue(window.StepValueNUD.Enabled);
+        }
+
+        [Test]
+        public void TestDisableSiblingOrderFields()
+        {
+            // Arrange
+            window.SiblingOrderCheckBox.Checked = true;
+            window.StartIndexNUD.Value = 1;
+            window.StepValueNUD.Value = 3;
+
+            // Act
+            window.SiblingOrderCheckBox.Checked = false;
+
+            // Assert
+            Assert.IsFalse(window.StartIndexNUD.Enabled);
+            Assert.AreEqual(0, window.StartIndexNUD.Value);
+            Assert.IsFalse(window.StepValueNUD.Enabled);
+            Assert.AreEqual(0, window.StepValueNUD.Value);
+        }
+
+        [Test]
         public void TestAddSiblingOrderToNode()
         {
             // Arrange
-            var node = new TreeNode("DIV");
-            NodeInfo nInfo = new NodeInfo();
-            node.Tag = nInfo;
-            presenter = new AddSiblingOrderPresenter(window, node);
-            presenter.View = window;
-
-            // Act
-            window.Show();
             window.CareAboutSiblingOrder = true;
             window.StartIndex = 1;
             window.StepValue = 3;
+
+            // Act
             window.OKButton.PerformClick();
 
             // Assert
             Assert.IsTrue(node.GetCareAboutSiblingOrder());
             Assert.AreEqual(1, node.GetStartIndex());
             Assert.AreEqual(3, node.GetStepValue());
+            Assert.AreEqual(Color.CadetBlue, node.ForeColor);
         }
 
         [Test]
         public void TestLoadExistingSiblingOrderFromNode()
         {
             // Arrange
-            var node = new TreeNode("DIV");
-            NodeInfo nInfo = new NodeInfo();
-            nInfo.CareAboutSiblingOrder = true;
-            nInfo.SiblingOrderStart = 1;
-            nInfo.SiblingOrderStep = 3;
-            node.Tag = nInfo;
+            node.SetCareAboutSiblingOrder(true);
+            node.SetStartIndex(1);
+            node.SetStepValue(3);
             presenter = new AddSiblingOrderPresenter(window, node);
-            presenter.View = window;
 
             // Act
             window.Show();
 
             // Assert
-            Assert.IsTrue(window.SiblingOrderCheckBox.Checked);
-            Assert.AreEqual(1, window.StartIndexNUD.Value);
-            Assert.AreEqual(3, window.StepValueNUD.Value);
+            Assert.IsTrue(window.CareAboutSiblingOrder);
+            Assert.AreEqual(1, window.StartIndex);
+            Assert.AreEqual(3, window.StepValue);
+        }
+
+        [Test]
+        public void TestChangeExistingSiblingOrder()
+        {
+            // Arrange
+            node.SetCareAboutSiblingOrder(true);
+            node.SetStartIndex(1);
+            node.SetStepValue(3);
+            presenter = new AddSiblingOrderPresenter(window, node);
+
+            // Act
+            window.Show();
+            window.StartIndex = 2;
+            window.StepValue = 4;
+            window.OKButton.PerformClick();
+
+            // Assert
+            Assert.IsTrue(node.GetCareAboutSiblingOrder());
+            Assert.AreEqual(2, node.GetStartIndex());
+            Assert.AreEqual(4, node.GetStepValue());
+        }
+
+        [Test]
+        public void TestRemoveExistingSiblingOrder()
+        {
+            // Arrange
+            node.SetCareAboutSiblingOrder(true);
+            node.SetStartIndex(1);
+            node.SetStepValue(3);
+            presenter = new AddSiblingOrderPresenter(window, node);
+
+            // Act
+            window.Show();
+            window.CareAboutSiblingOrder = false;
+            window.OKButton.PerformClick();
+
+            // Assert
+            Assert.IsFalse(node.GetCareAboutSiblingOrder());
+            Assert.AreEqual(0, node.GetStartIndex());
+            Assert.AreEqual(0, node.GetStepValue());
+            Assert.AreEqual(Color.Black, node.ForeColor);
         }
     }
 }

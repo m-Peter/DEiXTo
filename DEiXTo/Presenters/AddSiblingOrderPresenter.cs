@@ -33,12 +33,6 @@ namespace DEiXTo.Presenters
 
         public void AddSiblingOrder()
         {
-            if (!View.CareAboutSiblingOrder)
-            {
-                View.Exit();
-                return;
-            }
-
             int startIndex = View.StartIndex;
             int stepValue = View.StepValue;
             bool careAboutSO = View.CareAboutSiblingOrder;
@@ -47,14 +41,27 @@ namespace DEiXTo.Presenters
             _node.SetStartIndex(startIndex);
             _node.SetStepValue(stepValue);
 
+            if (!View.CareAboutSiblingOrder)
+            {
+                _node.ForeColor = Color.Black;
+                View.Exit();
+                return;
+            }
+
             _node.ForeColor = Color.CadetBlue;
 
             View.Exit();
         }
 
-        public void ChangeSiblingOrderVisibility(bool state)
+        public void ChangeSiblingOrderVisibility(bool enable)
         {
-            View.ApplyVisibilityStateInOrdering(state);
+            if (enable)
+            {
+                View.EnableSiblingOrderFields();
+                return;
+            }
+
+            View.DisableSiblingOrderFields();
         }
     }
 }

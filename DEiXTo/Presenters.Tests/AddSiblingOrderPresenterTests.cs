@@ -63,7 +63,7 @@ namespace DEiXTo.Presenters.Tests
             _presenter.ChangeSiblingOrderVisibility(true);
 
             // Assert
-            _view.Verify(m => m.ApplyVisibilityStateInOrdering(true));
+            _view.Verify(m => m.EnableSiblingOrderFields());
         }
 
         [TestMethod]
@@ -73,7 +73,7 @@ namespace DEiXTo.Presenters.Tests
             _presenter.ChangeSiblingOrderVisibility(false);
 
             // Assert
-            _view.Verify(m => m.ApplyVisibilityStateInOrdering(false));
+            _view.Verify(m => m.DisableSiblingOrderFields());
         }
     }
 }

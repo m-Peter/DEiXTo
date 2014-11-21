@@ -6,7 +6,8 @@ namespace DEiXTo.Views
     {
         AddSiblingOrderPresenter Presenter { get; set; }
 
-        void ApplyVisibilityStateInOrdering(bool checkedState);
+        void EnableSiblingOrderFields();
+        void DisableSiblingOrderFields();
         int StartIndex { get; set; }
         int StepValue { get; set; }
         bool CareAboutSiblingOrder { get; set; }
