@@ -12,11 +12,17 @@ namespace DEiXTo.Views.Tests
     {
         private AddLabelWindow window;
         private AddLabelPresenter presenter;
+        private TreeNode node;
 
         [SetUp]
         public void Init()
         {
+            node = new TreeNode("TEXT");
+            node.Tag = new NodeInfo();
             window = new AddLabelWindow();
+            presenter = new AddLabelPresenter(window, node);
+
+            window.Show();
         }
 
         [TearDown]
@@ -36,14 +42,6 @@ namespace DEiXTo.Views.Tests
         [Test]
         public void TestStartingState()
         {
-            // Arrange
-            presenter = new AddLabelPresenter(window, new TreeNode());
-            presenter.View = window;
-            
-            // Act
-            window.Show();
-
-            // Assert
             Assert.AreSame(presenter, window.Presenter);
             Assert.AreEqual(string.Empty, window.AddLabelTextBox.Text);
         }
@@ -51,53 +49,44 @@ namespace DEiXTo.Views.Tests
         [Test]
         public void TestGetAndSetLabelText()
         {
-            // Arrange
-            presenter = new AddLabelPresenter(window, new TreeNode());
-            presenter.View = window;
+            // Act
+            window.AddLabelTextBox.Text = "Container";
+            // Assert
+            Assert.AreEqual("Container", window.LabelText);
 
             // Act
-            window.Show();
-            window.LabelText = "Container";
-
+            window.LabelText = "Content";
             // Assert
-            Assert.AreEqual("Container", window.AddLabelTextBox.Text);
+            Assert.AreEqual("Content", window.AddLabelTextBox.Text);
         }
 
         [Test]
         public void TestAddLabelToNode()
         {
             // Arrange
-            var node = new TreeNode("DIV");
-            presenter = new AddLabelPresenter(window, node);
-            presenter.View = window;
-
-            // Act
-            window.Show();
             window.AddLabelTextBox.Text = "Container";
+            
+            // Act
             window.OkButton.PerformClick();
 
             // Assert
-            Assert.AreEqual("DIV:Container", node.Text);
+            Assert.AreEqual("TEXT:Container", node.Text);
+            Assert.AreEqual("Container", node.GetLabel());
         }
 
         [Test]
         public void TestAddInvalidLabelToNode()
         {
             // Arrange
-            AddLabelWindow form = new AddLabelWindow();
-            var node = new TreeNode("DIV");
-            presenter = new AddLabelPresenter(form, node);
-            presenter.View = form;
+            window.AddLabelTextBox.Text = string.Empty;
 
             // Act
-            base.ExpectModal("DEiXTo", MessageBoxTestHandler);
-            form.Show();
-            form.AddLabelTextBox.Text = string.Empty;
-            
-            form.OkButton.PerformClick();
+            ExpectModal("DEiXTo", MessageBoxTestHandler);
+            window.OkButton.PerformClick();
 
             // Assert
-            Assert.AreEqual("DIV", node.Text);
+            Assert.AreEqual("TEXT", node.Text);
+            Assert.Null(node.GetLabel());
         }
 
         public void MessageBoxTestHandler()
@@ -112,10 +101,7 @@ namespace DEiXTo.Views.Tests
         public void TestLoadExistingLabelFromNode()
         {
             // Arrange
-            var node = new TreeNode("DIV");
-            NodeInfo nInfo = new NodeInfo();
-            nInfo.Label = "Container";
-            node.Tag = nInfo;
+            node.SetLabel("Container");
             presenter = new AddLabelPresenter(window, node);
             presenter.View = window;
 
@@ -124,6 +110,25 @@ namespace DEiXTo.Views.Tests
 
             // Assert
             Assert.AreEqual("Container", window.AddLabelTextBox.Text);
+        }
+
+        [Test]
+        public void TestChangeExistingLabel()
+        {
+            // Arrange
+            node.SetLabel("Container");
+            node.Text = "TEXT:Container";
+            presenter = new AddLabelPresenter(window, node);
+            presenter.View = window;
+
+            // Act
+            window.Show();
+            window.AddLabelTextBox.Text = "Content";
+            window.OkButton.PerformClick();
+
+            // Assert
+            Assert.AreEqual("TEXT:Content", node.Text);
+            Assert.AreEqual("Content", node.GetLabel());
         }
     }
 }

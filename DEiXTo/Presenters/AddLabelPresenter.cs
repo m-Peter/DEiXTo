@@ -35,9 +35,14 @@ namespace DEiXTo.Presenters
             }
 
             _node.SetLabel(label);
-            string labeledTag = string.Format("{0}:{1}", _node.Text, label);
+            string labeledTag = string.Format("{0}:{1}", trimLabel(_node), label);
             _node.Text = labeledTag;
             View.Exit();
+        }
+
+        private string trimLabel(TreeNode node)
+        {
+            return node.Text.Split(':')[0];
         }
 
         public void KeyDownPress(Keys key)
