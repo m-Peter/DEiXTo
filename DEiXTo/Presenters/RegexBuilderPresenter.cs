@@ -29,6 +29,7 @@ namespace DEiXTo.Presenters
             if (_node.HasRegex())
             {
                 View.RegexText = _node.GetRegex();
+                View.InverseRegex = _node.InverseRegex();
                 return;
             }
 
@@ -38,6 +39,7 @@ namespace DEiXTo.Presenters
         public void AddRegex()
         {
             string regex = View.RegexText;
+            bool inverse = View.InverseRegex;
 
             if (String.IsNullOrWhiteSpace(regex))
             {
@@ -46,10 +48,12 @@ namespace DEiXTo.Presenters
             }
 
             _node.SetRegex(regex);
+            _node.SetInverse(inverse);
+
             if (_node.NodeFont != null)
             {
                 var font = _node.NodeFont;
-                _node.NodeFont = new Font(font, FontStyle.Underline | FontStyle.Bold);
+                _node.NodeFont = new Font(font, FontStyle.Underline | font.Style);
             }
             else
             {

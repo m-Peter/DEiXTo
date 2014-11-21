@@ -8,6 +8,7 @@
         public string Source { get; set; }
         public string Label { get; set; }
         public string Regex { get; set; }
+        public bool InverseRegex { get; set; }
         public bool IsRoot { get; set; }
         public bool IsTextNode { get; set; }
         public NodeState State { get; set; }

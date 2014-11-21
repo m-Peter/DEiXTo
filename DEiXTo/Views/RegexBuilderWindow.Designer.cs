@@ -71,12 +71,14 @@
             this.PatternColumn,
             this.DescriptionColumn,
             this.ExampleColumn});
+            this.PatternsListView.FullRowSelect = true;
             this.PatternsListView.Location = new System.Drawing.Point(6, 15);
             this.PatternsListView.Name = "PatternsListView";
             this.PatternsListView.Size = new System.Drawing.Size(433, 249);
             this.PatternsListView.TabIndex = 0;
             this.PatternsListView.UseCompatibleStateImageBehavior = false;
             this.PatternsListView.View = System.Windows.Forms.View.Details;
+            this.PatternsListView.ItemSelectionChanged += new System.Windows.Forms.ListViewItemSelectionChangedEventHandler(this.PatternsListView_ItemSelectionChanged);
             // 
             // PatternColumn
             // 
@@ -177,9 +179,9 @@
         private System.Windows.Forms.ListView PatternsListView;
         private System.Windows.Forms.TabPage tabPage2;
         private System.Windows.Forms.Label AddRegexLabel;
-        private System.Windows.Forms.TextBox AddRegexTextBox;
-        private System.Windows.Forms.CheckBox InverseEvaluationCheckBox;
-        private System.Windows.Forms.Button OKButton;
+        public System.Windows.Forms.TextBox AddRegexTextBox;
+        public System.Windows.Forms.CheckBox InverseEvaluationCheckBox;
+        public System.Windows.Forms.Button OKButton;
         private System.Windows.Forms.Button CancelButton;
         private System.Windows.Forms.ColumnHeader PatternColumn;
         private System.Windows.Forms.ColumnHeader DescriptionColumn;

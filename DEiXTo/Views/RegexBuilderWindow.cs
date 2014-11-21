@@ -43,6 +43,12 @@ namespace DEiXTo.Views
             }
         }
 
+        public bool InverseRegex
+        {
+            get { return InverseEvaluationCheckBox.Checked; }
+            set { InverseEvaluationCheckBox.Checked = value; }
+        }
+
         public RegexBuilderPresenter Presenter { get; set; }
 
         public void ShowInvalidRegexMessage()
@@ -68,6 +74,16 @@ namespace DEiXTo.Views
         private void RegexBuilderWindow_KeyDown(object sender, KeyEventArgs e)
         {
             Presenter.KeyDownPress(e.KeyCode);
+        }
+
+        private void PatternsListView_ItemSelectionChanged(object sender, ListViewItemSelectionChangedEventArgs e)
+        {
+            var item = e.Item;
+
+            if (e.IsSelected)
+            {
+                AddRegexTextBox.Text = item.SubItems[0].Text;
+            }
         }
     }
 }

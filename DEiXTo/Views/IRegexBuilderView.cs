@@ -8,6 +8,7 @@ namespace DEiXTo.Views
         RegexBuilderPresenter Presenter { get; set; }
 
         string RegexText { get; set; }
+        bool InverseRegex { get; set; }
 
         void ShowInvalidRegexMessage();
         void Exit();
