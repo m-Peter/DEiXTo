@@ -109,6 +109,7 @@
     <Compile Include="Services.Tests\ElementStylingTests.cs" />
     <Compile Include="Services.Tests\ExtractionPatternRepositoryTests.cs" />
     <Compile Include="Services.Tests\NodeBuilderTests.cs" />
+    <Compile Include="Services.Tests\TagTooltipExtractorTests.cs" />
     <Compile Include="Services.Tests\TooltipExtractionFactoryTests.cs" />
     <Compile Include="Services\DeixtoWrapperFileRepository.cs" />
     <Compile Include="Services\DeixtoWrapperMapper.cs" />
