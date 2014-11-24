@@ -188,7 +188,7 @@ namespace DEiXTo.Services
             pInfo.Source = tmpElem.outerHTML;
             
             newNode.Tag = pInfo;
-            newNode.ToolTipText = GetTooltipFor(tmpElem);
+            newNode.ToolTipText = TooltipExtractionFactory.GetTooltipFor(tmpElem).ExtractTooltip();
         }
 
         private void InsertChildNodes(IHTMLDOMNode element, NodeInfo pInfo, TreeNode newNode, DOMTree domTree)
@@ -283,7 +283,7 @@ namespace DEiXTo.Services
             return path;
         }
 
-        private string GetTooltipFor(IHTMLElement element)
+        /*private string GetTooltipFor(IHTMLElement element)
         {
             var tagName = element.tagName;
             var tooltip = "";
@@ -303,6 +303,6 @@ namespace DEiXTo.Services
             }
 
             return tooltip;
-        }
+        }*/
     }
 }

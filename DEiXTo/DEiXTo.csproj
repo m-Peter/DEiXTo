@@ -111,8 +111,12 @@
     <Compile Include="Services.Tests\NodeBuilderTests.cs" />
     <Compile Include="Services\DeixtoWrapperFileRepository.cs" />
     <Compile Include="Services\DeixtoWrapperMapper.cs" />
+    <Compile Include="Services\FormTooltipExtractor.cs" />
     <Compile Include="Services\IDeixtoWrapperMapper.cs" />
     <Compile Include="Services\IDeixtoWrapperRepository.cs" />
+    <Compile Include="Services\ImageTooltipExtractor.cs" />
+    <Compile Include="Services\InputTooltipExtractor.cs" />
+    <Compile Include="Services\LinkTooltipExtractor.cs" />
     <Compile Include="Services\NodeStateTranslator.cs" />
     <Compile Include="Services.Tests\PatternExecutorTests.cs" />
     <Compile Include="Services.Tests\RecordsWriterFactoryTests.cs" />
@@ -149,6 +153,7 @@
     <Compile Include="Services\ISubscriber.cs" />
     <Compile Include="Services\LinkAttributeExtractor.cs" />
     <Compile Include="Services\LinkContentExtractor.cs" />
+    <Compile Include="Services\NullTooltipExtractor.cs" />
     <Compile Include="Services\OpenFileDialogWrapper.cs" />
     <Compile Include="Services\ReadTargetUrls.cs" />
     <Compile Include="Services\ReadWrapperSettings.cs" />
@@ -157,6 +162,7 @@
     <Compile Include="Services\RssDialogBuilder.cs" />
     <Compile Include="Services\SaveFileDialogWrapper.cs" />
     <Compile Include="Services\TagContentExtractor.cs" />
+    <Compile Include="Services\TagTooltipExtractor.cs" />
     <Compile Include="Services\TextDialogBuilder.cs" />
     <Compile Include="Services\DOMBuilder.cs" />
     <Compile Include="Services\ElementStyling.cs" />
@@ -164,6 +170,7 @@
     <Compile Include="Services\PatternExecutor.cs" />
     <Compile Include="Services\StatesImageLoader.cs" />
     <Compile Include="Models\TreeNodeExtensions.cs" />
+    <Compile Include="Services\TooltipExtractionFactory.cs" />
     <Compile Include="Services\WindowsViewLoader.cs" />
     <Compile Include="Services\TextRecordsWriter.cs" />
     <Compile Include="Services\ExtractionPatternWriter.cs" />
