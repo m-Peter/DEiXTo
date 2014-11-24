@@ -71,7 +71,6 @@ namespace DEiXTo.Services.Tests
         {
             // Arrange
             var element = CreateGenericElement();
-            element.ToString();
             var domElement = element.DomElement as IHTMLElement;
 
             // Act
