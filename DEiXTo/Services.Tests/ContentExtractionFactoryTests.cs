@@ -15,10 +15,9 @@ namespace DEiXTo.Services.Tests
         {
             // Arrange
             var link = CreateLinkElement();
-            var domElement = link.DomElement as IHTMLElement;
 
             // Act
-            var extractor = ContentExtractionFactory.GetExtractorFor(domElement);
+            var extractor = ContentExtractionFactory.GetExtractorFor(link);
 
             // Assert
             Assert.IsInstanceOfType(extractor, typeof(LinkContentExtractor));
@@ -29,10 +28,9 @@ namespace DEiXTo.Services.Tests
         {
             // Arrange
             var image = CreateImageElement();
-            var domElement = image.DomElement as IHTMLElement;
 
             // Act
-            var extractor = ContentExtractionFactory.GetExtractorFor(domElement);
+            var extractor = ContentExtractionFactory.GetExtractorFor(image);
 
             // Assert
             Assert.IsInstanceOfType(extractor, typeof(ImageContentExtractor));
@@ -43,10 +41,9 @@ namespace DEiXTo.Services.Tests
         {
             // Arrange
             var form = CreateFormElement();
-            var domElement = form.DomElement as IHTMLElement;
 
             // Act
-            var extractor = ContentExtractionFactory.GetExtractorFor(domElement);
+            var extractor = ContentExtractionFactory.GetExtractorFor(form);
 
             // Assert
             Assert.IsInstanceOfType(extractor, typeof(FormContentExtractor));
@@ -57,10 +54,9 @@ namespace DEiXTo.Services.Tests
         {
             // Arrange
             var input = CreateInputElement();
-            var domElement = input.DomElement as IHTMLElement;
 
             // Act
-            var extractor = ContentExtractionFactory.GetExtractorFor(domElement);
+            var extractor = ContentExtractionFactory.GetExtractorFor(input);
 
             // Assert
             Assert.IsInstanceOfType(extractor, typeof(InputContentExtractor));
@@ -71,58 +67,62 @@ namespace DEiXTo.Services.Tests
         {
             // Arrange
             var element = CreateGenericElement();
-            var domElement = element.DomElement as IHTMLElement;
 
             // Act
-            var extractor = ContentExtractionFactory.GetExtractorFor(domElement);
+            var extractor = ContentExtractionFactory.GetExtractorFor(element);
             
             // Assert
             Assert.IsInstanceOfType(extractor, typeof(GenericContentExtractor));
         }
 
-        private HtmlElement CreateGenericElement()
+        private IHTMLElement CreateGenericElement()
         {
             var doc = CreateDocument();
             doc.Write("<p>Some text in here</p>");
             var element = doc.GetElementsByTagName("p")[0];
+            var domElement = (IHTMLElement)element.DomElement;
 
-            return element;
+            return domElement;
         }
 
-        private HtmlElement CreateInputElement()
+        private IHTMLElement CreateInputElement()
         {
             var doc = CreateDocument();
             doc.Write("<input name='s' type='text' />");
             var element = doc.GetElementsByTagName("input")[0];
+            var domElement = (IHTMLElement)element.DomElement;
 
-            return element;
+            return domElement;
         }
 
-        private HtmlElement CreateFormElement()
+        private IHTMLElement CreateFormElement()
         {
             var doc = CreateDocument();
             doc.Write("<form method='get' action='http://www.sitepoint.com'></form>");
             var element = doc.Forms[0];
+            var domElement = (IHTMLElement)element.DomElement;
             
-            return element;
+            return domElement;
         }
 
-        private HtmlElement CreateImageElement()
+        private IHTMLElement CreateImageElement()
         {
             var doc = CreateDocument();
             doc.Write("<img src='/img/main/thumb-small.png' alt='Image' />");
             var element = doc.GetElementsByTagName("img")[0];
+            var domElement = (IHTMLElement)element.DomElement;
 
-            return element;
+            return domElement;
         }
 
-        private HtmlElement CreateLinkElement()
+        private IHTMLElement CreateLinkElement()
         {
             var doc = CreateDocument();
             doc.Write("<a href='http://www.google.gr/'>Google</a>");
             var element = doc.GetElementsByTagName("a")[0];
+            var domElement = (IHTMLElement)element.DomElement;
 
-            return element;
+            return domElement;
         }
 
         private HtmlDocument CreateDocument()

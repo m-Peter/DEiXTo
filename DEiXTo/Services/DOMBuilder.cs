@@ -68,7 +68,6 @@ namespace DEiXTo.Services
                 if (curElement.nodeName == "#text" && !String.IsNullOrWhiteSpace(value))
                 {
                     var txtNode = new TreeNode("TEXT");
-                    //txtNode.ToolTipText = value.Trim();
                     txtNode.ToolTipText = TooltipExtractionFactory.GetTooltipFor(curElement).ExtractTooltip();
                     
                     NodeInfo pointer = new NodeInfo();
@@ -143,7 +142,7 @@ namespace DEiXTo.Services
                 if (IsTextNode(curElement, value))
                 {
                     var txtNode = new TreeNode("TEXT");
-                    txtNode.ToolTipText = value.Trim();
+                    txtNode.ToolTipText = TooltipExtractionFactory.GetTooltipFor(curElement).ExtractTooltip();
                     NodeInfo pointer = new NodeInfo();
                     pointer.IsTextNode = true;
                     pointer.Path = pInfo.Path + ".TEXT";
@@ -218,7 +217,6 @@ namespace DEiXTo.Services
         {
             var txtNode = new TreeNode("TEXT");
             string value = curElement.nodeValue as string;
-            //txtNode.ToolTipText = value.Trim();
             txtNode.ToolTipText = TooltipExtractionFactory.GetTooltipFor(curElement).ExtractTooltip();
             NodeInfo pointer = new NodeInfo();
             pointer.IsTextNode = true;
@@ -285,27 +283,5 @@ namespace DEiXTo.Services
 
             return path;
         }
-
-        /*private string GetTooltipFor(IHTMLElement element)
-        {
-            var tagName = element.tagName;
-            var tooltip = "";
-
-            switch (tagName)
-            {
-                case "A":
-                    tooltip = element.getAttribute("href");
-                    break;
-                case "IMG":
-                    tooltip = element.getAttribute("src");
-                    break;
-                case "FORM":
-                case "INPUT":
-                    tooltip = element.getAttribute("name");
-                    break;
-            }
-
-            return tooltip;
-        }*/
     }
 }
