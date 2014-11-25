@@ -4,14 +4,15 @@ namespace DEiXTo.Services
 {
     public class InputTooltipExtractor : TagTooltipExtractor
     {
-        public InputTooltipExtractor(IHTMLElement element)
+        public InputTooltipExtractor(IHTMLDOMNode element)
         {
             _element = element;
         }
 
         public override string ExtractTooltip()
         {
-            return _element.getAttribute("name");
+            var elem = (IHTMLElement)_element;
+            return elem.getAttribute("name");
         }
     }
 }

@@ -79,9 +79,23 @@ namespace DEiXTo.Services.Tests
             Assert.AreEqual(string.Empty, tooltip);
         }
 
+        [TestMethod]
+        public void TestExtractTooltipFromTextTag()
+        {
+            // Arrange
+            var element = CreateTextElement();
+            var extractor = TooltipExtractionFactory.GetTooltipFor(element);
+
+            // Act
+            var tooltip = extractor.ExtractTooltip();
+
+            // Assert
+            Assert.AreEqual("Some text in here", element.nodeValue);
+        }
+
         private TagTooltipExtractor CreateExtractor(HtmlElement element)
         {
-            var domElement = element.DomElement as IHTMLElement;
+            var domElement = element.DomElement as IHTMLDOMNode;
             var extractor = TooltipExtractionFactory.GetTooltipFor(domElement);
 
             return extractor;
@@ -94,6 +108,16 @@ namespace DEiXTo.Services.Tests
             var element = doc.GetElementsByTagName("p")[0];
 
             return element;
+        }
+
+        private IHTMLDOMNode CreateTextElement()
+        {
+            var doc = CreateDocument();
+            doc.Write("<p>Some text in here</p>");
+            var element = doc.GetElementsByTagName("p")[0];
+            var domNode = (IHTMLDOMNode)element.DomElement;
+            var textNode = domNode.firstChild;
+            return textNode;
         }
 
         private HtmlElement CreateInputElement()

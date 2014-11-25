@@ -4,7 +4,7 @@ namespace DEiXTo.Services
 {
     public abstract class TagTooltipExtractor
     {
-        protected IHTMLElement _element;
+        protected IHTMLDOMNode _element;
         public abstract string ExtractTooltip();
     }
 }

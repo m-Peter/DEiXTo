@@ -4,9 +4,9 @@ namespace DEiXTo.Services
 {
     public class TooltipExtractionFactory
     {
-        public static TagTooltipExtractor GetTooltipFor(IHTMLElement element)
+        public static TagTooltipExtractor GetTooltipFor(IHTMLDOMNode element)
         {
-            string tagName = element.tagName;
+            string tagName = element.nodeName;
 
             switch (tagName)
             {
@@ -18,6 +18,8 @@ namespace DEiXTo.Services
                     return new FormTooltipExtractor(element);
                 case "INPUT":
                     return new InputTooltipExtractor(element);
+                case "#text":
+                    return new TextTooltipExtractor(element);
             }
 
             return new NullTooltipExtractor();

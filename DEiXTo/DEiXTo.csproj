@@ -172,6 +172,7 @@
     <Compile Include="Services\PatternExecutor.cs" />
     <Compile Include="Services\StatesImageLoader.cs" />
     <Compile Include="Models\TreeNodeExtensions.cs" />
+    <Compile Include="Services\TextTooltipExtractor.cs" />
     <Compile Include="Services\TooltipExtractionFactory.cs" />
     <Compile Include="Services\WindowsViewLoader.cs" />
     <Compile Include="Services\TextRecordsWriter.cs" />

@@ -14,7 +14,7 @@ namespace DEiXTo.Services.Tests
         {
             // Arrange
             var link = CreateLinkElement();
-            var domElement = link.DomElement as IHTMLElement;
+            var domElement = link.DomElement as IHTMLDOMNode;
 
             // Act
             var extractor = TooltipExtractionFactory.GetTooltipFor(domElement);
@@ -28,7 +28,7 @@ namespace DEiXTo.Services.Tests
         {
             // Arrange
             var image = CreateImageElement();
-            var domElement = image.DomElement as IHTMLElement;
+            var domElement = image.DomElement as IHTMLDOMNode;
 
             // Act
             var extractor = TooltipExtractionFactory.GetTooltipFor(domElement);
@@ -42,7 +42,7 @@ namespace DEiXTo.Services.Tests
         {
             // Arrange
             var form = CreateFormElement();
-            var domElement = form.DomElement as IHTMLElement;
+            var domElement = form.DomElement as IHTMLDOMNode;
 
             // Act
             var extractor = TooltipExtractionFactory.GetTooltipFor(domElement);
@@ -56,7 +56,7 @@ namespace DEiXTo.Services.Tests
         {
             // Arrange
             var input = CreateInputElement();
-            var domElement = input.DomElement as IHTMLElement;
+            var domElement = input.DomElement as IHTMLDOMNode;
 
             // Act
             var extractor = TooltipExtractionFactory.GetTooltipFor(domElement);
@@ -71,13 +71,26 @@ namespace DEiXTo.Services.Tests
             // Arrange
             var element = CreateGenericElement();
             element.ToString();
-            var domElement = element.DomElement as IHTMLElement;
+            var domElement = element.DomElement as IHTMLDOMNode;
 
             // Act
             var extractor = TooltipExtractionFactory.GetTooltipFor(domElement);
 
             // Assert
             Assert.IsInstanceOfType(extractor, typeof(NullTooltipExtractor));
+        }
+
+        [TestMethod]
+        public void TestReturnsTextExtractorForTextElement()
+        {
+            // Arrange
+            var element = CreateTextElement();
+
+            // Act
+            var extractor = TooltipExtractionFactory.GetTooltipFor(element);
+
+            // Assert
+            Assert.IsInstanceOfType(extractor, typeof(TextTooltipExtractor));
         }
 
         private HtmlElement CreateGenericElement()
@@ -87,6 +100,16 @@ namespace DEiXTo.Services.Tests
             var element = doc.GetElementsByTagName("p")[0];
 
             return element;
+        }
+
+        private IHTMLDOMNode CreateTextElement()
+        {
+            var doc = CreateDocument();
+            doc.Write("<p>Some text in here</p>");
+            var element = doc.GetElementsByTagName("p")[0];
+            var domNode = (IHTMLDOMNode)element.DomElement;
+            var textNode = domNode.firstChild;
+            return textNode;
         }
 
         private HtmlElement CreateInputElement()

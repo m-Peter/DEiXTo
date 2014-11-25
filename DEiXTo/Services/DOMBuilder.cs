@@ -68,7 +68,9 @@ namespace DEiXTo.Services
                 if (curElement.nodeName == "#text" && !String.IsNullOrWhiteSpace(value))
                 {
                     var txtNode = new TreeNode("TEXT");
-                    txtNode.ToolTipText = value.Trim();
+                    //txtNode.ToolTipText = value.Trim();
+                    txtNode.ToolTipText = TooltipExtractionFactory.GetTooltipFor(curElement).ExtractTooltip();
+                    
                     NodeInfo pointer = new NodeInfo();
                     pointer.IsTextNode = true;
                     pointer.Path = pInfo.Path + ".TEXT";
@@ -188,7 +190,7 @@ namespace DEiXTo.Services
             pInfo.Source = tmpElem.outerHTML;
             
             newNode.Tag = pInfo;
-            newNode.ToolTipText = TooltipExtractionFactory.GetTooltipFor(tmpElem).ExtractTooltip();
+            newNode.ToolTipText = TooltipExtractionFactory.GetTooltipFor(element).ExtractTooltip();
         }
 
         private void InsertChildNodes(IHTMLDOMNode element, NodeInfo pInfo, TreeNode newNode, DOMTree domTree)
@@ -216,7 +218,8 @@ namespace DEiXTo.Services
         {
             var txtNode = new TreeNode("TEXT");
             string value = curElement.nodeValue as string;
-            txtNode.ToolTipText = value.Trim();
+            //txtNode.ToolTipText = value.Trim();
+            txtNode.ToolTipText = TooltipExtractionFactory.GetTooltipFor(curElement).ExtractTooltip();
             NodeInfo pointer = new NodeInfo();
             pointer.IsTextNode = true;
             pointer.Path = pInfo.Path + ".TEXT";

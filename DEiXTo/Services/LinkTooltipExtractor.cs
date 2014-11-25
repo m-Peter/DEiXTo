@@ -4,14 +4,15 @@ namespace DEiXTo.Services
 {
     public class LinkTooltipExtractor : TagTooltipExtractor
     {
-        public LinkTooltipExtractor(IHTMLElement element)
+        public LinkTooltipExtractor(IHTMLDOMNode element)
         {
             _element = element;
         }
 
         public override string ExtractTooltip()
         {
-            return _element.getAttribute("href");
+            var elem = (IHTMLElement)_element;
+            return elem.getAttribute("href");
         }
     }
 }
