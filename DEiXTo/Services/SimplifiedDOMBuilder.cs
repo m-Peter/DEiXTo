@@ -26,7 +26,7 @@ namespace DEiXTo.Services
             var rootNode = new TreeNode();
             var domTree = new DOMTree();
             BuildSimplifiedDOMTreeRec(domNode, rootNode, domTree, _ignoredTags);
-            domTree.RootNode = rootNode;
+            domTree.RootNode = rootNode.FirstNode;
             return domTree;
         }
 
@@ -52,17 +52,8 @@ namespace DEiXTo.Services
             {
                 return;
             }
-
+            
             NodeInfo pInfo = new NodeInfo();
-
-            if (IsIgnoredTag(element, ignoredTags))
-            {
-                // element is the EM tag, node is the P tag
-                AddTextNode(element, node, domTree, ignoredTags, pInfo);
-
-                return;
-            }
-
             var tmpNode = InsertNode(element, node, domTree);
 
             ApplyGrayedState(tmpNode);
@@ -70,18 +61,6 @@ namespace DEiXTo.Services
             SetNodeInfo(tmpNode, element, pInfo, node);
 
             InsertChildNodesIgnored(element, pInfo, tmpNode, domTree, ignoredTags);
-        }
-
-        private bool IsIgnoredTag(IHTMLDOMNode element, string[] ignoredTags)
-        {
-            string tag = "<" + element.nodeName.ToUpper() + ">";
-
-            return ignoredTags.Contains(tag);
-        }
-
-        private bool IsTextNode(TreeNode node)
-        {
-            return node != null && node.Text == "TEXT";
         }
 
         private void AddTextNode(IHTMLDOMNode element, TreeNode node, DOMTree domTree, string[] ignoredTags, NodeInfo pInfo)
@@ -112,10 +91,8 @@ namespace DEiXTo.Services
                 if (curElement.nodeName == "#text" && !String.IsNullOrWhiteSpace(value))
                 {
                     var txtNode = new TreeNode("TEXT");
-                    txtNode.ToolTipText = TooltipExtractionFactory.GetTooltipFor(curElement).ExtractTooltip();
-
+                    txtNode.ToolTipText = value.Trim();
                     NodeInfo pointer = new NodeInfo();
-                    pointer.IsTextNode = true;
                     pointer.Path = pInfo.Path + ".TEXT";
                     pointer.Content = curElement.nodeValue;
                     pointer.State = NodeState.Checked;
@@ -127,6 +104,18 @@ namespace DEiXTo.Services
 
                 BuildSimplifiedDOMTreeRec(curElement, node, domTree, ignoredTags);
             }
+        }
+
+        private bool IsIgnoredTag(IHTMLDOMNode element, string[] ignoredTags)
+        {
+            string tag = "<" + element.nodeName.ToUpper() + ">";
+
+            return ignoredTags.Contains(tag);
+        }
+
+        private bool IsTextNode(TreeNode node)
+        {
+            return node != null && node.Text == "TEXT";
         }
 
         private void InsertChildNodesIgnored(IHTMLDOMNode element, NodeInfo pInfo, TreeNode tmpNode, DOMTree domTree, string[] ignoredTags)
@@ -194,44 +183,6 @@ namespace DEiXTo.Services
             newNode.ToolTipText = TooltipExtractionFactory.GetTooltipFor(element).ExtractTooltip();
         }
 
-        private void InsertChildNodes(IHTMLDOMNode element, NodeInfo pInfo, TreeNode newNode, DOMTree domTree)
-        {
-            IHTMLDOMChildrenCollection childrenElements = element.childNodes as IHTMLDOMChildrenCollection;
-            int len = childrenElements.length;
-            IHTMLDOMNode curElement;
-            string value;
-
-            for (int i = 0; i < len; i++)
-            {
-                curElement = childrenElements.item(i);
-                value = curElement.nodeValue as string;
-
-                if (IsTextNode(curElement, value))
-                {
-                    SetChildNodeInfo(curElement, pInfo, newNode);
-                }
-
-                BuildDOMTreeRec(curElement, newNode, domTree);
-            }
-        }
-
-        private void BuildDOMTreeRec(IHTMLDOMNode element, TreeNode node, DOMTree domTree)
-        {
-            if (IgnoredElement(element))
-            {
-                return;
-            }
-
-            var newNode = InsertNode(element, node, domTree);
-            NodeInfo pInfo = new NodeInfo();
-            // By default each node is required, so add the Match Node image
-            ApplyGrayedState(newNode);
-
-            SetNodeInfo(newNode, element, pInfo, node);
-
-            InsertChildNodes(element, pInfo, newNode, domTree);
-        }
-
         private void SetChildNodeInfo(IHTMLDOMNode curElement, NodeInfo pInfo, TreeNode newNode)
         {
             var txtNode = new TreeNode("TEXT");
@@ -282,8 +233,7 @@ namespace DEiXTo.Services
             }
 
             path = node.GetPath() + String.Format(".{0}[{1}]", element.tagName, cnt);
-
-            return path;
+            return path.Substring(1);
         }
     }
 }
