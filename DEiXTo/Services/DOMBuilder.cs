@@ -6,11 +6,18 @@ using System.Windows.Forms;
 
 namespace DEiXTo.Services
 {
-    public class DOMBuilder
+    public class DOMBuilder : IDOMBuilder
     {
-        public DOMTree BuildDOMTree(HtmlElement element)
+        private HtmlElement _element;
+
+        public DOMBuilder(HtmlElement element)
         {
-            var domNode = element.DomElement as IHTMLDOMNode;
+            _element = element;
+        }
+
+        public DOMTree Build()
+        {
+            var domNode = _element.DomElement as IHTMLDOMNode;
             var rootNode = new TreeNode();
             DOMTree domTree = new DOMTree();
             BuildDOMTreeRec(domNode, rootNode, domTree);
@@ -18,144 +25,9 @@ namespace DEiXTo.Services
             return domTree;
         }
 
-        public DOMTree BuildSimplifiedDOMTree(HtmlElement element, string[] ignoredTags)
-        {
-            var domNode = element.DomElement as IHTMLDOMNode;
-            var rootNode = new TreeNode();
-            DOMTree domTree = new DOMTree();
-            BuildSimpliefiedDOMTreeRec(domNode, rootNode, domTree, ignoredTags);
-            domTree.RootNode = rootNode.FirstNode;
-            return domTree;
-        }
-
-        private bool IsIgnoredTag(IHTMLDOMNode element, string[] ignoredTags)
-        {
-            string tag = "<" + element.nodeName.ToUpper() + ">";
-
-            return ignoredTags.Contains(tag);
-        }
-
         private bool IsTextNode(TreeNode node)
         {
             return node != null && node.Text == "TEXT";
-        }
-
-        private void AddTextNode(IHTMLDOMNode element, TreeNode node, DOMTree domTree, string[] ignoredTags, NodeInfo pInfo)
-        {
-            IHTMLDOMChildrenCollection childrenElements = element.childNodes as IHTMLDOMChildrenCollection;
-            int len = childrenElements.length;
-            IHTMLDOMNode curElement;
-            string value;
-
-            var first = node.FirstNode;
-
-            if (IsTextNode(first))
-            {
-                curElement = childrenElements.item(0);
-                value = curElement.nodeValue as string;
-                var content = first.GetContent();
-                first.SetContent(content + value);
-                first.ToolTipText += value.Trim();
-
-                return;
-            }
-
-            for (int i = 0; i < len; i++)
-            {
-                curElement = childrenElements.item(i);
-                value = curElement.nodeValue as string;
-
-                if (curElement.nodeName == "#text" && !String.IsNullOrWhiteSpace(value))
-                {
-                    var txtNode = new TreeNode("TEXT");
-                    txtNode.ToolTipText = TooltipExtractionFactory.GetTooltipFor(curElement).ExtractTooltip();
-                    
-                    NodeInfo pointer = new NodeInfo();
-                    pointer.IsTextNode = true;
-                    pointer.Path = pInfo.Path + ".TEXT";
-                    pointer.Content = curElement.nodeValue;
-                    pointer.State = NodeState.Checked;
-                    txtNode.ImageIndex = 0;
-                    txtNode.SelectedImageIndex = 0;
-                    txtNode.Tag = pointer;
-                    node.Nodes.Add(txtNode);
-                }
-
-                BuildSimpliefiedDOMTreeRec(curElement, node, domTree, ignoredTags);
-            }
-        }
-
-        private void BuildSimpliefiedDOMTreeRec(IHTMLDOMNode element, TreeNode node, DOMTree domTree, string[] ignoredTags)
-        {
-            // P
-            //    TEXT
-            //    EM (ignored)
-            //        TEXT
-            // 
-            // (1) First we encounter the P tag, it's not an IgnoredElement or IsIgnoredTag, so we continue and
-            // add its child nodes.
-            // (2) Next we encounter the TEXT child node of P. It is an IgnoredElement, so we return. TEXT nodes
-            // do not have any childrens, that's the reason we return.
-            // (3) Next we encounter the EM child node of P. It is an IgnoredTag, so we only add his TEXT child,
-            // if it has one. In this case there is a TEXT child node on EM. But, we're adding the TEXT node in
-            // the parent node of EM. This way, the P tag (parent of EM) will end up with two TEXT nodes. In any
-            // case we, a node should have only one TEXT child node. In order to achieve this invariant, we have
-            // to check whether the parent already has a TEXT child node. If yes, we should merge the TEXT child
-            // node of EM.
-
-            if (IgnoredElement(element))
-            {
-                return;
-            }
-
-            NodeInfo pInfo = new NodeInfo();
-
-            if (IsIgnoredTag(element, ignoredTags))
-            {
-                // element is the EM tag, node is the P tag
-                AddTextNode(element, node, domTree, ignoredTags, pInfo);
-
-                return;
-            }
-
-            var tmpNode = InsertNode(element, node, domTree);
-
-            ApplyGrayedState(tmpNode);
-            
-            SetNodeInfo(tmpNode, element, pInfo, node);
-
-            InsertChildNodesIgnored(element, pInfo, tmpNode, domTree, ignoredTags);
-        }
-
-        private void InsertChildNodesIgnored(IHTMLDOMNode element, NodeInfo pInfo, TreeNode tmpNode, DOMTree domTree, string[] ignoredTags)
-        {
-            IHTMLDOMChildrenCollection childrenElements = element.childNodes as IHTMLDOMChildrenCollection;
-            int len = childrenElements.length;
-            IHTMLDOMNode curElement;
-            string value;
-
-            for (int i = 0; i < len; i++)
-            {
-                curElement = childrenElements.item(i);
-                value = curElement.nodeValue as string;
-
-                if (IsTextNode(curElement, value))
-                {
-                    var txtNode = new TreeNode("TEXT");
-                    txtNode.ToolTipText = TooltipExtractionFactory.GetTooltipFor(curElement).ExtractTooltip();
-                    NodeInfo pointer = new NodeInfo();
-                    pointer.IsTextNode = true;
-                    pointer.Path = pInfo.Path + ".TEXT";
-                    pointer.Content = curElement.nodeValue;
-                    pointer.State = NodeState.Checked;
-                    txtNode.ImageIndex = 0;
-                    txtNode.SelectedImageIndex = 0;
-                    txtNode.Tag = pointer;
-                    tmpNode.Nodes.Add(txtNode);
-                }
-
-                BuildSimpliefiedDOMTreeRec(curElement, tmpNode, domTree, ignoredTags);
-            }
         }
 
         private bool IgnoredElement(IHTMLDOMNode element)
@@ -280,8 +152,7 @@ namespace DEiXTo.Services
             }
 
             path = node.GetPath() + String.Format(".{0}[{1}]", element.tagName, cnt);
-
-            return path;
+            return path.Substring(1);
         }
     }
 }

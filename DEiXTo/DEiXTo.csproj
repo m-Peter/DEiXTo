@@ -106,6 +106,7 @@
     <Compile Include="Services.Tests\DialogBuilderFactoryTests.cs" />
     <Compile Include="Services.Tests\DialogBuilderTests.cs" />
     <Compile Include="Services.Tests\DocumentQueryTests.cs" />
+    <Compile Include="Services.Tests\DOMBuilderTests.cs" />
     <Compile Include="Services.Tests\ElementStylingTests.cs" />
     <Compile Include="Services.Tests\ExtractionPatternRepositoryTests.cs" />
     <Compile Include="Services.Tests\NodeBuilderTests.cs" />
@@ -116,6 +117,7 @@
     <Compile Include="Services\FormTooltipExtractor.cs" />
     <Compile Include="Services\IDeixtoWrapperMapper.cs" />
     <Compile Include="Services\IDeixtoWrapperRepository.cs" />
+    <Compile Include="Services\IDOMBuilder.cs" />
     <Compile Include="Services\ImageTooltipExtractor.cs" />
     <Compile Include="Services\InputTooltipExtractor.cs" />
     <Compile Include="Services\LinkTooltipExtractor.cs" />
@@ -163,6 +165,7 @@
     <Compile Include="Services\RegexAdded.cs" />
     <Compile Include="Services\RssDialogBuilder.cs" />
     <Compile Include="Services\SaveFileDialogWrapper.cs" />
+    <Compile Include="Services\SimplifiedDOMBuilder.cs" />
     <Compile Include="Services\TagContentExtractor.cs" />
     <Compile Include="Services\TagTooltipExtractor.cs" />
     <Compile Include="Services\TextDialogBuilder.cs" />

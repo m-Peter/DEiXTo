@@ -8,7 +8,7 @@ namespace DEiXTo.Services
     public class DeixtoAgentScreen : IDeixtoAgentScreen
     {
         private ElementStyling _styling;
-        private DOMBuilder _builder;
+        private IDOMBuilder _builder;
         private DocumentQuery _document;
         private StatesImageLoader _imageLoader;
         private DOMTree _domTree;
@@ -23,7 +23,6 @@ namespace DEiXTo.Services
         public DeixtoAgentScreen()
         {
             _styling = new ElementStyling();
-            _builder = new DOMBuilder();
             _imageLoader = new StatesImageLoader();
             _loader = new WindowsViewLoader();
             _readTargetUrls = new ReadTargetUrls();
@@ -157,7 +156,8 @@ namespace DEiXTo.Services
         public TreeNode BuildSimplifiedDOM(string[] ignoredTags)
         {
             var element = _document.GetHtmlElement();
-            _domTree = _builder.BuildSimplifiedDOMTree(element, ignoredTags);
+            _builder = new SimplifiedDOMBuilder(element, ignoredTags);
+            _domTree = _builder.Build();
 
             return _domTree.RootNode;
         }
@@ -165,7 +165,8 @@ namespace DEiXTo.Services
         public TreeNode BuildDom()
         {
             var element = _document.GetHtmlElement();
-            _domTree = _builder.BuildDOMTree(element);
+            _builder = new DOMBuilder(element);
+            _domTree = _builder.Build();
 
             return _domTree.RootNode;
         }
