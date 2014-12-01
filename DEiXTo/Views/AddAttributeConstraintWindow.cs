@@ -13,6 +13,14 @@ namespace DEiXTo.Views
             InitializeComponent();
             AttributesComboBox.DisplayMember = "Name";
             AttributesComboBox.ValueMember = "Value";
+            this.KeyPreview = true;
+            this.KeyDown += AddAttributeConstraintWindow_KeyDown;
+        }
+
+        void AddAttributeConstraintWindow_KeyDown(object sender, KeyEventArgs e)
+        {
+            var tag = AttributesComboBox.SelectedItem as TagAttribute;
+            Presenter.KeyDown(e.KeyCode, tag.Name);
         }
 
         public AddAttributeConstraintPresenter Presenter { get; set; }
@@ -48,6 +56,11 @@ namespace DEiXTo.Views
         {
             var tag = AttributesComboBox.SelectedItem as TagAttribute;
             Presenter.AttributeChanged(tag);
+        }
+
+        private void CancelButton_Click(object sender, EventArgs e)
+        {
+            Close();
         }
     }
 }

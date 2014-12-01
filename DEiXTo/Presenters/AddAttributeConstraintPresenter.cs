@@ -71,5 +71,18 @@ namespace DEiXTo.Presenters
             _node.SetAttrConstraint(attrConstraint);
             View.Exit();
         }
+
+        public void KeyDown(Keys key, string attributeName)
+        {
+            if (EnterPressed(key))
+            {
+                AddConstraint(attributeName);
+            }
+        }
+
+        private bool EnterPressed(Keys key)
+        {
+            return key == Keys.Enter;
+        }
     }
 }
