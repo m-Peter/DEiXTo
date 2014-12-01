@@ -22,6 +22,12 @@ namespace DEiXTo.Presenters
         private void populateAttributes()
         {
             var attributes = _node.GetAttributes();
+            
+            if (attributes == null)
+            {
+                return;
+            }
+            
             View.LoadAttributes(attributes.All);
 
             if (_node.HasAttrConstraint())

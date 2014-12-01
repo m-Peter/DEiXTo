@@ -41,6 +41,16 @@ namespace DEiXTo.Models
             return null;
         }
 
+        public static void SetAttributes(this TreeNode node, TagAttributeCollection attributes)
+        {
+            NodeInfo pInfo = GetPointerInfo(node);
+
+            if (pInfo != null)
+            {
+                pInfo.Attributes = attributes;
+            }
+        }
+
         public static TagAttributeConstraint GetAttrConstraint(this TreeNode node)
         {
             NodeInfo pInfo = GetPointerInfo(node);

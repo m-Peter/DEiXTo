@@ -112,11 +112,11 @@
 
         #endregion
 
-        private System.Windows.Forms.Button OKButton;
+        public System.Windows.Forms.Button OKButton;
         private System.Windows.Forms.Button CancelButton;
         private System.Windows.Forms.Label AddConstraintLabel;
-        private System.Windows.Forms.TextBox AddConstraintTextBox;
-        private System.Windows.Forms.ComboBox AttributesComboBox;
+        public System.Windows.Forms.TextBox AddConstraintTextBox;
+        public System.Windows.Forms.ComboBox AttributesComboBox;
         private System.Windows.Forms.Label ChooseAttributeLabel;
     }
 }
