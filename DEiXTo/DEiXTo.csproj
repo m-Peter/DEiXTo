@@ -187,6 +187,7 @@
     <Compile Include="Views.Tests\AddAttributeConstraintWindowTests.cs" />
     <Compile Include="Views.Tests\AddLabelWindowTests.cs" />
     <Compile Include="Views.Tests\AddSiblingOrderWindowTests.cs" />
+    <Compile Include="Views.Tests\MainWindowTests.cs" />
     <Compile Include="Views.Tests\RegexBuilderWindowTests.cs" />
     <Compile Include="Views\AddAttributeConstraintWindow.cs">
       <SubType>Form</SubType>
