@@ -30,8 +30,6 @@ namespace DEiXTo.Views.Tests
             node.Tag = new NodeInfo();
             window = new AddLabelWindow();
             presenter = new AddLabelPresenter(window, node);
-
-            // Act
             
             // Assert
             Assert.AreSame(presenter, window.Presenter);
@@ -69,8 +67,7 @@ namespace DEiXTo.Views.Tests
             window.AddLabelTextBox.Text = "Container";
             
             // Act
-            window.Show();
-            window.OkButton.PerformClick();
+            presenter.AddLabel();
 
             // Assert
             Assert.AreEqual("TEXT:Container", node.Text);
@@ -88,9 +85,8 @@ namespace DEiXTo.Views.Tests
             window.AddLabelTextBox.Text = string.Empty;
 
             // Act
-            window.Show();
             ExpectModal("DEiXTo", MessageBoxTestHandler);
-            window.OkButton.PerformClick();
+            presenter.AddLabel();
 
             // Assert
             Assert.AreEqual("TEXT", node.Text);
@@ -114,9 +110,7 @@ namespace DEiXTo.Views.Tests
             node.SetLabel("Container");
             window = new AddLabelWindow();
             presenter = new AddLabelPresenter(window, node);
-
-            // Act
-
+            
             // Assert
             Assert.AreEqual("Container", window.AddLabelTextBox.Text);
         }
@@ -133,9 +127,8 @@ namespace DEiXTo.Views.Tests
             node.Text = "TEXT:Container";
 
             // Act
-            window.Show();
             window.AddLabelTextBox.Text = "Content";
-            window.OkButton.PerformClick();
+            presenter.AddLabel();
 
             // Assert
             Assert.AreEqual("TEXT:Content", node.Text);

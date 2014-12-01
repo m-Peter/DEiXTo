@@ -15,12 +15,14 @@ namespace DEiXTo.Views.Tests
         [TestMethod]
         public void TestStartingState()
         {
+            // Arrange
             node = new TreeNode("DIV");
             NodeInfo nInfo = new NodeInfo();
             node.Tag = nInfo;
             window = new AddAttributeConstraintWindow();
             presenter = new AddAttributeConstraintPresenter(window, node);
 
+            // Assert
             Assert.AreEqual("", window.AddConstraintTextBox.Text);
             Assert.AreEqual(0, window.AttributesComboBox.Items.Count);
         }
@@ -40,8 +42,6 @@ namespace DEiXTo.Views.Tests
             node.SetAttributes(attributes);
             window = new AddAttributeConstraintWindow();
             presenter = new AddAttributeConstraintPresenter(window, node);
-            
-            // Act
 
             // Assert
             Assert.AreEqual(2, window.AttributesComboBox.Items.Count);
@@ -115,9 +115,8 @@ namespace DEiXTo.Views.Tests
             presenter = new AddAttributeConstraintPresenter(window, node);
 
             // Act
-            window.Show();
             window.AttributesComboBox.SelectedItem = klass;
-            window.OKButton.PerformClick();
+            presenter.AddConstraint(klass.Name);
 
             // Assert
             var constraint = node.GetAttrConstraint();

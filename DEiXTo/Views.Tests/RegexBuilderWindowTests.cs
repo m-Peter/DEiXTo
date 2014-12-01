@@ -16,19 +16,6 @@ namespace DEiXTo.Views.Tests
         private TreeNode node;
         private Mock<IEventHub> eventHub;
 
-        [SetUp]
-        public void Init()
-        {
-            /*node = new TreeNode("SPAN");
-            node.Tag = new NodeInfo();
-            node.SetContent("$11.5");
-            eventHub = new Mock<IEventHub>();
-            window = new RegexBuilderWindow();
-            presenter = new RegexBuilderPresenter(window, node, eventHub.Object);
-
-            window.Show();*/
-        }
-
         [Test]
         public void TestStartingState()
         {
@@ -39,6 +26,8 @@ namespace DEiXTo.Views.Tests
             eventHub = new Mock<IEventHub>();
             window = new RegexBuilderWindow();
             presenter = new RegexBuilderPresenter(window, node, eventHub.Object);
+
+            // Assert
             Assert.AreEqual("$11.5", window.AddRegexTextBox.Text);
             Assert.IsFalse(window.InverseEvaluationCheckBox.Checked);
         }
@@ -82,12 +71,11 @@ namespace DEiXTo.Views.Tests
             eventHub = new Mock<IEventHub>();
             window = new RegexBuilderWindow();
             presenter = new RegexBuilderPresenter(window, node, eventHub.Object);
-            // Arrange
             window.AddRegexTextBox.Text = "[0-9]{2}";
 
             // Act
-            window.Show();
-            window.OKButton.PerformClick();
+            window.AddRegexTextBox.Text = "[0-9]{2}";
+            presenter.AddRegex();
 
             // Assert
             Assert.AreEqual("[0-9]{2}", node.GetRegex());
@@ -108,11 +96,10 @@ namespace DEiXTo.Views.Tests
             var font = new Font(FontFamily.GenericSansSerif, 8.25f);
             var boldFont = new Font(font, FontStyle.Bold);
             node.NodeFont = boldFont;
-            window.AddRegexTextBox.Text = "[0-9]{2}";
 
             // Act
-            window.Show();
-            window.OKButton.PerformClick();
+            window.AddRegexTextBox.Text = "[0-9]{2}";
+            presenter.AddRegex();
 
             // Assert
             Assert.AreEqual("[0-9]{2}", node.GetRegex());
@@ -133,9 +120,6 @@ namespace DEiXTo.Views.Tests
             window = new RegexBuilderWindow();
             presenter = new RegexBuilderPresenter(window, node, eventHub.Object);
 
-            // Act
-            //window.Show();
-
             // Assert
             Assert.AreEqual("[0-9]{2}", window.RegexText);
             Assert.IsTrue(window.InverseRegex);
@@ -154,10 +138,9 @@ namespace DEiXTo.Views.Tests
             presenter = new RegexBuilderPresenter(window, node, eventHub.Object);
 
             // Act
-            window.Show();
             window.RegexText = "[a-z]?";
             window.InverseRegex = true;
-            window.OKButton.PerformClick();
+            presenter.AddRegex();
 
             // Assert
             Assert.AreEqual("[a-z]?", node.GetRegex());

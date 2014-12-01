@@ -23,8 +23,6 @@ namespace DEiXTo.Views.Tests
             window = new AddSiblingOrderWindow();
             presenter = new AddSiblingOrderPresenter(window, node);
 
-            // Act
-
             // Assert
             Assert.IsFalse(window.SiblingOrderCheckBox.Checked);
             Assert.IsFalse(window.StartIndexNUD.Enabled);
@@ -114,8 +112,7 @@ namespace DEiXTo.Views.Tests
             window.StepValue = 3;
 
             // Act
-            window.Show();
-            window.OKButton.PerformClick();
+            presenter.AddSiblingOrder();
 
             // Assert
             Assert.IsTrue(node.GetCareAboutSiblingOrder());
@@ -137,8 +134,6 @@ namespace DEiXTo.Views.Tests
             node.SetStepValue(3);
             presenter = new AddSiblingOrderPresenter(window, node);
 
-            // Act
-
             // Assert
             Assert.IsTrue(window.CareAboutSiblingOrder);
             Assert.AreEqual(1, window.StartIndex);
@@ -159,10 +154,9 @@ namespace DEiXTo.Views.Tests
             presenter = new AddSiblingOrderPresenter(window, node);
 
             // Act
-            window.Show();
             window.StartIndex = 2;
             window.StepValue = 4;
-            window.OKButton.PerformClick();
+            presenter.AddSiblingOrder();
 
             // Assert
             Assert.IsTrue(node.GetCareAboutSiblingOrder());
@@ -184,9 +178,8 @@ namespace DEiXTo.Views.Tests
             presenter = new AddSiblingOrderPresenter(window, node);
 
             // Act
-            window.Show();
             window.CareAboutSiblingOrder = false;
-            window.OKButton.PerformClick();
+            presenter.AddSiblingOrder();
 
             // Assert
             Assert.IsFalse(node.GetCareAboutSiblingOrder());
