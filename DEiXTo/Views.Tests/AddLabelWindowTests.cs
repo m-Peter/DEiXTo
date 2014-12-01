@@ -14,23 +14,6 @@ namespace DEiXTo.Views.Tests
         private AddLabelPresenter presenter;
         private TreeNode node;
 
-        [SetUp]
-        public void Init()
-        {
-            node = new TreeNode("TEXT");
-            node.Tag = new NodeInfo();
-            window = new AddLabelWindow();
-            presenter = new AddLabelPresenter(window, node);
-
-            window.Show();
-        }
-
-        [TearDown]
-        public void Cleanup()
-        {
-            window.Close();
-        }
-
         public override bool UseHidden
         {
             get
@@ -42,6 +25,15 @@ namespace DEiXTo.Views.Tests
         [Test]
         public void TestStartingState()
         {
+            // Arrange
+            node = new TreeNode("TEXT");
+            node.Tag = new NodeInfo();
+            window = new AddLabelWindow();
+            presenter = new AddLabelPresenter(window, node);
+
+            // Act
+            
+            // Assert
             Assert.AreSame(presenter, window.Presenter);
             Assert.AreEqual(string.Empty, window.AddLabelTextBox.Text);
         }
@@ -49,6 +41,12 @@ namespace DEiXTo.Views.Tests
         [Test]
         public void TestGetAndSetLabelText()
         {
+            // Arrange
+            node = new TreeNode("TEXT");
+            node.Tag = new NodeInfo();
+            window = new AddLabelWindow();
+            presenter = new AddLabelPresenter(window, node);
+
             // Act
             window.AddLabelTextBox.Text = "Container";
             // Assert
@@ -64,9 +62,14 @@ namespace DEiXTo.Views.Tests
         public void TestAddLabelToNode()
         {
             // Arrange
+            node = new TreeNode("TEXT");
+            node.Tag = new NodeInfo();
+            window = new AddLabelWindow();
+            presenter = new AddLabelPresenter(window, node);
             window.AddLabelTextBox.Text = "Container";
             
             // Act
+            window.Show();
             window.OkButton.PerformClick();
 
             // Assert
@@ -77,10 +80,15 @@ namespace DEiXTo.Views.Tests
         [Test]
         public void TestAddInvalidLabelToNode()
         {
-            // Arrange
+            // Arrrange
+            node = new TreeNode("TEXT");
+            node.Tag = new NodeInfo();
+            window = new AddLabelWindow();
+            presenter = new AddLabelPresenter(window, node);
             window.AddLabelTextBox.Text = string.Empty;
 
             // Act
+            window.Show();
             ExpectModal("DEiXTo", MessageBoxTestHandler);
             window.OkButton.PerformClick();
 
@@ -101,11 +109,13 @@ namespace DEiXTo.Views.Tests
         public void TestLoadExistingLabelFromNode()
         {
             // Arrange
+            node = new TreeNode("TEXT");
+            node.Tag = new NodeInfo();
             node.SetLabel("Container");
+            window = new AddLabelWindow();
             presenter = new AddLabelPresenter(window, node);
 
             // Act
-            window.Show();
 
             // Assert
             Assert.AreEqual("Container", window.AddLabelTextBox.Text);
@@ -115,9 +125,12 @@ namespace DEiXTo.Views.Tests
         public void TestChangeExistingLabel()
         {
             // Arrange
+            node = new TreeNode("TEXT");
+            node.Tag = new NodeInfo();
+            window = new AddLabelWindow();
+            presenter = new AddLabelPresenter(window, node);
             node.SetLabel("Container");
             node.Text = "TEXT:Container";
-            presenter = new AddLabelPresenter(window, node);
 
             // Act
             window.Show();

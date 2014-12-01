@@ -19,25 +19,26 @@ namespace DEiXTo.Views.Tests
         [SetUp]
         public void Init()
         {
-            node = new TreeNode("SPAN");
+            /*node = new TreeNode("SPAN");
             node.Tag = new NodeInfo();
             node.SetContent("$11.5");
             eventHub = new Mock<IEventHub>();
             window = new RegexBuilderWindow();
             presenter = new RegexBuilderPresenter(window, node, eventHub.Object);
 
-            window.Show();
-        }
-
-        [TearDown]
-        public void Cleanup()
-        {
-            window.Close();
+            window.Show();*/
         }
 
         [Test]
         public void TestStartingState()
         {
+            // Arrange
+            node = new TreeNode("SPAN");
+            node.Tag = new NodeInfo();
+            node.SetContent("$11.5");
+            eventHub = new Mock<IEventHub>();
+            window = new RegexBuilderWindow();
+            presenter = new RegexBuilderPresenter(window, node, eventHub.Object);
             Assert.AreEqual("$11.5", window.AddRegexTextBox.Text);
             Assert.IsFalse(window.InverseEvaluationCheckBox.Checked);
         }
@@ -45,6 +46,13 @@ namespace DEiXTo.Views.Tests
         [Test]
         public void TestGetAndSetRegexFields()
         {
+            // Arrange
+            node = new TreeNode("SPAN");
+            node.Tag = new NodeInfo();
+            node.SetContent("$11.5");
+            eventHub = new Mock<IEventHub>();
+            window = new RegexBuilderWindow();
+            presenter = new RegexBuilderPresenter(window, node, eventHub.Object);
             // Act
             window.AddRegexTextBox.Text = "[0-9]{2}";
             window.InverseEvaluationCheckBox.Checked = true;
@@ -68,9 +76,17 @@ namespace DEiXTo.Views.Tests
         public void TestAddRegex()
         {
             // Arrange
+            node = new TreeNode("SPAN");
+            node.Tag = new NodeInfo();
+            node.SetContent("$11.5");
+            eventHub = new Mock<IEventHub>();
+            window = new RegexBuilderWindow();
+            presenter = new RegexBuilderPresenter(window, node, eventHub.Object);
+            // Arrange
             window.AddRegexTextBox.Text = "[0-9]{2}";
 
             // Act
+            window.Show();
             window.OKButton.PerformClick();
 
             // Assert
@@ -83,12 +99,19 @@ namespace DEiXTo.Views.Tests
         public void TestAddRegexInBoldTreeNode()
         {
             // Arrange
+            node = new TreeNode("SPAN");
+            node.Tag = new NodeInfo();
+            node.SetContent("$11.5");
+            eventHub = new Mock<IEventHub>();
+            window = new RegexBuilderWindow();
+            presenter = new RegexBuilderPresenter(window, node, eventHub.Object);
             var font = new Font(FontFamily.GenericSansSerif, 8.25f);
             var boldFont = new Font(font, FontStyle.Bold);
             node.NodeFont = boldFont;
             window.AddRegexTextBox.Text = "[0-9]{2}";
 
             // Act
+            window.Show();
             window.OKButton.PerformClick();
 
             // Assert
@@ -101,12 +124,17 @@ namespace DEiXTo.Views.Tests
         public void TestLoadExistingRegex()
         {
             // Arrange
+            node = new TreeNode("SPAN");
+            node.Tag = new NodeInfo();
+            node.SetContent("$11.5");
             node.SetRegex("[0-9]{2}");
             node.SetInverse(true);
+            eventHub = new Mock<IEventHub>();
+            window = new RegexBuilderWindow();
             presenter = new RegexBuilderPresenter(window, node, eventHub.Object);
 
             // Act
-            window.Show();
+            //window.Show();
 
             // Assert
             Assert.AreEqual("[0-9]{2}", window.RegexText);
@@ -117,7 +145,12 @@ namespace DEiXTo.Views.Tests
         public void TestChangeExistingRegex()
         {
             // Arrange
+            node = new TreeNode("SPAN");
+            node.Tag = new NodeInfo();
+            node.SetContent("$11.5");
             node.SetRegex("[0-9]{2}");
+            eventHub = new Mock<IEventHub>();
+            window = new RegexBuilderWindow();
             presenter = new RegexBuilderPresenter(window, node, eventHub.Object);
 
             // Act

@@ -21,8 +21,6 @@ namespace DEiXTo.Views.Tests
             window = new AddAttributeConstraintWindow();
             presenter = new AddAttributeConstraintPresenter(window, node);
 
-            window.Show();
-
             Assert.AreEqual("", window.AddConstraintTextBox.Text);
             Assert.AreEqual(0, window.AttributesComboBox.Items.Count);
         }
@@ -44,7 +42,6 @@ namespace DEiXTo.Views.Tests
             presenter = new AddAttributeConstraintPresenter(window, node);
             
             // Act
-            window.Show();
 
             // Assert
             Assert.AreEqual(2, window.AttributesComboBox.Items.Count);
@@ -69,7 +66,6 @@ namespace DEiXTo.Views.Tests
             presenter = new AddAttributeConstraintPresenter(window, node);
 
             // Act
-            window.Show();
             var selectedItem = window.AttributesComboBox.SelectedItem as TagAttribute;
 
             // Assert
@@ -94,13 +90,39 @@ namespace DEiXTo.Views.Tests
             presenter = new AddAttributeConstraintPresenter(window, node);
 
             // Act
-            window.Show();
             window.AttributesComboBox.SelectedItem = klass;
 
             // Assert
             var selectedItem = window.AttributesComboBox.SelectedItem as TagAttribute;
             Assert.AreEqual("class", selectedItem.Name);
             Assert.AreEqual("column", selectedItem.Value);
+        }
+
+        [TestMethod]
+        public void TestAddConstraint()
+        {
+            // Arrange
+            node = new TreeNode("DIV");
+            NodeInfo nInfo = new NodeInfo();
+            node.Tag = nInfo;
+            var attributes = new TagAttributeCollection();
+            var id = new TagAttribute { Name = "Id", Value = "container" };
+            var klass = new TagAttribute { Name = "class", Value = "column" };
+            attributes.Add(id);
+            attributes.Add(klass);
+            node.SetAttributes(attributes);
+            window = new AddAttributeConstraintWindow();
+            presenter = new AddAttributeConstraintPresenter(window, node);
+
+            // Act
+            window.Show();
+            window.AttributesComboBox.SelectedItem = klass;
+            window.OKButton.PerformClick();
+
+            // Assert
+            var constraint = node.GetAttrConstraint();
+            Assert.AreEqual("class", constraint.Attribute);
+            Assert.AreEqual("column", constraint.Value);
         }
     }
 }

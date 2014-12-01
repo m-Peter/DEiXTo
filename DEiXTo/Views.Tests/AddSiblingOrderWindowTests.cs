@@ -14,26 +14,18 @@ namespace DEiXTo.Views.Tests
         private AddSiblingOrderPresenter presenter;
         private TreeNode node;
 
-        [SetUp]
-        public void Init()
+        [Test]
+        public void TestStartingState()
         {
+            // Arrange
             node = new TreeNode("DIV");
             node.Tag = new NodeInfo();
             window = new AddSiblingOrderWindow();
             presenter = new AddSiblingOrderPresenter(window, node);
 
-            window.Show();
-        }
+            // Act
 
-        [TearDown]
-        public void Cleanup()
-        {
-            window.Close();
-        }
-
-        [Test]
-        public void TestStartingState()
-        {
+            // Assert
             Assert.IsFalse(window.SiblingOrderCheckBox.Checked);
             Assert.IsFalse(window.StartIndexNUD.Enabled);
             Assert.IsFalse(window.StepValueNUD.Enabled);
@@ -42,6 +34,12 @@ namespace DEiXTo.Views.Tests
         [Test]
         public void TestGetAndSetSiblingOrderFields()
         {
+            // Arrange
+            node = new TreeNode("DIV");
+            node.Tag = new NodeInfo();
+            window = new AddSiblingOrderWindow();
+            presenter = new AddSiblingOrderPresenter(window, node);
+
             // Act
             window.SiblingOrderCheckBox.Checked = true;
             window.StartIndexNUD.Value = 1;
@@ -67,8 +65,15 @@ namespace DEiXTo.Views.Tests
         [Test]
         public void TestEnableSiblingOrderFields()
         {
+            // Arrange
+            node = new TreeNode("DIV");
+            node.Tag = new NodeInfo();
+            window = new AddSiblingOrderWindow();
+            presenter = new AddSiblingOrderPresenter(window, node);
+
             // Act
             window.SiblingOrderCheckBox.Checked = true;
+            
             // Assert
             Assert.IsTrue(window.StartIndexNUD.Enabled);
             Assert.IsTrue(window.StepValueNUD.Enabled);
@@ -78,6 +83,10 @@ namespace DEiXTo.Views.Tests
         public void TestDisableSiblingOrderFields()
         {
             // Arrange
+            node = new TreeNode("DIV");
+            node.Tag = new NodeInfo();
+            window = new AddSiblingOrderWindow();
+            presenter = new AddSiblingOrderPresenter(window, node);
             window.SiblingOrderCheckBox.Checked = true;
             window.StartIndexNUD.Value = 1;
             window.StepValueNUD.Value = 3;
@@ -96,11 +105,16 @@ namespace DEiXTo.Views.Tests
         public void TestAddSiblingOrderToNode()
         {
             // Arrange
+            node = new TreeNode("DIV");
+            node.Tag = new NodeInfo();
+            window = new AddSiblingOrderWindow();
+            presenter = new AddSiblingOrderPresenter(window, node);
             window.CareAboutSiblingOrder = true;
             window.StartIndex = 1;
             window.StepValue = 3;
 
             // Act
+            window.Show();
             window.OKButton.PerformClick();
 
             // Assert
@@ -114,13 +128,16 @@ namespace DEiXTo.Views.Tests
         public void TestLoadExistingSiblingOrderFromNode()
         {
             // Arrange
+            node = new TreeNode("DIV");
+            node.Tag = new NodeInfo();
+            window = new AddSiblingOrderWindow();
+            presenter = new AddSiblingOrderPresenter(window, node);
             node.SetCareAboutSiblingOrder(true);
             node.SetStartIndex(1);
             node.SetStepValue(3);
             presenter = new AddSiblingOrderPresenter(window, node);
 
             // Act
-            window.Show();
 
             // Assert
             Assert.IsTrue(window.CareAboutSiblingOrder);
@@ -132,6 +149,10 @@ namespace DEiXTo.Views.Tests
         public void TestChangeExistingSiblingOrder()
         {
             // Arrange
+            node = new TreeNode("DIV");
+            node.Tag = new NodeInfo();
+            window = new AddSiblingOrderWindow();
+            presenter = new AddSiblingOrderPresenter(window, node);
             node.SetCareAboutSiblingOrder(true);
             node.SetStartIndex(1);
             node.SetStepValue(3);
@@ -153,6 +174,10 @@ namespace DEiXTo.Views.Tests
         public void TestRemoveExistingSiblingOrder()
         {
             // Arrange
+            node = new TreeNode("DIV");
+            node.Tag = new NodeInfo();
+            window = new AddSiblingOrderWindow();
+            presenter = new AddSiblingOrderPresenter(window, node);
             node.SetCareAboutSiblingOrder(true);
             node.SetStartIndex(1);
             node.SetStepValue(3);
