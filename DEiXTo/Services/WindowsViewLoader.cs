@@ -11,7 +11,7 @@ namespace DEiXTo.Services
         public void LoadMainView()
         {
             MainWindow window = new MainWindow();
-            MainWindowPresenter presenter = new MainWindowPresenter(window, this, EventHub.Instance);
+            MainWindowPresenter presenter = new MainWindowPresenter(window, this, EventHub.Instance, new BrowserVersionManager());
 
             LoadView(window);
         }

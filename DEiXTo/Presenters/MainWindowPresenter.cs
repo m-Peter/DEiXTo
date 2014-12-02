@@ -13,12 +13,12 @@ namespace DEiXTo.Presenters
         private int _formCounter = 0;
         private readonly IBrowserVersionManager _browserManager;
 
-        public MainWindowPresenter(IMainView view, IViewLoader viewLoader, IEventHub eventHub)
+        public MainWindowPresenter(IMainView view, IViewLoader viewLoader, IEventHub eventHub, IBrowserVersionManager browserManager)
         {
             View = view;
             _viewLoader = viewLoader;
             _eventHub = eventHub;
-            _browserManager = new BrowserVersionManager();
+            _browserManager = browserManager;
             View.Presenter = this;
 
             eventHub.Subscribe<DeixtoAgentClosed>(this);

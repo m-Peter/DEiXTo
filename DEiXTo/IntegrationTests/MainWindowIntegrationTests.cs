@@ -17,6 +17,7 @@ namespace DEiXTo.IntegrationTests
         private MainWindow window;
         private IViewLoader loader;
         private IEventHub eventHub;
+        private IBrowserVersionManager browserManager;
         private MainWindowPresenter presenter;
 
         [TestInitialize]
@@ -25,7 +26,8 @@ namespace DEiXTo.IntegrationTests
             window = new MainWindow();
             loader = new WindowsViewLoader();
             eventHub = EventHub.Instance;
-            presenter = new MainWindowPresenter(window, loader, eventHub);
+            browserManager = new BrowserVersionManager();
+            presenter = new MainWindowPresenter(window, loader, eventHub, browserManager);
         }
 
         [TestMethod]

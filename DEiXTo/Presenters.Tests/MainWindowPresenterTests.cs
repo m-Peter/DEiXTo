@@ -12,6 +12,7 @@ namespace DEiXTo.Presenters.Tests
         private Mock<IMainView> view;
         private Mock<IViewLoader> loader;
         private Mock<IEventHub> eventHub;
+        private Mock<IBrowserVersionManager> browserManager;
         private MainWindowPresenter presenter;
 
         [TestInitialize]
@@ -20,7 +21,8 @@ namespace DEiXTo.Presenters.Tests
             view = new Mock<IMainView>();
             loader = new Mock<IViewLoader>();
             eventHub = new Mock<IEventHub>();
-            presenter = new MainWindowPresenter(view.Object, loader.Object, eventHub.Object);
+            browserManager = new Mock<IBrowserVersionManager>();
+            presenter = new MainWindowPresenter(view.Object, loader.Object, eventHub.Object, browserManager.Object);
         }
 
         [TestMethod]
@@ -145,6 +147,26 @@ namespace DEiXTo.Presenters.Tests
             // Assert
             view.Verify(v => v.AskUserToConfirmClosing());
             Assert.IsFalse(args.Cancel);
+        }
+
+        [TestMethod]
+        public void TestUpdateBrowserVersion()
+        {
+            // Act
+            presenter.UpdateBrowserVersion();
+
+            // Assert
+            browserManager.Verify(b => b.UpdateBrowserVersion());
+        }
+
+        [TestMethod]
+        public void TestResetBrowserVersion()
+        {
+            // Act
+            presenter.ResetBrowserVersion();
+
+            // Assert
+            browserManager.Verify(b => b.ResetBrowserVersion());
         }
     }
 }
