@@ -2100,14 +2100,14 @@
         private System.Windows.Forms.Button GoButton;
         private System.Windows.Forms.TextBox AddURLTextBox;
         private System.Windows.Forms.Label OutputFileFormatLabel;
-        private System.Windows.Forms.TextBox OutputFileNameTextBox;
+        public System.Windows.Forms.TextBox OutputFileNameTextBox;
         private System.Windows.Forms.Label OutputFileNameLabel;
         private System.Windows.Forms.Button BrowseURLsFileButton;
         private System.Windows.Forms.TextBox URLsFileTextBox;
         private System.Windows.Forms.Label FileLabel;
         private System.Windows.Forms.Button RemoveURLButton;
         private System.Windows.Forms.Button AddURLButton;
-        private System.Windows.Forms.ComboBox OutputFileFormatComboBox;
+        public System.Windows.Forms.ComboBox OutputFileFormatComboBox;
         public System.Windows.Forms.TextBox HTMLLinkTextBox;
         private System.Windows.Forms.Label HTMLLinkLabel;
         public System.Windows.Forms.NumericUpDown CrawlingDepthNUD;
@@ -2126,7 +2126,7 @@
         public System.Windows.Forms.CheckBox ExtractURLCheckBox;
         public System.Windows.Forms.NumericUpDown DelayNUD;
         private System.Windows.Forms.Label DelayLabel;
-        private System.Windows.Forms.NumericUpDown HitsNUD;
+        public System.Windows.Forms.NumericUpDown HitsNUD;
         private System.Windows.Forms.Label HitsLabel;
         private System.Windows.Forms.TreeView ExtractionPatternTreeView;
         private System.Windows.Forms.TextBox OuterHtmlTextBox;

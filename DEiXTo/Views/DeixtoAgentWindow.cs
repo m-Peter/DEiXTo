@@ -513,15 +513,15 @@ namespace DEiXTo.Views
 
         public void ApplyVisibilityStateInAutoFill(bool state)
         {
-            FormNameTextBox.Enabled = state;
-            InputNameTextBox.Enabled = state;
-            SearchQueryTextBox.Enabled = state;
+            FormNameTextBox.Enabled = InputNameTextBox.Enabled = SearchQueryTextBox.Enabled = state;
+            FormNameTextBox.Text = InputNameTextBox.Text = SearchQueryTextBox.Text = string.Empty;
         }
 
         public void ApplyVisibilityStateInCrawling(bool state)
         {
-            CrawlingDepthNUD.Enabled = state;
-            HTMLLinkTextBox.Enabled = state;
+            CrawlingDepthNUD.Enabled = HTMLLinkTextBox.Enabled = state;
+            CrawlingDepthNUD.Value = 5;
+            HTMLLinkTextBox.Text = string.Empty;
         }
 
         public HtmlDocument GetHtmlDocument()

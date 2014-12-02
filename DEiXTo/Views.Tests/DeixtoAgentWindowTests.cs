@@ -118,5 +118,77 @@ namespace DEiXTo.Views.Tests
             window.OverwriteRadioBtn.Checked = true;
             Assert.AreEqual(OutputMode.Overwrite, window.OutputMode);
         }
+
+        [TestMethod]
+        public void TestGetAndSetNumberOfHits()
+        {
+            window.HitsNUD.Value = 3;
+            Assert.AreEqual(3, window.NumberOfHits);
+
+            window.NumberOfHits = 2;
+            Assert.AreEqual(2, window.HitsNUD.Value);
+        }
+
+        [TestMethod]
+        public void TestGetAndSetDelayBetweenUrls()
+        {
+            window.DelayNUD.Value = 3;
+            Assert.AreEqual(3, window.Delay);
+
+            window.Delay = 1;
+            Assert.AreEqual(1, window.DelayNUD.Value);
+        }
+
+        [TestMethod]
+        public void TestGetAndSetAutoFillFields()
+        {
+            window.AutoFillCheckBox.Checked = true;
+            window.FormNameTextBox.Text = "s-form";
+            window.InputNameTextBox.Text = "q";
+            window.SearchQueryTextBox.Text = "JavaScript";
+
+            Assert.AreEqual("s-form", window.FormName);
+            Assert.AreEqual("q", window.FormInputName);
+            Assert.AreEqual("JavaScript", window.FormTerm);
+
+            window.AutoFill = false;
+
+            Assert.AreEqual("", window.FormNameTextBox.Text);
+            Assert.AreEqual("", window.InputNameTextBox.Text);
+            Assert.AreEqual("", window.SearchQueryTextBox.Text);
+        }
+
+        [TestMethod]
+        public void TestGetAndSetCrawlingFields()
+        {
+            window.CrawlingCheckBox.Checked = true;
+            window.CrawlingDepthNUD.Value = 4;
+            window.HTMLLinkTextBox.Text = "Next";
+
+            Assert.AreEqual(4, window.MaxCrawlingDepth);
+            Assert.AreEqual("Next", window.HtmlNextLink);
+
+            window.CrawlingEnabled = false;
+
+            Assert.AreEqual(5, window.CrawlingDepthNUD.Value);
+            Assert.AreEqual("", window.HTMLLinkTextBox.Text);
+        }
+
+        [TestMethod]
+        public void TestGetAndSetOutputFileFields()
+        {
+            window.OutputFileNameTextBox.Text = "some_file";
+            window.OutputFileFormatComboBox.SelectedIndex = 0;
+
+            Assert.AreEqual("some_file", window.OutputFileName);
+            Assert.AreEqual(Format.Text, window.OutputFormat);
+
+            window.OutputFileName = "another_file";
+            window.OutputFormat = Format.XML;
+
+            Assert.AreEqual("another_file", window.OutputFileNameTextBox.Text);
+            var selectedItem = (OutputFormat)window.OutputFileFormatComboBox.SelectedItem;
+            Assert.AreEqual(Format.XML, selectedItem.Format);
+        }
     }
 }
