@@ -35,7 +35,7 @@ namespace DEiXTo.Presenters.Tests
         }
 
         [TestMethod]
-        public void TestCreategManyAgents()
+        public void TestCreateManyAgents()
         {
             // Act
             presenter.CreateNewAgent();
@@ -48,21 +48,7 @@ namespace DEiXTo.Presenters.Tests
         }
 
         [TestMethod]
-        public void TestFormCounterIsResetWhenAllAgentWindowsAreClosed()
-        {
-            // Arrange
-            presenter.CreateNewAgent();
-            presenter.CreateNewAgent();
-
-            // Act
-            presenter.CloseAgentWindows();
-
-            // Assert
-            Assert.AreEqual(0, presenter.FormCounter);
-        }
-
-        [TestMethod]
-        public void TestFormCounterIsReducedByOneWhenSingleAgentIsClose()
+        public void TestFormCounterIsReducedByOneWhenSingleAgentIsClosed()
         {
             // Arrange
             presenter.CreateNewAgent();
@@ -100,6 +86,7 @@ namespace DEiXTo.Presenters.Tests
             presenter.CloseAgentWindows();
 
             // Assert
+            Assert.AreEqual(0, presenter.FormCounter);
             view.Verify(v => v.CloseAgents());
         }
 
@@ -118,7 +105,7 @@ namespace DEiXTo.Presenters.Tests
         }
 
         [TestMethod]
-        public void TestCloseMainWindowPromptsUser()
+        public void TestClosingMainWindowPromptsUser()
         {
             // Arrange
             var args = new FormClosingEventArgs(CloseReason.UserClosing, true);
