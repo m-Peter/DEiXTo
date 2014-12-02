@@ -1,6 +1,7 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 using DEiXTo.Views;
+using DEiXTo.Models;
 using System.Windows.Forms;
 
 namespace DEiXTo.Presenters.Tests
@@ -8,70 +9,111 @@ namespace DEiXTo.Presenters.Tests
     [TestClass]
     public class AddLabelPresenterTests
     {
-        private Mock<IAddLabelView> _view;
-        private AddLabelPresenter _presenter;
-        private TreeNode _node;
+        private Mock<IAddLabelView> view;
+        private AddLabelPresenter presenter;
+        private TreeNode node;
 
         [TestInitialize]
         public void SetUp()
         {
-            _view = new Mock<IAddLabelView>();
-            _node = new TreeNode("H1");
-            _presenter = new AddLabelPresenter(_view.Object, _node);
+            view = new Mock<IAddLabelView>();
+            node = new TreeNode("H1");
+            NodeInfo nInfo = new NodeInfo();
+            node.Tag = nInfo;
+            presenter = new AddLabelPresenter(view.Object, node);
         }
 
         [TestMethod]
         public void TestAddLabel()
         {
             // Arrange
-            _view.Setup(m => m.LabelText).Returns("HEADER");
+            view.Setup(v => v.LabelText).Returns("HEADER");
 
             // Act
-            _presenter.AddLabel();
+            presenter.AddLabel();
 
             // Assert
-            Assert.AreEqual("H1:HEADER", _node.Text);
+            Assert.AreEqual("H1:HEADER", node.Text);
+        }
+
+        [TestMethod]
+        public void TestLoadExistingNodesLabel()
+        {
+            // Arrange
+            node.SetLabel("HEAD");
+            presenter = new AddLabelPresenter(view.Object, node);
+
+            // Assert
+            view.VerifySet(v => v.LabelText = "HEAD");
+        }
+
+        [TestMethod]
+        public void TestReplaceExistingLabelWithNew()
+        {
+            // Arrange
+            node.SetLabel("HEAD");
+            presenter = new AddLabelPresenter(view.Object, node);
+
+            // Act
+            view.Setup(v => v.LabelText).Returns("HEADER");
+            presenter.AddLabel();
+
+            // Assert
+            Assert.AreEqual("H1:HEADER", node.Text);
         }
 
         [TestMethod]
         public void TestWindowClosesAfterLabelInsertion()
         {
             // Arrange
-            _view.Setup(m => m.LabelText).Returns("HEADER");
+            view.Setup(v => v.LabelText).Returns("HEADER");
 
             // Act
-            _presenter.AddLabel();
+            presenter.AddLabel();
 
             // Assert
-            Assert.AreEqual("H1:HEADER", _node.Text);
-            _view.Verify(m => m.Exit());
+            view.Verify(v => v.Exit());
         }
 
         [TestMethod]
-        public void TestAddInvalidLabel()
+        public void TestInvalidLabelDoesNotGetAdded()
         {
             // Arrange
-            _view.Setup(m => m.LabelText).Returns("");
+            view.Setup(v => v.LabelText).Returns("");
 
             // Act
-            _presenter.AddLabel();
+            presenter.AddLabel();
 
             // Assert
-            _view.Verify(m => m.ShowInvalidLabelMessage());
-            _view.Verify(m => m.Exit());
+            Assert.AreEqual("H1", node.Text);
+            
+        }
+
+        [TestMethod]
+        public void TestMessageIsShownOnInvalidLabel()
+        {
+            // Arrange
+            view.Setup(v => v.LabelText).Returns("");
+
+            // Act
+            presenter.AddLabel();
+
+            // Assert
+            view.Verify(v => v.ShowInvalidLabelMessage());
+            view.Verify(v => v.Exit());
         }
 
         [TestMethod]
         public void TestPressingEnterAddsLabel()
         {
             // Arrange
-            _view.Setup(m => m.LabelText).Returns("HEADER");
+            view.Setup(v => v.LabelText).Returns("HEADER");
 
             // Act
-            _presenter.KeyDownPress(Keys.Enter);
+            presenter.KeyDownPress(Keys.Enter);
 
             // Assert
-            Assert.AreEqual("H1:HEADER", _node.Text);
+            Assert.AreEqual("H1:HEADER", node.Text);
         }
     }
 }
