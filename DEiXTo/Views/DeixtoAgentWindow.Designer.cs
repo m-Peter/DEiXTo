@@ -2120,7 +2120,7 @@
         public System.Windows.Forms.TextBox FormNameTextBox;
         public System.Windows.Forms.CheckBox AutoFillCheckBox;
         private System.Windows.Forms.Button SelectOutputFileButton;
-        private System.Windows.Forms.CheckedListBox HTMLTagsListBox;
+        public System.Windows.Forms.CheckedListBox HTMLTagsListBox;
         private System.Windows.Forms.Button LoadPatternButton;
         private System.Windows.Forms.Button TunePatternButton;
         public System.Windows.Forms.CheckBox ExtractURLCheckBox;
@@ -2152,7 +2152,7 @@
         private System.Windows.Forms.Button SimplifyDOMButton;
         private System.Windows.Forms.Button RebuildDOMButton;
         private System.Windows.Forms.ToolTip DeixtoAgentTooltip;
-        private System.Windows.Forms.ListBox TargetURLsListBox;
+        public System.Windows.Forms.ListBox TargetURLsListBox;
         private System.Windows.Forms.ContextMenuStrip CreatePatternsMenuStrip;
         private System.Windows.Forms.ToolStripMenuItem WorkingPatternMenuItem;
         private System.Windows.Forms.ToolStripMenuItem AuxiliaryPatternMenuItem;

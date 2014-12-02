@@ -190,5 +190,42 @@ namespace DEiXTo.Views.Tests
             var selectedItem = (OutputFormat)window.OutputFileFormatComboBox.SelectedItem;
             Assert.AreEqual(Format.XML, selectedItem.Format);
         }
+
+        [TestMethod]
+        public void TestGetAndSetIgnoredTags()
+        {
+            window.HTMLTagsListBox.SetItemChecked(0, true);
+            window.HTMLTagsListBox.SetItemChecked(2, true);
+
+            var ignoredTags = window.IgnoredTags;
+            Assert.AreEqual(2, ignoredTags.Length);
+            Assert.AreEqual("<B>", ignoredTags[0]);
+            Assert.AreEqual("<I>", ignoredTags[1]);
+
+            window.HTMLTagsListBox.SetItemChecked(0, false);
+            window.HTMLTagsListBox.SetItemChecked(2, false);
+            window.IgnoredTags = new string[] { "<EM>" };
+
+            Assert.AreEqual(1, window.HTMLTagsListBox.CheckedItems.Count);
+            Assert.AreEqual("<EM>", window.HTMLTagsListBox.CheckedItems[0]);
+        }
+
+        [TestMethod]
+        public void TestGetAndSetTargetUrls()
+        {
+            window.TargetURLsListBox.Items.Add("http://www.google.gr/");
+            window.TargetURLsListBox.Items.Add("http://www.teilar.gr/");
+
+            var targetUrls = window.TargetUrls;
+            Assert.AreEqual(2, targetUrls.Length);
+            Assert.AreEqual("http://www.google.gr/", targetUrls[0]);
+            Assert.AreEqual("http://www.teilar.gr/", targetUrls[1]);
+
+            window.TargetURLsListBox.Items.Clear();
+            window.TargetUrls = new string[] { "http://www.skai-news.gr/" };
+
+            Assert.AreEqual(1, window.TargetURLsListBox.Items.Count);
+            Assert.AreEqual("http://www.skai-news.gr/", window.TargetURLsListBox.Items[0]);
+        }
     }
 }
