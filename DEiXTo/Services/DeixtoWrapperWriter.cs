@@ -18,7 +18,7 @@ namespace DEiXTo.Services
         private void writeInputFile()
         {
             _writer.WriteStartElement("InputFile"); // Write InputFile
-            _writer.WriteAttributeString("Filename", _wrapper.InputFile); // Write Filename attribute
+            _writer.WriteAttributeString("Filename", _wrapper.UrlsInputFile); // Write Filename attribute
             _writer.WriteEndElement(); // Close InputFile element
         }
 
@@ -122,13 +122,13 @@ namespace DEiXTo.Services
 
         private void writeIgnoredTags()
         {
-            if (_wrapper.IgnoredTags == null)
+            if (_wrapper.IgnoredHtmlTags == null)
             {
                 return;
             }
             _writer.WriteStartElement("IgnoredTagsList"); // Write IgnoredTagsList element
 
-            foreach (var tag in _wrapper.IgnoredTags)
+            foreach (var tag in _wrapper.IgnoredHtmlTags)
             {
                 _writer.WriteStartElement("IgnoredTag"); // Write IgnoredTag element
                 _writer.WriteAttributeString("Label", tag); // Write the Label attribute
@@ -159,7 +159,7 @@ namespace DEiXTo.Services
             }
             
             _writer.WriteAttributeString("Format", format); // Write Format attribute
-            _writer.WriteAttributeString("FileMode", _wrapper.OutputMode.ToString()); // Write FileMode attribute
+            _writer.WriteAttributeString("FileMode", _wrapper.OutputFileMode.ToString()); // Write FileMode attribute
             _writer.WriteEndElement(); // Close OutputFile element
         }
 

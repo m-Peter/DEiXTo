@@ -1224,14 +1224,14 @@ namespace DEiXTo.Presenters.Tests
             _view.VerifySet(v => v.FormName = wrapper.FormName);
             _view.VerifySet(v => v.FormTerm = wrapper.SearchQuery);
             _view.VerifySet(v => v.HtmlNextLink = wrapper.HtmlNextLink);
-            _view.VerifySet(v => v.IgnoredTags = wrapper.IgnoredTags);
-            _view.VerifySet(v => v.InputFile = wrapper.InputFile);
+            _view.VerifySet(v => v.IgnoredTags = wrapper.IgnoredHtmlTags);
+            _view.VerifySet(v => v.InputFile = wrapper.UrlsInputFile);
             _view.VerifySet(v => v.MaxCrawlingDepth = wrapper.MaxCrawlingDepth);
             _view.VerifySet(v => v.MultiPageCrawling = wrapper.MultiPageCrawling);
             _view.VerifySet(v => v.NumberOfHits = wrapper.NumberOfHits);
             _view.VerifySet(v => v.OutputFileName = wrapper.OutputFileName);
             _view.VerifySet(v => v.OutputFormat = wrapper.OutputFileFormat);
-            _view.VerifySet(v => v.OutputMode = wrapper.OutputMode);
+            _view.VerifySet(v => v.OutputMode = wrapper.OutputFileMode);
             _view.VerifySet(v => v.TargetUrls = wrapper.TargetUrls);
             _view.Verify(v => v.ExpandExtractionTree());
         }
@@ -1249,14 +1249,14 @@ namespace DEiXTo.Presenters.Tests
             wrapper.FormName = "q";
             wrapper.SearchQuery = "rails";
             wrapper.HtmlNextLink = "Next";
-            wrapper.IgnoredTags = new string[] { "<B>", "<I>", "<EM>" };
-            wrapper.InputFile = "some_input_file";
+            wrapper.IgnoredHtmlTags = new string[] { "<B>", "<I>", "<EM>" };
+            wrapper.UrlsInputFile = "some_input_file";
             wrapper.MaxCrawlingDepth = 3;
             wrapper.MultiPageCrawling = true;
             wrapper.NumberOfHits = 4;
             wrapper.OutputFileName = "some_output_file";
             wrapper.OutputFileFormat = Format.XML;
-            wrapper.OutputMode = OutputMode.Append;
+            wrapper.OutputFileMode = OutputMode.Append;
             wrapper.TargetUrls = new string[] { "url1", "url2" };
 
             return wrapper;

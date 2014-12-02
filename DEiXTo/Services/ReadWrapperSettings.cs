@@ -22,7 +22,7 @@ namespace DEiXTo.Services
                     if (reader.NodeType == XmlNodeType.Element && reader.LocalName == "InputFile")
                     {
                         reader.MoveToAttribute("Filename");
-                        wrapper.InputFile = reader.Value;
+                        wrapper.UrlsInputFile = reader.Value;
                     }
                     else if (reader.NodeType == XmlNodeType.Element && reader.LocalName == "TargetUrls")
                     {
@@ -62,7 +62,7 @@ namespace DEiXTo.Services
                             }
                         }
 
-                        wrapper.IgnoredTags = tags;
+                        wrapper.IgnoredHtmlTags = tags;
                     }
                     else if (reader.NodeType == XmlNodeType.Element && reader.LocalName == "MultiplePage")
                     {
@@ -102,7 +102,7 @@ namespace DEiXTo.Services
 
                         wrapper.OutputFileName = output_filename;
                         wrapper.OutputFileFormat = format.Format;
-                        wrapper.OutputMode = mode == "Append" ? OutputMode.Append : OutputMode.Overwrite;
+                        wrapper.OutputFileMode = mode == "Append" ? OutputMode.Append : OutputMode.Overwrite;
                     }
                     else if (reader.NodeType == XmlNodeType.Element && reader.LocalName == "MaxHits")
                     {

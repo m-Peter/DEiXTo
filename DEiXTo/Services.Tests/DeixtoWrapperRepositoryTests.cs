@@ -101,7 +101,7 @@ namespace DEiXTo.Services.Tests
         public void TestSaveAndLoadInputFile()
         {
             // Arrange
-            _wrapper.InputFile = "input_file.txt";
+            _wrapper.UrlsInputFile = "input_file.txt";
 
             // Act
             _repository.Save(_wrapper, _stream);
@@ -109,7 +109,7 @@ namespace DEiXTo.Services.Tests
             var loaded = _repository.Load(_stream);
 
             // Assert
-            Assert.AreEqual("input_file.txt", loaded.InputFile);
+            Assert.AreEqual("input_file.txt", loaded.UrlsInputFile);
         }
 
         [TestMethod]
@@ -167,7 +167,7 @@ namespace DEiXTo.Services.Tests
         public void TestSaveAndLoadAppendMode()
         {
             // Arrange
-            _wrapper.OutputMode = OutputMode.Append;
+            _wrapper.OutputFileMode = OutputMode.Append;
 
             // Act
             _repository.Save(_wrapper, _stream);
@@ -175,14 +175,14 @@ namespace DEiXTo.Services.Tests
             var loaded = _repository.Load(_stream);
 
             // Assert
-            Assert.AreEqual(OutputMode.Append, loaded.OutputMode);
+            Assert.AreEqual(OutputMode.Append, loaded.OutputFileMode);
         }
 
         [TestMethod]
         public void TestSaveAndLoadOverwriteMode()
         {
             // Arrange
-            _wrapper.OutputMode = OutputMode.Overwrite;
+            _wrapper.OutputFileMode = OutputMode.Overwrite;
 
             // Act
             _repository.Save(_wrapper, _stream);
@@ -190,7 +190,7 @@ namespace DEiXTo.Services.Tests
             var loaded = _repository.Load(_stream);
 
             // Assert
-            Assert.AreEqual(OutputMode.Overwrite, loaded.OutputMode);
+            Assert.AreEqual(OutputMode.Overwrite, loaded.OutputFileMode);
         }
 
         [TestMethod]
@@ -224,7 +224,7 @@ namespace DEiXTo.Services.Tests
             tags[0] = "<B>";
             tags[1] = "<SPAN>";
             tags[2] = "<EM>";
-            _wrapper.IgnoredTags = tags;
+            _wrapper.IgnoredHtmlTags = tags;
 
             // Act
             _repository.Save(_wrapper, _stream);
@@ -232,7 +232,7 @@ namespace DEiXTo.Services.Tests
             var loaded = _repository.Load(_stream);
 
             // Assert
-            var loadedTags = loaded.IgnoredTags;
+            var loadedTags = loaded.IgnoredHtmlTags;
             Assert.AreEqual(3, loadedTags.Length);
             Assert.AreEqual("<B>", loadedTags[0]);
             Assert.AreEqual("<SPAN>", loadedTags[1]);
@@ -338,7 +338,7 @@ namespace DEiXTo.Services.Tests
             AddNodesTo(div, h2, p, p1);
             var pattern = new ExtractionPattern(div);
             var inputFile = "input_file.txt";
-            _wrapper.InputFile = inputFile;
+            _wrapper.UrlsInputFile = inputFile;
             _wrapper.ExtractionPattern = pattern;
 
             // Act
@@ -347,7 +347,7 @@ namespace DEiXTo.Services.Tests
             var loaded = _repository.Load(_stream);
 
             // Assert
-            Assert.AreEqual("input_file.txt", loaded.InputFile);
+            Assert.AreEqual("input_file.txt", loaded.UrlsInputFile);
             var loadedPattern = loaded.ExtractionPattern.RootNode;
 
             Assert.AreEqual("DIV", loadedPattern.Text);

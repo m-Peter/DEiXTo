@@ -899,7 +899,7 @@ namespace DEiXTo.Presenters
             }
             else
             {
-                wrapper.InputFile = inputFile;
+                wrapper.UrlsInputFile = inputFile;
             }
 
             wrapper.ExtractionPattern = new ExtractionPattern(View.ExtractionPattern);
@@ -910,13 +910,13 @@ namespace DEiXTo.Presenters
             wrapper.FormName = View.FormName;
             wrapper.SearchQuery = View.FormTerm;
             wrapper.HtmlNextLink = View.HtmlNextLink;
-            wrapper.IgnoredTags = View.IgnoredTags;
+            wrapper.IgnoredHtmlTags = View.IgnoredTags;
             wrapper.MaxCrawlingDepth = View.MaxCrawlingDepth;
             wrapper.MultiPageCrawling = View.MultiPageCrawling;
             wrapper.NumberOfHits = View.NumberOfHits;
             wrapper.OutputFileName = View.OutputFileName;
             wrapper.OutputFileFormat = View.OutputFormat;
-            wrapper.OutputMode = View.OutputMode;
+            wrapper.OutputFileMode = View.OutputMode;
 
 
             string filter = "Wrapper Project Files (*.wpf)|";
@@ -958,14 +958,14 @@ namespace DEiXTo.Presenters
             View.FormName = wrapper.FormName;
             View.FormTerm = wrapper.SearchQuery;
             View.HtmlNextLink = wrapper.HtmlNextLink;
-            View.IgnoredTags = wrapper.IgnoredTags;
-            View.InputFile = wrapper.InputFile;
+            View.IgnoredTags = wrapper.IgnoredHtmlTags;
+            View.InputFile = wrapper.UrlsInputFile;
             View.MaxCrawlingDepth = wrapper.MaxCrawlingDepth;
             View.MultiPageCrawling = wrapper.MultiPageCrawling;
             View.NumberOfHits = wrapper.NumberOfHits;
             View.OutputFileName = wrapper.OutputFileName;
             View.OutputFormat = wrapper.OutputFileFormat;
-            View.OutputMode = wrapper.OutputMode;
+            View.OutputMode = wrapper.OutputFileMode;
             View.TargetUrls = wrapper.TargetUrls;
             View.ExpandExtractionTree();
         }

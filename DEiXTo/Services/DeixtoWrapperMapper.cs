@@ -66,7 +66,7 @@ namespace DEiXTo.Services
         private void ReadInputFile(XmlReader reader, DeixtoWrapper wrapper)
         {
             reader.MoveToAttribute("Filename");
-            wrapper.InputFile = reader.Value;
+            wrapper.UrlsInputFile = reader.Value;
         }
 
         private void ReadTargetUrls(XmlReader reader, DeixtoWrapper wrapper)
@@ -108,7 +108,7 @@ namespace DEiXTo.Services
                 }
             }
 
-            wrapper.IgnoredTags = tags;
+            wrapper.IgnoredHtmlTags = tags;
         }
 
         private void ReadMultiplePage(XmlReader reader, DeixtoWrapper wrapper)
@@ -152,7 +152,7 @@ namespace DEiXTo.Services
 
             wrapper.OutputFileName = output_filename;
             wrapper.OutputFileFormat = format.Format;
-            wrapper.OutputMode = mode == "Append" ? OutputMode.Append : OutputMode.Overwrite;
+            wrapper.OutputFileMode = mode == "Append" ? OutputMode.Append : OutputMode.Overwrite;
         }
 
         private void ReadMaxHits(XmlReader reader, DeixtoWrapper wrapper)
