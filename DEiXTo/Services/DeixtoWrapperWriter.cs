@@ -68,10 +68,10 @@ namespace DEiXTo.Services
         private void writeSubmitForm()
         {
             _writer.WriteStartElement("SubmitForm"); // Write SubmitForm element
-            _writer.WriteAttributeString("Enabled", _wrapper.AutoFill ? "true" : "false"); // Write Enabled attribute
+            _writer.WriteAttributeString("Enabled", _wrapper.AutoSubmitForm ? "true" : "false"); // Write Enabled attribute
             _writer.WriteAttributeString("FormName", _wrapper.FormName); // Write FormName attribute
-            _writer.WriteAttributeString("InputName", _wrapper.FormInputName); // Write InputName attribute
-            _writer.WriteAttributeString("Term", _wrapper.FormTerm); // Write Term attribute
+            _writer.WriteAttributeString("InputName", _wrapper.InputName); // Write InputName attribute
+            _writer.WriteAttributeString("Term", _wrapper.SearchQuery); // Write Term attribute
             _writer.WriteEndElement(); // Close SubmitForm element
         }
 
@@ -145,15 +145,15 @@ namespace DEiXTo.Services
 
             string format = null;
             
-            if (_wrapper.OutputFormat == Format.Text)
+            if (_wrapper.OutputFileFormat == Format.Text)
             {
                 format = "TabDelimited";
             }
-            else if (_wrapper.OutputFormat == Format.XML)
+            else if (_wrapper.OutputFileFormat == Format.XML)
             {
                 format = "XML";
             }
-            else if (_wrapper.OutputFormat == Format.RSS)
+            else if (_wrapper.OutputFileFormat == Format.RSS)
             {
                 format = "RSS";
             }

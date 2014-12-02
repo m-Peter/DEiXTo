@@ -1216,13 +1216,13 @@ namespace DEiXTo.Presenters.Tests
             _presenter.LoadWrapper();
 
             // Assert
-            _view.VerifySet(v => v.AutoFill = wrapper.AutoFill);
+            _view.VerifySet(v => v.AutoFill = wrapper.AutoSubmitForm);
             _view.VerifySet(v => v.Delay = wrapper.Delay);
             _view.VerifySet(v => v.ExtractionPattern = wrapper.ExtractionPattern.RootNode);
             _view.VerifySet(v => v.ExtractNativeUrl = wrapper.ExtractNativeUrl);
-            _view.VerifySet(v => v.FormInputName = wrapper.FormInputName);
+            _view.VerifySet(v => v.FormInputName = wrapper.InputName);
             _view.VerifySet(v => v.FormName = wrapper.FormName);
-            _view.VerifySet(v => v.FormTerm = wrapper.FormTerm);
+            _view.VerifySet(v => v.FormTerm = wrapper.SearchQuery);
             _view.VerifySet(v => v.HtmlNextLink = wrapper.HtmlNextLink);
             _view.VerifySet(v => v.IgnoredTags = wrapper.IgnoredTags);
             _view.VerifySet(v => v.InputFile = wrapper.InputFile);
@@ -1230,7 +1230,7 @@ namespace DEiXTo.Presenters.Tests
             _view.VerifySet(v => v.MultiPageCrawling = wrapper.MultiPageCrawling);
             _view.VerifySet(v => v.NumberOfHits = wrapper.NumberOfHits);
             _view.VerifySet(v => v.OutputFileName = wrapper.OutputFileName);
-            _view.VerifySet(v => v.OutputFormat = wrapper.OutputFormat);
+            _view.VerifySet(v => v.OutputFormat = wrapper.OutputFileFormat);
             _view.VerifySet(v => v.OutputMode = wrapper.OutputMode);
             _view.VerifySet(v => v.TargetUrls = wrapper.TargetUrls);
             _view.Verify(v => v.ExpandExtractionTree());
@@ -1241,13 +1241,13 @@ namespace DEiXTo.Presenters.Tests
         {
             var wrapper = new DeixtoWrapper();
 
-            wrapper.AutoFill = true;
+            wrapper.AutoSubmitForm = true;
             wrapper.Delay = 2;
             wrapper.ExtractionPattern = new ExtractionPattern(new TreeNode("DIV"));
             wrapper.ExtractNativeUrl = true;
-            wrapper.FormInputName = "repo";
+            wrapper.InputName = "repo";
             wrapper.FormName = "q";
-            wrapper.FormTerm = "rails";
+            wrapper.SearchQuery = "rails";
             wrapper.HtmlNextLink = "Next";
             wrapper.IgnoredTags = new string[] { "<B>", "<I>", "<EM>" };
             wrapper.InputFile = "some_input_file";
@@ -1255,7 +1255,7 @@ namespace DEiXTo.Presenters.Tests
             wrapper.MultiPageCrawling = true;
             wrapper.NumberOfHits = 4;
             wrapper.OutputFileName = "some_output_file";
-            wrapper.OutputFormat = Format.XML;
+            wrapper.OutputFileFormat = Format.XML;
             wrapper.OutputMode = OutputMode.Append;
             wrapper.TargetUrls = new string[] { "url1", "url2" };
 

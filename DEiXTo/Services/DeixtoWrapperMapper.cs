@@ -151,7 +151,7 @@ namespace DEiXTo.Services
             var mode = reader.Value;
 
             wrapper.OutputFileName = output_filename;
-            wrapper.OutputFormat = format.Format;
+            wrapper.OutputFileFormat = format.Format;
             wrapper.OutputMode = mode == "Append" ? OutputMode.Append : OutputMode.Overwrite;
         }
 
@@ -179,10 +179,10 @@ namespace DEiXTo.Services
             string inputName = reader.ReadContentAsString();
             reader.MoveToAttribute("Term");
             string term = reader.ReadContentAsString();
-            wrapper.AutoFill = enabled;
+            wrapper.AutoSubmitForm = enabled;
             wrapper.FormName = formName;
-            wrapper.FormInputName = inputName;
-            wrapper.FormTerm = term;
+            wrapper.InputName = inputName;
+            wrapper.SearchQuery = term;
         }
 
         private void ReadExtractionPattern(XmlReader reader, DeixtoWrapper wrapper)

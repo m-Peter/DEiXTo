@@ -903,19 +903,19 @@ namespace DEiXTo.Presenters
             }
 
             wrapper.ExtractionPattern = new ExtractionPattern(View.ExtractionPattern);
-            wrapper.AutoFill = View.AutoFill;
+            wrapper.AutoSubmitForm = View.AutoFill;
             wrapper.Delay = View.Delay;
             wrapper.ExtractNativeUrl = View.ExtractNativeUrl;
-            wrapper.FormInputName = View.FormInputName;
+            wrapper.InputName = View.FormInputName;
             wrapper.FormName = View.FormName;
-            wrapper.FormTerm = View.FormTerm;
+            wrapper.SearchQuery = View.FormTerm;
             wrapper.HtmlNextLink = View.HtmlNextLink;
             wrapper.IgnoredTags = View.IgnoredTags;
             wrapper.MaxCrawlingDepth = View.MaxCrawlingDepth;
             wrapper.MultiPageCrawling = View.MultiPageCrawling;
             wrapper.NumberOfHits = View.NumberOfHits;
             wrapper.OutputFileName = View.OutputFileName;
-            wrapper.OutputFormat = View.OutputFormat;
+            wrapper.OutputFileFormat = View.OutputFormat;
             wrapper.OutputMode = View.OutputMode;
 
 
@@ -950,13 +950,13 @@ namespace DEiXTo.Presenters
             string filename = dialog.Filename;
 
             var wrapper = _screen.LoadWrapper(filename);
-            View.AutoFill = wrapper.AutoFill;
+            View.AutoFill = wrapper.AutoSubmitForm;
             View.Delay = wrapper.Delay;
             View.ExtractionPattern = wrapper.ExtractionPattern.RootNode;
             View.ExtractNativeUrl = wrapper.ExtractNativeUrl;
-            View.FormInputName = wrapper.FormInputName;
+            View.FormInputName = wrapper.InputName;
             View.FormName = wrapper.FormName;
-            View.FormTerm = wrapper.FormTerm;
+            View.FormTerm = wrapper.SearchQuery;
             View.HtmlNextLink = wrapper.HtmlNextLink;
             View.IgnoredTags = wrapper.IgnoredTags;
             View.InputFile = wrapper.InputFile;
@@ -964,7 +964,7 @@ namespace DEiXTo.Presenters
             View.MultiPageCrawling = wrapper.MultiPageCrawling;
             View.NumberOfHits = wrapper.NumberOfHits;
             View.OutputFileName = wrapper.OutputFileName;
-            View.OutputFormat = wrapper.OutputFormat;
+            View.OutputFormat = wrapper.OutputFileFormat;
             View.OutputMode = wrapper.OutputMode;
             View.TargetUrls = wrapper.TargetUrls;
             View.ExpandExtractionTree();

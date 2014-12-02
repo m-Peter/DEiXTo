@@ -31,10 +31,10 @@ namespace DEiXTo.Services.Tests
         public void TestSaveAndLoadSubmitFormFields()
         {
             // Arrange
-            _wrapper.AutoFill = true;
+            _wrapper.AutoSubmitForm = true;
             _wrapper.FormName = "search-repo";
-            _wrapper.FormInputName = "query";
-            _wrapper.FormTerm = "rails";
+            _wrapper.InputName = "query";
+            _wrapper.SearchQuery = "rails";
 
             // Act
             _repository.Save(_wrapper, _stream);
@@ -42,10 +42,10 @@ namespace DEiXTo.Services.Tests
             var loaded = _repository.Load(_stream);
 
             // Assert
-            Assert.IsTrue(loaded.AutoFill);
+            Assert.IsTrue(loaded.AutoSubmitForm);
             Assert.AreEqual("search-repo", loaded.FormName);
-            Assert.AreEqual("query", loaded.FormInputName);
-            Assert.AreEqual("rails", loaded.FormTerm);
+            Assert.AreEqual("query", loaded.InputName);
+            Assert.AreEqual("rails", loaded.SearchQuery);
         }
 
         [TestMethod]
@@ -117,7 +117,7 @@ namespace DEiXTo.Services.Tests
         {
             // Arrange
             _wrapper.OutputFileName = "output_file.xml";
-            _wrapper.OutputFormat = Format.XML;
+            _wrapper.OutputFileFormat = Format.XML;
 
             // Act
             _repository.Save(_wrapper, _stream);
@@ -126,7 +126,7 @@ namespace DEiXTo.Services.Tests
 
             // Assert
             Assert.AreEqual("output_file.xml", loaded.OutputFileName);
-            Assert.AreEqual(Format.XML, loaded.OutputFormat);
+            Assert.AreEqual(Format.XML, loaded.OutputFileFormat);
         }
 
         [TestMethod]
@@ -134,7 +134,7 @@ namespace DEiXTo.Services.Tests
         {
             // Arrange
             _wrapper.OutputFileName = "output_file.txt";
-            _wrapper.OutputFormat = Format.Text;
+            _wrapper.OutputFileFormat = Format.Text;
 
             // Act
             _repository.Save(_wrapper, _stream);
@@ -143,7 +143,7 @@ namespace DEiXTo.Services.Tests
 
             // Assert
             Assert.AreEqual("output_file.txt", loaded.OutputFileName);
-            Assert.AreEqual(Format.Text, loaded.OutputFormat);
+            Assert.AreEqual(Format.Text, loaded.OutputFileFormat);
         }
 
         [TestMethod]
@@ -151,7 +151,7 @@ namespace DEiXTo.Services.Tests
         {
             // Arrange
             _wrapper.OutputFileName = "output_file.rss";
-            _wrapper.OutputFormat = Format.RSS;
+            _wrapper.OutputFileFormat = Format.RSS;
 
             // Act
             _repository.Save(_wrapper, _stream);
@@ -160,7 +160,7 @@ namespace DEiXTo.Services.Tests
 
             // Assert
             Assert.AreEqual("output_file.rss", loaded.OutputFileName);
-            Assert.AreEqual(Format.RSS, loaded.OutputFormat);
+            Assert.AreEqual(Format.RSS, loaded.OutputFileFormat);
         }
 
         [TestMethod]
