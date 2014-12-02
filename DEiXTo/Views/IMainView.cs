@@ -5,7 +5,7 @@ namespace DEiXTo.Views
 {
     public interface IMainView
     {
-        MainPresenter Presenter { get; set; }
+        IMainWindowPresenter Presenter { get; set; }
 
         void CascadeAgents();
         void CloseAgents();

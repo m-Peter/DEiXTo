@@ -11,7 +11,7 @@ namespace DEiXTo.Views
             InitializeComponent();
         }
 
-        public MainPresenter Presenter { get; set; }
+        public IMainWindowPresenter Presenter { get; set; }
 
         public void CascadeAgents()
         {

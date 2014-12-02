@@ -30,11 +30,11 @@
         {
             this.TopMenu = new System.Windows.Forms.MenuStrip();
             this.AgentsMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.newAgentToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.NewAgentMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.WindowsMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.cascadeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.closeAllToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.floatAllToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.CascadeAgentsMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.CloseAgentsMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.FloatAgentsMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.SettingsMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.UpdateBrowserVersionMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.ResetToDefaultMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -57,48 +57,48 @@
             // AgentsMenuItem
             // 
             this.AgentsMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.newAgentToolStripMenuItem});
+            this.NewAgentMenuItem});
             this.AgentsMenuItem.Name = "AgentsMenuItem";
             this.AgentsMenuItem.Size = new System.Drawing.Size(56, 20);
             this.AgentsMenuItem.Text = "Agents";
             // 
-            // newAgentToolStripMenuItem
+            // NewAgentMenuItem
             // 
-            this.newAgentToolStripMenuItem.Name = "newAgentToolStripMenuItem";
-            this.newAgentToolStripMenuItem.Size = new System.Drawing.Size(133, 22);
-            this.newAgentToolStripMenuItem.Text = "New Agent";
-            this.newAgentToolStripMenuItem.Click += new System.EventHandler(this.newAgentToolStripMenuItem_Click);
+            this.NewAgentMenuItem.Name = "NewAgentMenuItem";
+            this.NewAgentMenuItem.Size = new System.Drawing.Size(133, 22);
+            this.NewAgentMenuItem.Text = "New Agent";
+            this.NewAgentMenuItem.Click += new System.EventHandler(this.newAgentToolStripMenuItem_Click);
             // 
             // WindowsMenuItem
             // 
             this.WindowsMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.cascadeToolStripMenuItem,
-            this.closeAllToolStripMenuItem,
-            this.floatAllToolStripMenuItem});
+            this.CascadeAgentsMenuItem,
+            this.CloseAgentsMenuItem,
+            this.FloatAgentsMenuItem});
             this.WindowsMenuItem.Name = "WindowsMenuItem";
             this.WindowsMenuItem.Size = new System.Drawing.Size(68, 20);
             this.WindowsMenuItem.Text = "&Windows";
             // 
-            // cascadeToolStripMenuItem
+            // CascadeAgentsMenuItem
             // 
-            this.cascadeToolStripMenuItem.Name = "cascadeToolStripMenuItem";
-            this.cascadeToolStripMenuItem.Size = new System.Drawing.Size(120, 22);
-            this.cascadeToolStripMenuItem.Text = "Cascade";
-            this.cascadeToolStripMenuItem.Click += new System.EventHandler(this.cascadeToolStripMenuItem_Click);
+            this.CascadeAgentsMenuItem.Name = "CascadeAgentsMenuItem";
+            this.CascadeAgentsMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.CascadeAgentsMenuItem.Text = "Cascade";
+            this.CascadeAgentsMenuItem.Click += new System.EventHandler(this.cascadeToolStripMenuItem_Click);
             // 
-            // closeAllToolStripMenuItem
+            // CloseAgentsMenuItem
             // 
-            this.closeAllToolStripMenuItem.Name = "closeAllToolStripMenuItem";
-            this.closeAllToolStripMenuItem.Size = new System.Drawing.Size(120, 22);
-            this.closeAllToolStripMenuItem.Text = "Close All";
-            this.closeAllToolStripMenuItem.Click += new System.EventHandler(this.closeAllToolStripMenuItem_Click);
+            this.CloseAgentsMenuItem.Name = "CloseAgentsMenuItem";
+            this.CloseAgentsMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.CloseAgentsMenuItem.Text = "Close All";
+            this.CloseAgentsMenuItem.Click += new System.EventHandler(this.closeAllToolStripMenuItem_Click);
             // 
-            // floatAllToolStripMenuItem
+            // FloatAgentsMenuItem
             // 
-            this.floatAllToolStripMenuItem.Name = "floatAllToolStripMenuItem";
-            this.floatAllToolStripMenuItem.Size = new System.Drawing.Size(120, 22);
-            this.floatAllToolStripMenuItem.Text = "Float All";
-            this.floatAllToolStripMenuItem.Click += new System.EventHandler(this.floatAllToolStripMenuItem_Click);
+            this.FloatAgentsMenuItem.Name = "FloatAgentsMenuItem";
+            this.FloatAgentsMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.FloatAgentsMenuItem.Text = "Float All";
+            this.FloatAgentsMenuItem.Click += new System.EventHandler(this.floatAllToolStripMenuItem_Click);
             // 
             // SettingsMenuItem
             // 
@@ -145,13 +145,13 @@
 
         private System.Windows.Forms.MenuStrip TopMenu;
         private System.Windows.Forms.ToolStripMenuItem AgentsMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem newAgentToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem cascadeToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem closeAllToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem floatAllToolStripMenuItem;
+        public System.Windows.Forms.ToolStripMenuItem NewAgentMenuItem;
+        public System.Windows.Forms.ToolStripMenuItem CascadeAgentsMenuItem;
+        public System.Windows.Forms.ToolStripMenuItem CloseAgentsMenuItem;
+        public System.Windows.Forms.ToolStripMenuItem FloatAgentsMenuItem;
         public System.Windows.Forms.ToolStripMenuItem WindowsMenuItem;
         private System.Windows.Forms.ToolStripMenuItem SettingsMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem UpdateBrowserVersionMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem ResetToDefaultMenuItem;
+        public System.Windows.Forms.ToolStripMenuItem UpdateBrowserVersionMenuItem;
+        public System.Windows.Forms.ToolStripMenuItem ResetToDefaultMenuItem;
     }
 }

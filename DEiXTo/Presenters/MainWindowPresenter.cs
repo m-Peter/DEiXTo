@@ -5,7 +5,7 @@ using System.Windows.Forms;
 
 namespace DEiXTo.Presenters
 {
-    public class MainPresenter : ISubscriber<DeixtoAgentClosed>
+    public class MainWindowPresenter : ISubscriber<DeixtoAgentClosed>, IMainWindowPresenter
     {
         private readonly IViewLoader _viewLoader;
         private readonly IEventHub _eventHub;
@@ -13,7 +13,7 @@ namespace DEiXTo.Presenters
         private int _formCounter = 0;
         private readonly IBrowserVersionManager _browserManager;
 
-        public MainPresenter(IMainView view, IViewLoader viewLoader, IEventHub eventHub)
+        public MainWindowPresenter(IMainView view, IViewLoader viewLoader, IEventHub eventHub)
         {
             View = view;
             _viewLoader = viewLoader;

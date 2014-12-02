@@ -10,92 +10,108 @@ namespace DEiXTo.Views.Tests
     public class MainWindowTests
     {
         private MainWindow window;
-        private MainPresenter presenter;
-        private IViewLoader loader;
-        private Mock<IEventHub> eventHub;
+        private Mock<IMainWindowPresenter> presenter;
 
         [TestInitialize]
         public void SetUp()
         {
             window = new MainWindow();
-            eventHub = new Mock<IEventHub>();
-            loader = new WindowsViewLoader();
-            presenter = new MainPresenter(window, loader, eventHub.Object);
-        }
-
-        [TestMethod]
-        public void TestStartingState()
-        {
-            // Assert
-            Assert.IsTrue(window.HasChildren);
+            presenter = new Mock<IMainWindowPresenter>();
+            window.Presenter = presenter.Object;
         }
 
         [TestMethod]
         public void TestCreateNewAgent()
         {
-            // Act
-            presenter.CreateNewAgent();
+            // Arrange
+            window.Show();
 
+            // Act
+            window.NewAgentMenuItem.PerformClick();
+            
             // Assert
-            Assert.AreEqual(1, window.MdiChildren.Length);
-            var child = window.MdiChildren[0];
-            Assert.AreEqual("Agent 1", child.Text);
+            presenter.Verify(p => p.CreateNewAgent());
         }
 
         [TestMethod]
         public void TestCascadeAgents()
         {
+            // Arrange
+            window.Show();
+            window.NewAgentMenuItem.PerformClick();
+            
             // Act
-            presenter.CreateNewAgent();
-            presenter.CreateNewAgent();
-            window.CascadeAgents();
+            window.CascadeAgentsMenuItem.PerformClick();
 
             // Assert
-            var childs = window.MdiChildren;
-            foreach (Form form in childs)
-            {
-                Assert.AreEqual(FormWindowState.Normal, form.WindowState);
-            }
+            presenter.Verify(p => p.CascadeAgentWindows());
         }
 
         [TestMethod]
         public void TestFloatAgents()
         {
+            // Arrange
+            window.Show();
+            window.NewAgentMenuItem.PerformClick();
+
             // Act
-            presenter.CreateNewAgent();
-            presenter.CreateNewAgent();
-            window.FloatAgents();
+            window.FloatAgentsMenuItem.PerformClick();
 
             // Assert
-            var childs = window.MdiChildren;
-            foreach (Form form in childs)
-            {
-                Assert.AreEqual(FormWindowState.Maximized, form.WindowState);
-            }
+            presenter.Verify(p => p.FloatAgentWindows());
         }
 
         [TestMethod]
         public void TestCloseAgents()
         {
+            // Arrange
+            window.Show();
+            window.NewAgentMenuItem.PerformClick();
+
             // Act
-            presenter.CreateNewAgent();
-            presenter.CreateNewAgent();
-            window.CloseAgents();
+            window.CloseAgentsMenuItem.PerformClick();
 
             // Assert
-            Assert.AreEqual(0, window.MdiChildren.Length);
+            presenter.Verify(p => p.CloseAgentWindows());
         }
 
         [TestMethod]
-        public void TestCloseAgent()
+        public void TestUpdateBrowserVersion()
         {
+            // Arrange
+            window.Show();
+
             // Act
-            presenter.CreateNewAgent();
+            window.UpdateBrowserVersionMenuItem.PerformClick();
 
             // Assert
-            Assert.AreEqual(1, presenter.FormCounter);
-            presenter.Receive(new DeixtoAgentClosed());
-            Assert.AreEqual(0, presenter.FormCounter);
+            presenter.Verify(p => p.UpdateBrowserVersion());
+        }
+
+        [TestMethod]
+        public void TestResetBrowserVersion()
+        {
+            // Arrange
+            window.Show();
+
+            // Act
+            window.ResetToDefaultMenuItem.PerformClick();
+
+            // Assert
+            presenter.Verify(p => p.ResetBrowserVersion());
+        }
+
+        [TestMethod]
+        public void TestClosingWindowPromptsUser()
+        {
+            // Arrange
+            window.Show();
+
+            // Act
+            window.Close();
+
+            // Assert
+            presenter.Verify(p => p.WindowClosing(It.IsAny<FormClosingEventArgs>()));
         }
     }
 }
