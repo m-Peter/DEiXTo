@@ -23,9 +23,6 @@ namespace DEiXTo.Views.Tests
         [TestMethod]
         public void TestCreateNewAgent()
         {
-            // Arrange
-            window.Show();
-
             // Act
             window.NewAgentMenuItem.PerformClick();
             
@@ -37,7 +34,6 @@ namespace DEiXTo.Views.Tests
         public void TestCascadeAgents()
         {
             // Arrange
-            window.Show();
             window.NewAgentMenuItem.PerformClick();
             
             // Act
@@ -51,7 +47,6 @@ namespace DEiXTo.Views.Tests
         public void TestFloatAgents()
         {
             // Arrange
-            window.Show();
             window.NewAgentMenuItem.PerformClick();
 
             // Act
@@ -65,7 +60,6 @@ namespace DEiXTo.Views.Tests
         public void TestCloseAgents()
         {
             // Arrange
-            window.Show();
             window.NewAgentMenuItem.PerformClick();
 
             // Act
@@ -78,9 +72,6 @@ namespace DEiXTo.Views.Tests
         [TestMethod]
         public void TestUpdateBrowserVersion()
         {
-            // Arrange
-            window.Show();
-
             // Act
             window.UpdateBrowserVersionMenuItem.PerformClick();
 
@@ -91,9 +82,6 @@ namespace DEiXTo.Views.Tests
         [TestMethod]
         public void TestResetBrowserVersion()
         {
-            // Arrange
-            window.Show();
-
             // Act
             window.ResetToDefaultMenuItem.PerformClick();
 
