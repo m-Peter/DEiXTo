@@ -35,8 +35,8 @@ namespace DEiXTo.Views
         string Url { get; }
         HtmlElement CurrentElement { get; set; }
         bool HighlightModeEnabled { get; set; }
-        bool CrawlingEnabled { get; }
-        bool CanAutoScroll { get; }
+        bool CrawlingEnabled { get; set; }
+        bool CanAutoScroll { get; set; }
         bool BrowserContextMenuEnabled { get; }
         string FirstTargetURL { get; }
         string TargetURLsFile { get; set; }

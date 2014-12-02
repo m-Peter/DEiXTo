@@ -430,6 +430,7 @@ namespace DEiXTo.Views
         public bool CrawlingEnabled
         {
             get { return CrawlingCheckBox.Checked; }
+            set { CrawlingCheckBox.Checked = value; }
         }
 
         public int CrawlingDepth()
@@ -451,6 +452,7 @@ namespace DEiXTo.Views
         public bool CanAutoScroll
         {
             get { return AutoScrollCheckBox.Checked; }
+            set { AutoScrollCheckBox.Checked = value; }
         }
 
         public void FillElementInfo(TreeNode node, string outerHtml)
