@@ -11,69 +11,114 @@ namespace DEiXTo.Presenters.Tests
     [TestClass]
     public class AddSiblingOrderPresenterTests
     {
-        private Mock<IAddSiblingOrderView> _view;
-        private TreeNode _node;
-        private AddSiblingOrderPresenter _presenter;
+        private Mock<IAddSiblingOrderView> view;
+        private TreeNode node;
+        private AddSiblingOrderPresenter presenter;
 
         [TestInitialize]
         public void SetUp()
         {
-            _view = new Mock<IAddSiblingOrderView>();
-            _node = new TreeNode("H1");
+            view = new Mock<IAddSiblingOrderView>();
+            node = new TreeNode("H1");
             NodeInfo nInfo = new NodeInfo();
-            _node.Tag = nInfo;
-            _presenter = new AddSiblingOrderPresenter(_view.Object, _node);
+            node.Tag = nInfo;
+            presenter = new AddSiblingOrderPresenter(view.Object, node);
         }
 
         [TestMethod]
         public void TestAddSiblingOrder()
         {
             // Arrange
-            _view.Setup(m => m.CareAboutSiblingOrder).Returns(true);
-            _view.Setup(m => m.StartIndex).Returns(0);
-            _view.Setup(m => m.StepValue).Returns(2);
+            view.Setup(v => v.CareAboutSiblingOrder).Returns(true);
+            view.Setup(v => v.StartIndex).Returns(0);
+            view.Setup(v => v.StepValue).Returns(2);
 
             // Act
-            _presenter.AddSiblingOrder();
+            presenter.AddSiblingOrder();
 
             // Assert
-            Assert.IsTrue(_node.GetCareAboutSiblingOrder());
-            Assert.AreEqual(2, _node.GetStepValue());
-            Assert.AreEqual(Color.CadetBlue, _node.ForeColor);
-            _view.Verify(m => m.Exit());
+            Assert.IsTrue(node.GetCareAboutSiblingOrder());
+            Assert.AreEqual(0, node.GetStartIndex());
+            Assert.AreEqual(2, node.GetStepValue());
+            view.Verify(v => v.Exit());
         }
 
         [TestMethod]
-        public void TestReturnsWhenCheckBoxIsDisabled()
+        public void TestLoadExistingSiblingOrder()
         {
             // Arrange
-            _view.Setup(m => m.CareAboutSiblingOrder).Returns(false);
+            node.SetCareAboutSiblingOrder(true);
+            node.SetStartIndex(1);
+            node.SetStepValue(3);
 
             // Act
-            _presenter.AddSiblingOrder();
+            presenter = new AddSiblingOrderPresenter(view.Object, node);
 
             // Assert
-            _view.Verify(m => m.Exit());
+            view.VerifySet(v => v.CareAboutSiblingOrder = true);
+            view.VerifySet(v => v.StartIndex = 1);
+            view.VerifySet(v => v.StepValue = 3);
+        }
+
+        [TestMethod]
+        public void TestChangeExistingSiblingOrder()
+        {
+            // Arrange
+            node.SetCareAboutSiblingOrder(true);
+            node.SetStartIndex(1);
+            node.SetStepValue(3);
+
+            // Act
+            presenter = new AddSiblingOrderPresenter(view.Object, node);
+            view.Setup(v => v.CareAboutSiblingOrder).Returns(true);
+            view.Setup(v => v.StartIndex).Returns(2);
+            view.Setup(v => v.StepValue).Returns(4);
+            presenter.AddSiblingOrder();
+
+            // Assert
+            Assert.IsTrue(node.GetCareAboutSiblingOrder());
+            Assert.AreEqual(2, node.GetStartIndex());
+            Assert.AreEqual(4, node.GetStepValue());
+        }
+
+        [TestMethod]
+        public void TestRemoveExistingSiblingOrder()
+        {
+            // Arrange
+            node.SetCareAboutSiblingOrder(true);
+            node.SetStartIndex(1);
+            node.SetStepValue(3);
+
+            // Act
+            presenter = new AddSiblingOrderPresenter(view.Object, node);
+            view.Setup(v => v.CareAboutSiblingOrder).Returns(false);
+            presenter.AddSiblingOrder();
+
+            // Assert
+            Assert.IsFalse(node.GetCareAboutSiblingOrder());
+            Assert.AreEqual(0, node.GetStartIndex());
+            Assert.AreEqual(0, node.GetStepValue());
+            view.Verify(v => v.Exit());
         }
 
         [TestMethod]
         public void TestSiblingOrderFieldsAreEnabledUponCheckBoxChecking()
         {
             // Act
-            _presenter.ChangeSiblingOrderVisibility(true);
+            presenter.ChangeSiblingOrderVisibility(true);
 
             // Assert
-            _view.Verify(m => m.EnableSiblingOrderFields());
+            view.Verify(v => v.EnableSiblingOrderFields());
         }
 
         [TestMethod]
         public void TestSiblingOrderFieldsAreDisabledUponCheckBoxUnchecking()
         {
             // Act
-            _presenter.ChangeSiblingOrderVisibility(false);
+            presenter.ChangeSiblingOrderVisibility(false);
 
             // Assert
-            _view.Verify(m => m.DisableSiblingOrderFields());
+            view.Verify(v => v.DisableSiblingOrderFields());
         }
     }
 }
