@@ -330,15 +330,9 @@ namespace DEiXTo.Presenters
             }
         }
 
-        /// <summary>
-        /// NOT DONE
-        /// </summary>
-        
-        
-
         public void NodeStateChanged(TreeNode node, NodeState state)
         {
-            int imageIndex = NodeStateTranslator.StateToImageIndex(state);
+            var imageIndex = NodeStateTranslator.StateToImageIndex(state);
             View.ApplyStateToNode(node, imageIndex);
             node.SetState(state);
 
@@ -390,6 +384,10 @@ namespace DEiXTo.Presenters
             View.ExpandPatternTree();
         }
 
+        /// <summary>
+        /// NOT DONE
+        /// </summary>
+        
         public void ExecuteRule()
         {
             var pattern = View.GetWorkingPattern();

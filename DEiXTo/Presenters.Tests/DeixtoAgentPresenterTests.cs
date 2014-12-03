@@ -695,16 +695,12 @@ namespace DEiXTo.Presenters.Tests
             view.Verify(v => v.SelectDOMNode(domNode));
         }
 
-        /// <summary>
-        /// NOT DONE
-        /// </summary>
-        
         [TestMethod]
-        public void TestNodeStateChanges()
+        public void TestChangeNodeStateToGrayed()
         {
             // Arrange
-            TreeNode node = new TreeNode("DIV");
-            NodeInfo nInfo = new NodeInfo();
+            var node = new TreeNode("DIV");
+            var nInfo = new NodeInfo();
             node.Tag = nInfo;
 
             // Act
@@ -716,15 +712,85 @@ namespace DEiXTo.Presenters.Tests
         }
 
         [TestMethod]
+        public void TestChangeNodeStateToChecked()
+        {
+            // Arrange
+            var node = new TreeNode("DIV");
+            var nInfo = new NodeInfo();
+            node.Tag = nInfo;
+
+            // Act
+            presenter.NodeStateChanged(node, NodeState.Checked);
+            view.Verify(v => v.ApplyStateToNode(node, 0));
+            Assert.AreEqual(NodeState.Checked, node.GetState());
+        }
+
+        [TestMethod]
+        public void TestChangeNodeStateToCheckedImplied()
+        {
+            // Arrange
+            var node = new TreeNode("DIV");
+            var nInfo = new NodeInfo();
+            node.Tag = nInfo;
+
+            // Act
+            presenter.NodeStateChanged(node, NodeState.CheckedImplied);
+            view.Verify(v => v.ApplyStateToNode(node, 1));
+            Assert.AreEqual(NodeState.CheckedImplied, node.GetState());
+        }
+
+        [TestMethod]
+        public void TestChangeNodeStateToCheckedSource()
+        {
+            // Arrange
+            var node = new TreeNode("DIV");
+            var nInfo = new NodeInfo();
+            node.Tag = nInfo;
+
+            // Act
+            presenter.NodeStateChanged(node, NodeState.CheckedSource);
+            view.Verify(v => v.ApplyStateToNode(node, 2));
+            Assert.AreEqual(NodeState.CheckedSource, node.GetState());
+        }
+
+        [TestMethod]
+        public void TestChangeNodeStateToGrayedImplied()
+        {
+            // Arrange
+            var node = new TreeNode("DIV");
+            var nInfo = new NodeInfo();
+            node.Tag = nInfo;
+
+            // Act
+            presenter.NodeStateChanged(node, NodeState.GrayedImplied);
+            view.Verify(v => v.ApplyStateToNode(node, 4));
+            Assert.AreEqual(NodeState.GrayedImplied, node.GetState());
+        }
+
+        [TestMethod]
+        public void TestChangeNodeStateToUnchecked()
+        {
+            // Arrange
+            var node = new TreeNode("DIV");
+            var nInfo = new NodeInfo();
+            node.Tag = nInfo;
+
+            // Act
+            presenter.NodeStateChanged(node, NodeState.Unchecked);
+            view.Verify(v => v.ApplyStateToNode(node, 5));
+            Assert.AreEqual(NodeState.Unchecked, node.GetState());
+        }
+
+        [TestMethod]
         public void TestNodeStateChangesToUnchecked()
         {
             // Arrange
-            TreeNode node = new TreeNode("DIV");
-            TreeNode n1 = new TreeNode("H1");
-            TreeNode n2 = new TreeNode("P");
+            var node = new TreeNode("DIV");
+            var n1 = new TreeNode("H1");
+            var n2 = new TreeNode("P");
             node.Nodes.Add(n1);
             node.Nodes.Add(n2);
-            NodeInfo nInfo = new NodeInfo();
+            var nInfo = new NodeInfo();
             node.Tag = nInfo;
 
             // Act
@@ -741,10 +807,10 @@ namespace DEiXTo.Presenters.Tests
         public void TestLevelDownWorkingPattern()
         {
             // Arrange
-            TreeNode node = new TreeNode("DIV");
-            TreeNode n1 = new TreeNode("H1");
+            var node = new TreeNode("DIV");
+            var n1 = new TreeNode("H1");
             node.Nodes.Add(n1);
-            NodeInfo nInfo = new NodeInfo();
+            var nInfo = new NodeInfo();
             nInfo.IsRoot = false;
             node.Tag = nInfo;
 
@@ -761,8 +827,8 @@ namespace DEiXTo.Presenters.Tests
         public void TestCannotLevelDownFromRootNode()
         {
             // Arrange
-            TreeNode node = new TreeNode("DIV");
-            NodeInfo nInfo = new NodeInfo();
+            var node = new TreeNode("DIV");
+            var nInfo = new NodeInfo();
             nInfo.IsRoot = true;
             node.Tag = nInfo;
 
@@ -773,6 +839,31 @@ namespace DEiXTo.Presenters.Tests
             view.Verify(v => v.ShowCannotDeleteRootMessage());
         }
 
+        [TestMethod]
+        public void TestLevelUpWorkingPattern()
+        {
+            // Arrange
+            var element = CreateUlElement();
+            var node = new TreeNode("LI");
+            var dom = new TreeNode("UL");
+            var d1 = new TreeNode("LI");
+            dom.Nodes.Add(d1);
+            screen.Setup(s => s.GetDomNode(node)).Returns(d1);
+            screen.Setup(s => s.GetElementFromNode(dom)).Returns(element);
+
+            // Act
+            presenter.LevelUpWorkingPattern(node);
+
+            // Assert
+            view.Verify(v => v.ClearPatternTree());
+            view.Verify(v => v.FillPatternTree(It.Is<TreeNode>(n => n.Text == "UL")));
+            view.Verify(v => v.ExpandPatternTree());
+        }
+
+        /// <summary>
+        /// NOT DONE
+        /// </summary>
+        
         [TestMethod]
         public void TestClearTreeViews()
         {
@@ -927,29 +1018,6 @@ namespace DEiXTo.Presenters.Tests
 
             // Assert
             view.Verify(v => v.NavigateForward());
-        }
-
-        
-
-        [TestMethod]
-        public void TestLevelUpWorkingPattern()
-        {
-            // Arrange
-            var element = CreateHtmlElement();
-            var node = new TreeNode("LI");
-            var dom = new TreeNode("DIV");
-            var d1 = new TreeNode("LI");
-            dom.Nodes.Add(d1);
-            screen.Setup(s => s.GetDomNode(node)).Returns(d1);
-            screen.Setup(s => s.GetElementFromNode(dom)).Returns(element);
-
-            // Act
-            presenter.LevelUpWorkingPattern(node);
-
-            // Assert
-            view.Verify(v => v.ClearPatternTree());
-            view.Verify(v => v.FillPatternTree(It.Is<TreeNode>(n => n.Text == "LI")));
-            view.Verify(v => v.ExpandPatternTree());
         }
 
         [TestMethod]
@@ -1462,10 +1530,23 @@ namespace DEiXTo.Presenters.Tests
             return wrapper;
         }
 
+        private HtmlElement CreateUlElement()
+        {
+            WebBrowser browser = new WebBrowser();
+            browser.DocumentText = "some text";
+            browser.Show();
+            var doc = browser.Document;
+            doc.Write("<ul><li>hey</li></ul>");
+            var elements = doc.GetElementsByTagName("ul");
+            var elem = elements[0];
+
+            return elem;
+        }
+
         private HtmlElement CreateHtmlElement()
         {
             WebBrowser browser = new WebBrowser();
-            browser.DocumentText = "<li></li>";
+            browser.DocumentText = "some text";
             browser.Show();
             var doc = browser.Document;
             doc.Write("<li></li>");
