@@ -11,17 +11,17 @@ namespace DEiXTo.Presenters.Tests
     [TestClass]
     public class AddAttributeConstraintPresenterTests
     {
-        private Mock<IAddAttributeConstraintView> _view;
-        private AddAttributeConstraintPresenter _presenter;
-        private TreeNode _node;
-        private TagAttributeCollection _attrs;
+        private Mock<IAddAttributeConstraintView> view;
+        private AddAttributeConstraintPresenter presenter;
+        private TreeNode node;
+        private TagAttributeCollection attrs;
 
         [TestInitialize]
         public void SetUp()
         {
-            _view = new Mock<IAddAttributeConstraintView>();
-            _node = new TreeNode("A");
-            _attrs = createAttributes();
+            view = new Mock<IAddAttributeConstraintView>();
+            node = new TreeNode("A");
+            attrs = createAttributes();
         }
 
         private TagAttributeCollection createAttributes()
@@ -31,7 +31,7 @@ namespace DEiXTo.Presenters.Tests
             attrs.Add(new TagAttribute { Name = "href", Value = "http://www.google.gr" });
             attrs.Add(new TagAttribute { Name = "id", Value = "some-link" });
             nInfo.Attributes = attrs;
-            _node.Tag = nInfo;
+            node.Tag = nInfo;
 
             return attrs;
         }
@@ -40,11 +40,11 @@ namespace DEiXTo.Presenters.Tests
         public void TestPopulateAttributes()
         {
             // Act
-            _presenter = new AddAttributeConstraintPresenter(_view.Object, _node);
+            presenter = new AddAttributeConstraintPresenter(view.Object, node);
 
             // Assert
-            _view.Verify(v => v.LoadAttributes(It.Is<List<TagAttribute>>(attr => _attrs.All == attr)));
-            Assert.AreEqual(2, _node.GetAttributes().Count);
+            view.Verify(v => v.LoadAttributes(It.Is<List<TagAttribute>>(attr => attrs.All == attr)));
+            Assert.AreEqual(2, node.GetAttributes().Count);
         }
 
         [TestMethod]
@@ -52,31 +52,31 @@ namespace DEiXTo.Presenters.Tests
         {
             // Arrange
             string constraint = "some-link";
-            _view.Setup(v => v.Constraint).Returns(constraint);
+            view.Setup(v => v.Constraint).Returns(constraint);
 
             // Act
-            _presenter = new AddAttributeConstraintPresenter(_view.Object, _node);
-            _presenter.AddConstraint("id");
+            presenter = new AddAttributeConstraintPresenter(view.Object, node);
+            presenter.AddConstraint("id");
 
             // Assert
-            var attrConstraint = _node.GetAttrConstraint();
+            var attrConstraint = node.GetAttrConstraint();
             Assert.AreEqual("id", attrConstraint.Attribute);
             Assert.AreEqual("some-link", attrConstraint.Value);
-            _view.Verify(v => v.Exit());
+            view.Verify(v => v.Exit());
         }
 
         [TestMethod]
         public void TestAttributeChanged()
         {
             // Arrange
-            _presenter = new AddAttributeConstraintPresenter(_view.Object, _node);
+            presenter = new AddAttributeConstraintPresenter(view.Object, node);
             var attribute = new TagAttribute { Name = "id", Value = "some-link" };
             
             // Act
-            _presenter.AttributeChanged(attribute);
+            presenter.AttributeChanged(attribute);
 
             // Assert
-            _view.VerifySet(v => v.Constraint = attribute.Value);
+            view.VerifySet(v => v.Constraint = attribute.Value);
         }
 
         [TestMethod]
@@ -84,14 +84,14 @@ namespace DEiXTo.Presenters.Tests
         {
             // Arrange
             var attrConstraint = new TagAttributeConstraint { Attribute = "id", Value = "some-link" };
-            _node.SetAttrConstraint(attrConstraint);
+            node.SetAttrConstraint(attrConstraint);
 
             // Act
-            _presenter = new AddAttributeConstraintPresenter(_view.Object, _node);
+            presenter = new AddAttributeConstraintPresenter(view.Object, node);
 
             // Assert
-            _view.Verify(v => v.LoadAttributes(It.Is<List<TagAttribute>>(attr => _attrs.All == attr)));
-            _view.Verify(v => v.SelectAttribute(It.Is<TagAttribute>(attr => attr.Name == "id" && attr.Value == "some-link")));
+            view.Verify(v => v.LoadAttributes(It.Is<List<TagAttribute>>(attr => attrs.All == attr)));
+            view.Verify(v => v.SelectAttribute(It.Is<TagAttribute>(attr => attr.Name == "id" && attr.Value == "some-link")));
         }
     }
 }
