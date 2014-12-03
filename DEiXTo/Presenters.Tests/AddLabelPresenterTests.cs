@@ -34,13 +34,16 @@ namespace DEiXTo.Presenters.Tests
 
             // Assert
             Assert.AreEqual("H1:HEADER", node.Text);
+            view.Verify(v => v.Exit());
         }
 
         [TestMethod]
-        public void TestLoadExistingNodesLabel()
+        public void TestLoadNodeWithLabel()
         {
             // Arrange
             node.SetLabel("HEAD");
+
+            // Act
             presenter = new AddLabelPresenter(view.Object, node);
 
             // Assert
@@ -60,18 +63,6 @@ namespace DEiXTo.Presenters.Tests
 
             // Assert
             Assert.AreEqual("H1:HEADER", node.Text);
-        }
-
-        [TestMethod]
-        public void TestWindowClosesAfterLabelInsertion()
-        {
-            // Arrange
-            view.Setup(v => v.LabelText).Returns("HEADER");
-
-            // Act
-            presenter.AddLabel();
-
-            // Assert
             view.Verify(v => v.Exit());
         }
 
@@ -86,19 +77,6 @@ namespace DEiXTo.Presenters.Tests
 
             // Assert
             Assert.AreEqual("H1", node.Text);
-            
-        }
-
-        [TestMethod]
-        public void TestMessageIsShownOnInvalidLabel()
-        {
-            // Arrange
-            view.Setup(v => v.LabelText).Returns("");
-
-            // Act
-            presenter.AddLabel();
-
-            // Assert
             view.Verify(v => v.ShowInvalidLabelMessage());
             view.Verify(v => v.Exit());
         }
@@ -114,6 +92,7 @@ namespace DEiXTo.Presenters.Tests
 
             // Assert
             Assert.AreEqual("H1:HEADER", node.Text);
+            view.Verify(v => v.Exit());
         }
     }
 }
