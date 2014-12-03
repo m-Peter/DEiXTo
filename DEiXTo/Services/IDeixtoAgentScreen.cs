@@ -17,7 +17,7 @@ namespace DEiXTo.Services
         ISaveFileDialog GetSaveFileDialog(Format format);
         string[] LoadUrlsFromFile(string filename);
         void WriteExtractedRecords(string filename);
-        void SaveExtractionPattern(string filename, TreeNodeCollection nodes);
+        void SaveExtractionPattern(string filename, TreeNode node);
         void HighlightElement(HtmlElement element);
         void RemoveHighlighting(HtmlElement element);
         void ClearStyling();

@@ -781,11 +781,6 @@ namespace DEiXTo.Views
             return HtmlTreeView.Nodes[0].Nodes[1].Nodes;
         }
 
-        public void DeletePatternNode(TreeNode node)
-        {
-            WorkingPatternTreeView.Nodes.Remove(node);
-        }
-
         public bool OutputFileSpecified
         {
             get

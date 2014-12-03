@@ -195,19 +195,17 @@ namespace DEiXTo.Presenters.Tests
             view.Verify(v => v.ShowSpecifyTargetURLMessage());
         }
 
-
-        
         [TestMethod]
         public void TestSelectTextFormatOutputFile()
         {
             // Arrange
-            string filename = "output_file";
-            var dialog = new Mock<ISaveFileDialog>();
+            var filename = "output_file";
+            var openFileDialog = new Mock<ISaveFileDialog>();
             var format = Format.Text;
             view.Setup(v => v.OutputFileFormat).Returns(format);
-            screen.Setup(s => s.GetSaveFileDialog(format)).Returns(dialog.Object);
-            dialog.Setup(d => d.ShowDialog()).Returns(DialogResult.OK);
-            dialog.Setup(d => d.Filename).Returns(filename);
+            screen.Setup(s => s.GetSaveFileDialog(format)).Returns(openFileDialog.Object);
+            openFileDialog.Setup(o => o.ShowDialog()).Returns(DialogResult.OK);
+            openFileDialog.Setup(o => o.Filename).Returns(filename);
 
             // Act
             presenter.SelectOutputFile();
@@ -220,13 +218,13 @@ namespace DEiXTo.Presenters.Tests
         public void TestSelectXmlFormatOutputFile()
         {
             // Arrange
-            string filename = "output_file";
-            var dialog = new Mock<ISaveFileDialog>();
+            var filename = "output_file";
+            var openFileDialog = new Mock<ISaveFileDialog>();
             var format = Format.XML;
             view.Setup(v => v.OutputFileFormat).Returns(format);
-            screen.Setup(s => s.GetSaveFileDialog(format)).Returns(dialog.Object);
-            dialog.Setup(d => d.ShowDialog()).Returns(DialogResult.OK);
-            dialog.Setup(d => d.Filename).Returns(filename);
+            screen.Setup(s => s.GetSaveFileDialog(format)).Returns(openFileDialog.Object);
+            openFileDialog.Setup(o => o.ShowDialog()).Returns(DialogResult.OK);
+            openFileDialog.Setup(o => o.Filename).Returns(filename);
 
             // Act
             presenter.SelectOutputFile();
@@ -239,17 +237,17 @@ namespace DEiXTo.Presenters.Tests
         public void TestSelectRssFormatOutputFile()
         {
             // Arrange
-            string filename = "output_file";
-            var dialog = new Mock<ISaveFileDialog>();
+            var filename = "output_file";
+            var openFileDialog = new Mock<ISaveFileDialog>();
             var format = Format.RSS;
             view.Setup(v => v.OutputFileFormat).Returns(format);
-            screen.Setup(s => s.GetSaveFileDialog(format)).Returns(dialog.Object);
-            dialog.Setup(d => d.ShowDialog()).Returns(DialogResult.OK);
-            dialog.Setup(d => d.Filename).Returns(filename);
+            screen.Setup(s => s.GetSaveFileDialog(format)).Returns(openFileDialog.Object);
+            openFileDialog.Setup(o => o.ShowDialog()).Returns(DialogResult.OK);
+            openFileDialog.Setup(o => o.Filename).Returns(filename);
 
             // Act
             presenter.SelectOutputFile();
-            
+
             // Assert
             view.VerifySet(v => v.OutputFileName = filename);
         }
@@ -258,19 +256,75 @@ namespace DEiXTo.Presenters.Tests
         public void TestOutputFileSelectionAbortsForNegativeAnswer()
         {
             // Arrange
-            string filename = "output_file";
-            var dialog = new Mock<ISaveFileDialog>();
+            var filename = "output_file";
+            var openFileDialog = new Mock<ISaveFileDialog>();
             var format = Format.XML;
             view.Setup(v => v.OutputFileFormat).Returns(format);
-            screen.Setup(s => s.GetSaveFileDialog(format)).Returns(dialog.Object);
-            dialog.Setup(d => d.ShowDialog()).Returns(DialogResult.Abort);
-            dialog.Setup(d => d.Filename).Returns(filename);
+            screen.Setup(s => s.GetSaveFileDialog(format)).Returns(openFileDialog.Object);
+            openFileDialog.Setup(o => o.ShowDialog()).Returns(DialogResult.Abort);
+            openFileDialog.Setup(o => o.Filename).Returns(filename);
 
             // Act
             presenter.SelectOutputFile();
-            
+
             // Assert
             view.VerifyGet(v => v.OutputFileName, Times.Never);
+        }
+
+        [TestMethod]
+        public void TestEnableHighlighting()
+        {
+            // Act
+            presenter.EnableHighlighting();
+
+            // Assert
+            view.Verify(v => v.EnableHighlighting());
+        }
+
+        [TestMethod]
+        public void TestDisableHighlighting()
+        {
+            // Act
+            presenter.DisableHighlighting();
+
+            // Assert
+            view.Verify(v => v.DisableHighlighting());
+        }
+
+        [TestMethod]
+        public void TestSaveToDisk()
+        {
+            // Arrange
+            var filter = "Text Files (*.txt)|";
+            var extension = "txt";
+            var filename = "extracted_records";
+            var dialog = new Mock<ISaveFileDialog>();
+            dialog.Setup(d => d.ShowDialog()).Returns(DialogResult.OK);
+            dialog.Setup(d => d.Filename).Returns(filename);
+            screen.Setup(s => s.GetSaveFileDialog(filter, extension)).Returns(dialog.Object);
+
+            // Act
+            presenter.SaveToDisk();
+
+            // Assert
+            screen.Verify(s => s.WriteExtractedRecords(filename));
+        }
+
+        [TestMethod]
+        public void TestSavingToDiskAbortsIfUserDoesNotSelectOutputFile()
+        {
+            // Arrange
+            var filter = "Text Files (*.txt)|";
+            var extension = "txt";
+            var dialog = new Mock<ISaveFileDialog>();
+            screen.Setup(s => s.GetSaveFileDialog(filter, extension)).Returns(dialog.Object);
+            dialog.Setup(d => d.ShowDialog()).Returns(DialogResult.Cancel);
+
+            // Act
+            presenter.SaveToDisk();
+
+            // Assert
+            screen.Verify(v => v.WriteExtractedRecords(""), Times.Never);
         }
 
         [TestMethod]
@@ -287,20 +341,166 @@ namespace DEiXTo.Presenters.Tests
         }
 
         [TestMethod]
-        public void TestDeleteNodeFromWorkingPattern()
+        public void TestAddAttributeConstraint()
         {
             // Arrange
-            var node = new TreeNode("DIV");
+            var node = new TreeNode("SECTION");
 
             // Act
-            presenter.DeleteNode(node);
+            presenter.AddAttributeConstraint(node);
 
             // Assert
-            view.Verify(v => v.DeletePatternNode(It.Is<TreeNode>(n => n == node)));
+            loader.Verify(l => l.LoadAddAttributeConstraintView(It.Is<TreeNode>(n => n == node)));
         }
 
         [TestMethod]
-        public void TestUrlInputIsFilledUponTargetUrlSelection()
+        public void TestAddNextSiblingNode()
+        {
+            // Arrange
+            var node = new TreeNode("DIV");
+            var n1 = new TreeNode("H1");
+            node.Nodes.Add(n1);
+            var dom = new TreeNode("DIV");
+            var d1 = new TreeNode("H1");
+            var d2 = new TreeNode("P");
+            dom.AddNode(d1);
+            dom.AddNode(d2);
+
+            screen.Setup(s => s.GetDomNode(n1)).Returns(d1);
+
+            // Act
+            presenter.AddNextSibling(n1);
+
+            // Assert
+            Assert.AreEqual(2, node.Nodes.Count);
+            Assert.AreEqual("P", node.Nodes[1].Text);
+        }
+
+        [TestMethod]
+        public void TestAddPreviousSiblingNode()
+        {
+            // Arrange
+            var node = new TreeNode("DIV");
+            var n1 = new TreeNode("P");
+            node.Nodes.Add(n1);
+
+            var dom = new TreeNode("DIV");
+            var d1 = new TreeNode("H1");
+            var d2 = new TreeNode("P");
+            dom.AddNode(d1);
+            dom.AddNode(d2);
+
+            screen.Setup(s => s.GetDomNode(n1)).Returns(d2);
+
+            // Act
+            presenter.AddPreviousSibling(n1);
+
+            // Assert
+            Assert.AreEqual(2, node.Nodes.Count);
+            Assert.AreEqual("H1", node.Nodes[0].Text);
+        }
+
+        [TestMethod]
+        public void TestDeleteNodeFromWorkingPattern()
+        {
+            // Arrange
+            var pattern = new TreeNode("DIV");
+            var n1 = new TreeNode("H1");
+            var n2 = new TreeNode("P");
+            pattern.AddNode(n1);
+            pattern.AddNode(n2);
+            view.Setup(v => v.GetWorkingPattern()).Returns(pattern);
+
+            // Act
+            presenter.DeleteNode(n2);
+
+            // Assert
+            Assert.AreEqual(1, pattern.Nodes.Count);
+            Assert.AreEqual("H1", pattern.Nodes[0].Text);
+        }
+
+        [TestMethod]
+        public void TestLoadExtractionPattern()
+        {
+            // Arrange
+            var filter = "XML Files (*.xml)|";
+            var filename = "extraction_pattern";
+            var node = new TreeNode("DIV");
+            var dialog = new Mock<IOpenFileDialog>();
+            screen.Setup(s => s.GetOpenFileDialog(filter)).Returns(dialog.Object);
+            dialog.Setup(d => d.ShowDialog()).Returns(DialogResult.OK);
+            dialog.Setup(d => d.Filename).Returns(filename);
+            screen.Setup(s => s.LoadExtractionPattern(filename)).Returns(node);
+
+            // Act
+            presenter.LoadExtractionPattern();
+
+            // Assert
+            view.Verify(v => v.FillExtractionPattern(node));
+            view.Verify(v => v.ExpandExtractionTree());
+        }
+
+        [TestMethod]
+        public void TestLoadingExtractionPatternAbortsWithNegativeAnswer()
+        {
+            // Arrange
+            var filter = "XML Files (*.xml)|";
+            var dialog = new Mock<IOpenFileDialog>();
+            screen.Setup(s => s.GetOpenFileDialog(filter)).Returns(dialog.Object);
+            dialog.Setup(d => d.ShowDialog()).Returns(DialogResult.Cancel);
+
+            // Act
+            presenter.LoadExtractionPattern();
+
+            // Assert
+            view.Verify(v => v.FillExtractionPattern(new TreeNode()), Times.Never);
+            view.Verify(v => v.ExpandExtractionTree(), Times.Never);
+        }
+
+        [TestMethod]
+        public void TestSaveExtractionPattern()
+        {
+            // Arrange
+            var filter = "XML Files (*.xml)|";
+            var extension = "xml";
+            var filename = "extraction_pattern";
+            var pattern = new TreeNode("DIV");
+            var n1 = new TreeNode("h1");
+            var n2 = new TreeNode("p");
+            pattern.AddNode(n1);
+            pattern.AddNode(n2);
+            var dialog = new Mock<ISaveFileDialog>();
+            screen.Setup(s => s.GetSaveFileDialog(filter, extension)).Returns(dialog.Object);
+            dialog.Setup(d => d.ShowDialog()).Returns(DialogResult.OK);
+            dialog.Setup(d => d.Filename).Returns(filename);
+            view.Setup(v => v.GetWorkingPattern()).Returns(pattern);
+
+            // Act
+            presenter.SaveExtractionPattern();
+
+            // Assert
+            screen.Verify(s => s.SaveExtractionPattern(filename, pattern));
+        }
+
+        [TestMethod]
+        public void TestSavingExtractionPatternAbortsWithNegativeAnswer()
+        {
+            // Arrange
+            var filter = "XML Files (*.xml)|";
+            var extension = "xml";
+            var dialog = new Mock<ISaveFileDialog>();
+            screen.Setup(s => s.GetSaveFileDialog(filter, extension)).Returns(dialog.Object);
+            dialog.Setup(d => d.ShowDialog()).Returns(DialogResult.Cancel);
+
+            // Act
+            presenter.SaveExtractionPattern();
+
+            // Assert
+            screen.Verify(s => s.SaveExtractionPattern("", null), Times.Never);
+        }
+
+        [TestMethod]
+        public void TestTargetUrlSelected()
         {
             // Arrange
             string url = "http://www.google.gr";
@@ -316,7 +516,7 @@ namespace DEiXTo.Presenters.Tests
         public void TestRemoveUrlFromTargetUrls()
         {
             // Arrange
-            string url = "http://www.google.gr";
+            var url = "http://www.google.gr";
             view.Setup(v => v.TargetURLToAdd()).Returns(url);
             view.Setup(v => v.AskUserToRemoveURL()).Returns(true);
 
@@ -332,7 +532,7 @@ namespace DEiXTo.Presenters.Tests
         public void TestRemovingEmptyUrlFromTargetUrlsShowsWarningMessage()
         {
             // Arrange
-            string url = "";
+            var url = string.Empty;
             view.Setup(v => v.TargetURLToAdd()).Returns(url);
 
             // Act
@@ -346,7 +546,7 @@ namespace DEiXTo.Presenters.Tests
         public void TestUrlDeletionIsAbortedIfUserDoesNotConfirm()
         {
             // Arrange
-            string url = "http://www.google.gr";
+            var url = "http://www.google.gr";
             view.Setup(v => v.TargetURLToAdd()).Returns(url);
             view.Setup(v => v.AskUserToRemoveURL()).Returns(false);
 
@@ -355,13 +555,14 @@ namespace DEiXTo.Presenters.Tests
 
             // Assert
             view.Verify(v => v.RemoveTargetURL(url), Times.Never);
+            view.Verify(v => v.ClearAddURLInput(), Times.Never);
         }
 
         [TestMethod]
         public void TestAddUrlToTargetUrls()
         {
             // Arrange
-            string url = "http://www.google.gr";
+            var url = "http://www.google.gr";
             view.Setup(v => v.TargetURLToAdd()).Returns(url);
 
             // Act
@@ -376,7 +577,7 @@ namespace DEiXTo.Presenters.Tests
         public void TestEmptyUrlIsNotAddedToTargetUrls()
         {
             // Arrange
-            string url = "";
+            var url = string.Empty;
             view.Setup(v => v.TargetURLToAdd()).Returns(url);
 
             // Act
@@ -390,9 +591,9 @@ namespace DEiXTo.Presenters.Tests
         public void TestRemoveRegexFromNode()
         {
             // Arrange
-            TreeNode node = new TreeNode("DIV");
+            var node = new TreeNode("DIV");
             node.NodeFont = new Font(FontFamily.GenericSerif, 8.25f, FontStyle.Bold);
-            NodeInfo nInfo = new NodeInfo();
+            var nInfo = new NodeInfo();
             nInfo.Regex = "/[a-z]{3}/";
             node.Tag = nInfo;
 
@@ -401,16 +602,14 @@ namespace DEiXTo.Presenters.Tests
 
             // Assert
             Assert.IsNull(node.GetRegex());
-            var font = node.NodeFont;
-            Assert.AreEqual(FontStyle.Regular, font.Style);
         }
 
         [TestMethod]
         public void TestRemoveLabelFromNode()
         {
             // Arrange
-            TreeNode node = new TreeNode("DIV:CONTAINER");
-            NodeInfo nInfo = new NodeInfo();
+            var node = new TreeNode("DIV:CONTAINER");
+            var nInfo = new NodeInfo();
             nInfo.Label = "CONTAINER";
             node.Tag = nInfo;
 
@@ -423,10 +622,20 @@ namespace DEiXTo.Presenters.Tests
         }
 
         [TestMethod]
+        public void TestWindowClosingPublishesEvent()
+        {
+            // Act
+            presenter.windowClosing();
+
+            // Assert
+            eventHub.Verify(e => e.Publish(It.IsAny<DeixtoAgentClosed>()));
+        }
+
+        [TestMethod]
         public void TestAddRegexToNode()
         {
             // Arrange
-            TreeNode node = new TreeNode("DIV");
+            var node = new TreeNode("DIV");
 
             // Act
             presenter.AddRegex(node);
@@ -439,7 +648,7 @@ namespace DEiXTo.Presenters.Tests
         public void TestAddLabelToNode()
         {
             // Arrange
-            TreeNode node = new TreeNode("DIV");
+            var node = new TreeNode("DIV");
 
             // Act
             presenter.AddNewLabel(node);
@@ -449,15 +658,47 @@ namespace DEiXTo.Presenters.Tests
         }
 
         [TestMethod]
-        public void TestWindowClosingPublishesEvent()
+        public void TestOutputResultSelected()
         {
+            // Arrange
+            var node = new TreeNode("DIV");
+            var domNode = new TreeNode("DIV");
+            var element = CreateHtmlElement();
+            screen.Setup(s => s.GetElementFromNode(node)).Returns(element);
+            screen.Setup(s => s.GetDomNode(node)).Returns(domNode);
+
             // Act
-            presenter.windowClosing();
-            
+            presenter.OutputResultSelected(true, node);
+
             // Assert
-            eventHub.Verify(e => e.Publish(It.IsAny<DeixtoAgentClosed>()));
+            view.Verify(v => v.FillElementInfo(node, element.OuterHtml));
+            view.Verify(v => v.SelectDOMNode(domNode));
         }
 
+        [TestMethod]
+        public void TestOutputResultHighlightsElementIfEnabled()
+        {
+            // Arrange
+            var node = new TreeNode("DIV");
+            var domNode = new TreeNode("DIV");
+            var element = CreateHtmlElement();
+            screen.Setup(s => s.GetElementFromNode(node)).Returns(element);
+            screen.Setup(s => s.GetDomNode(node)).Returns(domNode);
+            view.Setup(v => v.HighlightModeEnabled).Returns(true);
+
+            // Act
+            presenter.OutputResultSelected(true, node);
+
+            // Assert
+            view.Verify(v => v.FillElementInfo(node, element.OuterHtml));
+            screen.Verify(s => s.HighlightElement(element));
+            view.Verify(v => v.SelectDOMNode(domNode));
+        }
+
+        /// <summary>
+        /// NOT DONE
+        /// </summary>
+        
         [TestMethod]
         public void TestNodeStateChanges()
         {
@@ -688,172 +929,7 @@ namespace DEiXTo.Presenters.Tests
             view.Verify(v => v.NavigateForward());
         }
 
-        [TestMethod]
-        public void TestLoadingOfUrlsIsAbortedIfUserDoesNotSelectFile()
-        {
-            // Arrange
-            string filter = "Text Files (*.txt)|";
-            var dialog = new Mock<IOpenFileDialog>();
-            screen.Setup(s => s.GetOpenFileDialog(filter)).Returns(dialog.Object);
-            dialog.Setup(d => d.ShowDialog()).Returns(DialogResult.Abort);
-
-            // Act
-            presenter.LoadURLsFromFile();
-
-            // Assert
-            screen.Verify(s => s.LoadUrlsFromFile("output_file"), Times.Never);
-        }
-
-        [TestMethod]
-        public void TestSaveToDisk()
-        {
-            // Arrange
-            string filter = "Text Files (*.txt)|";
-            string extension = "txt";
-            string filename = "extracted_records";
-            var dialog = new Mock<ISaveFileDialog>();
-            dialog.Setup(d => d.ShowDialog()).Returns(DialogResult.OK);
-            dialog.Setup(d => d.Filename).Returns(filename);
-            screen.Setup(s => s.GetSaveFileDialog(filter, extension)).Returns(dialog.Object);
-
-            // Act
-            presenter.SaveToDisk();
-
-            // Assert
-            screen.Verify(s => s.WriteExtractedRecords(filename));
-        }
-
-        [TestMethod]
-        public void TestSaveToDiskAbortsIfUserDoesNotSelectOutputFile()
-        {
-            // Arrange
-            string filter = "Text Files (*.txt)|";
-            string extension = "txt";
-            var dialog = new Mock<ISaveFileDialog>();
-            screen.Setup(s => s.GetSaveFileDialog(filter, extension)).Returns(dialog.Object);
-            dialog.Setup(d => d.ShowDialog()).Returns(DialogResult.Abort);
-
-            // Act
-            presenter.SaveToDisk();
-
-            // Assert
-            screen.Verify(v => v.WriteExtractedRecords(It.IsAny<string>()), Times.Never);
-        }
-
-        [TestMethod]
-        public void TestAddNextSiblingNode()
-        {
-            // Arrange
-            var node = new TreeNode("DIV");
-            var n1 = new TreeNode("h1");
-            node.Nodes.Add(n1);
-
-            var dom = new TreeNode("DIV");
-            var d1 = new TreeNode("h1");
-            var d2 = new TreeNode("p");
-            dom.AddNode(d1);
-            dom.AddNode(d2);
-
-            screen.Setup(s => s.GetDomNode(n1)).Returns(d1);
-
-            // Act
-            presenter.AddNextSibling(n1);
-
-            // Assert
-            Assert.AreEqual(2, node.Nodes.Count);
-            Assert.AreEqual(d2.Text, node.Nodes[1].Text);
-        }
-
-        [TestMethod]
-        public void TestAddPreviousSiblingNode()
-        {
-            // Arrange
-            var node = new TreeNode("DIV");
-            var n1 = new TreeNode("p");
-            node.Nodes.Add(n1);
-
-            var dom = new TreeNode("DIV");
-            var d1 = new TreeNode("h1");
-            var d2 = new TreeNode("p");
-            dom.AddNode(d1);
-            dom.AddNode(d2);
-
-            screen.Setup(s => s.GetDomNode(n1)).Returns(d2);
-
-            // Act
-            presenter.AddPreviousSibling(n1);
-
-            // Assert
-            Assert.AreEqual(2, node.Nodes.Count);
-            Assert.AreEqual(d1.Text, node.Nodes[0].Text);
-        }
-
-        [TestMethod]
-        public void TestLoadExtractionPattern()
-        {
-            // Arrange
-            string filter = "XML Files (*.xml)|";
-            string filename = "extraction_pattern";
-            var node = new TreeNode("DIV");
-            var dialog = new Mock<IOpenFileDialog>();
-            screen.Setup(s => s.GetOpenFileDialog(filter)).Returns(dialog.Object);
-            dialog.Setup(d => d.ShowDialog()).Returns(DialogResult.OK);
-            dialog.Setup(d => d.Filename).Returns(filename);
-            screen.Setup(s => s.LoadExtractionPattern(filename)).Returns(node);
-
-            // Act
-            presenter.LoadExtractionPattern();
-            
-            // Assert
-            view.Verify(v => v.FillExtractionPattern(node));
-            view.Verify(v => v.ExpandExtractionTree());
-        }
-
-        [TestMethod]
-        public void TestSaveExtractionPattern()
-        {
-            // Arrange
-            string filter = "XML Files (*.xml)|";
-            string extension = "xml";
-            string filename = "extraction_pattern";
-            var dom = new TreeNode("DIV");
-            var d1 = new TreeNode("h1");
-            var d2 = new TreeNode("p");
-            dom.AddNode(d1);
-            dom.AddNode(d2);
-            var dialog = new Mock<ISaveFileDialog>();
-            screen.Setup(s => s.GetSaveFileDialog(filter, extension)).Returns(dialog.Object);
-            dialog.Setup(d => d.ShowDialog()).Returns(DialogResult.OK);
-            dialog.Setup(d => d.Filename).Returns(filename);
-            view.Setup(v => v.GetPatternTreeNodes()).Returns(dom.Nodes);
-
-            // Act
-            presenter.SaveExtractionPattern();
-
-            // Assert
-            screen.Verify(s => s.SaveExtractionPattern(filename, dom.Nodes));
-        }
-
-        [TestMethod]
-        public void TestOutputResultSelected()
-        {
-            // Arrange
-            var element = CreateHtmlElement();
-            var node = new TreeNode("H1");
-            var domNode = new TreeNode("H1");
-            screen.Setup(s => s.GetElementFromNode(node)).Returns(element);
-            view.Setup(v => v.HighlightModeEnabled).Returns(true);
-            screen.Setup(s => s.GetDomNode(node)).Returns(domNode);
-            view.Setup(v => v.CanAutoScroll).Returns(true);
-
-            // Act
-            presenter.OutputResultSelected(true, node);
-
-            // Assert
-            screen.Setup(s => s.HighlightElement(element));
-            view.Verify(v => v.FillElementInfo(node, element.OuterHtml));
-            view.Verify(v => v.SelectDOMNode(domNode));
-        }
+        
 
         [TestMethod]
         public void TestLevelUpWorkingPattern()
@@ -924,10 +1000,10 @@ namespace DEiXTo.Presenters.Tests
             NodeInfo nInfo = new NodeInfo();
             nInfo.IsTextNode = true;
             node.Tag = nInfo;
-            
+
             // Act
             presenter.AuxiliaryPatternNodeClick(node);
-            
+
             // Assert
             view.Verify(v => v.FillTextNodeElementInfo(node));
         }
@@ -1103,7 +1179,7 @@ namespace DEiXTo.Presenters.Tests
 
             // Act
             presenter.DOMNodeClick(node, MouseButtons.Left);
-            
+
             // Assert
             screen.Verify(s => s.HighlightElement(element));
             view.Verify(v => v.FillElementInfo(node, element.OuterHtml));

@@ -120,10 +120,10 @@ namespace DEiXTo.Services
             _recordsWriter.Write(records);
         }
 
-        public void SaveExtractionPattern(string filename, TreeNodeCollection nodes)
+        public void SaveExtractionPattern(string filename, TreeNode node)
         {
             _patternRepository = new ExtractionPatternFileRepository(filename);
-            ExtractionPattern pattern = new ExtractionPattern(nodes[0]);
+            ExtractionPattern pattern = new ExtractionPattern(node);
             var loader = new FileLoader();
             
             using (var stream = loader.Load(filename, FileMode.Create))

@@ -71,7 +71,6 @@ namespace DEiXTo.Views
         void FillDomTree(TreeNode node);
         void FillSnapshotTree(TreeNode node);
         void FillExtractionPattern(TreeNode node);
-        void DeletePatternNode(TreeNode node);
         int CrawlingDepth();
         string HtmlLink();
         void ShowSpecifyExtractionPatternMessage();

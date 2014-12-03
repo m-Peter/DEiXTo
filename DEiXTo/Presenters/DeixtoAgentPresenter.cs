@@ -112,19 +112,6 @@ namespace DEiXTo.Presenters
             View.ExpandPatternTree();
         }
 
-
-
-
-
-
-
-
-        /// <summary>
-        /// 
-        /// </summary>
-
-        
-
         public void SelectOutputFile()
         {
             var format = View.OutputFileFormat;
@@ -181,8 +168,8 @@ namespace DEiXTo.Presenters
         public void AddNextSibling(TreeNode node)
         {
             var parent = node.Parent;
-            var tmpNode = _screen.GetDomNode(node);
-            var nextNode = tmpNode.NextNode;
+            var domNode = _screen.GetDomNode(node);
+            var nextNode = domNode.NextNode;
 
             if (nextNode == null)
             {
@@ -196,8 +183,8 @@ namespace DEiXTo.Presenters
         public void AddPreviousSibling(TreeNode node)
         {
             var parent = node.Parent;
-            var tmpNode = _screen.GetDomNode(node);
-            var prevNode = tmpNode.PrevNode;
+            var domNode = _screen.GetDomNode(node);
+            var prevNode = domNode.PrevNode;
 
             if (prevNode == null)
             {
@@ -209,7 +196,8 @@ namespace DEiXTo.Presenters
 
         public void DeleteNode(TreeNode node)
         {
-            View.DeletePatternNode(node);
+            var pattern = View.GetWorkingPattern();
+            pattern.Nodes.Remove(node);
         }
 
         public void LoadExtractionPattern()
@@ -222,7 +210,7 @@ namespace DEiXTo.Presenters
                 return;
             }
 
-            string filename = dialog.Filename;
+            var filename = dialog.Filename;
             var node = _screen.LoadExtractionPattern(filename);
             View.FillExtractionPattern(node);
             View.ExpandExtractionTree();
@@ -230,8 +218,8 @@ namespace DEiXTo.Presenters
 
         public void SaveExtractionPattern()
         {
-            string filter = "XML Files (*.xml)|";
-            string extension = "xml";
+            var filter = "XML Files (*.xml)|";
+            var extension = "xml";
             var dialog = _screen.GetSaveFileDialog(filter, extension);
             var answer = dialog.ShowDialog();
 
@@ -240,8 +228,8 @@ namespace DEiXTo.Presenters
                 return;
             }
 
-            string filename = dialog.Filename;
-            _screen.SaveExtractionPattern(filename, View.GetPatternTreeNodes());
+            var filename = dialog.Filename;
+            _screen.SaveExtractionPattern(filename, View.GetWorkingPattern());
         }
 
         public void TargetURLSelected(string url)
@@ -252,7 +240,7 @@ namespace DEiXTo.Presenters
         public void RemoveURLFromTargetURLs()
         {
             // retrieve the select URL from the TargetURLs list
-            string url = View.TargetURLToAdd();
+            var url = View.TargetURLToAdd();
 
             if (String.IsNullOrWhiteSpace(url))
             {
@@ -260,7 +248,7 @@ namespace DEiXTo.Presenters
                 return;
             }
 
-            bool confirm = View.AskUserToRemoveURL();
+            var confirm = View.AskUserToRemoveURL();
 
             if (confirm)
             {
@@ -272,7 +260,7 @@ namespace DEiXTo.Presenters
         public void AddURLToTargetURLs()
         {
             // fetch the user-entered url
-            string url = View.TargetURLToAdd();
+            var url = View.TargetURLToAdd();
 
             // if nothing was entered show a warning message
             if (String.IsNullOrWhiteSpace(url))
@@ -296,8 +284,8 @@ namespace DEiXTo.Presenters
 
         public void RemoveLabel(TreeNode node)
         {
-            string text = node.Text;
-            int index = text.IndexOf(":");
+            var text = node.Text;
+            var index = text.IndexOf(":");
             node.Text = text.Substring(0, index);
             node.SetLabel(null);
         }
@@ -332,7 +320,7 @@ namespace DEiXTo.Presenters
             }
 
             View.FillElementInfo(node, element.OuterHtml);
-            
+
             var domNode = _screen.GetDomNode(node);
             View.SelectDOMNode(domNode);
 
@@ -341,6 +329,12 @@ namespace DEiXTo.Presenters
                 element.ScrollIntoView(true);
             }
         }
+
+        /// <summary>
+        /// NOT DONE
+        /// </summary>
+        
+        
 
         public void NodeStateChanged(TreeNode node, NodeState state)
         {
