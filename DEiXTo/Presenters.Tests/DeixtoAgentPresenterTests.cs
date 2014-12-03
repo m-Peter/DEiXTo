@@ -13,24 +13,189 @@ namespace DEiXTo.Presenters.Tests
     [TestClass]
     public class DeixtoAgentPresenterTests
     {
-        private Mock<IDeixtoAgentView> _view;
-        private Mock<ISaveFileDialog> _saveFileDialog;
-        private Mock<IViewLoader> _loader;
-        private Mock<IEventHub> _eventHub;
-        private Mock<IDeixtoAgentScreen> _screen;
-        private DeixtoAgentPresenter _presenter;
+        private Mock<IDeixtoAgentView> view;
+        private Mock<ISaveFileDialog> saveFileDialog;
+        private Mock<IViewLoader> loader;
+        private Mock<IEventHub> eventHub;
+        private Mock<IDeixtoAgentScreen> screen;
+        private DeixtoAgentPresenter presenter;
 
         [TestInitialize]
         public void SetUp()
         {
-            _view = new Mock<IDeixtoAgentView>();
-            _saveFileDialog = new Mock<ISaveFileDialog>();
-            _loader = new Mock<IViewLoader>();
-            _eventHub = new Mock<IEventHub>();
-            _screen = new Mock<IDeixtoAgentScreen>();
+            view = new Mock<IDeixtoAgentView>();
+            saveFileDialog = new Mock<ISaveFileDialog>();
+            loader = new Mock<IViewLoader>();
+            eventHub = new Mock<IEventHub>();
+            screen = new Mock<IDeixtoAgentScreen>();
 
-            _presenter = new DeixtoAgentPresenter(_view.Object, _loader.Object, _eventHub.Object, _screen.Object);
+            presenter = new DeixtoAgentPresenter(view.Object, loader.Object, eventHub.Object, screen.Object);
         }
+
+        [TestMethod]
+        public void TestSubscribesForTheRegexAddedEvent()
+        {
+            // Assert
+            eventHub.Verify(e => e.Subscribe<RegexAdded>(presenter));
+        }
+
+        [TestMethod]
+        public void TestLoadStateImages()
+        {
+            // Assert
+            screen.Verify(s => s.LoadStateImages());
+            view.Verify(v => v.AddWorkingPatternImages(It.IsAny<ImageList>()));
+            view.Verify(v => v.AddExtractionTreeImages(It.IsAny<ImageList>()));
+        }
+
+        [TestMethod]
+        public void TestReceiveRegexAdded()
+        {
+            // Arrange
+            var node = new TreeNode("DIV");
+            var nInfo = new NodeInfo();
+            nInfo.SourceIndex = 12;
+            node.Tag = nInfo;
+            var regexAdded = new RegexAdded(node);
+            var element = CreateHtmlElement();
+            screen.Setup(s => s.GetElementFromNode(node)).Returns(element);
+
+            // Act
+            presenter.Receive(regexAdded);
+
+            // Assert
+            view.Verify(v => v.FillElementInfo(node, element.OuterHtml));
+        }
+
+        [TestMethod]
+        public void TestLoadUrlsFromFile()
+        {
+            // Arrange
+            var filter = "Text Files (*.txt)|";
+            var urls = new string[] { "http://www.google.gr", "http://www.cs.teilar.gr" };
+            var openFileDialog = new Mock<IOpenFileDialog>();
+            screen.Setup(s => s.GetOpenFileDialog(filter)).Returns(openFileDialog.Object);
+            openFileDialog.Setup(o => o.ShowDialog()).Returns(DialogResult.OK);
+            openFileDialog.Setup(o => o.Filename).Returns("urls_file");
+            screen.Setup(s => s.LoadUrlsFromFile("urls_file")).Returns(urls);
+
+            // Act
+            presenter.LoadURLsFromFile();
+
+            // Assert
+            view.Verify(v => v.AppendTargetUrls(urls));
+            view.VerifySet(v => v.TargetURLsFile = "urls_file");
+        }
+
+        [TestMethod]
+        public void TestCancelLoadingUrlsFromFile()
+        {
+            // Arrange
+            var filter = "Text Files (*.txt)|";
+            var openFileDialog = new Mock<IOpenFileDialog>();
+            screen.Setup(s => s.GetOpenFileDialog(filter)).Returns(openFileDialog.Object);
+            openFileDialog.Setup(o => o.ShowDialog()).Returns(DialogResult.Cancel);
+
+            // Act
+            presenter.LoadURLsFromFile();
+
+            // Assert
+            view.Verify(v => v.AppendTargetUrls(It.IsAny<string[]>()), Times.Never);
+            view.VerifySet(v => v.TargetURLsFile = "", Times.Never);
+        }
+
+        [TestMethod]
+        public void TestTuneExtractionPattern()
+        {
+            // Arrange
+            view.Setup(v => v.ExtractionPatternSpecified).Returns(true);
+            view.Setup(v => v.TargetURLSpecified).Returns(true);
+            view.Setup(v => v.FirstTargetURL).Returns("http://www.google.gr/");
+
+            // Act
+            presenter.TunePattern();
+
+            // Assert
+            view.Verify(v => v.NavigateTo("http://www.google.gr/"));
+        }
+
+        [TestMethod]
+        public void TestPatternMatchFound()
+        {
+            // Arrange
+            view.Setup(v => v.ExtractionPatternSpecified).Returns(true);
+            view.Setup(v => v.TargetURLSpecified).Returns(true);
+            view.Setup(v => v.FirstTargetURL).Returns("http://www.google.gr/");
+            var pattern = new TreeNode("H2");
+            var domNodes = new TreeNode("BODY");
+            domNodes.AddNode(new TreeNode("SECTION"));
+            domNodes.AddNode(new TreeNode("H2"));
+            view.Setup(v => v.GetExtractionPattern()).Returns(pattern);
+            view.Setup(v => v.GetDOMTreeNodes()).Returns(domNodes.Nodes);
+            var matchNode = new TreeNode("H2");
+            screen.Setup(s => s.ScanDomTree(pattern)).Returns(matchNode);
+
+            // Act
+            presenter.TunePattern();
+            presenter.BrowserCompleted();
+
+            // Assert
+            view.Verify(v => v.FillPatternTree(It.Is<TreeNode>(n => n.Text == matchNode.Text)));
+            view.Verify(v => v.ExpandPatternTree());
+        }
+
+        [TestMethod]
+        public void TestPatternMatchNotFound()
+        {
+            // Arrange
+            view.Setup(v => v.ExtractionPatternSpecified).Returns(true);
+            view.Setup(v => v.TargetURLSpecified).Returns(true);
+            view.Setup(v => v.FirstTargetURL).Returns("http://www.google.gr/");
+            var pattern = new TreeNode("H2");
+            var domNodes = new TreeNode("BODY");
+            domNodes.AddNode(new TreeNode("SECTION"));
+            domNodes.AddNode(new TreeNode("H1"));
+            view.Setup(v => v.GetExtractionPattern()).Returns(pattern);
+            view.Setup(v => v.GetDOMTreeNodes()).Returns(domNodes.Nodes);
+            TreeNode matchNode = null;
+            screen.Setup(s => s.ScanDomTree(pattern)).Returns(matchNode);
+
+            // Act
+            presenter.TunePattern();
+            presenter.BrowserCompleted();
+
+            // Assert
+            view.Verify(v => v.ShowPatternMatchNotFoundMessage());
+        }
+
+        [TestMethod]
+        public void TestTuningRequiresExtractionPattern()
+        {
+            // Arrange
+            view.Setup(v => v.ExtractionPatternSpecified).Returns(false);
+
+            // Act
+            presenter.TunePattern();
+
+            // Assert
+            view.Verify(v => v.ShowSpecifyExtractionPatternMessage());
+        }
+
+        [TestMethod]
+        public void TestTuningRequiresTargetUrl()
+        {
+            // Arrange
+            view.Setup(v => v.ExtractionPatternSpecified).Returns(true);
+            view.Setup(v => v.TargetURLSpecified).Returns(false);
+
+            // Act
+            presenter.TunePattern();
+
+            // Assert
+            view.Verify(v => v.ShowSpecifyTargetURLMessage());
+        }
+
+
         
         [TestMethod]
         public void TestSelectTextFormatOutputFile()
@@ -39,16 +204,16 @@ namespace DEiXTo.Presenters.Tests
             string filename = "output_file";
             var dialog = new Mock<ISaveFileDialog>();
             var format = Format.Text;
-            _view.Setup(v => v.OutputFileFormat).Returns(format);
-            _screen.Setup(s => s.GetSaveFileDialog(format)).Returns(dialog.Object);
+            view.Setup(v => v.OutputFileFormat).Returns(format);
+            screen.Setup(s => s.GetSaveFileDialog(format)).Returns(dialog.Object);
             dialog.Setup(d => d.ShowDialog()).Returns(DialogResult.OK);
             dialog.Setup(d => d.Filename).Returns(filename);
 
             // Act
-            _presenter.SelectOutputFile();
+            presenter.SelectOutputFile();
 
             // Assert
-            _view.VerifySet(v => v.OutputFileName = filename);
+            view.VerifySet(v => v.OutputFileName = filename);
         }
 
         [TestMethod]
@@ -58,16 +223,16 @@ namespace DEiXTo.Presenters.Tests
             string filename = "output_file";
             var dialog = new Mock<ISaveFileDialog>();
             var format = Format.XML;
-            _view.Setup(v => v.OutputFileFormat).Returns(format);
-            _screen.Setup(s => s.GetSaveFileDialog(format)).Returns(dialog.Object);
+            view.Setup(v => v.OutputFileFormat).Returns(format);
+            screen.Setup(s => s.GetSaveFileDialog(format)).Returns(dialog.Object);
             dialog.Setup(d => d.ShowDialog()).Returns(DialogResult.OK);
             dialog.Setup(d => d.Filename).Returns(filename);
 
             // Act
-            _presenter.SelectOutputFile();
+            presenter.SelectOutputFile();
 
             // Assert
-            _view.VerifySet(v => v.OutputFileName = filename);
+            view.VerifySet(v => v.OutputFileName = filename);
         }
 
         [TestMethod]
@@ -77,16 +242,16 @@ namespace DEiXTo.Presenters.Tests
             string filename = "output_file";
             var dialog = new Mock<ISaveFileDialog>();
             var format = Format.RSS;
-            _view.Setup(v => v.OutputFileFormat).Returns(format);
-            _screen.Setup(s => s.GetSaveFileDialog(format)).Returns(dialog.Object);
+            view.Setup(v => v.OutputFileFormat).Returns(format);
+            screen.Setup(s => s.GetSaveFileDialog(format)).Returns(dialog.Object);
             dialog.Setup(d => d.ShowDialog()).Returns(DialogResult.OK);
             dialog.Setup(d => d.Filename).Returns(filename);
 
             // Act
-            _presenter.SelectOutputFile();
+            presenter.SelectOutputFile();
             
             // Assert
-            _view.VerifySet(v => v.OutputFileName = filename);
+            view.VerifySet(v => v.OutputFileName = filename);
         }
 
         [TestMethod]
@@ -96,16 +261,16 @@ namespace DEiXTo.Presenters.Tests
             string filename = "output_file";
             var dialog = new Mock<ISaveFileDialog>();
             var format = Format.XML;
-            _view.Setup(v => v.OutputFileFormat).Returns(format);
-            _screen.Setup(s => s.GetSaveFileDialog(format)).Returns(dialog.Object);
+            view.Setup(v => v.OutputFileFormat).Returns(format);
+            screen.Setup(s => s.GetSaveFileDialog(format)).Returns(dialog.Object);
             dialog.Setup(d => d.ShowDialog()).Returns(DialogResult.Abort);
             dialog.Setup(d => d.Filename).Returns(filename);
 
             // Act
-            _presenter.SelectOutputFile();
+            presenter.SelectOutputFile();
             
             // Assert
-            _view.VerifyGet(v => v.OutputFileName, Times.Never);
+            view.VerifyGet(v => v.OutputFileName, Times.Never);
         }
 
         [TestMethod]
@@ -115,10 +280,10 @@ namespace DEiXTo.Presenters.Tests
             var node = new TreeNode("DIV");
 
             // Act
-            _presenter.AddSiblingOrder(node);
+            presenter.AddSiblingOrder(node);
 
             // Assert
-            _loader.Verify(l => l.LoadAddSiblingOrderView(It.Is<TreeNode>(n => n == node)));
+            loader.Verify(l => l.LoadAddSiblingOrderView(It.Is<TreeNode>(n => n == node)));
         }
 
         [TestMethod]
@@ -128,10 +293,10 @@ namespace DEiXTo.Presenters.Tests
             var node = new TreeNode("DIV");
 
             // Act
-            _presenter.DeleteNode(node);
+            presenter.DeleteNode(node);
 
             // Assert
-            _view.Verify(v => v.DeletePatternNode(It.Is<TreeNode>(n => n == node)));
+            view.Verify(v => v.DeletePatternNode(It.Is<TreeNode>(n => n == node)));
         }
 
         [TestMethod]
@@ -141,10 +306,10 @@ namespace DEiXTo.Presenters.Tests
             string url = "http://www.google.gr";
 
             // Act
-            _presenter.TargetURLSelected(url);
+            presenter.TargetURLSelected(url);
 
             // Assert
-            _view.Verify(v => v.SetURLInput(It.Is<string>(s => s == url)));
+            view.Verify(v => v.SetURLInput(It.Is<string>(s => s == url)));
         }
 
         [TestMethod]
@@ -152,15 +317,15 @@ namespace DEiXTo.Presenters.Tests
         {
             // Arrange
             string url = "http://www.google.gr";
-            _view.Setup(v => v.TargetURLToAdd()).Returns(url);
-            _view.Setup(v => v.AskUserToRemoveURL()).Returns(true);
+            view.Setup(v => v.TargetURLToAdd()).Returns(url);
+            view.Setup(v => v.AskUserToRemoveURL()).Returns(true);
 
             // Act
-            _presenter.RemoveURLFromTargetURLs();
+            presenter.RemoveURLFromTargetURLs();
 
             // Assert
-            _view.Verify(v => v.RemoveTargetURL(It.Is<string>(s => s == url)));
-            _view.Verify(v => v.ClearAddURLInput());
+            view.Verify(v => v.RemoveTargetURL(It.Is<string>(s => s == url)));
+            view.Verify(v => v.ClearAddURLInput());
         }
 
         [TestMethod]
@@ -168,13 +333,13 @@ namespace DEiXTo.Presenters.Tests
         {
             // Arrange
             string url = "";
-            _view.Setup(v => v.TargetURLToAdd()).Returns(url);
+            view.Setup(v => v.TargetURLToAdd()).Returns(url);
 
             // Act
-            _presenter.RemoveURLFromTargetURLs();
+            presenter.RemoveURLFromTargetURLs();
 
             // Assert
-            _view.Verify(v => v.ShowSelectURLMessage());
+            view.Verify(v => v.ShowSelectURLMessage());
         }
 
         [TestMethod]
@@ -182,14 +347,14 @@ namespace DEiXTo.Presenters.Tests
         {
             // Arrange
             string url = "http://www.google.gr";
-            _view.Setup(v => v.TargetURLToAdd()).Returns(url);
-            _view.Setup(v => v.AskUserToRemoveURL()).Returns(false);
+            view.Setup(v => v.TargetURLToAdd()).Returns(url);
+            view.Setup(v => v.AskUserToRemoveURL()).Returns(false);
 
             // Act
-            _presenter.RemoveURLFromTargetURLs();
+            presenter.RemoveURLFromTargetURLs();
 
             // Assert
-            _view.Verify(v => v.RemoveTargetURL(url), Times.Never);
+            view.Verify(v => v.RemoveTargetURL(url), Times.Never);
         }
 
         [TestMethod]
@@ -197,14 +362,14 @@ namespace DEiXTo.Presenters.Tests
         {
             // Arrange
             string url = "http://www.google.gr";
-            _view.Setup(v => v.TargetURLToAdd()).Returns(url);
+            view.Setup(v => v.TargetURLToAdd()).Returns(url);
 
             // Act
-            _presenter.AddURLToTargetURLs();
+            presenter.AddURLToTargetURLs();
 
             // Assert
-            _view.Verify(v => v.AppendTargetUrl(It.Is<string>(s => s == url)));
-            _view.Verify(v => v.ClearAddURLInput());
+            view.Verify(v => v.AppendTargetUrl(It.Is<string>(s => s == url)));
+            view.Verify(v => v.ClearAddURLInput());
         }
 
         [TestMethod]
@@ -212,13 +377,13 @@ namespace DEiXTo.Presenters.Tests
         {
             // Arrange
             string url = "";
-            _view.Setup(v => v.TargetURLToAdd()).Returns(url);
+            view.Setup(v => v.TargetURLToAdd()).Returns(url);
 
             // Act
-            _presenter.AddURLToTargetURLs();
+            presenter.AddURLToTargetURLs();
 
             // Assert
-            _view.Verify(v => v.ShowEnterURLToAddMessage());
+            view.Verify(v => v.ShowEnterURLToAddMessage());
         }
 
         [TestMethod]
@@ -232,7 +397,7 @@ namespace DEiXTo.Presenters.Tests
             node.Tag = nInfo;
 
             // Act
-            _presenter.RemoveRegex(node);
+            presenter.RemoveRegex(node);
 
             // Assert
             Assert.IsNull(node.GetRegex());
@@ -250,7 +415,7 @@ namespace DEiXTo.Presenters.Tests
             node.Tag = nInfo;
 
             // Act
-            _presenter.RemoveLabel(node);
+            presenter.RemoveLabel(node);
 
             // Assert
             Assert.IsNull(node.GetLabel());
@@ -264,10 +429,10 @@ namespace DEiXTo.Presenters.Tests
             TreeNode node = new TreeNode("DIV");
 
             // Act
-            _presenter.AddRegex(node);
+            presenter.AddRegex(node);
 
             // Assert
-            _loader.Verify(l => l.LoadRegexBuilderView(It.Is<TreeNode>(n => n == node)));
+            loader.Verify(l => l.LoadRegexBuilderView(It.Is<TreeNode>(n => n == node)));
         }
 
         [TestMethod]
@@ -277,20 +442,20 @@ namespace DEiXTo.Presenters.Tests
             TreeNode node = new TreeNode("DIV");
 
             // Act
-            _presenter.AddNewLabel(node);
+            presenter.AddNewLabel(node);
 
             // Assert
-            _loader.Verify(l => l.LoadAddLabelView(It.Is<TreeNode>(n => n == node)));
+            loader.Verify(l => l.LoadAddLabelView(It.Is<TreeNode>(n => n == node)));
         }
 
         [TestMethod]
         public void TestWindowClosingPublishesEvent()
         {
             // Act
-            _presenter.windowClosing();
+            presenter.windowClosing();
             
             // Assert
-            _eventHub.Verify(e => e.Publish(It.IsAny<DeixtoAgentClosed>()));
+            eventHub.Verify(e => e.Publish(It.IsAny<DeixtoAgentClosed>()));
         }
 
         [TestMethod]
@@ -302,10 +467,10 @@ namespace DEiXTo.Presenters.Tests
             node.Tag = nInfo;
 
             // Act
-            _presenter.NodeStateChanged(node, NodeState.Grayed);
+            presenter.NodeStateChanged(node, NodeState.Grayed);
 
             // Assert
-            _view.Verify(v => v.ApplyStateToNode(node, 3));
+            view.Verify(v => v.ApplyStateToNode(node, 3));
             Assert.AreEqual(NodeState.Grayed, node.GetState());
         }
 
@@ -322,12 +487,12 @@ namespace DEiXTo.Presenters.Tests
             node.Tag = nInfo;
 
             // Act
-            _presenter.NodeStateChanged(node, NodeState.Unchecked);
+            presenter.NodeStateChanged(node, NodeState.Unchecked);
 
             // Assert
-            _view.Verify(v => v.ApplyStateToNode(node, 5));
-            _view.Verify(v => v.ApplyStateToNode(n1, 5));
-            _view.Verify(v => v.ApplyStateToNode(n2, 5));
+            view.Verify(v => v.ApplyStateToNode(node, 5));
+            view.Verify(v => v.ApplyStateToNode(n1, 5));
+            view.Verify(v => v.ApplyStateToNode(n2, 5));
             Assert.AreEqual(NodeState.Unchecked, node.GetState());
         }
 
@@ -343,12 +508,12 @@ namespace DEiXTo.Presenters.Tests
             node.Tag = nInfo;
 
             // Act
-            _presenter.LevelDownWorkingPattern(node);
+            presenter.LevelDownWorkingPattern(node);
 
             // Assert
-            _view.Verify(v => v.ClearPatternTree());
-            _view.Verify(v => v.FillPatternTree(It.Is<TreeNode>(n => n.Text == "H1")));
-            _view.Verify(v => v.ExpandPatternTree());
+            view.Verify(v => v.ClearPatternTree());
+            view.Verify(v => v.FillPatternTree(It.Is<TreeNode>(n => n.Text == "H1")));
+            view.Verify(v => v.ExpandPatternTree());
         }
 
         [TestMethod]
@@ -361,52 +526,52 @@ namespace DEiXTo.Presenters.Tests
             node.Tag = nInfo;
 
             // Act
-            _presenter.LevelDownWorkingPattern(node);
+            presenter.LevelDownWorkingPattern(node);
 
             // Assert
-            _view.Verify(v => v.ShowCannotDeleteRootMessage());
+            view.Verify(v => v.ShowCannotDeleteRootMessage());
         }
 
         [TestMethod]
         public void TestClearTreeViews()
         {
             // Arrange
-            _view.Setup(v => v.AskUserToClearTreeViews()).Returns(true);
+            view.Setup(v => v.AskUserToClearTreeViews()).Returns(true);
 
             // Act
-            _presenter.ClearTreeViews(2);
+            presenter.ClearTreeViews(2);
 
             // Assert
-            _view.Verify(v => v.ClearAuxiliaryTree());
-            _view.Verify(v => v.ClearPatternTree());
-            _view.Verify(v => v.ClearSnapshotTree());
+            view.Verify(v => v.ClearAuxiliaryTree());
+            view.Verify(v => v.ClearPatternTree());
+            view.Verify(v => v.ClearSnapshotTree());
         }
 
         [TestMethod]
         public void TestClearTreeViewsAbortsIfUserDoesNotConfirm()
         {
             // Arrange
-            _view.Setup(v => v.AskUserToClearTreeViews()).Returns(false);
+            view.Setup(v => v.AskUserToClearTreeViews()).Returns(false);
 
             // Act
-            _presenter.ClearTreeViews(2);
+            presenter.ClearTreeViews(2);
 
             // Assert
-            _view.Verify(v => v.ClearAuxiliaryTree(), Times.Never);
-            _view.Verify(v => v.ClearPatternTree(), Times.Never);
-            _view.Verify(v => v.ClearSnapshotTree(), Times.Never);
+            view.Verify(v => v.ClearAuxiliaryTree(), Times.Never);
+            view.Verify(v => v.ClearPatternTree(), Times.Never);
+            view.Verify(v => v.ClearSnapshotTree(), Times.Never);
         }
 
         [TestMethod]
         public void TestClearTreeViewsDoesNotProceedIfCountIsZero()
         {
             // Act
-            _presenter.ClearTreeViews(0);
+            presenter.ClearTreeViews(0);
 
             // Assert
-            _view.Verify(v => v.ClearAuxiliaryTree(), Times.Never);
-            _view.Verify(v => v.ClearPatternTree(), Times.Never);
-            _view.Verify(v => v.ClearSnapshotTree(), Times.Never);
+            view.Verify(v => v.ClearAuxiliaryTree(), Times.Never);
+            view.Verify(v => v.ClearPatternTree(), Times.Never);
+            view.Verify(v => v.ClearSnapshotTree(), Times.Never);
         }
 
         [TestMethod]
@@ -416,12 +581,12 @@ namespace DEiXTo.Presenters.Tests
             TreeNode node = new TreeNode("DIV");
 
             // Act
-            _presenter.MakeWorkingPatternFromSnapshot(node);
+            presenter.MakeWorkingPatternFromSnapshot(node);
 
             // Assert
-            _view.Verify(v => v.ClearPatternTree());
-            _view.Verify(v => v.FillPatternTree(It.Is<TreeNode>(n => n.Text == node.Text)));
-            _view.Verify(v => v.ExpandPatternTree());
+            view.Verify(v => v.ClearPatternTree());
+            view.Verify(v => v.FillPatternTree(It.Is<TreeNode>(n => n.Text == node.Text)));
+            view.Verify(v => v.ExpandPatternTree());
         }
 
         [TestMethod]
@@ -431,10 +596,10 @@ namespace DEiXTo.Presenters.Tests
             TreeNode node = new TreeNode("DIV");
 
             // Act
-            _presenter.DeleteSnapshot(node);
+            presenter.DeleteSnapshot(node);
 
             // Assert
-            _view.Verify(v => v.DeleteSnapshotInstance(node));
+            view.Verify(v => v.DeleteSnapshotInstance(node));
         }
 
         [TestMethod]
@@ -444,42 +609,42 @@ namespace DEiXTo.Presenters.Tests
             TreeNode node = new TreeNode("DIV");
 
             // Act
-            _presenter.CreateSnapshot(node);
+            presenter.CreateSnapshot(node);
 
             // Assert
-            _view.Verify(v => v.FillSnapshotTree(It.Is<TreeNode>(n => n.Text.StartsWith("SNAP"))));
+            view.Verify(v => v.FillSnapshotTree(It.Is<TreeNode>(n => n.Text.StartsWith("SNAP"))));
         }
 
         [TestMethod]
         public void TestCrawlingChanged()
         {
             // Act
-            _presenter.CrawlingChanged(true);
+            presenter.CrawlingChanged(true);
 
             // Assert
-            _view.Verify(v => v.ApplyVisibilityStateInCrawling(true));
+            view.Verify(v => v.ApplyVisibilityStateInCrawling(true));
 
             // Act
-            _presenter.CrawlingChanged(false);
+            presenter.CrawlingChanged(false);
 
             // Assert
-            _view.Verify(v => v.ApplyVisibilityStateInCrawling(false));
+            view.Verify(v => v.ApplyVisibilityStateInCrawling(false));
         }
 
         [TestMethod]
         public void TestAutoFillChanged()
         {
             // Act
-            _presenter.AutoFillChanged(true);
+            presenter.AutoFillChanged(true);
 
             // Assert
-            _view.Verify(v => v.ApplyVisibilityStateInAutoFill(true));
+            view.Verify(v => v.ApplyVisibilityStateInAutoFill(true));
 
             // Act
-            _presenter.AutoFillChanged(false);
+            presenter.AutoFillChanged(false);
 
             // Assert
-            _view.Verify(v => v.ApplyVisibilityStateInAutoFill(false));
+            view.Verify(v => v.ApplyVisibilityStateInAutoFill(false));
         }
 
         [TestMethod]
@@ -488,13 +653,13 @@ namespace DEiXTo.Presenters.Tests
             // Arrange
             var args = new KeyEventArgs(Keys.Enter);
             var url = "http://www.google.gr/";
-            _view.Setup(v => v.Url).Returns(url);
+            view.Setup(v => v.Url).Returns(url);
 
             // Act
-            _presenter.KeyDownPress(args);
+            presenter.KeyDownPress(args);
 
             // Assert
-            _view.Verify(v => v.NavigateTo("http://www.google.gr/"));
+            view.Verify(v => v.NavigateTo("http://www.google.gr/"));
         }
 
         [TestMethod]
@@ -504,10 +669,10 @@ namespace DEiXTo.Presenters.Tests
             var args = new KeyEventArgs(Keys.Alt | Keys.Left);
 
             // Act
-            _presenter.KeyDownPress(args);
+            presenter.KeyDownPress(args);
 
             // Assert
-            _view.Verify(v => v.NavigateBack());
+            view.Verify(v => v.NavigateBack());
         }
 
         [TestMethod]
@@ -517,50 +682,10 @@ namespace DEiXTo.Presenters.Tests
             var args = new KeyEventArgs(Keys.Alt | Keys.Right);
 
             // Act
-            _presenter.KeyDownPress(args);
+            presenter.KeyDownPress(args);
 
             // Assert
-            _view.Verify(v => v.NavigateForward());
-        }
-
-        [TestMethod]
-        public void TestReceiveRegexAdded()
-        {
-            // Arrange
-            TreeNode node = new TreeNode("DIV");
-            NodeInfo nInfo = new NodeInfo();
-            nInfo.SourceIndex = 12;
-            node.Tag = nInfo;
-            RegexAdded ra = new RegexAdded(node);
-            var element = CreateHtmlElement();
-            _screen.Setup(s => s.GetElementFromNode(node)).Returns(element);
-
-            // Act
-            _presenter.Receive(ra);
-            
-            // Assert
-            _view.Verify(v => v.FillElementInfo(node, element.OuterHtml));
-        }
-
-        [TestMethod]
-        public void TestLoadUrlsFromFile()
-        {
-            // Arrange
-            string filter = "Text Files (*.txt)|";
-            string filename = "output_file";
-            string[] urls = new string[] { "http://www.google.gr", "http://www.cs.teilar.gr" };
-            var dialog = new Mock<IOpenFileDialog>();
-            _screen.Setup(s => s.GetOpenFileDialog(filter)).Returns(dialog.Object);
-            dialog.Setup(d => d.ShowDialog()).Returns(DialogResult.OK);
-            dialog.Setup(d => d.Filename).Returns(filename);
-            _screen.Setup(s => s.LoadUrlsFromFile(filename)).Returns(urls);
-
-            // Act
-            _presenter.LoadURLsFromFile();
-
-            // Assert
-            _view.Verify(v => v.AppendTargetUrls(urls));
-            _view.VerifySet(v => v.TargetURLsFile = filename);
+            view.Verify(v => v.NavigateForward());
         }
 
         [TestMethod]
@@ -569,14 +694,14 @@ namespace DEiXTo.Presenters.Tests
             // Arrange
             string filter = "Text Files (*.txt)|";
             var dialog = new Mock<IOpenFileDialog>();
-            _screen.Setup(s => s.GetOpenFileDialog(filter)).Returns(dialog.Object);
+            screen.Setup(s => s.GetOpenFileDialog(filter)).Returns(dialog.Object);
             dialog.Setup(d => d.ShowDialog()).Returns(DialogResult.Abort);
 
             // Act
-            _presenter.LoadURLsFromFile();
+            presenter.LoadURLsFromFile();
 
             // Assert
-            _screen.Verify(s => s.LoadUrlsFromFile("output_file"), Times.Never);
+            screen.Verify(s => s.LoadUrlsFromFile("output_file"), Times.Never);
         }
 
         [TestMethod]
@@ -589,13 +714,13 @@ namespace DEiXTo.Presenters.Tests
             var dialog = new Mock<ISaveFileDialog>();
             dialog.Setup(d => d.ShowDialog()).Returns(DialogResult.OK);
             dialog.Setup(d => d.Filename).Returns(filename);
-            _screen.Setup(s => s.GetSaveFileDialog(filter, extension)).Returns(dialog.Object);
+            screen.Setup(s => s.GetSaveFileDialog(filter, extension)).Returns(dialog.Object);
 
             // Act
-            _presenter.SaveToDisk();
+            presenter.SaveToDisk();
 
             // Assert
-            _screen.Verify(s => s.WriteExtractedRecords(filename));
+            screen.Verify(s => s.WriteExtractedRecords(filename));
         }
 
         [TestMethod]
@@ -605,14 +730,14 @@ namespace DEiXTo.Presenters.Tests
             string filter = "Text Files (*.txt)|";
             string extension = "txt";
             var dialog = new Mock<ISaveFileDialog>();
-            _screen.Setup(s => s.GetSaveFileDialog(filter, extension)).Returns(dialog.Object);
+            screen.Setup(s => s.GetSaveFileDialog(filter, extension)).Returns(dialog.Object);
             dialog.Setup(d => d.ShowDialog()).Returns(DialogResult.Abort);
 
             // Act
-            _presenter.SaveToDisk();
+            presenter.SaveToDisk();
 
             // Assert
-            _screen.Verify(v => v.WriteExtractedRecords(It.IsAny<string>()), Times.Never);
+            screen.Verify(v => v.WriteExtractedRecords(It.IsAny<string>()), Times.Never);
         }
 
         [TestMethod]
@@ -629,10 +754,10 @@ namespace DEiXTo.Presenters.Tests
             dom.AddNode(d1);
             dom.AddNode(d2);
 
-            _screen.Setup(s => s.GetDomNode(n1)).Returns(d1);
+            screen.Setup(s => s.GetDomNode(n1)).Returns(d1);
 
             // Act
-            _presenter.AddNextSibling(n1);
+            presenter.AddNextSibling(n1);
 
             // Assert
             Assert.AreEqual(2, node.Nodes.Count);
@@ -653,10 +778,10 @@ namespace DEiXTo.Presenters.Tests
             dom.AddNode(d1);
             dom.AddNode(d2);
 
-            _screen.Setup(s => s.GetDomNode(n1)).Returns(d2);
+            screen.Setup(s => s.GetDomNode(n1)).Returns(d2);
 
             // Act
-            _presenter.AddPreviousSibling(n1);
+            presenter.AddPreviousSibling(n1);
 
             // Assert
             Assert.AreEqual(2, node.Nodes.Count);
@@ -671,17 +796,17 @@ namespace DEiXTo.Presenters.Tests
             string filename = "extraction_pattern";
             var node = new TreeNode("DIV");
             var dialog = new Mock<IOpenFileDialog>();
-            _screen.Setup(s => s.GetOpenFileDialog(filter)).Returns(dialog.Object);
+            screen.Setup(s => s.GetOpenFileDialog(filter)).Returns(dialog.Object);
             dialog.Setup(d => d.ShowDialog()).Returns(DialogResult.OK);
             dialog.Setup(d => d.Filename).Returns(filename);
-            _screen.Setup(s => s.LoadExtractionPattern(filename)).Returns(node);
+            screen.Setup(s => s.LoadExtractionPattern(filename)).Returns(node);
 
             // Act
-            _presenter.LoadExtractionPattern();
+            presenter.LoadExtractionPattern();
             
             // Assert
-            _view.Verify(v => v.FillExtractionPattern(node));
-            _view.Verify(v => v.ExpandExtractionTree());
+            view.Verify(v => v.FillExtractionPattern(node));
+            view.Verify(v => v.ExpandExtractionTree());
         }
 
         [TestMethod]
@@ -697,16 +822,16 @@ namespace DEiXTo.Presenters.Tests
             dom.AddNode(d1);
             dom.AddNode(d2);
             var dialog = new Mock<ISaveFileDialog>();
-            _screen.Setup(s => s.GetSaveFileDialog(filter, extension)).Returns(dialog.Object);
+            screen.Setup(s => s.GetSaveFileDialog(filter, extension)).Returns(dialog.Object);
             dialog.Setup(d => d.ShowDialog()).Returns(DialogResult.OK);
             dialog.Setup(d => d.Filename).Returns(filename);
-            _view.Setup(v => v.GetPatternTreeNodes()).Returns(dom.Nodes);
+            view.Setup(v => v.GetPatternTreeNodes()).Returns(dom.Nodes);
 
             // Act
-            _presenter.SaveExtractionPattern();
+            presenter.SaveExtractionPattern();
 
             // Assert
-            _screen.Verify(s => s.SaveExtractionPattern(filename, dom.Nodes));
+            screen.Verify(s => s.SaveExtractionPattern(filename, dom.Nodes));
         }
 
         [TestMethod]
@@ -716,18 +841,18 @@ namespace DEiXTo.Presenters.Tests
             var element = CreateHtmlElement();
             var node = new TreeNode("H1");
             var domNode = new TreeNode("H1");
-            _screen.Setup(s => s.GetElementFromNode(node)).Returns(element);
-            _view.Setup(v => v.HighlightModeEnabled).Returns(true);
-            _screen.Setup(s => s.GetDomNode(node)).Returns(domNode);
-            _view.Setup(v => v.CanAutoScroll).Returns(true);
+            screen.Setup(s => s.GetElementFromNode(node)).Returns(element);
+            view.Setup(v => v.HighlightModeEnabled).Returns(true);
+            screen.Setup(s => s.GetDomNode(node)).Returns(domNode);
+            view.Setup(v => v.CanAutoScroll).Returns(true);
 
             // Act
-            _presenter.OutputResultSelected(true, node);
+            presenter.OutputResultSelected(true, node);
 
             // Assert
-            _screen.Setup(s => s.HighlightElement(element));
-            _view.Verify(v => v.FillElementInfo(node, element.OuterHtml));
-            _view.Verify(v => v.SelectDOMNode(domNode));
+            screen.Setup(s => s.HighlightElement(element));
+            view.Verify(v => v.FillElementInfo(node, element.OuterHtml));
+            view.Verify(v => v.SelectDOMNode(domNode));
         }
 
         [TestMethod]
@@ -739,16 +864,16 @@ namespace DEiXTo.Presenters.Tests
             var dom = new TreeNode("DIV");
             var d1 = new TreeNode("LI");
             dom.Nodes.Add(d1);
-            _screen.Setup(s => s.GetDomNode(node)).Returns(d1);
-            _screen.Setup(s => s.GetElementFromNode(dom)).Returns(element);
+            screen.Setup(s => s.GetDomNode(node)).Returns(d1);
+            screen.Setup(s => s.GetElementFromNode(dom)).Returns(element);
 
             // Act
-            _presenter.LevelUpWorkingPattern(node);
+            presenter.LevelUpWorkingPattern(node);
 
             // Assert
-            _view.Verify(v => v.ClearPatternTree());
-            _view.Verify(v => v.FillPatternTree(It.Is<TreeNode>(n => n.Text == "LI")));
-            _view.Verify(v => v.ExpandPatternTree());
+            view.Verify(v => v.ClearPatternTree());
+            view.Verify(v => v.FillPatternTree(It.Is<TreeNode>(n => n.Text == "LI")));
+            view.Verify(v => v.ExpandPatternTree());
         }
 
         [TestMethod]
@@ -759,36 +884,36 @@ namespace DEiXTo.Presenters.Tests
             var document = CreateHtmlDocument();
             var node = new TreeNode("HTML");
             string[] tags = new string[] { "em" };
-            _view.Setup(v => v.IgnoredTags).Returns(tags);
-            _view.Setup(v => v.GetHtmlDocument()).Returns(document);
-            _screen.Setup(s => s.BuildSimplifiedDOM(tags)).Returns(node);
-            _view.Setup(v => v.Url).Returns(url);
+            view.Setup(v => v.IgnoredTags).Returns(tags);
+            view.Setup(v => v.GetHtmlDocument()).Returns(document);
+            screen.Setup(s => s.BuildSimplifiedDOM(tags)).Returns(node);
+            view.Setup(v => v.Url).Returns(url);
 
             // Act
-            _presenter.SimplifyDOMTree();
+            presenter.SimplifyDOMTree();
 
             // Assert
-            _view.Verify(v => v.ClearPatternTree());
-            _view.Verify(v => v.ClearSnapshotTree());
-            _view.Verify(v => v.ClearAuxiliaryTree());
-            _view.Verify(v => v.ClearDOMTree());
-            _screen.Verify(s => s.CreateDocument(document));
-            _view.Verify(v => v.FillDomTree(node));
-            _view.Verify(v => v.ClearTargetURLs());
-            _view.Verify(v => v.AppendTargetUrl(url));
+            view.Verify(v => v.ClearPatternTree());
+            view.Verify(v => v.ClearSnapshotTree());
+            view.Verify(v => v.ClearAuxiliaryTree());
+            view.Verify(v => v.ClearDOMTree());
+            screen.Verify(s => s.CreateDocument(document));
+            view.Verify(v => v.FillDomTree(node));
+            view.Verify(v => v.ClearTargetURLs());
+            view.Verify(v => v.AppendTargetUrl(url));
         }
 
         [TestMethod]
         public void TestSimplifyDomTreeNoTagSelected()
         {
             // Arrange
-            _view.Setup(v => v.IgnoredTags).Returns(new string[0]);
+            view.Setup(v => v.IgnoredTags).Returns(new string[0]);
 
             // Act
-            _presenter.SimplifyDOMTree();
+            presenter.SimplifyDOMTree();
 
             // Assert
-            _view.Verify(v => v.ShowNoTagSelectedMessage());
+            view.Verify(v => v.ShowNoTagSelectedMessage());
         }
 
         [TestMethod]
@@ -801,10 +926,10 @@ namespace DEiXTo.Presenters.Tests
             node.Tag = nInfo;
             
             // Act
-            _presenter.AuxiliaryPatternNodeClick(node);
+            presenter.AuxiliaryPatternNodeClick(node);
             
             // Assert
-            _view.Verify(v => v.FillTextNodeElementInfo(node));
+            view.Verify(v => v.FillTextNodeElementInfo(node));
         }
 
         [TestMethod]
@@ -814,16 +939,16 @@ namespace DEiXTo.Presenters.Tests
             var element = CreateHtmlElement();
             var node = new TreeNode("DIV");
             var domNode = new TreeNode("DIV");
-            _screen.Setup(s => s.GetElementFromNode(node)).Returns(element);
-            _screen.Setup(s => s.GetDomNode(node)).Returns(domNode);
+            screen.Setup(s => s.GetElementFromNode(node)).Returns(element);
+            screen.Setup(s => s.GetDomNode(node)).Returns(domNode);
 
             // Act
-            _presenter.AuxiliaryPatternNodeClick(node);
+            presenter.AuxiliaryPatternNodeClick(node);
 
             // Assert
-            _screen.Verify(s => s.HighlightElement(element));
-            _view.Verify(v => v.FillElementInfo(node, element.OuterHtml));
-            _view.Verify(v => v.SelectDOMNode(domNode));
+            screen.Verify(s => s.HighlightElement(element));
+            view.Verify(v => v.FillElementInfo(node, element.OuterHtml));
+            view.Verify(v => v.SelectDOMNode(domNode));
         }
 
         [TestMethod]
@@ -832,16 +957,16 @@ namespace DEiXTo.Presenters.Tests
             // Arrange
             var element = CreateHtmlElement();
             var node = new TreeNode("DIV");
-            _screen.Setup(s => s.GetNodeFromElement(element)).Returns(node);
+            screen.Setup(s => s.GetNodeFromElement(element)).Returns(node);
 
             // Act
-            _presenter.CreateAuxiliaryPatternFromDocument(element);
+            presenter.CreateAuxiliaryPatternFromDocument(element);
 
             // Assert
-            _view.Verify(v => v.FocusAuxiliaryTabPage());
-            _view.Verify(v => v.ClearAuxiliaryTree());
-            _view.Verify(v => v.FillAuxiliaryTree(It.Is<TreeNode>(n => n.Text == node.Text)));
-            _view.Verify(v => v.ExpandAuxiliaryTree());
+            view.Verify(v => v.FocusAuxiliaryTabPage());
+            view.Verify(v => v.ClearAuxiliaryTree());
+            view.Verify(v => v.FillAuxiliaryTree(It.Is<TreeNode>(n => n.Text == node.Text)));
+            view.Verify(v => v.ExpandAuxiliaryTree());
         }
 
         [TestMethod]
@@ -853,17 +978,17 @@ namespace DEiXTo.Presenters.Tests
             var domNode = new TreeNode("DIV");
             NodeInfo nInfo = new NodeInfo();
             domNode.Tag = nInfo;
-            _screen.Setup(s => s.GetNodeFromElement(element)).Returns(domNode);
+            screen.Setup(s => s.GetNodeFromElement(element)).Returns(domNode);
 
             // Act
-            _presenter.CreateWorkingPatternFromDocument(element);
+            presenter.CreateWorkingPatternFromDocument(element);
 
             // Assert
-            _view.Verify(v => v.ClearPatternTree());
+            view.Verify(v => v.ClearPatternTree());
             Assert.IsTrue(domNode.IsRoot());
-            _view.Verify(v => v.SetNodeFont(It.Is<TreeNode>(n => n.Text == "DIV")));
-            _view.Verify(v => v.FillPatternTree(It.Is<TreeNode>(n => n.Text == "DIV")));
-            _view.Verify(v => v.ExpandPatternTree());
+            view.Verify(v => v.SetNodeFont(It.Is<TreeNode>(n => n.Text == "DIV")));
+            view.Verify(v => v.FillPatternTree(It.Is<TreeNode>(n => n.Text == "DIV")));
+            view.Verify(v => v.ExpandPatternTree());
         }
 
         [TestMethod]
@@ -878,18 +1003,18 @@ namespace DEiXTo.Presenters.Tests
             node.Tag = nInfo;
             var domNode = new TreeNode("DIV");
             var element = CreateHtmlElement();
-            _screen.Setup(s => s.GetElementFromNode(node)).Returns(element);
-            _view.Setup(v => v.HighlightModeEnabled).Returns(true);
-            _screen.Setup(s => s.GetNodeFromElement(element)).Returns(domNode);
+            screen.Setup(s => s.GetElementFromNode(node)).Returns(element);
+            view.Setup(v => v.HighlightModeEnabled).Returns(true);
+            screen.Setup(s => s.GetNodeFromElement(element)).Returns(domNode);
 
             // Act
-            _presenter.WorkingPatternNodeClick(node, MouseButtons.Right);
+            presenter.WorkingPatternNodeClick(node, MouseButtons.Right);
 
             // Assert
-            _view.Verify(v => v.SetAdjustContextMenuFor(node));
-            _screen.Verify(s => s.HighlightElement(element));
-            _view.Verify(v => v.FillElementInfo(node, element.OuterHtml));
-            _view.Verify(v => v.SelectDOMNode(domNode));
+            view.Verify(v => v.SetAdjustContextMenuFor(node));
+            screen.Verify(s => s.HighlightElement(element));
+            view.Verify(v => v.FillElementInfo(node, element.OuterHtml));
+            view.Verify(v => v.SelectDOMNode(domNode));
         }
 
         [TestMethod]
@@ -904,17 +1029,17 @@ namespace DEiXTo.Presenters.Tests
             node.Tag = nInfo;
             var domNode = new TreeNode("DIV");
             var element = CreateHtmlElement();
-            _screen.Setup(s => s.GetElementFromNode(node)).Returns(element);
-            _view.Setup(v => v.HighlightModeEnabled).Returns(true);
-            _screen.Setup(s => s.GetNodeFromElement(element)).Returns(domNode);
+            screen.Setup(s => s.GetElementFromNode(node)).Returns(element);
+            view.Setup(v => v.HighlightModeEnabled).Returns(true);
+            screen.Setup(s => s.GetNodeFromElement(element)).Returns(domNode);
 
             // Act
-            _presenter.WorkingPatternNodeClick(node, MouseButtons.Left);
+            presenter.WorkingPatternNodeClick(node, MouseButtons.Left);
 
             // Assert
-            _screen.Verify(s => s.HighlightElement(element));
-            _view.Verify(v => v.FillElementInfo(node, element.OuterHtml));
-            _view.Verify(v => v.SelectDOMNode(domNode));
+            screen.Verify(s => s.HighlightElement(element));
+            view.Verify(v => v.FillElementInfo(node, element.OuterHtml));
+            view.Verify(v => v.SelectDOMNode(domNode));
         }
 
         [TestMethod]
@@ -927,11 +1052,10 @@ namespace DEiXTo.Presenters.Tests
             node.Tag = nInfo;
 
             // Act
-            _presenter.WorkingPatternNodeClick(node, MouseButtons.Left);
+            presenter.WorkingPatternNodeClick(node, MouseButtons.Left);
 
             //Assert
-            _view.Verify(v => v.FillTextNodeElementInfo(node));
-
+            view.Verify(v => v.FillTextNodeElementInfo(node));
         }
 
         [TestMethod]
@@ -941,13 +1065,13 @@ namespace DEiXTo.Presenters.Tests
             var node = new TreeNode("DIV");
 
             // Act
-            _presenter.CreateAuxiliaryPattern(node);
+            presenter.CreateAuxiliaryPattern(node);
 
             // Assert
-            _view.Verify(v => v.FocusAuxiliaryTabPage());
-            _view.Verify(v => v.ClearAuxiliaryTree());
-            _view.Verify(v => v.FillAuxiliaryTree(It.Is<TreeNode>(n => n.Text == node.Text)));
-            _view.Verify(v => v.ExpandAuxiliaryTree());
+            view.Verify(v => v.FocusAuxiliaryTabPage());
+            view.Verify(v => v.ClearAuxiliaryTree());
+            view.Verify(v => v.FillAuxiliaryTree(It.Is<TreeNode>(n => n.Text == node.Text)));
+            view.Verify(v => v.ExpandAuxiliaryTree());
         }
 
         [TestMethod]
@@ -956,16 +1080,16 @@ namespace DEiXTo.Presenters.Tests
             // Arrange
             var node = new TreeNode("DIV");
             var domNode = new TreeNode("DIV");
-            _screen.Setup(s => s.GetDomNode(node)).Returns(domNode);
+            screen.Setup(s => s.GetDomNode(node)).Returns(domNode);
 
             // Act
-            _presenter.CreateWorkingPattern(node);
+            presenter.CreateWorkingPattern(node);
 
             // Assert
-            _view.Verify(v => v.ClearPatternTree());
-            _view.Verify(v => v.SetNodeFont(It.Is<TreeNode>(n => n.Text == "DIV")));
-            _view.Verify(v => v.FillPatternTree(It.Is<TreeNode>(n => n.Text == "DIV")));
-            _view.Verify(v => v.ExpandPatternTree());
+            view.Verify(v => v.ClearPatternTree());
+            view.Verify(v => v.SetNodeFont(It.Is<TreeNode>(n => n.Text == "DIV")));
+            view.Verify(v => v.FillPatternTree(It.Is<TreeNode>(n => n.Text == "DIV")));
+            view.Verify(v => v.ExpandPatternTree());
         }
 
         [TestMethod]
@@ -974,15 +1098,15 @@ namespace DEiXTo.Presenters.Tests
             // Arrange
             var element = CreateHtmlElement();
             var node = new TreeNode("DIV");
-            _screen.Setup(s => s.GetElementFromNode(node)).Returns(element);
-            _view.Setup(v => v.CanAutoScroll).Returns(true);
+            screen.Setup(s => s.GetElementFromNode(node)).Returns(element);
+            view.Setup(v => v.CanAutoScroll).Returns(true);
 
             // Act
-            _presenter.DOMNodeClick(node, MouseButtons.Left);
+            presenter.DOMNodeClick(node, MouseButtons.Left);
             
             // Assert
-            _screen.Verify(s => s.HighlightElement(element));
-            _view.Verify(v => v.FillElementInfo(node, element.OuterHtml));
+            screen.Verify(s => s.HighlightElement(element));
+            view.Verify(v => v.FillElementInfo(node, element.OuterHtml));
         }
 
         [TestMethod]
@@ -991,16 +1115,16 @@ namespace DEiXTo.Presenters.Tests
             // Arrange
             var element = CreateHtmlElement();
             var node = new TreeNode("DIV");
-            _screen.Setup(s => s.GetElementFromNode(node)).Returns(element);
-            _view.Setup(v => v.CanAutoScroll).Returns(true);
+            screen.Setup(s => s.GetElementFromNode(node)).Returns(element);
+            view.Setup(v => v.CanAutoScroll).Returns(true);
 
             // Act
-            _presenter.DOMNodeClick(node, MouseButtons.Right);
+            presenter.DOMNodeClick(node, MouseButtons.Right);
 
             // Assert
-            _view.Verify(v => v.SetContextMenuFor(node));
-            _screen.Verify(s => s.HighlightElement(element));
-            _view.Verify(v => v.FillElementInfo(node, element.OuterHtml));
+            view.Verify(v => v.SetContextMenuFor(node));
+            screen.Verify(s => s.HighlightElement(element));
+            view.Verify(v => v.FillElementInfo(node, element.OuterHtml));
         }
 
         [TestMethod]
@@ -1012,14 +1136,14 @@ namespace DEiXTo.Presenters.Tests
             NodeInfo nInfo = new NodeInfo();
             nInfo.IsTextNode = true;
             node.Tag = nInfo;
-            _screen.Setup(s => s.GetElementFromNode(node)).Returns(element);
-            _view.Setup(v => v.CanAutoScroll).Returns(true);
+            screen.Setup(s => s.GetElementFromNode(node)).Returns(element);
+            view.Setup(v => v.CanAutoScroll).Returns(true);
 
             // Act
-            _presenter.DOMNodeClick(node, MouseButtons.Left);
+            presenter.DOMNodeClick(node, MouseButtons.Left);
 
             // Assert
-            _view.Verify(v => v.FillTextNodeElementInfo(node));
+            view.Verify(v => v.FillTextNodeElementInfo(node));
         }
 
         [TestMethod]
@@ -1027,14 +1151,14 @@ namespace DEiXTo.Presenters.Tests
         {
             // Arrange
             var element = CreateHtmlElement();
-            _view.Setup(v => v.HighlightModeEnabled).Returns(true);
+            view.Setup(v => v.HighlightModeEnabled).Returns(true);
 
             // Act
-            _presenter.DocumentMouseLeave(element);
+            presenter.DocumentMouseLeave(element);
 
             // Assert
-            _screen.Verify(s => s.RemoveHighlighting(element));
-            _view.Verify(v => v.ClearElementInfo());
+            screen.Verify(s => s.RemoveHighlighting(element));
+            view.Verify(v => v.ClearElementInfo());
         }
 
         [TestMethod]
@@ -1043,16 +1167,16 @@ namespace DEiXTo.Presenters.Tests
             // Arrange
             var element = CreateHtmlElement();
             var node = new TreeNode("DIV");
-            _view.Setup(v => v.HighlightModeEnabled).Returns(true);
-            _screen.Setup(s => s.GetNodeFromElement(element)).Returns(node);
+            view.Setup(v => v.HighlightModeEnabled).Returns(true);
+            screen.Setup(s => s.GetNodeFromElement(element)).Returns(node);
 
             // Act
-            _presenter.DocumentMouseOver(element);
+            presenter.DocumentMouseOver(element);
 
             // Assert
-            _screen.Verify(s => s.HighlightElement(element));
-            _view.Verify(v => v.SelectDOMNode(node));
-            _view.Verify(v => v.FillElementInfo(node, element.OuterHtml));
+            screen.Verify(s => s.HighlightElement(element));
+            view.Verify(v => v.SelectDOMNode(node));
+            view.Verify(v => v.FillElementInfo(node, element.OuterHtml));
         }
 
         [TestMethod]
@@ -1062,26 +1186,26 @@ namespace DEiXTo.Presenters.Tests
             string url = "http://www.google.gr";
             var node = new TreeNode("HTML");
             var document = CreateHtmlDocument();
-            _view.Setup(v => v.CrawlingEnabled).Returns(false);
-            _view.Setup(v => v.GetHtmlDocument()).Returns(document);
-            _view.Setup(v => v.GetDocumentUrl()).Returns(url);
-            _screen.Setup(s => s.BuildDom()).Returns(node);
+            view.Setup(v => v.CrawlingEnabled).Returns(false);
+            view.Setup(v => v.GetHtmlDocument()).Returns(document);
+            view.Setup(v => v.GetDocumentUrl()).Returns(url);
+            screen.Setup(s => s.BuildDom()).Returns(node);
 
             // Act
-            _presenter.BrowserCompleted();
+            presenter.BrowserCompleted();
 
             // Assert
-            _screen.Verify(s => s.ClearStyling());
-            _view.Verify(v => v.ClearSnapshotTree());
-            _view.Verify(v => v.ClearPatternTree());
-            _view.Verify(v => v.ClearAuxiliaryTree());
-            _view.Verify(v => v.ClearDOMTree());
-            _screen.Verify(s => s.CreateDocument(document));
-            _view.Verify(v => v.ClearTargetURLs());
-            _view.Verify(v => v.AppendTargetUrl(url));
-            _view.Verify(v => v.UpdateDocumentUrl());
-            _view.Verify(v => v.FillDomTree(node));
-            _view.Verify(v => v.AttachDocumentEvents());
+            screen.Verify(s => s.ClearStyling());
+            view.Verify(v => v.ClearSnapshotTree());
+            view.Verify(v => v.ClearPatternTree());
+            view.Verify(v => v.ClearAuxiliaryTree());
+            view.Verify(v => v.ClearDOMTree());
+            screen.Verify(s => s.CreateDocument(document));
+            view.Verify(v => v.ClearTargetURLs());
+            view.Verify(v => v.AppendTargetUrl(url));
+            view.Verify(v => v.UpdateDocumentUrl());
+            view.Verify(v => v.FillDomTree(node));
+            view.Verify(v => v.AttachDocumentEvents());
         }
 
         [TestMethod]
@@ -1089,13 +1213,13 @@ namespace DEiXTo.Presenters.Tests
         {
             // Arrange
             TreeNode node = null;
-            _view.Setup(v => v.GetWorkingPattern()).Returns(node);
+            view.Setup(v => v.GetWorkingPattern()).Returns(node);
 
             // Act
-            _presenter.ExecuteRule();
+            presenter.ExecuteRule();
 
             // Assert
-            _view.Verify(v => v.ShowSpecifyPatternMessage());
+            view.Verify(v => v.ShowSpecifyPatternMessage());
         }
 
         [TestMethod]
@@ -1110,22 +1234,22 @@ namespace DEiXTo.Presenters.Tests
             node.AddNode(n1);
             node.AddNode(n2);
             var domNodes = node.Nodes;
-            _view.Setup(v => v.GetWorkingPattern()).Returns(node);
-            _view.Setup(v => v.GetBodyTreeNodes()).Returns(domNodes);
-            _screen.Setup(s => s.Execute(node, domNodes)).Returns(extraction.Object);
+            view.Setup(v => v.GetWorkingPattern()).Returns(node);
+            view.Setup(v => v.GetBodyTreeNodes()).Returns(domNodes);
+            screen.Setup(s => s.Execute(node, domNodes)).Returns(extraction.Object);
             extraction.Setup(e => e.RecordsCount).Returns(4);
             extraction.Setup(e => e.VariablesCount).Returns(3);
             extraction.Setup(e => e.OutputVariableLabels).Returns(new List<string>());
             extraction.Setup(e => e.ExtractedRecords).Returns(results);
 
             // Act
-            _presenter.ExecuteRule();
+            presenter.ExecuteRule();
 
             // Assert
             string message = "Extraction Completed: 4 results!";
-            _view.Verify(v => v.WritePageResults(message));
-            _view.Verify(v => v.FillExtractionPattern(It.Is<TreeNode>(n => n.Text == "DIV")));
-            _view.Verify(v => v.ExpandExtractionTree());
+            view.Verify(v => v.WritePageResults(message));
+            view.Verify(v => v.FillExtractionPattern(It.Is<TreeNode>(n => n.Text == "DIV")));
+            view.Verify(v => v.ExpandExtractionTree());
         }
 
         [TestMethod]
@@ -1142,46 +1266,46 @@ namespace DEiXTo.Presenters.Tests
             string extension = "wpf";
             string filename = "deixto_wrapper";
             var dialog = new Mock<ISaveFileDialog>();
-            _screen.Setup(s => s.GetSaveFileDialog(filter, extension)).Returns(dialog.Object);
+            screen.Setup(s => s.GetSaveFileDialog(filter, extension)).Returns(dialog.Object);
             dialog.Setup(d => d.ShowDialog()).Returns(DialogResult.OK);
             dialog.Setup(d => d.Filename).Returns(filename);
-            _view.Setup(v => v.TargetUrls).Returns(new string[] {"http://www.teilar.gr"});
-            _view.Setup(v => v.TargetURLsFile).Returns("");
-            _view.Setup(v => v.GetExtractionPatternNodes()).Returns(nodes);
+            view.Setup(v => v.TargetUrls).Returns(new string[] { "http://www.teilar.gr" });
+            view.Setup(v => v.TargetURLsFile).Returns("");
+            view.Setup(v => v.GetExtractionPatternNodes()).Returns(nodes);
 
             // Act
-            _presenter.SaveWrapper();
+            presenter.SaveWrapper();
 
             // Assert
-            _screen.Verify(s => s.SaveWrapper(It.IsAny<DeixtoWrapper>(), nodes, filename));
+            screen.Verify(s => s.SaveWrapper(It.IsAny<DeixtoWrapper>(), nodes, filename));
         }
 
         [TestMethod]
         public void TestSavingWrapperRequiresOneInputSource()
         {
             // Arrange
-            _view.Setup(v => v.TargetUrls).Returns(new string[0]);
-            _view.Setup(v => v.TargetURLsFile).Returns(String.Empty);
+            view.Setup(v => v.TargetUrls).Returns(new string[0]);
+            view.Setup(v => v.TargetURLsFile).Returns(String.Empty);
 
             // Act
-            _presenter.SaveWrapper();
+            presenter.SaveWrapper();
 
             // Assert
-            _view.Verify(v => v.ShowSpecifyInputSourceMessage());
+            view.Verify(v => v.ShowSpecifyInputSourceMessage());
         }
 
         [TestMethod]
         public void TestSavingWrapperAcceptsOnlyOneInputSource()
         {
             // Arrange
-            _view.Setup(v => v.TargetUrls).Returns(new string[] {"http://www.teilar.gr"});
-            _view.Setup(v => v.TargetURLsFile).Returns("some_file");
+            view.Setup(v => v.TargetUrls).Returns(new string[] { "http://www.teilar.gr" });
+            view.Setup(v => v.TargetURLsFile).Returns("some_file");
 
             // Act
-            _presenter.SaveWrapper();
+            presenter.SaveWrapper();
 
             // Assert
-            _view.Verify(v => v.ShowSelectOneInputSourceMessage());
+            view.Verify(v => v.ShowSelectOneInputSourceMessage());
         }
 
         [TestMethod]
@@ -1189,14 +1313,14 @@ namespace DEiXTo.Presenters.Tests
         {
             // Arrange
             var node = new TreeNode("DIV");
-            _view.Setup(v => v.TargetURLsFile).Returns("some_file");
-            _view.Setup(v => v.GetExtractionPatternNodes()).Returns(node.Nodes);
+            view.Setup(v => v.TargetURLsFile).Returns("some_file");
+            view.Setup(v => v.GetExtractionPatternNodes()).Returns(node.Nodes);
 
             // Act
-            _presenter.SaveWrapper();
+            presenter.SaveWrapper();
 
             // Assert
-            _view.Verify(v => v.ShowSpecifyExtractionPatternMessage());
+            view.Verify(v => v.ShowSpecifyExtractionPatternMessage());
         }
 
         [TestMethod]
@@ -1207,33 +1331,33 @@ namespace DEiXTo.Presenters.Tests
             var filter = "Wrapper Project Files (*.wpf)|";
             var filename = "wrapper_file";
             var dialog = new Mock<IOpenFileDialog>();
-            _screen.Setup(s => s.GetOpenFileDialog(filter)).Returns(dialog.Object);
+            screen.Setup(s => s.GetOpenFileDialog(filter)).Returns(dialog.Object);
             dialog.Setup(d => d.ShowDialog()).Returns(DialogResult.OK);
             dialog.Setup(d => d.Filename).Returns(filename);
-            _screen.Setup(s => s.LoadWrapper(filename)).Returns(wrapper);
+            screen.Setup(s => s.LoadWrapper(filename)).Returns(wrapper);
 
             // Act
-            _presenter.LoadWrapper();
+            presenter.LoadWrapper();
 
             // Assert
-            _view.VerifySet(v => v.AutoFill = wrapper.AutoSubmitForm);
-            _view.VerifySet(v => v.Delay = wrapper.Delay);
-            _view.VerifySet(v => v.ExtractionPattern = wrapper.ExtractionPattern.RootNode);
-            _view.VerifySet(v => v.ExtractNativeUrl = wrapper.ExtractNativeUrl);
-            _view.VerifySet(v => v.FormInputName = wrapper.InputName);
-            _view.VerifySet(v => v.FormName = wrapper.FormName);
-            _view.VerifySet(v => v.FormTerm = wrapper.SearchQuery);
-            _view.VerifySet(v => v.HtmlNextLink = wrapper.HtmlNextLink);
-            _view.VerifySet(v => v.IgnoredTags = wrapper.IgnoredHtmlTags);
-            _view.VerifySet(v => v.InputFile = wrapper.UrlsInputFile);
-            _view.VerifySet(v => v.MaxCrawlingDepth = wrapper.MaxCrawlingDepth);
-            _view.VerifySet(v => v.MultiPageCrawling = wrapper.MultiPageCrawling);
-            _view.VerifySet(v => v.NumberOfHits = wrapper.NumberOfHits);
-            _view.VerifySet(v => v.OutputFileName = wrapper.OutputFileName);
-            _view.VerifySet(v => v.OutputFormat = wrapper.OutputFileFormat);
-            _view.VerifySet(v => v.OutputMode = wrapper.OutputFileMode);
-            _view.VerifySet(v => v.TargetUrls = wrapper.TargetUrls);
-            _view.Verify(v => v.ExpandExtractionTree());
+            view.VerifySet(v => v.AutoFill = wrapper.AutoSubmitForm);
+            view.VerifySet(v => v.Delay = wrapper.Delay);
+            view.VerifySet(v => v.ExtractionPattern = wrapper.ExtractionPattern.RootNode);
+            view.VerifySet(v => v.ExtractNativeUrl = wrapper.ExtractNativeUrl);
+            view.VerifySet(v => v.FormInputName = wrapper.InputName);
+            view.VerifySet(v => v.FormName = wrapper.FormName);
+            view.VerifySet(v => v.FormTerm = wrapper.SearchQuery);
+            view.VerifySet(v => v.HtmlNextLink = wrapper.HtmlNextLink);
+            view.VerifySet(v => v.IgnoredTags = wrapper.IgnoredHtmlTags);
+            view.VerifySet(v => v.InputFile = wrapper.UrlsInputFile);
+            view.VerifySet(v => v.MaxCrawlingDepth = wrapper.MaxCrawlingDepth);
+            view.VerifySet(v => v.MultiPageCrawling = wrapper.MultiPageCrawling);
+            view.VerifySet(v => v.NumberOfHits = wrapper.NumberOfHits);
+            view.VerifySet(v => v.OutputFileName = wrapper.OutputFileName);
+            view.VerifySet(v => v.OutputFormat = wrapper.OutputFileFormat);
+            view.VerifySet(v => v.OutputMode = wrapper.OutputFileMode);
+            view.VerifySet(v => v.TargetUrls = wrapper.TargetUrls);
+            view.Verify(v => v.ExpandExtractionTree());
         }
 
         // HELPER METHODS

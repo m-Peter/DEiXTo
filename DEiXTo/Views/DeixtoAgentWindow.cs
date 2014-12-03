@@ -99,6 +99,11 @@ namespace DEiXTo.Views
             MessageBox.Show(message, "Microsoft Internet Explorer", MessageBoxButtons.OK, MessageBoxIcon.Error);
         }
 
+        public void ShowPatternMatchNotFoundMessage()
+        {
+            MessageBox.Show("Sorry! Could not find a match...", "DEiXTo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+        }
+
         public string[] TargetUrls
         {
             get

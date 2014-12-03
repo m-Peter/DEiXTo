@@ -43,50 +43,14 @@ namespace DEiXTo.Presenters
 
         public void Receive(RegexAdded subject)
         {
-            TreeNode node = subject.Node;
+            var node = subject.Node;
             var element = _screen.GetElementFromNode(node);
-
             View.FillElementInfo(node, element.OuterHtml);
-        }
-
-        private void applyUncheckedToSubtree(TreeNodeCollection nodes)
-        {
-            foreach (TreeNode node in nodes)
-            {
-                View.ApplyStateToNode(node, 5);
-                node.SetState(NodeState.Unchecked);
-                applyUncheckedToSubtree(node.Nodes);
-            }
-        }
-
-        private bool CustomMenuCanBeShown(HtmlElementEventArgs e)
-        {
-            return e.CtrlKeyPressed && View.BrowserContextMenuEnabled;
-        }
-
-        private bool AltPressed(KeyEventArgs e)
-        {
-            return e.Alt;
-        }
-
-        private bool EnterPressed(KeyEventArgs e)
-        {
-            return e.KeyCode == Keys.Enter;
-        }
-
-        private bool RightButtonPressed(MouseButtons button)
-        {
-            return button == MouseButtons.Right;
-        }
-
-        private bool Negative(DialogResult answer)
-        {
-            return answer != DialogResult.OK;
         }
 
         public void LoadURLsFromFile()
         {
-            string filter = "Text Files (*.txt)|";
+            var filter = "Text Files (*.txt)|";
             var openFileDialog = _screen.GetOpenFileDialog(filter);
             var answer = openFileDialog.ShowDialog();
 
@@ -122,21 +86,23 @@ namespace DEiXTo.Presenters
             string url = View.FirstTargetURL;
 
             DomBuilted += DeixtoAgentPresenter_DomBuilted;
-            
+
             // Navigate to that URL
             View.NavigateTo(url);
         }
 
         void DeixtoAgentPresenter_DomBuilted()
         {
-            // TODO REMOVE DEPENDENCIES
             // Grab the Extraction Pattern
             var pattern = View.GetExtractionPattern();
-            var extraction = new ExtractionPattern(pattern);
 
             // Search for the tree structure in the Extraction Pattern
-            _executor = new PatternExecutor(extraction, View.GetDOMTreeNodes());
             var matchedNode = _screen.ScanDomTree(pattern);
+            if (matchedNode == null)
+            {
+                View.ShowPatternMatchNotFoundMessage();
+                return;
+            }
             matchedNode.Tag = pattern.Tag;
             var font = new Font(FontFamily.GenericSansSerif, 8.25f);
             matchedNode.NodeFont = new Font(font, FontStyle.Bold);
@@ -145,6 +111,19 @@ namespace DEiXTo.Presenters
             View.FillPatternTree(matchedNode.GetClone());
             View.ExpandPatternTree();
         }
+
+
+
+
+
+
+
+
+        /// <summary>
+        /// 
+        /// </summary>
+
+        
 
         public void SelectOutputFile()
         {
@@ -466,51 +445,6 @@ namespace DEiXTo.Presenters
 
                 View.FillExtractionPattern(pattern.GetClone());
                 View.ExpandExtractionTree();
-            }
-        }
-
-        private void CrawlPages(int depth, string mylink, TreeNode pattern, ref int count)
-        {
-            var domNodes = View.GetBodyTreeNodes();
-            var extractionResult = _screen.Execute(pattern, domNodes);
-            AddOutputColumns(extractionResult);
-
-            for (int i = 0; i < depth; i++)
-            {
-                FollowNextLink(mylink);
-
-                domNodes = View.GetBodyTreeNodes();
-                extractionResult = _screen.Execute(pattern, domNodes);
-                count += extractionResult.RecordsCount;
-                
-                AddOutputResults(extractionResult);
-
-                View.WritePageResults(count.ToString() + " results!");
-            }
-        }
-
-        private void FollowNextLink(string nextLink)
-        {
-            var elem = _screen.GetLinkToFollow(nextLink);
-            string href = elem.GetAttribute("href");
-            View.NavigateTo(href);
-        }
-
-        private void AddOutputColumns(IExtraction extraction)
-        {
-            var labels = extraction.OutputVariableLabels;
-
-            foreach (string label in labels)
-            {
-                View.AddOutputColumn(label);
-            }
-        }
-
-        private void AddOutputResults(IExtraction extraction)
-        {
-            foreach (var item in extraction.ExtractedRecords)
-            {
-                View.AddOutputItem(item.ToStringArray(), item.Node);
             }
         }
 
@@ -991,6 +925,46 @@ namespace DEiXTo.Presenters
             ExecutePattern();
         }
 
+        void DeixtoAgentPresenter_FormSubmitted()
+        {
+            ExecutePattern();
+        }
+
+        private void applyUncheckedToSubtree(TreeNodeCollection nodes)
+        {
+            foreach (TreeNode node in nodes)
+            {
+                View.ApplyStateToNode(node, 5);
+                node.SetState(NodeState.Unchecked);
+                applyUncheckedToSubtree(node.Nodes);
+            }
+        }
+
+        private bool CustomMenuCanBeShown(HtmlElementEventArgs e)
+        {
+            return e.CtrlKeyPressed && View.BrowserContextMenuEnabled;
+        }
+
+        private bool AltPressed(KeyEventArgs e)
+        {
+            return e.Alt;
+        }
+
+        private bool EnterPressed(KeyEventArgs e)
+        {
+            return e.KeyCode == Keys.Enter;
+        }
+
+        private bool RightButtonPressed(MouseButtons button)
+        {
+            return button == MouseButtons.Right;
+        }
+
+        private bool Negative(DialogResult answer)
+        {
+            return answer != DialogResult.OK;
+        }
+
         private void ExecutePattern()
         {
             // search for the extraction pattern in dom
@@ -1006,9 +980,49 @@ namespace DEiXTo.Presenters
             View.WritePageResults("Extraction Completed: " + extractionResult.RecordsCount.ToString() + " results!");
         }
 
-        void DeixtoAgentPresenter_FormSubmitted()
+        private void CrawlPages(int depth, string mylink, TreeNode pattern, ref int count)
         {
-            ExecutePattern();
+            var domNodes = View.GetBodyTreeNodes();
+            var extractionResult = _screen.Execute(pattern, domNodes);
+            AddOutputColumns(extractionResult);
+
+            for (int i = 0; i < depth; i++)
+            {
+                FollowNextLink(mylink);
+
+                domNodes = View.GetBodyTreeNodes();
+                extractionResult = _screen.Execute(pattern, domNodes);
+                count += extractionResult.RecordsCount;
+
+                AddOutputResults(extractionResult);
+
+                View.WritePageResults(count.ToString() + " results!");
+            }
+        }
+
+        private void FollowNextLink(string nextLink)
+        {
+            var elem = _screen.GetLinkToFollow(nextLink);
+            string href = elem.GetAttribute("href");
+            View.NavigateTo(href);
+        }
+
+        private void AddOutputColumns(IExtraction extraction)
+        {
+            var labels = extraction.OutputVariableLabels;
+
+            foreach (string label in labels)
+            {
+                View.AddOutputColumn(label);
+            }
+        }
+
+        private void AddOutputResults(IExtraction extraction)
+        {
+            foreach (var item in extraction.ExtractedRecords)
+            {
+                View.AddOutputItem(item.ToStringArray(), item.Node);
+            }
         }
     }
 }
