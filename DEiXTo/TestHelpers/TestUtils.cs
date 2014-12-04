@@ -41,6 +41,40 @@ namespace DEiXTo.TestHelpers
             return browser.Document;
         }
 
+        public static HtmlDocument CreateDomHtmlDocument()
+        {
+            browser = new WebBrowser();
+            browser.DocumentText = "some text";
+            browser.Show();
+
+            var doc = browser.Document;
+            string source = @"
+            <!DOCTYPE HTML>
+            <html>
+                <head>
+                    <title>My Web Page</title>
+                </head>
+                <body>
+                    <div id='links'>
+						<a href='/projects/'>Projects</a>
+						<a href='/blog/'>Blog</a>
+						<a href='/notes/'>Drafts &amp; Notes</a>
+                    </div>
+                    <div id='main'>
+                        <a href='/next_page/'>Next</a>
+                    </div>
+                    <div id='search'>
+                        <form method='get' action='http://www.search.com' name='search-form'>
+                            <input name='s' type='text' />
+                        </form>
+                    </div>
+                </body>
+            </html>";
+            doc.Write(source);
+
+            return browser.Document;
+        }
+
         public static HtmlDocument CreateHtmlDocument()
         {
             browser.DocumentText = "some text";

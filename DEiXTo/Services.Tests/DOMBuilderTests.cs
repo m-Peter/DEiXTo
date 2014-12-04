@@ -1,4 +1,5 @@
 ﻿using DEiXTo.Models;
+using DEiXTo.TestHelpers;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using mshtml;
 using System.Windows.Forms;
@@ -8,7 +9,6 @@ namespace DEiXTo.Services.Tests
     [TestClass]
     public class DOMBuilderTests
     {
-        private WebBrowser browser = new WebBrowser();
         private IDOMBuilder _builder;
         private HtmlElement _htmlTag;
         private DOMTree _domTree;
@@ -16,7 +16,7 @@ namespace DEiXTo.Services.Tests
         [TestInitialize]
         public void SetUp()
         {
-            var document = CreateDocument();
+            var document = TestUtils.CreateDomHtmlDocument();
             _htmlTag = document.GetElementsByTagName("HTML")[0];
             _builder = new DOMBuilder(_htmlTag);
             _domTree = _builder.Build();
@@ -105,39 +105,6 @@ namespace DEiXTo.Services.Tests
             }
 
             return true;
-        }
-
-        private HtmlDocument CreateDocument()
-        {
-            browser.DocumentText = "some text";
-            browser.Show();
-
-            var doc = browser.Document;
-            string source = @"
-            <!DOCTYPE HTML>
-            <html>
-                <head>
-                    <title>My Web Page</title>
-                </head>
-                <body>
-                    <div id='links'>
-						<a href='/projects/'>Projects</a>
-						<a href='/blog/'>Blog</a>
-						<a href='/notes/'>Drafts &amp; Notes</a>
-                    </div>
-                    <div id='main'>
-                        <a href='/next_page/'>Next</a>
-                    </div>
-                    <div id='search'>
-                        <form method='get' action='http://www.search.com' name='search-form'>
-                            <input name='s' type='text' />
-                        </form>
-                    </div>
-                </body>
-            </html>";
-            doc.Write(source);
-
-            return browser.Document;
         }
     }
 }
