@@ -7,6 +7,29 @@ namespace DEiXTo.TestHelpers
     {
         private static WebBrowser browser = new WebBrowser();
 
+        public static HtmlDocument CreateSimplifiedDocument()
+        {
+            browser.DocumentText = "some text";
+            browser.Show();
+
+            var doc = browser.Document;
+            string source = @"
+            <!DOCTYPE HTML>
+            <html>
+                <head>
+                    <title>My Web Page</title>
+                </head>
+                <body>
+                    <p>
+                        This <b>is</b> some <b>text</b> that <b>is</b> made <b>bold</b> for <b>testing</b> <b>purposes</b><br/>
+                    </p>
+                </body>
+            </html>";
+            doc.Write(source);
+
+            return browser.Document;
+        }
+
         public static HtmlDocument CreateFilledHtmlDocument()
         {
             browser.DocumentText = "some text";

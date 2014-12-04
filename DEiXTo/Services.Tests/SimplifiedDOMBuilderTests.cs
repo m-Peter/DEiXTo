@@ -1,4 +1,5 @@
 ﻿using DEiXTo.Models;
+using DEiXTo.TestHelpers;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Windows.Forms;
 
@@ -7,14 +8,13 @@ namespace DEiXTo.Services.Tests
     [TestClass]
     public class SimplifiedDOMBuilderTests
     {
-        private WebBrowser browser = new WebBrowser();
         private IDOMBuilder _builder;
         private HtmlElement _htmlTag;
 
         [TestInitialize]
         public void SetUp()
         {
-            var document = CreateDocument();
+            var document = TestUtils.CreateSimplifiedDocument();
             _htmlTag = document.GetElementsByTagName("HTML")[0];
         }
 
@@ -116,29 +116,6 @@ namespace DEiXTo.Services.Tests
             }
 
             return true;
-        }
-
-        private HtmlDocument CreateDocument()
-        {
-            browser.DocumentText = "some text";
-            browser.Show();
-
-            var doc = browser.Document;
-            string source = @"
-            <!DOCTYPE HTML>
-            <html>
-                <head>
-                    <title>My Web Page</title>
-                </head>
-                <body>
-                    <p>
-                        This <b>is</b> some <b>text</b> that <b>is</b> made <b>bold</b> for <b>testing</b> <b>purposes</b><br/>
-                    </p>
-                </body>
-            </html>";
-            doc.Write(source);
-
-            return browser.Document;
         }
     }
 }
