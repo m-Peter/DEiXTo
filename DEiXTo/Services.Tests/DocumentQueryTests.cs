@@ -2,19 +2,19 @@
 using System.Windows.Forms;
 using System.Drawing;
 using mshtml;
+using DEiXTo.TestHelpers;
 
 namespace DEiXTo.Services.Tests
 {
     [TestClass]
     public class DocumentQueryTests
     {
-        private WebBrowser browser = new WebBrowser();
         private DocumentQuery query;
 
         [TestInitialize]
         public void SetUp()
         {
-            var document = CreateDocument();
+            var document = TestUtils.CreateFilledHtmlDocument();
             query = new DocumentQuery(document);
         }
 
@@ -117,40 +117,6 @@ namespace DEiXTo.Services.Tests
             // Act
             query.FillInput(inputElement, "about");
             query.SubmitForm(formElement);
-        }
-
-        private HtmlDocument CreateDocument()
-        {
-            browser.DocumentText = "some text";
-            browser.Show();
-
-            var doc = browser.Document;
-            string source = @"
-            <html>
-                <head>
-                    <title>My Web Page</title>
-                </head>
-                <body>
-                    <div id='links'>
-                        <nav id='nav'>
-						    <a href='/projects/'>Projects</a>
-						    <a href='/blog/'>Blog</a>
-						    <a href='/notes/'>Drafts &amp; Notes</a>
-						</nav>
-                    </div>
-                    <div id='main'>
-                        <a href='/next_page/'>Next</a>
-                    </div>
-                    <div id='search'>
-                        <form method='get' action='http://www.search.com' name='search-form'>
-                            <input name='s' type='text' />
-                        </form
-                    </div>
-                </body>
-            </html>";
-            doc.Write(source);
-
-            return browser.Document;
         }
     }
 }
