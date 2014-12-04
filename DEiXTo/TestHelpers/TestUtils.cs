@@ -159,7 +159,7 @@ namespace DEiXTo.TestHelpers
         public static IHTMLElement CreateFormElement()
         {
             var doc = CreateHtmlDocument();
-            doc.Write("<form method='get' action='http://www.sitepoint.com'></form>");
+            doc.Write("<form name='query' method='get' action='http://www.sitepoint.com'></form>");
             var element = doc.Forms[0];
             var domElement = (IHTMLElement)element.DomElement;
 
@@ -169,7 +169,7 @@ namespace DEiXTo.TestHelpers
         public static IHTMLElement CreateImageElement()
         {
             var doc = CreateHtmlDocument();
-            doc.Write("<img src='/img/main/thumb-small.png' alt='Image' />");
+            doc.Write("<img src='http://www.images.com/img/main/thumb-small.png' alt='Image' />");
             var element = doc.GetElementsByTagName("img")[0];
             var domElement = (IHTMLElement)element.DomElement;
 
