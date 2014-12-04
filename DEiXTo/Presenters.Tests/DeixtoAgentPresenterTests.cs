@@ -966,7 +966,7 @@ namespace DEiXTo.Presenters.Tests
             node.AddNode(n1);
             node.AddNode(n2);
             var domNodes = node.Nodes;
-            var linkElement = TestUtils.CreateLinkElement();
+            var linkElement = TestUtils.CreateHtmlLinkElement();
             view.Setup(v => v.GetWorkingPattern()).Returns(node);
             view.Setup(v => v.CrawlingEnabled).Returns(true);
             view.Setup(v => v.HtmlLink()).Returns("Next");

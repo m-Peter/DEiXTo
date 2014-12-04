@@ -1,4 +1,5 @@
-﻿using System.Windows.Forms;
+﻿using mshtml;
+using System.Windows.Forms;
 
 namespace DEiXTo.TestHelpers
 {
@@ -23,7 +24,7 @@ namespace DEiXTo.TestHelpers
             return element;
         }
 
-        public static HtmlElement CreateLinkElement()
+        public static HtmlElement CreateHtmlLinkElement()
         {
             var doc = CreateHtmlDocument();
             doc.Write("<a href='http://www.google.gr/?page=1'>Google</a>");
@@ -32,11 +33,58 @@ namespace DEiXTo.TestHelpers
             return element;
         }
 
+        public static IHTMLElement CreateGenericElement()
+        {
+            var doc = CreateHtmlDocument();
+            doc.Write("<p>Some text in here</p>");
+            var element = doc.GetElementsByTagName("p")[0];
+            var domElement = (IHTMLElement)element.DomElement;
+
+            return domElement;
+        }
+
+        public static IHTMLElement CreateInputElement()
+        {
+            var doc = CreateHtmlDocument();
+            doc.Write("<input name='s' type='text' />");
+            var element = doc.GetElementsByTagName("input")[0];
+            var domElement = (IHTMLElement)element.DomElement;
+
+            return domElement;
+        }
+
+        public static IHTMLElement CreateFormElement()
+        {
+            var doc = CreateHtmlDocument();
+            doc.Write("<form method='get' action='http://www.sitepoint.com'></form>");
+            var element = doc.Forms[0];
+            var domElement = (IHTMLElement)element.DomElement;
+
+            return domElement;
+        }
+
+        public static IHTMLElement CreateImageElement()
+        {
+            var doc = CreateHtmlDocument();
+            doc.Write("<img src='/img/main/thumb-small.png' alt='Image' />");
+            var element = doc.GetElementsByTagName("img")[0];
+            var domElement = (IHTMLElement)element.DomElement;
+
+            return domElement;
+        }
+
+        public static IHTMLElement CreateLinkElement()
+        {
+            var doc = CreateHtmlDocument();
+            doc.Write("<a href='http://www.google.gr/'>Google</a>");
+            var element = doc.GetElementsByTagName("a")[0];
+            var domElement = (IHTMLElement)element.DomElement;
+
+            return domElement;
+        }
+
         public static HtmlElement CreateUlElement()
         {
-            //WebBrowser browser = new WebBrowser();
-            //browser.DocumentText = "some text";
-            //browser.Show();
             var doc = CreateHtmlDocument();
             doc.Write("<ul><li>hey</li></ul>");
             var elements = doc.GetElementsByTagName("ul");
