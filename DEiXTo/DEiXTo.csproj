@@ -186,6 +186,7 @@
     <Compile Include="Services\DeixtoWrapperWriter.cs" />
     <Compile Include="Services\XmlDialogBuilder.cs" />
     <Compile Include="Services\XmlRecordsWriter.cs" />
+    <Compile Include="TestHelpers\TestUtils.cs" />
     <Compile Include="Views.Tests\AddAttributeConstraintWindowTests.cs" />
     <Compile Include="Views.Tests\AddLabelWindowTests.cs" />
     <Compile Include="Views.Tests\AddSiblingOrderWindowTests.cs" />

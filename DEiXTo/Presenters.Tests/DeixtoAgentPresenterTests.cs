@@ -8,6 +8,7 @@ using System.Windows.Forms;
 using DEiXTo.Models;
 using System.Drawing;
 using mshtml;
+using DEiXTo.TestHelpers;
 
 namespace DEiXTo.Presenters.Tests
 {
@@ -58,7 +59,7 @@ namespace DEiXTo.Presenters.Tests
             nInfo.SourceIndex = 12;
             node.Tag = nInfo;
             var regexAdded = new RegexAdded(node);
-            var element = CreateHtmlElement();
+            var element = TestUtils.CreateHtmlElement();
             screen.Setup(s => s.GetElementFromNode(node)).Returns(element);
 
             // Act
@@ -664,7 +665,7 @@ namespace DEiXTo.Presenters.Tests
             // Arrange
             var node = new TreeNode("DIV");
             var domNode = new TreeNode("DIV");
-            var element = CreateHtmlElement();
+            var element = TestUtils.CreateHtmlElement();
             screen.Setup(s => s.GetElementFromNode(node)).Returns(element);
             screen.Setup(s => s.GetDomNode(node)).Returns(domNode);
 
@@ -682,7 +683,7 @@ namespace DEiXTo.Presenters.Tests
             // Arrange
             var node = new TreeNode("DIV");
             var domNode = new TreeNode("DIV");
-            var element = CreateHtmlElement();
+            var element = TestUtils.CreateHtmlElement();
             screen.Setup(s => s.GetElementFromNode(node)).Returns(element);
             screen.Setup(s => s.GetDomNode(node)).Returns(domNode);
             view.Setup(v => v.HighlightModeEnabled).Returns(true);
@@ -844,7 +845,7 @@ namespace DEiXTo.Presenters.Tests
         public void TestLevelUpWorkingPattern()
         {
             // Arrange
-            var element = CreateUlElement();
+            var element = TestUtils.CreateUlElement();
             var node = new TreeNode("LI");
             var dom = new TreeNode("UL");
             var d1 = new TreeNode("LI");
@@ -965,7 +966,7 @@ namespace DEiXTo.Presenters.Tests
             node.AddNode(n1);
             node.AddNode(n2);
             var domNodes = node.Nodes;
-            var linkElement = CreateLinkElement();
+            var linkElement = TestUtils.CreateLinkElement();
             view.Setup(v => v.GetWorkingPattern()).Returns(node);
             view.Setup(v => v.CrawlingEnabled).Returns(true);
             view.Setup(v => v.HtmlLink()).Returns("Next");
@@ -995,7 +996,7 @@ namespace DEiXTo.Presenters.Tests
             // Arrange
             var url = "http://www.google.gr";
             var node = new TreeNode("HTML");
-            var document = CreateHtmlDocument();
+            var document = TestUtils.CreateHtmlDocument();
             view.Setup(v => v.CrawlingEnabled).Returns(false);
             view.Setup(v => v.GetHtmlDocument()).Returns(document);
             view.Setup(v => v.GetDocumentUrl()).Returns(url);
@@ -1106,7 +1107,7 @@ namespace DEiXTo.Presenters.Tests
         {
             // Arrange
             var url = "htt://www.google.gr";
-            var document = CreateHtmlDocument();
+            var document = TestUtils.CreateHtmlDocument();
             var node = new TreeNode("HTML");
             var tags = new string[] { "em" };
             view.Setup(v => v.IgnoredTags).Returns(tags);
@@ -1145,7 +1146,7 @@ namespace DEiXTo.Presenters.Tests
         public void TestAuxiliaryPatternNodeClick()
         {
             // Arrange
-            var element = CreateHtmlElement();
+            var element = TestUtils.CreateHtmlElement();
             var node = new TreeNode("DIV");
             var domNode = new TreeNode("DIV");
             screen.Setup(s => s.GetElementFromNode(node)).Returns(element);
@@ -1180,7 +1181,7 @@ namespace DEiXTo.Presenters.Tests
         public void TestCreateAuxiliaryPatternFromDocument()
         {
             // Arrange
-            var element = CreateHtmlElement();
+            var element = TestUtils.CreateHtmlElement();
             var node = new TreeNode("DIV");
             screen.Setup(s => s.GetNodeFromElement(element)).Returns(node);
 
@@ -1198,7 +1199,7 @@ namespace DEiXTo.Presenters.Tests
         public void TestCreateWorkingPatternFromDocument()
         {
             // Arrange
-            var element = CreateHtmlElement();
+            var element = TestUtils.CreateHtmlElement();
             var node = new TreeNode("DIV");
             var nInfo = new NodeInfo();
             node.Tag = nInfo;
@@ -1226,7 +1227,7 @@ namespace DEiXTo.Presenters.Tests
             nInfo.Attributes = attributes;
             node.Tag = nInfo;
             var domNode = new TreeNode("DIV");
-            var element = CreateHtmlElement();
+            var element = TestUtils.CreateHtmlElement();
             screen.Setup(s => s.GetElementFromNode(node)).Returns(element);
             view.Setup(v => v.HighlightModeEnabled).Returns(true);
             screen.Setup(s => s.GetNodeFromElement(element)).Returns(domNode);
@@ -1254,7 +1255,7 @@ namespace DEiXTo.Presenters.Tests
             nInfo.Attributes = attributes;
             node.Tag = nInfo;
             var domNode = new TreeNode("DIV");
-            var element = CreateHtmlElement();
+            var element = TestUtils.CreateHtmlElement();
             screen.Setup(s => s.GetElementFromNode(node)).Returns(element);
             view.Setup(v => v.HighlightModeEnabled).Returns(true);
             screen.Setup(s => s.GetNodeFromElement(element)).Returns(domNode);
@@ -1324,7 +1325,7 @@ namespace DEiXTo.Presenters.Tests
         public void TestDOMNodeClick()
         {
             // Arrange
-            var element = CreateHtmlElement();
+            var element = TestUtils.CreateHtmlElement();
             var node = new TreeNode("DIV");
             screen.Setup(s => s.GetElementFromNode(node)).Returns(element);
             view.Setup(v => v.CanAutoScroll).Returns(true);
@@ -1341,7 +1342,7 @@ namespace DEiXTo.Presenters.Tests
         public void TestDOMNodeRightClick()
         {
             // Arrange
-            var element = CreateHtmlElement();
+            var element = TestUtils.CreateHtmlElement();
             var node = new TreeNode("DIV");
             screen.Setup(s => s.GetElementFromNode(node)).Returns(element);
             view.Setup(v => v.CanAutoScroll).Returns(true);
@@ -1359,7 +1360,7 @@ namespace DEiXTo.Presenters.Tests
         public void TestDOMTextNodeClick()
         {
             // Arrange
-            var element = CreateHtmlElement();
+            var element = TestUtils.CreateHtmlElement();
             var node = new TreeNode("TEXT");
             var nInfo = new NodeInfo();
             nInfo.IsTextNode = true;
@@ -1378,7 +1379,7 @@ namespace DEiXTo.Presenters.Tests
         public void TestDocumentMouseLeave()
         {
             // Arrange
-            var element = CreateHtmlElement();
+            var element = TestUtils.CreateHtmlElement();
             view.Setup(v => v.HighlightModeEnabled).Returns(true);
 
             // Act
@@ -1393,7 +1394,7 @@ namespace DEiXTo.Presenters.Tests
         public void TestDocumentMouseOver()
         {
             // Arrange
-            var element = CreateHtmlElement();
+            var element = TestUtils.CreateHtmlElement();
             var node = new TreeNode("DIV");
             view.Setup(v => v.HighlightModeEnabled).Returns(true);
             screen.Setup(s => s.GetNodeFromElement(element)).Returns(node);
@@ -1411,7 +1412,7 @@ namespace DEiXTo.Presenters.Tests
         public void TestDoesNotHighlightOnMouseOverIfHighlightIsDisabled()
         {
             // Arrange
-            var element = CreateHtmlElement();
+            var element = TestUtils.CreateHtmlElement();
             var node = new TreeNode("DIV");
             view.Setup(v => v.HighlightModeEnabled).Returns(false);
             screen.Setup(s => s.GetNodeFromElement(element)).Returns(node);
@@ -1551,7 +1552,7 @@ namespace DEiXTo.Presenters.Tests
             // Arrange
             string url = "http://www.google.gr";
             var node = new TreeNode("HTML");
-            var document = CreateHtmlDocument();
+            var document = TestUtils.CreateHtmlDocument();
             view.Setup(v => v.CrawlingEnabled).Returns(false);
             view.Setup(v => v.GetHtmlDocument()).Returns(document);
             view.Setup(v => v.GetDocumentUrl()).Returns(url);
@@ -1780,74 +1781,6 @@ namespace DEiXTo.Presenters.Tests
             wrapper.TargetUrls = new string[] { "url1", "url2" };
 
             return wrapper;
-        }
-
-        private HtmlElement CreateUlElement()
-        {
-            WebBrowser browser = new WebBrowser();
-            browser.DocumentText = "some text";
-            browser.Show();
-            var doc = browser.Document;
-            doc.Write("<ul><li>hey</li></ul>");
-            var elements = doc.GetElementsByTagName("ul");
-            var elem = elements[0];
-
-            return elem;
-        }
-
-        private HtmlElement CreateHtmlElement()
-        {
-            WebBrowser browser = new WebBrowser();
-            browser.DocumentText = "some text";
-            browser.Show();
-            var doc = browser.Document;
-            doc.Write("<li></li>");
-            var element = doc.GetElementsByTagName("li");
-            var elem = element[0];
-
-            return elem;
-        }
-
-        private HtmlElement CreateHtmlElementWithAttribute()
-        {
-            WebBrowser browser = new WebBrowser();
-            browser.DocumentText = "<a href='projects' id='projects_link'>Projects</a>";
-            browser.Show();
-            var doc = browser.Document;
-            doc.Write("<a href='projects' id='projects_link'>Projects</a>");
-            var element = doc.GetElementsByTagName("a");
-            var elem = element[0];
-
-            return elem;
-        }
-
-        private HtmlDocument CreateHtmlDocument()
-        {
-            WebBrowser browser = new WebBrowser();
-            browser.DocumentText = "<html></html>";
-            browser.Show();
-            var doc = browser.Document;
-            doc.Write("<html></html>");
-
-            return browser.Document;
-        }
-
-        private HtmlElement CreateLinkElement()
-        {
-            var doc = CreateDocument();
-            doc.Write("<a href='http://www.google.gr/?page=1'>Google</a>");
-            var element = doc.GetElementsByTagName("a")[0];
-
-            return element;
-        }
-
-        private HtmlDocument CreateDocument()
-        {
-            WebBrowser browser = new WebBrowser();
-            browser.DocumentText = "some text";
-            browser.Show();
-
-            return browser.Document;
         }
     }
 }
