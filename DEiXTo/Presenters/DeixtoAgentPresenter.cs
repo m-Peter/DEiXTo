@@ -384,10 +384,6 @@ namespace DEiXTo.Presenters
             View.ExpandPatternTree();
         }
 
-        /// <summary>
-        /// NOT DONE
-        /// </summary>
-        
         public void ExecuteRule()
         {
             var pattern = View.GetWorkingPattern();
@@ -452,7 +448,7 @@ namespace DEiXTo.Presenters
                 return;
             }
 
-            bool confirm = View.AskUserToClearTreeViews();
+            var confirm = View.AskUserToClearTreeViews();
 
             if (confirm)
             {
@@ -476,7 +472,7 @@ namespace DEiXTo.Presenters
 
         public void CreateSnapshot(TreeNode node)
         {
-            TreeNode root = new TreeNode("SNAP " + string.Format("{0:hh:mm:ss tt}", DateTime.Now));
+            var root = new TreeNode("SNAP " + string.Format("{0:hh:mm:ss tt}", DateTime.Now));
             root.AddNode(node.GetClone());
             View.FillSnapshotTree(root);
         }
@@ -536,27 +532,6 @@ namespace DEiXTo.Presenters
 
             View.FillAuxiliaryTree(domNode.GetClone());
             View.ExpandAuxiliaryTree();
-        }
-
-        public void ShowBrowserContextMenu(object sender, HtmlElementEventArgs e)
-        {
-            // TODO REMOVE DEPENDENCIES
-            // specify that the event was handled
-            e.ReturnValue = e.CtrlKeyPressed;
-
-            if (CustomMenuCanBeShown(e))
-            {
-                return;
-            }
-
-            if (!View.BrowserContextMenuEnabled)
-            {
-                View.ShowHighlightContextMenu();
-                return;
-            }
-
-            View.CurrentElement = _screen.GetElementFromPosition(e.ClientMousePosition);
-            View.ShowBrowserMenu();
         }
 
         public void CreateWorkingPatternFromDocument(HtmlElement element)
@@ -715,27 +690,6 @@ namespace DEiXTo.Presenters
             }
         }
 
-        public void NavigationFailed(object StatusCode)
-        {
-            string status = StatusCode.ToString();
-            string message = string.Empty;
-
-            if (status == "404")
-            {
-                message = "Object not found.";
-            }
-            else if (status == "-2146697211")
-            {
-                message = "Requested resource not found.";
-            }
-            else
-            {
-                message = status;
-            }
-
-            View.ShowNavigationErrorMessage(message);
-        }
-
         public void BrowseToUrl()
         {
             var url = View.Url;
@@ -844,9 +798,8 @@ namespace DEiXTo.Presenters
             wrapper.OutputFileFormat = View.OutputFormat;
             wrapper.OutputFileMode = View.OutputMode;
 
-
-            string filter = "Wrapper Project Files (*.wpf)|";
-            string extension = "wpf";
+            var filter = "Wrapper Project Files (*.wpf)|";
+            var extension = "wpf";
             var dialog = _screen.GetSaveFileDialog(filter, extension);
 
             var answer = dialog.ShowDialog();
@@ -856,14 +809,14 @@ namespace DEiXTo.Presenters
                 return;
             }
 
-            string filename = dialog.Filename;
+            var filename = dialog.Filename;
 
             _screen.SaveWrapper(wrapper, pattern, filename);
         }
 
         public void LoadWrapper()
         {
-            string filter = "Wrapper Project Files (*.wpf)|";
+            var filter = "Wrapper Project Files (*.wpf)|";
             var dialog = _screen.GetOpenFileDialog(filter);
 
             var answer = dialog.ShowDialog();
@@ -873,7 +826,7 @@ namespace DEiXTo.Presenters
                 return;
             }
 
-            string filename = dialog.Filename;
+            var filename = dialog.Filename;
 
             var wrapper = _screen.LoadWrapper(filename);
             View.AutoFill = wrapper.AutoSubmitForm;
@@ -915,6 +868,52 @@ namespace DEiXTo.Presenters
             }
 
             ExecutePattern();
+        }
+
+        /// <summary>
+        /// NOT DONE
+        /// </summary>
+        
+        public void ShowBrowserContextMenu(object sender, HtmlElementEventArgs e)
+        {
+            // TODO REMOVE DEPENDENCIES
+            // specify that the event was handled
+            e.ReturnValue = e.CtrlKeyPressed;
+
+            if (CustomMenuCanBeShown(e))
+            {
+                return;
+            }
+
+            if (!View.BrowserContextMenuEnabled)
+            {
+                View.ShowHighlightContextMenu();
+                return;
+            }
+
+            View.CurrentElement = _screen.GetElementFromPosition(e.ClientMousePosition);
+            View.ShowBrowserMenu();
+        }
+
+        public void NavigationFailed(object StatusCode)
+        {
+            string status = StatusCode.ToString();
+            string message = string.Empty;
+
+            if (status == "404")
+            {
+                message = "Object not found.";
+            }
+            else if (status == "-2146697211")
+            {
+                message = "Requested resource not found.";
+            }
+            else
+            {
+                message = status;
+            }
+
+            View.ShowNavigationErrorMessage(message);
         }
 
         void DeixtoAgentPresenter_FormSubmitted()

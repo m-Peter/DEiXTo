@@ -7,6 +7,7 @@ using DEiXTo.Services;
 using System.Windows.Forms;
 using DEiXTo.Models;
 using System.Drawing;
+using mshtml;
 
 namespace DEiXTo.Presenters.Tests
 {
@@ -860,10 +861,163 @@ namespace DEiXTo.Presenters.Tests
             view.Verify(v => v.ExpandPatternTree());
         }
 
-        /// <summary>
-        /// NOT DONE
-        /// </summary>
-        
+        [TestMethod]
+        public void TestExecuteRuleRequiresWorkingPattern()
+        {
+            // Arrange
+            TreeNode node = null;
+            view.Setup(v => v.GetWorkingPattern()).Returns(node);
+
+            // Act
+            presenter.ExecuteRule();
+
+            // Assert
+            view.Verify(v => v.ShowSpecifyPatternMessage());
+        }
+
+        [TestMethod]
+        public void TestExecuteRuleSingePage()
+        {
+            // Arrange
+            IList<Result> results = new List<Result>();
+            var extraction = new Mock<IExtraction>();
+            var node = new TreeNode("DIV");
+            var n1 = new TreeNode("H1");
+            var n2 = new TreeNode("P");
+            node.AddNode(n1);
+            node.AddNode(n2);
+            var domNodes = node.Nodes;
+            view.Setup(v => v.GetWorkingPattern()).Returns(node);
+            view.Setup(v => v.GetBodyTreeNodes()).Returns(domNodes);
+            screen.Setup(s => s.Execute(node, domNodes)).Returns(extraction.Object);
+            extraction.Setup(e => e.RecordsCount).Returns(4);
+            extraction.Setup(e => e.VariablesCount).Returns(3);
+            extraction.Setup(e => e.OutputVariableLabels).Returns(new List<string>());
+            extraction.Setup(e => e.ExtractedRecords).Returns(results);
+
+            // Act
+            presenter.ExecuteRule();
+
+            // Assert
+            var message = "Extraction Completed: 4 results!";
+            view.Verify(v => v.ClearExtractionPattern());
+            view.Verify(v => v.FocusOutputTabPage());
+            view.Verify(v => v.WritePageResults(message));
+            view.Verify(v => v.FillExtractionPattern(It.Is<TreeNode>(n => n.Text == "DIV")));
+            view.Verify(v => v.ExpandExtractionTree());
+        }
+
+        [TestMethod]
+        public void TestExecuteRuleMultiPageRequiresHtmlLink()
+        {
+            // Arrange
+            var node = new TreeNode("DIV");
+            var n1 = new TreeNode("H1");
+            var n2 = new TreeNode("P");
+            node.AddNode(n1);
+            node.AddNode(n2);
+            view.Setup(v => v.GetWorkingPattern()).Returns(node);
+            view.Setup(v => v.CrawlingEnabled).Returns(true);
+            view.Setup(v => v.HtmlLink()).Returns("");
+            view.Setup(v => v.CrawlingDepth()).Returns(2);
+
+            // Act
+            presenter.ExecuteRule();
+
+            // Assert
+            view.Verify(v => v.ClearExtractionPattern());
+            view.Verify(v => v.FocusOutputTabPage());
+            view.Verify(v => v.ShowEmptyLinkMessage());
+        }
+
+        [TestMethod]
+        public void TestExecuteRuleMultiPageRequiresPositiveDepth()
+        {
+            // Arrange
+            var node = new TreeNode("DIV");
+            var n1 = new TreeNode("H1");
+            var n2 = new TreeNode("P");
+            node.AddNode(n1);
+            node.AddNode(n2);
+            view.Setup(v => v.GetWorkingPattern()).Returns(node);
+            view.Setup(v => v.CrawlingEnabled).Returns(true);
+            view.Setup(v => v.HtmlLink()).Returns("Next");
+            view.Setup(v => v.CrawlingDepth()).Returns(-2);
+
+            // Act
+            presenter.ExecuteRule();
+
+            // Assert
+            view.Verify(v => v.ClearExtractionPattern());
+            view.Verify(v => v.FocusOutputTabPage());
+            view.Verify(v => v.ShowInvalidDepthMessage());
+        }
+
+        [TestMethod]
+        public void TestExecuteRuleMultiPage()
+        {
+            // Arrange
+            IList<Result> results = new List<Result>();
+            var extraction = new Mock<IExtraction>();
+            var node = new TreeNode("DIV");
+            var n1 = new TreeNode("H1");
+            var n2 = new TreeNode("P");
+            node.AddNode(n1);
+            node.AddNode(n2);
+            var domNodes = node.Nodes;
+            var linkElement = CreateLinkElement();
+            view.Setup(v => v.GetWorkingPattern()).Returns(node);
+            view.Setup(v => v.CrawlingEnabled).Returns(true);
+            view.Setup(v => v.HtmlLink()).Returns("Next");
+            view.Setup(v => v.CrawlingDepth()).Returns(1);
+            view.Setup(v => v.GetBodyTreeNodes()).Returns(domNodes);
+            screen.Setup(s => s.Execute(node, domNodes)).Returns(extraction.Object);
+            screen.Setup(s => s.GetLinkToFollow("Next")).Returns(linkElement);
+            extraction.Setup(e => e.RecordsCount).Returns(4);
+            extraction.Setup(e => e.VariablesCount).Returns(3);
+            extraction.Setup(e => e.OutputVariableLabels).Returns(new List<string>());
+            extraction.Setup(e => e.ExtractedRecords).Returns(results);
+
+            // Act
+            presenter.ExecuteRule();
+
+            // Assert
+            view.Verify(v => v.WritePageResults("Extraction Completed: 4 results!"));
+            view.Verify(v => v.GetBodyTreeNodes());
+            screen.Verify(s => s.Execute(node, domNodes));
+            extraction.Verify(e => e.RecordsCount);
+            view.Verify(v => v.WritePageResults("4 results!"));
+        }
+
+        [TestMethod]
+        public void TestRebuildDOM()
+        {
+            // Arrange
+            var url = "http://www.google.gr";
+            var node = new TreeNode("HTML");
+            var document = CreateHtmlDocument();
+            view.Setup(v => v.CrawlingEnabled).Returns(false);
+            view.Setup(v => v.GetHtmlDocument()).Returns(document);
+            view.Setup(v => v.GetDocumentUrl()).Returns(url);
+            screen.Setup(s => s.BuildDom()).Returns(node);
+
+            // Act
+            presenter.BrowserCompleted();
+
+            // Assert
+            screen.Verify(s => s.ClearStyling());
+            view.Verify(v => v.ClearSnapshotTree());
+            view.Verify(v => v.ClearPatternTree());
+            view.Verify(v => v.ClearAuxiliaryTree());
+            view.Verify(v => v.ClearDOMTree());
+            screen.Verify(s => s.CreateDocument(document));
+            view.Verify(v => v.ClearTargetURLs());
+            view.Verify(v => v.AppendTargetUrl(url));
+            view.Verify(v => v.UpdateDocumentUrl());
+            view.Verify(v => v.FillDomTree(node));
+            view.Verify(v => v.AttachDocumentEvents());
+        }
+
         [TestMethod]
         public void TestClearTreeViews()
         {
@@ -910,7 +1064,7 @@ namespace DEiXTo.Presenters.Tests
         public void TestMakeWorkingPatternFromSnapshot()
         {
             // Arrange
-            TreeNode node = new TreeNode("DIV");
+            var node = new TreeNode("DIV");
 
             // Act
             presenter.MakeWorkingPatternFromSnapshot(node);
@@ -925,7 +1079,7 @@ namespace DEiXTo.Presenters.Tests
         public void TestDeleteNodeFromSnapshots()
         {
             // Arrange
-            TreeNode node = new TreeNode("DIV");
+            var node = new TreeNode("DIV");
 
             // Act
             presenter.DeleteSnapshot(node);
@@ -938,7 +1092,7 @@ namespace DEiXTo.Presenters.Tests
         public void TestCreateSnapshots()
         {
             // Arrange
-            TreeNode node = new TreeNode("DIV");
+            var node = new TreeNode("DIV");
 
             // Act
             presenter.CreateSnapshot(node);
@@ -948,86 +1102,13 @@ namespace DEiXTo.Presenters.Tests
         }
 
         [TestMethod]
-        public void TestCrawlingChanged()
-        {
-            // Act
-            presenter.CrawlingChanged(true);
-
-            // Assert
-            view.Verify(v => v.ApplyVisibilityStateInCrawling(true));
-
-            // Act
-            presenter.CrawlingChanged(false);
-
-            // Assert
-            view.Verify(v => v.ApplyVisibilityStateInCrawling(false));
-        }
-
-        [TestMethod]
-        public void TestAutoFillChanged()
-        {
-            // Act
-            presenter.AutoFillChanged(true);
-
-            // Assert
-            view.Verify(v => v.ApplyVisibilityStateInAutoFill(true));
-
-            // Act
-            presenter.AutoFillChanged(false);
-
-            // Assert
-            view.Verify(v => v.ApplyVisibilityStateInAutoFill(false));
-        }
-
-        [TestMethod]
-        public void TestBrowsesToUrlWhenEnterPressed()
-        {
-            // Arrange
-            var args = new KeyEventArgs(Keys.Enter);
-            var url = "http://www.google.gr/";
-            view.Setup(v => v.Url).Returns(url);
-
-            // Act
-            presenter.KeyDownPress(args);
-
-            // Assert
-            view.Verify(v => v.NavigateTo("http://www.google.gr/"));
-        }
-
-        [TestMethod]
-        public void TestNavigatesBackWhenAltAndLeftArePressed()
-        {
-            // Arrange
-            var args = new KeyEventArgs(Keys.Alt | Keys.Left);
-
-            // Act
-            presenter.KeyDownPress(args);
-
-            // Assert
-            view.Verify(v => v.NavigateBack());
-        }
-
-        [TestMethod]
-        public void TestNavigatesForwardWhenAltAndRightArePressed()
-        {
-            // Arrange
-            var args = new KeyEventArgs(Keys.Alt | Keys.Right);
-
-            // Act
-            presenter.KeyDownPress(args);
-
-            // Assert
-            view.Verify(v => v.NavigateForward());
-        }
-
-        [TestMethod]
         public void TestSimplifyDomTree()
         {
             // Arrange
-            string url = "htt://www.google.gr";
+            var url = "htt://www.google.gr";
             var document = CreateHtmlDocument();
             var node = new TreeNode("HTML");
-            string[] tags = new string[] { "em" };
+            var tags = new string[] { "em" };
             view.Setup(v => v.IgnoredTags).Returns(tags);
             view.Setup(v => v.GetHtmlDocument()).Returns(document);
             screen.Setup(s => s.BuildSimplifiedDOM(tags)).Returns(node);
@@ -1061,22 +1142,6 @@ namespace DEiXTo.Presenters.Tests
         }
 
         [TestMethod]
-        public void TestAuxiliaryPatternTextNodeClick()
-        {
-            // Arrange
-            var node = new TreeNode("TEXT");
-            NodeInfo nInfo = new NodeInfo();
-            nInfo.IsTextNode = true;
-            node.Tag = nInfo;
-
-            // Act
-            presenter.AuxiliaryPatternNodeClick(node);
-
-            // Assert
-            view.Verify(v => v.FillTextNodeElementInfo(node));
-        }
-
-        [TestMethod]
         public void TestAuxiliaryPatternNodeClick()
         {
             // Arrange
@@ -1093,6 +1158,22 @@ namespace DEiXTo.Presenters.Tests
             screen.Verify(s => s.HighlightElement(element));
             view.Verify(v => v.FillElementInfo(node, element.OuterHtml));
             view.Verify(v => v.SelectDOMNode(domNode));
+        }
+
+        [TestMethod]
+        public void TestAuxiliaryPatternTextNodeClick()
+        {
+            // Arrange
+            var node = new TreeNode("TEXT");
+            var nInfo = new NodeInfo();
+            nInfo.IsTextNode = true;
+            node.Tag = nInfo;
+
+            // Act
+            presenter.AuxiliaryPatternNodeClick(node);
+
+            // Assert
+            view.Verify(v => v.FillTextNodeElementInfo(node));
         }
 
         [TestMethod]
@@ -1119,17 +1200,16 @@ namespace DEiXTo.Presenters.Tests
             // Arrange
             var element = CreateHtmlElement();
             var node = new TreeNode("DIV");
-            var domNode = new TreeNode("DIV");
-            NodeInfo nInfo = new NodeInfo();
-            domNode.Tag = nInfo;
-            screen.Setup(s => s.GetNodeFromElement(element)).Returns(domNode);
+            var nInfo = new NodeInfo();
+            node.Tag = nInfo;
+            screen.Setup(s => s.GetNodeFromElement(element)).Returns(node);
 
             // Act
             presenter.CreateWorkingPatternFromDocument(element);
 
             // Assert
             view.Verify(v => v.ClearPatternTree());
-            Assert.IsTrue(domNode.IsRoot());
+            Assert.IsTrue(node.IsRoot());
             view.Verify(v => v.SetNodeFont(It.Is<TreeNode>(n => n.Text == "DIV")));
             view.Verify(v => v.FillPatternTree(It.Is<TreeNode>(n => n.Text == "DIV")));
             view.Verify(v => v.ExpandPatternTree());
@@ -1140,7 +1220,7 @@ namespace DEiXTo.Presenters.Tests
         {
             // Arrange
             var node = new TreeNode("DIV");
-            NodeInfo nInfo = new NodeInfo();
+            var nInfo = new NodeInfo();
             var attributes = new TagAttributeCollection();
             attributes.Add(new TagAttribute { Name = "id", Value = "main-wrapper" });
             nInfo.Attributes = attributes;
@@ -1155,6 +1235,8 @@ namespace DEiXTo.Presenters.Tests
             presenter.WorkingPatternNodeClick(node, MouseButtons.Right);
 
             // Assert
+            view.Verify(v => v.ClearAttributes());
+            view.Verify(v => v.LoadNodeAttributes(attributes.All));
             view.Verify(v => v.SetAdjustContextMenuFor(node));
             screen.Verify(s => s.HighlightElement(element));
             view.Verify(v => v.FillElementInfo(node, element.OuterHtml));
@@ -1166,7 +1248,7 @@ namespace DEiXTo.Presenters.Tests
         {
             // Arrange
             var node = new TreeNode("DIV");
-            NodeInfo nInfo = new NodeInfo();
+            var nInfo = new NodeInfo();
             var attributes = new TagAttributeCollection();
             attributes.Add(new TagAttribute { Name = "id", Value = "main-wrapper" });
             nInfo.Attributes = attributes;
@@ -1181,6 +1263,8 @@ namespace DEiXTo.Presenters.Tests
             presenter.WorkingPatternNodeClick(node, MouseButtons.Left);
 
             // Assert
+            view.Verify(v => v.ClearAttributes());
+            view.Verify(v => v.LoadNodeAttributes(attributes.All));
             screen.Verify(s => s.HighlightElement(element));
             view.Verify(v => v.FillElementInfo(node, element.OuterHtml));
             view.Verify(v => v.SelectDOMNode(domNode));
@@ -1191,7 +1275,7 @@ namespace DEiXTo.Presenters.Tests
         {
             // Arrange
             var node = new TreeNode("TEXT");
-            NodeInfo nInfo = new NodeInfo();
+            var nInfo = new NodeInfo();
             nInfo.IsTextNode = true;
             node.Tag = nInfo;
 
@@ -1277,7 +1361,7 @@ namespace DEiXTo.Presenters.Tests
             // Arrange
             var element = CreateHtmlElement();
             var node = new TreeNode("TEXT");
-            NodeInfo nInfo = new NodeInfo();
+            var nInfo = new NodeInfo();
             nInfo.IsTextNode = true;
             node.Tag = nInfo;
             screen.Setup(s => s.GetElementFromNode(node)).Returns(element);
@@ -1324,6 +1408,144 @@ namespace DEiXTo.Presenters.Tests
         }
 
         [TestMethod]
+        public void TestDoesNotHighlightOnMouseOverIfHighlightIsDisabled()
+        {
+            // Arrange
+            var element = CreateHtmlElement();
+            var node = new TreeNode("DIV");
+            view.Setup(v => v.HighlightModeEnabled).Returns(false);
+            screen.Setup(s => s.GetNodeFromElement(element)).Returns(node);
+
+            // Act
+            presenter.DocumentMouseOver(element);
+
+            // Assert
+            screen.Verify(s => s.HighlightElement(element), Times.Never);
+            view.Verify(v => v.SelectDOMNode(node), Times.Never);
+            view.Verify(v => v.FillElementInfo(node, element.OuterHtml), Times.Never);
+        }
+
+        [TestMethod]
+        public void TestCrawlingChanged()
+        {
+            // Act
+            presenter.CrawlingChanged(true);
+
+            // Assert
+            view.Verify(v => v.ApplyVisibilityStateInCrawling(true));
+
+            // Act
+            presenter.CrawlingChanged(false);
+
+            // Assert
+            view.Verify(v => v.ApplyVisibilityStateInCrawling(false));
+        }
+
+        [TestMethod]
+        public void TestAutoFillChanged()
+        {
+            // Act
+            presenter.AutoFillChanged(true);
+
+            // Assert
+            view.Verify(v => v.ApplyVisibilityStateInAutoFill(true));
+
+            // Act
+            presenter.AutoFillChanged(false);
+
+            // Assert
+            view.Verify(v => v.ApplyVisibilityStateInAutoFill(false));
+        }
+
+        [TestMethod]
+        public void TestBrowsesToUrlWhenEnterPressed()
+        {
+            // Arrange
+            var args = new KeyEventArgs(Keys.Enter);
+            var url = "http://www.google.gr/";
+            view.Setup(v => v.Url).Returns(url);
+
+            // Act
+            presenter.KeyDownPress(args);
+
+            // Assert
+            view.Verify(v => v.NavigateTo("http://www.google.gr/"));
+        }
+
+        [TestMethod]
+        public void TestNavigatesBackWhenAltAndLeftArePressed()
+        {
+            // Arrange
+            var args = new KeyEventArgs(Keys.Alt | Keys.Left);
+
+            // Act
+            presenter.KeyDownPress(args);
+
+            // Assert
+            view.Verify(v => v.NavigateBack());
+        }
+
+        [TestMethod]
+        public void TestNavigatesForwardWhenAltAndRightArePressed()
+        {
+            // Arrange
+            var args = new KeyEventArgs(Keys.Alt | Keys.Right);
+
+            // Act
+            presenter.KeyDownPress(args);
+
+            // Assert
+            view.Verify(v => v.NavigateForward());
+        }
+
+        [TestMethod]
+        public void TestBrowseToUrl()
+        {
+            // Arrange
+            view.Setup(v => v.Url).Returns("http://www.google.gr/");
+            view.Setup(v => v.CrawlingEnabled).Returns(false);
+
+            // Act
+            presenter.BrowseToUrl();
+
+            // Assert
+            view.Verify(v => v.ClearAuxiliaryTree());
+            view.Verify(v => v.ClearSnapshotTree());
+            view.Verify(v => v.ClearPatternTree());
+            view.Verify(v => v.NavigateTo("http://www.google.gr/"));
+        }
+
+        [TestMethod]
+        public void TestBrowseToUrlRequiresNonEmptyUrl()
+        {
+            // Arrange
+            view.Setup(v => v.Url).Returns(string.Empty);
+
+            // Act
+            presenter.BrowseToUrl();
+
+            // Assert
+            view.Verify(v => v.ShowSpecifyURLMessage());
+        }
+
+        [TestMethod]
+        public void TestBrowseToUrlPreservesPatternWhenMultiPageCrawlingIsEnabled()
+        {
+            // Arrange
+            view.Setup(v => v.Url).Returns("http://www.google.gr/");
+            view.Setup(v => v.CrawlingEnabled).Returns(true);
+
+            // Act
+            presenter.BrowseToUrl();
+
+            // Assert
+            view.Verify(v => v.ClearAuxiliaryTree());
+            view.Verify(v => v.ClearSnapshotTree());
+            view.Verify(v => v.ClearPatternTree(), Times.Never);
+            view.Verify(v => v.NavigateTo("http://www.google.gr/"));
+        }
+
+        [TestMethod]
         public void TestBrowserCompleted()
         {
             // Arrange
@@ -1350,50 +1572,6 @@ namespace DEiXTo.Presenters.Tests
             view.Verify(v => v.UpdateDocumentUrl());
             view.Verify(v => v.FillDomTree(node));
             view.Verify(v => v.AttachDocumentEvents());
-        }
-
-        [TestMethod]
-        public void TestExecuteRuleWithNoWorkingPattern()
-        {
-            // Arrange
-            TreeNode node = null;
-            view.Setup(v => v.GetWorkingPattern()).Returns(node);
-
-            // Act
-            presenter.ExecuteRule();
-
-            // Assert
-            view.Verify(v => v.ShowSpecifyPatternMessage());
-        }
-
-        [TestMethod]
-        public void TestExecuteRuleSingePage()
-        {
-            // Arrange
-            IList<Result> results = new List<Result>();
-            var extraction = new Mock<IExtraction>();
-            var node = new TreeNode("DIV");
-            var n1 = new TreeNode("H1");
-            var n2 = new TreeNode("P");
-            node.AddNode(n1);
-            node.AddNode(n2);
-            var domNodes = node.Nodes;
-            view.Setup(v => v.GetWorkingPattern()).Returns(node);
-            view.Setup(v => v.GetBodyTreeNodes()).Returns(domNodes);
-            screen.Setup(s => s.Execute(node, domNodes)).Returns(extraction.Object);
-            extraction.Setup(e => e.RecordsCount).Returns(4);
-            extraction.Setup(e => e.VariablesCount).Returns(3);
-            extraction.Setup(e => e.OutputVariableLabels).Returns(new List<string>());
-            extraction.Setup(e => e.ExtractedRecords).Returns(results);
-
-            // Act
-            presenter.ExecuteRule();
-
-            // Assert
-            string message = "Extraction Completed: 4 results!";
-            view.Verify(v => v.WritePageResults(message));
-            view.Verify(v => v.FillExtractionPattern(It.Is<TreeNode>(n => n.Text == "DIV")));
-            view.Verify(v => v.ExpandExtractionTree());
         }
 
         [TestMethod]
@@ -1504,6 +1682,80 @@ namespace DEiXTo.Presenters.Tests
             view.Verify(v => v.ExpandExtractionTree());
         }
 
+        [TestMethod]
+        public void TestRunInAutoMode()
+        {
+            // Arrange
+            IList<Result> results = new List<Result>();
+            var extraction = new Mock<IExtraction>();
+            var node = new TreeNode("DIV");
+            var n1 = new TreeNode("H1");
+            var n2 = new TreeNode("P");
+            node.AddNode(n1);
+            node.AddNode(n2);
+            var domNodes = node.Nodes;
+            var url = "http://www.google.gr/";
+            view.Setup(v => v.FirstTargetURL).Returns(url);
+            view.Setup(v => v.ExtractionPattern).Returns(node);
+            view.Setup(v => v.GetBodyTreeNodes()).Returns(domNodes);
+            screen.Setup(s => s.Execute(node, domNodes)).Returns(extraction.Object);
+            extraction.Setup(e => e.RecordsCount).Returns(4);
+            extraction.Setup(e => e.VariablesCount).Returns(3);
+            extraction.Setup(e => e.OutputVariableLabels).Returns(new List<string>());
+            extraction.Setup(e => e.ExtractedRecords).Returns(results);
+
+            // Act
+            presenter.RunInAutoMode();
+
+            // Assert
+            view.Verify(v => v.NavigateTo(url));
+            view.Verify(v => v.FocusOutputTabPage());
+            var message = "Extraction Completed: 4 results!";
+            view.Verify(v => v.WritePageResults(message));
+        }
+
+        [TestMethod]
+        public void TestRunInAutoModeWithSubmitForm()
+        {
+            // Arrange
+            IList<Result> results = new List<Result>();
+            var extraction = new Mock<IExtraction>();
+            var node = new TreeNode("DIV");
+            var n1 = new TreeNode("H1");
+            var n2 = new TreeNode("P");
+            node.AddNode(n1);
+            node.AddNode(n2);
+            var domNodes = node.Nodes;
+            var url = "http://www.google.gr/";
+            view.Setup(v => v.FirstTargetURL).Returns(url);
+            view.Setup(v => v.ExtractionPattern).Returns(node);
+            view.Setup(v => v.GetBodyTreeNodes()).Returns(domNodes);
+            view.Setup(v => v.AutoFill).Returns(true);
+            view.Setup(v => v.FormName).Returns("search-form");
+            view.Setup(v => v.FormInputName).Returns("query");
+            view.Setup(v => v.FormTerm).Returns("JS");
+            screen.Setup(s => s.Execute(node, domNodes)).Returns(extraction.Object);
+            extraction.Setup(e => e.RecordsCount).Returns(4);
+            extraction.Setup(e => e.VariablesCount).Returns(3);
+            extraction.Setup(e => e.OutputVariableLabels).Returns(new List<string>());
+            extraction.Setup(e => e.ExtractedRecords).Returns(results);
+
+            // Act
+            presenter.RunInAutoMode();
+            presenter.BrowserCompleted();
+
+            // Assert
+            view.Verify(v => v.NavigateTo(url));
+            view.Verify(v => v.FocusOutputTabPage());
+            screen.Verify(s => s.SubmitForm("search-form", "query", "JS"));
+            var message = "Extraction Completed: 4 results!";
+            view.Verify(v => v.WritePageResults(message));
+        }
+
+        /// <summary>
+        /// NOT DONE
+        /// </summary>
+
         // HELPER METHODS
         private DeixtoWrapper CreateWrapper()
         {
@@ -1576,6 +1828,24 @@ namespace DEiXTo.Presenters.Tests
             browser.Show();
             var doc = browser.Document;
             doc.Write("<html></html>");
+
+            return browser.Document;
+        }
+
+        private HtmlElement CreateLinkElement()
+        {
+            var doc = CreateDocument();
+            doc.Write("<a href='http://www.google.gr/?page=1'>Google</a>");
+            var element = doc.GetElementsByTagName("a")[0];
+
+            return element;
+        }
+
+        private HtmlDocument CreateDocument()
+        {
+            WebBrowser browser = new WebBrowser();
+            browser.DocumentText = "some text";
+            browser.Show();
 
             return browser.Document;
         }
