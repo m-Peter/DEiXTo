@@ -92,6 +92,18 @@ namespace DEiXTo.TestHelpers
             return element;
         }
 
+        public static HtmlElement CreateParagraphElement()
+        {
+            browser = new WebBrowser();
+            browser.DocumentText = "some text";
+            browser.Show();
+            var doc = CreateHtmlDocument();
+            doc.Write("<p>Some text in here</p>");
+            var element = doc.GetElementsByTagName("p")[0];
+
+            return element;
+        }
+
         public static HtmlElement CreateHtmlLinkElement()
         {
             var doc = CreateHtmlDocument();

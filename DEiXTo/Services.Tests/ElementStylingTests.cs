@@ -1,4 +1,5 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using DEiXTo.TestHelpers;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Windows.Forms;
 
 namespace DEiXTo.Services.Tests
@@ -6,7 +7,6 @@ namespace DEiXTo.Services.Tests
     [TestClass]
     public class ElementStylingTests
     {
-        private WebBrowser browser = new WebBrowser();
         private static string STYLE = "BORDER-TOP: red 2px solid; BORDER-RIGHT: red 2px solid; BORDER-BOTTOM: red 2px solid; BORDER-LEFT: red 2px solid; BACKGROUND-COLOR: yellow";
 
         [TestMethod]
@@ -14,7 +14,7 @@ namespace DEiXTo.Services.Tests
         {
             // Arrange
             var styling = new ElementStyling();
-            var element = CreateParagraphElement();
+            var element = TestUtils.CreateParagraphElement();
 
             // Act
             styling.Style(element);
@@ -28,14 +28,14 @@ namespace DEiXTo.Services.Tests
         {
             // Arrange
             var styling = new ElementStyling();
-            var p = CreateLinkElement();
-            p.Style = "align: center";
+            var element = TestUtils.CreateHtmlLinkElement();
+            element.Style = "align: center";
 
             // Act
-            styling.Style(p);
+            styling.Style(element);
 
             // Assert
-            Assert.AreEqual(STYLE + "; align: center", p.Style);
+            Assert.AreEqual(STYLE + "; align: center", element.Style);
         }
 
         [TestMethod]
@@ -43,7 +43,7 @@ namespace DEiXTo.Services.Tests
         {
             // Arrange
             var styling = new ElementStyling();
-            var element = CreateParagraphElement();
+            var element = TestUtils.CreateParagraphElement();
             styling.Style(element);
 
             // Act
@@ -58,15 +58,15 @@ namespace DEiXTo.Services.Tests
         {
             // Arrange
             var styling = new ElementStyling();
-            var p = CreateLinkElement();
-            p.Style = "align: center";
-            styling.Style(p);
+            var element = TestUtils.CreateHtmlLinkElement();
+            element.Style = "align: center";
+            styling.Style(element);
 
             // Act
-            styling.Unstyle(p);
+            styling.Unstyle(element);
 
             // Assert
-            Assert.AreEqual("align: center", p.Style);
+            Assert.AreEqual("align: center", element.Style);
         }
 
         [TestMethod]
@@ -74,16 +74,16 @@ namespace DEiXTo.Services.Tests
         {
             // Arrange
             var styling = new ElementStyling();
-            var p = CreateParagraphElement();
-            var link = CreateLinkElement();
-            styling.Style(p);
+            var paragraph = TestUtils.CreateParagraphElement();
+            var link = TestUtils.CreateHtmlLinkElement();
+            styling.Style(paragraph);
             styling.Style(link);
 
             // Act
             styling.UnstyleElements();
 
             // Assert
-            Assert.AreEqual(null, p.Style);
+            Assert.AreEqual(null, paragraph.Style);
             Assert.AreEqual(null, link.Style);
         }
 
@@ -92,7 +92,7 @@ namespace DEiXTo.Services.Tests
         {
             // Arrange
             var styling = new ElementStyling();
-            var element = CreateParagraphElement();
+            var element = TestUtils.CreateParagraphElement();
             styling.Style(element);
 
             // Act
@@ -107,7 +107,7 @@ namespace DEiXTo.Services.Tests
         {
             // Arrange
             var styling = new ElementStyling();
-            var element = CreateParagraphElement();
+            var element = TestUtils.CreateParagraphElement();
 
             // Act
             styling.Style(element);
@@ -127,11 +127,11 @@ namespace DEiXTo.Services.Tests
         {
             // Arrange
             var styling = new ElementStyling();
-            var p = CreateParagraphElement();
-            var link = CreateLinkElement();
+            var paragraph = TestUtils.CreateParagraphElement();
+            var link = TestUtils.CreateHtmlLinkElement();
 
             // Act
-            styling.Style(p);
+            styling.Style(paragraph);
             styling.Style(link);
 
             // Assert
@@ -142,32 +142,6 @@ namespace DEiXTo.Services.Tests
 
             // Assert
             Assert.AreEqual(0, styling.Count());
-        }
-
-        private HtmlElement CreateParagraphElement()
-        {
-            var doc = CreateDocument();
-            doc.Write("<p>Some text in here</p>");
-            var element = doc.GetElementsByTagName("p")[0];
-
-            return element;
-        }
-
-        private HtmlElement CreateLinkElement()
-        {
-            var doc = CreateDocument();
-            doc.Write("<a href='http://www.google.gr/'>Google</a>");
-            var element = doc.GetElementsByTagName("a")[0];
-
-            return element;
-        }
-
-        private HtmlDocument CreateDocument()
-        {
-            browser.DocumentText = "some text";
-            browser.Show();
-
-            return browser.Document;
         }
     }
 }
