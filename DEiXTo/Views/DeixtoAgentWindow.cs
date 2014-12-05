@@ -317,7 +317,6 @@ namespace DEiXTo.Views
 
         public void ClearAttributes()
         {
-            //AttributesListView.Items.Clear();
             AttributesDataGridView.Rows.Clear();
         }
 
@@ -327,8 +326,7 @@ namespace DEiXTo.Views
 
             foreach (TagAttribute tag in attributes)
             {
-                //AttributesListView.Items.Add(new ListViewItem(new[] {tag.Name, tag.Value}));
-                AttributesDataGridView.Rows.Add(new object[] {tag.Name, tag.Value, false});
+                AttributesDataGridView.Rows.Add(new object[] {tag.Name, tag.Value, node.HasAttrConstraint()});
                 AttributesDataGridView.Rows[i].Tag = node;
                 i++;
             }
