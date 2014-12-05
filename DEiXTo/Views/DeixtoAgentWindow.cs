@@ -317,14 +317,16 @@ namespace DEiXTo.Views
 
         public void ClearAttributes()
         {
-            AttributesListView.Items.Clear();
+            //AttributesListView.Items.Clear();
+            AttributesDataGridView.Rows.Clear();
         }
 
         public void LoadNodeAttributes(List<TagAttribute> attributes)
         {
             foreach (TagAttribute tag in attributes)
             {
-                AttributesListView.Items.Add(new ListViewItem(new[] {tag.Name, tag.Value}));
+                //AttributesListView.Items.Add(new ListViewItem(new[] {tag.Name, tag.Value}));
+                AttributesDataGridView.Rows.Add(new object[] {tag.Name, tag.Value, false});
             }
         }
 
