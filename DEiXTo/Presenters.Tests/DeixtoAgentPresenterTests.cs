@@ -1237,7 +1237,7 @@ namespace DEiXTo.Presenters.Tests
 
             // Assert
             view.Verify(v => v.ClearAttributes());
-            view.Verify(v => v.LoadNodeAttributes(attributes.All));
+            view.Verify(v => v.LoadNodeAttributes(attributes.All, node));
             view.Verify(v => v.SetAdjustContextMenuFor(node));
             screen.Verify(s => s.HighlightElement(element));
             view.Verify(v => v.FillElementInfo(node, element.OuterHtml));
@@ -1265,7 +1265,7 @@ namespace DEiXTo.Presenters.Tests
 
             // Assert
             view.Verify(v => v.ClearAttributes());
-            view.Verify(v => v.LoadNodeAttributes(attributes.All));
+            view.Verify(v => v.LoadNodeAttributes(attributes.All, node));
             screen.Verify(s => s.HighlightElement(element));
             view.Verify(v => v.FillElementInfo(node, element.OuterHtml));
             view.Verify(v => v.SelectDOMNode(domNode));

@@ -13,7 +13,7 @@ namespace DEiXTo.Views
         void DisableHighlighting();
         void EnableHighlighting();
         void ClearAttributes();
-        void LoadNodeAttributes(List<TagAttribute> attributes);
+        void LoadNodeAttributes(List<TagAttribute> attributes, TreeNode node);
         string[] IgnoredTags { get; set; }
         string[] TargetUrls { get; set; }
         OutputMode OutputMode { get; set; }

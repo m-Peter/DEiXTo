@@ -555,7 +555,7 @@ namespace DEiXTo.Presenters
             {
                 View.ClearAttributes();
                 var attributes = node.GetAttributes().All;
-                View.LoadNodeAttributes(attributes);
+                View.LoadNodeAttributes(attributes, node);
             }
 
             if (RightButtonPressed(button))

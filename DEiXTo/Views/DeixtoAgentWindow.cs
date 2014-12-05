@@ -321,12 +321,16 @@ namespace DEiXTo.Views
             AttributesDataGridView.Rows.Clear();
         }
 
-        public void LoadNodeAttributes(List<TagAttribute> attributes)
+        public void LoadNodeAttributes(List<TagAttribute> attributes, TreeNode node)
         {
+            int i = 0;
+
             foreach (TagAttribute tag in attributes)
             {
                 //AttributesListView.Items.Add(new ListViewItem(new[] {tag.Name, tag.Value}));
                 AttributesDataGridView.Rows.Add(new object[] {tag.Name, tag.Value, false});
+                AttributesDataGridView.Rows[i].Tag = node;
+                i++;
             }
         }
 
@@ -1160,8 +1164,8 @@ namespace DEiXTo.Views
 
         private void AddAttributeConstraintMenuItem_Click(object sender, EventArgs e)
         {
-            var node = WorkingPatternTreeView.SelectedNode;
-            Presenter.AddAttributeConstraint(node);
+            //var node = WorkingPatternTreeView.SelectedNode;
+            //Presenter.AddAttributeConstraint(node);
         }
 
         private void DisableHighlightingMenuItem_Click(object sender, EventArgs e)
@@ -1176,8 +1180,12 @@ namespace DEiXTo.Views
 
         private void AttributesDataGridView_DoubleClick(object sender, EventArgs e)
         {
-            AddAttributeConstraintWindow window = new AddAttributeConstraintWindow();
-            window.ShowDialog();
+            var attr = AttributesDataGridView.SelectedRows[0];
+            var cells = attr.Cells;
+
+            var node = attr.Tag as TreeNode;
+            Presenter.AddAttributeConstraint(node);
+            cells[2].Value = 1;
         }
     }
 }
