@@ -43,7 +43,7 @@ namespace DEiXTo.Presenters.Tests
             presenter = new AddAttributeConstraintPresenter(view.Object, node);
 
             // Assert
-            view.Verify(v => v.LoadAttributes(It.Is<List<TagAttribute>>(attr => attrs.All == attr)));
+            view.Verify(v => v.LoadAttribute(It.IsAny<TagAttribute>()));
             Assert.AreEqual(2, node.GetAttributes().Count);
         }
 
@@ -90,8 +90,7 @@ namespace DEiXTo.Presenters.Tests
             presenter = new AddAttributeConstraintPresenter(view.Object, node);
 
             // Assert
-            view.Verify(v => v.LoadAttributes(It.Is<List<TagAttribute>>(attr => attrs.All == attr)));
-            view.Verify(v => v.SelectAttribute(It.Is<TagAttribute>(attr => attr.Name == "id" && attr.Value == "some-link")));
+            view.Verify(v => v.LoadAttribute(It.IsAny<TagAttribute>()));
         }
     }
 }

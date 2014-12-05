@@ -28,7 +28,7 @@ namespace DEiXTo.Presenters
                 return;
             }
             
-            View.LoadAttributes(attributes.All);
+            View.LoadAttribute(attributes.All[0]);
 
             if (_node.HasAttrConstraint())
             {
@@ -41,7 +41,7 @@ namespace DEiXTo.Presenters
             var constraint = _node.GetAttrConstraint();
             var selectedTag = GetSelectedAttribute(attributes, constraint.Attribute);
 
-            View.SelectAttribute(selectedTag);
+            //View.SelectAttribute(selectedTag);
         }
 
         private TagAttribute GetSelectedAttribute(List<TagAttribute> attributes, string tagAttribute)

@@ -11,28 +11,24 @@ namespace DEiXTo.Views
         public AddAttributeConstraintWindow()
         {
             InitializeComponent();
-            AttributesComboBox.DisplayMember = "Name";
-            AttributesComboBox.ValueMember = "Value";
             this.KeyPreview = true;
             this.KeyDown += AddAttributeConstraintWindow_KeyDown;
         }
 
         void AddAttributeConstraintWindow_KeyDown(object sender, KeyEventArgs e)
         {
-            var tag = AttributesComboBox.SelectedItem as TagAttribute;
-            Presenter.KeyDown(e.KeyCode, tag.Name);
+            var name = AttributeNameTextBox.Text;
+            Presenter.KeyDown(e.KeyCode, name);
         }
 
         public AddAttributeConstraintPresenter Presenter { get; set; }
 
-        public void LoadAttributes(List<TagAttribute> attributes)
+        public void LoadAttribute(TagAttribute attribute)
         {
-            AttributesComboBox.DataSource = attributes;
-        }
-
-        public void SelectAttribute(TagAttribute tagAttribute)
-        {
-            AttributesComboBox.SelectedItem = tagAttribute;
+            //AttributesComboBox.DataSource = attributes;
+            //var attribute = attributes[0];
+            AttributeNameTextBox.Text = attribute.Name;
+            AddConstraintTextBox.Text = attribute.Value;
         }
 
         public string Constraint
@@ -48,14 +44,8 @@ namespace DEiXTo.Views
 
         private void OKButton_Click(object sender, EventArgs e)
         {
-            var tag = AttributesComboBox.SelectedItem as TagAttribute;
-            Presenter.AddConstraint(tag.Name);
-        }
-
-        private void AttributesComboBox_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            var tag = AttributesComboBox.SelectedItem as TagAttribute;
-            Presenter.AttributeChanged(tag);
+            var name = AttributeNameTextBox.Text;
+            Presenter.AddConstraint(name);
         }
 
         private void CancelButton_Click(object sender, EventArgs e)

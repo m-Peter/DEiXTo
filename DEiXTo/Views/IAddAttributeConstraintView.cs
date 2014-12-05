@@ -7,8 +7,7 @@ namespace DEiXTo.Views
     public interface IAddAttributeConstraintView
     {
         AddAttributeConstraintPresenter Presenter { get; set; }
-        void LoadAttributes(List<TagAttribute> attributes);
-        void SelectAttribute(TagAttribute attribute);
+        void LoadAttribute(TagAttribute attribute);
         string Constraint { get; set; }
         void Exit();
     }
