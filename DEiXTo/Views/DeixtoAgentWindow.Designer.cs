@@ -50,6 +50,7 @@
             this.WorkingPatternGroupBox = new System.Windows.Forms.GroupBox();
             this.AttributesTabControl = new System.Windows.Forms.TabControl();
             this.Attributes = new System.Windows.Forms.TabPage();
+            this.AttributesDataGridView = new System.Windows.Forms.DataGridView();
             this.Auxiliary = new System.Windows.Forms.TabPage();
             this.AuxiliaryTreeView = new System.Windows.Forms.TreeView();
             this.ExecuteButton = new System.Windows.Forms.Button();
@@ -207,7 +208,6 @@
             this.DeleteNodeMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.EnableHighlightMenuStrip = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.EnableHighlightingMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.AttributesDataGridView = new System.Windows.Forms.DataGridView();
             this.AttributeColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Value = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Constraint = new System.Windows.Forms.DataGridViewCheckBoxColumn();
@@ -228,6 +228,7 @@
             this.WorkingPatternGroupBox.SuspendLayout();
             this.AttributesTabControl.SuspendLayout();
             this.Attributes.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.AttributesDataGridView)).BeginInit();
             this.Auxiliary.SuspendLayout();
             this.SettingsTabControl.SuspendLayout();
             this.ProjectInfo.SuspendLayout();
@@ -255,7 +256,6 @@
             this.SnapshotsMenuStrip.SuspendLayout();
             this.AdjustpatternMenuStrip.SuspendLayout();
             this.EnableHighlightMenuStrip.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.AttributesDataGridView)).BeginInit();
             this.SuspendLayout();
             // 
             // splitContainer1
@@ -528,13 +528,29 @@
             this.Attributes.Text = "Attributes";
             this.Attributes.UseVisualStyleBackColor = true;
             // 
+            // AttributesDataGridView
+            // 
+            this.AttributesDataGridView.AllowUserToAddRows = false;
+            this.AttributesDataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.AttributesDataGridView.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.AttributeColumn,
+            this.Value,
+            this.Constraint});
+            this.AttributesDataGridView.Location = new System.Drawing.Point(3, 6);
+            this.AttributesDataGridView.Name = "AttributesDataGridView";
+            this.AttributesDataGridView.RowHeadersVisible = false;
+            this.AttributesDataGridView.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
+            this.AttributesDataGridView.Size = new System.Drawing.Size(226, 321);
+            this.AttributesDataGridView.TabIndex = 0;
+            this.AttributesDataGridView.DoubleClick += new System.EventHandler(this.AttributesDataGridView_DoubleClick);
+            // 
             // Auxiliary
             // 
             this.Auxiliary.Controls.Add(this.AuxiliaryTreeView);
             this.Auxiliary.Location = new System.Drawing.Point(4, 22);
             this.Auxiliary.Name = "Auxiliary";
             this.Auxiliary.Padding = new System.Windows.Forms.Padding(3);
-            this.Auxiliary.Size = new System.Drawing.Size(208, 351);
+            this.Auxiliary.Size = new System.Drawing.Size(235, 351);
             this.Auxiliary.TabIndex = 1;
             this.Auxiliary.Text = "Auxiliary";
             this.Auxiliary.UseVisualStyleBackColor = true;
@@ -545,7 +561,7 @@
             this.AuxiliaryTreeView.Location = new System.Drawing.Point(3, 3);
             this.AuxiliaryTreeView.Name = "AuxiliaryTreeView";
             this.AuxiliaryTreeView.ShowNodeToolTips = true;
-            this.AuxiliaryTreeView.Size = new System.Drawing.Size(202, 345);
+            this.AuxiliaryTreeView.Size = new System.Drawing.Size(229, 345);
             this.AuxiliaryTreeView.TabIndex = 0;
             this.AuxiliaryTreeView.NodeMouseClick += new System.Windows.Forms.TreeNodeMouseClickEventHandler(this.AuxiliaryTreeView_NodeMouseClick);
             // 
@@ -553,7 +569,7 @@
             // 
             this.ExecuteButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.ExecuteButton.Image = ((System.Drawing.Image)(resources.GetObject("ExecuteButton.Image")));
-            this.ExecuteButton.Location = new System.Drawing.Point(215, 366);
+            this.ExecuteButton.Location = new System.Drawing.Point(191, 366);
             this.ExecuteButton.Name = "ExecuteButton";
             this.ExecuteButton.Size = new System.Drawing.Size(32, 23);
             this.ExecuteButton.TabIndex = 6;
@@ -564,7 +580,7 @@
             // 
             this.LevelDownButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.LevelDownButton.Image = ((System.Drawing.Image)(resources.GetObject("LevelDownButton.Image")));
-            this.LevelDownButton.Location = new System.Drawing.Point(177, 366);
+            this.LevelDownButton.Location = new System.Drawing.Point(157, 366);
             this.LevelDownButton.Name = "LevelDownButton";
             this.LevelDownButton.Size = new System.Drawing.Size(32, 23);
             this.LevelDownButton.TabIndex = 5;
@@ -575,7 +591,7 @@
             // 
             this.LevelUpButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.LevelUpButton.Image = ((System.Drawing.Image)(resources.GetObject("LevelUpButton.Image")));
-            this.LevelUpButton.Location = new System.Drawing.Point(139, 366);
+            this.LevelUpButton.Location = new System.Drawing.Point(119, 366);
             this.LevelUpButton.Name = "LevelUpButton";
             this.LevelUpButton.Size = new System.Drawing.Size(32, 23);
             this.LevelUpButton.TabIndex = 4;
@@ -597,7 +613,7 @@
             // 
             this.ClearTreeViewsButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.ClearTreeViewsButton.Image = ((System.Drawing.Image)(resources.GetObject("ClearTreeViewsButton.Image")));
-            this.ClearTreeViewsButton.Location = new System.Drawing.Point(44, 366);
+            this.ClearTreeViewsButton.Location = new System.Drawing.Point(43, 365);
             this.ClearTreeViewsButton.Name = "ClearTreeViewsButton";
             this.ClearTreeViewsButton.Size = new System.Drawing.Size(32, 23);
             this.ClearTreeViewsButton.TabIndex = 2;
@@ -1409,6 +1425,7 @@
             // 
             // StatisticsDataGridView
             // 
+            this.StatisticsDataGridView.AllowUserToAddRows = false;
             this.StatisticsDataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.StatisticsDataGridView.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.ColumnMetric,
@@ -1958,35 +1975,25 @@
             this.EnableHighlightingMenuItem.Text = "Enable Highlighting";
             this.EnableHighlightingMenuItem.Click += new System.EventHandler(this.EnableHighlightingMenuItem_Click);
             // 
-            // AttributesDataGridView
-            // 
-            this.AttributesDataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.AttributesDataGridView.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.AttributeColumn,
-            this.Value,
-            this.Constraint});
-            this.AttributesDataGridView.Location = new System.Drawing.Point(3, 6);
-            this.AttributesDataGridView.Name = "AttributesDataGridView";
-            this.AttributesDataGridView.RowHeadersVisible = false;
-            this.AttributesDataGridView.Size = new System.Drawing.Size(226, 341);
-            this.AttributesDataGridView.TabIndex = 0;
-            // 
             // AttributeColumn
             // 
             this.AttributeColumn.HeaderText = "Attribute";
             this.AttributeColumn.Name = "AttributeColumn";
+            this.AttributeColumn.ReadOnly = true;
             this.AttributeColumn.Width = 70;
             // 
             // Value
             // 
             this.Value.HeaderText = "Value";
             this.Value.Name = "Value";
+            this.Value.ReadOnly = true;
             this.Value.Width = 70;
             // 
             // Constraint
             // 
             this.Constraint.HeaderText = "Constraint";
             this.Constraint.Name = "Constraint";
+            this.Constraint.ReadOnly = true;
             // 
             // DeixtoAgentWindow
             // 
@@ -2018,6 +2025,7 @@
             this.WorkingPatternGroupBox.ResumeLayout(false);
             this.AttributesTabControl.ResumeLayout(false);
             this.Attributes.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.AttributesDataGridView)).EndInit();
             this.Auxiliary.ResumeLayout(false);
             this.SettingsTabControl.ResumeLayout(false);
             this.ProjectInfo.ResumeLayout(false);
@@ -2056,7 +2064,6 @@
             this.SnapshotsMenuStrip.ResumeLayout(false);
             this.AdjustpatternMenuStrip.ResumeLayout(false);
             this.EnableHighlightMenuStrip.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.AttributesDataGridView)).EndInit();
             this.ResumeLayout(false);
 
         }

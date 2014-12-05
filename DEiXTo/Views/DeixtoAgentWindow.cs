@@ -1173,5 +1173,11 @@ namespace DEiXTo.Views
         {
             Presenter.EnableHighlighting();
         }
+
+        private void AttributesDataGridView_DoubleClick(object sender, EventArgs e)
+        {
+            AddAttributeConstraintWindow window = new AddAttributeConstraintWindow();
+            window.ShowDialog();
+        }
     }
 }

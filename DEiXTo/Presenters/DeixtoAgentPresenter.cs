@@ -18,7 +18,6 @@ namespace DEiXTo.Presenters
     {
         private IViewLoader _loader;
         private IEventHub _eventHub;
-        private PatternExecutor _executor;
         private IDeixtoAgentScreen _screen;
 
         public event DOMBuilted DomBuilted;
