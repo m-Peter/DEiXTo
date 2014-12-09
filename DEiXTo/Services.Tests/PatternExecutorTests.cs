@@ -141,12 +141,12 @@ namespace DEiXTo.Services.Tests
             return section;
         }
 
-        private TreeNodeCollection getDOMNodes(int instances, bool isOptional=false)
+        private TreeNodeCollection getDOMNodes(int instances, bool isOptional = false)
         {
             var body = new TreeNode("BODY");
             var div = new TreeNode("DIV");
             body.AddNode(div);
-            
+
             for (int i = 0; i < instances; i++)
             {
                 div.AddNode(getInstanceTree());
@@ -168,10 +168,10 @@ namespace DEiXTo.Services.Tests
             var extraction = new ExtractionPattern(root);
             var domNodes = getDOMNodes(1);
             PatternExecutor pattern = new PatternExecutor(extraction, domNodes);
-            
+
             // Act
             pattern.FindMatches();
-            
+
             // Assert
             Assert.AreEqual(1, pattern.Count);
         }
@@ -184,10 +184,10 @@ namespace DEiXTo.Services.Tests
             var extraction = new ExtractionPattern(root);
             var domNodes = getDOMNodes(2);
             PatternExecutor pattern = new PatternExecutor(extraction, domNodes);
-            
+
             // Act
             pattern.FindMatches();
-            
+
             // Assert
             Assert.AreEqual(2, pattern.Count);
         }
@@ -200,10 +200,10 @@ namespace DEiXTo.Services.Tests
             var extraction = new ExtractionPattern(root);
             var domNodes = getDOMNodes(11);
             PatternExecutor pattern = new PatternExecutor(extraction, domNodes);
-            
+
             // Act
             pattern.FindMatches();
-            
+
             // Assert
             Assert.AreEqual(11, pattern.Count);
         }
@@ -216,10 +216,10 @@ namespace DEiXTo.Services.Tests
             var extraction = new ExtractionPattern(root);
             var domNodes = getDOMNodes(10, true);
             PatternExecutor pattern = new PatternExecutor(extraction, domNodes);
-            
+
             // Act
             pattern.FindMatches();
-            
+
             // Assert
             Assert.AreEqual(11, pattern.Count);
         }
@@ -237,10 +237,10 @@ namespace DEiXTo.Services.Tests
             div.AddNode(root);
             body.AddNode(div);
             PatternExecutor pattern = new PatternExecutor(extraction, body.Nodes);
-            
+
             // Act
             pattern.FindMatches();
-            
+
             // Assert
             Assert.AreEqual(3, pattern.Count);
         }
@@ -262,6 +262,47 @@ namespace DEiXTo.Services.Tests
             pattern.FindMatches();
 
             // Assert
+            Assert.AreEqual(3, pattern.Count);
+        }
+
+        [TestMethod]
+        public void TestFilterAttributeWithRegex()
+        {
+            // Arrange
+            var img = CreateRootNode("IMG");
+            var constraint = new TagAttributeConstraint { Attribute = "src", Value = "/img/main/post.png" };
+            img.SetAttrConstraint(constraint);
+            var div = CreateNode("DIV", NodeState.Grayed);
+            var attributes = new TagAttributeCollection();
+            attributes.Add(new TagAttribute { Name = "src", Value = "/img/main/post.png" });
+            var jpeg = new TagAttributeCollection();
+            jpeg.Add(new TagAttribute{Name = "src", Value = "img/main/header.jpeg"});
+            var gif = new TagAttributeCollection();
+            gif.Add(new TagAttribute { Name = "src", Value = "img/main/footer.gif" });
+            var img1 = CreateNode("IMG", NodeState.Grayed);
+            img1.SetContent("/img/main/post.png");
+            img1.SetAttributes(attributes);
+            var img2 = CreateNode("IMG", NodeState.Grayed);
+            img2.SetContent("/img/main/post.png");
+            img2.SetAttributes(attributes);
+            var img3 = CreateNode("IMG", NodeState.Grayed);
+            img3.SetContent("/img/main/post.png");
+            img3.SetAttributes(attributes);
+            var img4 = CreateNode("IMG", NodeState.Grayed);
+            img4.SetContent("/img/main/header.jpeg");
+            img4.SetAttributes(jpeg);
+            var img5 = CreateNode("IMG", NodeState.Grayed);
+            img5.SetContent("/img/main/footer.gif");
+            img5.SetAttributes(gif);
+            AddNodesTo(div, img1, img2, img3, img4, img5);
+            var extraction = new ExtractionPattern(img);
+            var pattern = new PatternExecutor(extraction, div.Nodes);
+
+            // Act
+            pattern.FindMatches();
+
+            // Assert
+            Assert.AreEqual(5, div.Nodes.Count);
             Assert.AreEqual(3, pattern.Count);
         }
 

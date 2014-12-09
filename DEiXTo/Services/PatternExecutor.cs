@@ -240,7 +240,9 @@ namespace DEiXTo.Services
                 var attributes = right.GetAttributes();
                 var klass = attributes.GetByName(attr).Value;
 
-                if (value != klass)
+                Match match = Regex.Match(klass, value);
+
+                if (!match.Success)
                 {
                     return false;
                 }
