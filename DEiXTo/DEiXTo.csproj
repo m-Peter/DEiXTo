@@ -168,7 +168,7 @@
     <Compile Include="Services\ReadWrapperSettings.cs" />
     <Compile Include="Services\RecordsWriterFactory.cs" />
     <Compile Include="Services\RegexAdded.cs" />
-    <Compile Include="Models.Tests\RegexContraintTests.cs" />
+    <Compile Include="Models.Tests\RegexConstraintTests.cs" />
     <Compile Include="Services\RssDialogBuilder.cs" />
     <Compile Include="Services\SaveFileDialogWrapper.cs" />
     <Compile Include="Services\SimplifiedDOMBuilder.cs" />

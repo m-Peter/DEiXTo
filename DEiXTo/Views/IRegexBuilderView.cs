@@ -1,4 +1,5 @@
-﻿using DEiXTo.Presenters;
+﻿using DEiXTo.Models;
+using DEiXTo.Presenters;
 using System.Windows.Forms;
 
 namespace DEiXTo.Views
@@ -8,6 +9,7 @@ namespace DEiXTo.Views
         RegexBuilderPresenter Presenter { get; set; }
 
         string RegexText { get; set; }
+        ConstraintAction Action { get; set; }
         bool InverseRegex { get; set; }
 
         void ShowInvalidRegexMessage();

@@ -21,9 +21,8 @@ namespace DEiXTo.Presenters.Tests
         {
             view = new Mock<IRegexBuilderView>();
             node = new TreeNode("H1");
-            NodeInfo nInfo = new NodeInfo();
-            nInfo.Content = "This is the header";
-            node.Tag = nInfo;
+            node.Tag = new NodeInfo();
+            node.SetContent("This is the header");
             eventHub = new Mock<IEventHub>();
             presenter = new RegexBuilderPresenter(view.Object, node, eventHub.Object);
         }
@@ -40,12 +39,15 @@ namespace DEiXTo.Presenters.Tests
         {
             // Arrange
             view.Setup(v => v.RegexText).Returns("some regex");
+            view.Setup(v => v.Action).Returns(ConstraintAction.MatchAndExtract);
 
             // Act
             presenter.AddRegex();
 
             // Assert
-            Assert.AreEqual("some regex", node.GetRegex());
+            var constraint = node.GetRegexConstraint();
+            Assert.AreEqual("some regex", constraint.Pattern);
+            Assert.AreEqual(ConstraintAction.MatchAndExtract, constraint.Action);
             eventHub.Verify(e => e.Publish(It.Is<RegexAdded>(ra => ra.Node == node)));
             view.Verify(v => v.Exit());
         }
@@ -69,13 +71,16 @@ namespace DEiXTo.Presenters.Tests
         {
             // Arrange
             view.Setup(v => v.RegexText).Returns("some regex");
+            view.Setup(v => v.Action).Returns(ConstraintAction.Match);
 
             // Act
             presenter.KeyDownPress(Keys.Enter);
 
             // Assert
-            Assert.AreEqual("some regex", node.GetRegex());
-            eventHub.Verify(e => e.Publish(It.Is<RegexAdded>(ra => ra.Node == node )));
+            var constraint = node.GetRegexConstraint();
+            Assert.AreEqual("some regex", constraint.Pattern);
+            Assert.AreEqual(ConstraintAction.Match, constraint.Action);
+            eventHub.Verify(e => e.Publish(It.Is<RegexAdded>(ra => ra.Node == node)));
             view.Verify(v => v.Exit());
         }
 
@@ -83,32 +88,34 @@ namespace DEiXTo.Presenters.Tests
         public void TestLoadExistingRegex()
         {
             // Arrange
-            node.SetRegex("[0-9]{2}");
-            node.SetInverse(true);
+            var constraint = new RegexConstraint("[0-9]{2}", ConstraintAction.Match);
+            node.SetRegexConstraint(constraint);
 
             // Act
             presenter = new RegexBuilderPresenter(view.Object, node, eventHub.Object);
 
             // Assert
             view.VerifySet(v => v.RegexText = "[0-9]{2}");
-            view.VerifySet(v => v.InverseRegex = true);
+            view.VerifySet(v => v.Action = ConstraintAction.Match);
         }
 
         [TestMethod]
         public void TestChangeExistingRegex()
         {
             // Arrange
-            node.SetRegex("[a-z]{4}");
-            node.SetInverse(false);
+            var constraint = new RegexConstraint("[a-z]{4}", ConstraintAction.Match);
+            node.SetRegexConstraint(constraint);
 
             // Act
             presenter = new RegexBuilderPresenter(view.Object, node, eventHub.Object);
             view.Setup(v => v.RegexText).Returns("[0-9]{2}");
-            view.Setup(v => v.InverseRegex).Returns(true);
+            view.Setup(v => v.Action).Returns(ConstraintAction.MatchAndExtract);
             presenter.AddRegex();
 
             // Assert
-            Assert.AreEqual("[0-9]{2}", node.GetRegex());
+            var result = node.GetRegexConstraint();
+            Assert.AreEqual("[0-9]{2}", result.Pattern);
+            Assert.AreEqual(ConstraintAction.MatchAndExtract, result.Action);
             eventHub.Verify(e => e.Publish(It.Is<RegexAdded>(ra => ra.Node == node)));
             view.Verify(v => v.Exit());
         }

@@ -40,6 +40,8 @@
             this.InverseEvaluationCheckBox = new System.Windows.Forms.CheckBox();
             this.OKButton = new System.Windows.Forms.Button();
             this.CancelButton = new System.Windows.Forms.Button();
+            this.label1 = new System.Windows.Forms.Label();
+            this.ConstraintActionComboBox = new System.Windows.Forms.ComboBox();
             this.PatternsTabControl.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.SuspendLayout();
@@ -125,7 +127,7 @@
             // InverseEvaluationCheckBox
             // 
             this.InverseEvaluationCheckBox.AutoSize = true;
-            this.InverseEvaluationCheckBox.Location = new System.Drawing.Point(16, 352);
+            this.InverseEvaluationCheckBox.Location = new System.Drawing.Point(16, 389);
             this.InverseEvaluationCheckBox.Name = "InverseEvaluationCheckBox";
             this.InverseEvaluationCheckBox.Size = new System.Drawing.Size(151, 17);
             this.InverseEvaluationCheckBox.TabIndex = 3;
@@ -134,7 +136,7 @@
             // 
             // OKButton
             // 
-            this.OKButton.Location = new System.Drawing.Point(16, 378);
+            this.OKButton.Location = new System.Drawing.Point(16, 423);
             this.OKButton.Name = "OKButton";
             this.OKButton.Size = new System.Drawing.Size(75, 23);
             this.OKButton.TabIndex = 4;
@@ -144,7 +146,7 @@
             // 
             // CancelButton
             // 
-            this.CancelButton.Location = new System.Drawing.Point(108, 378);
+            this.CancelButton.Location = new System.Drawing.Point(106, 423);
             this.CancelButton.Name = "CancelButton";
             this.CancelButton.Size = new System.Drawing.Size(75, 23);
             this.CancelButton.TabIndex = 5;
@@ -152,11 +154,31 @@
             this.CancelButton.UseVisualStyleBackColor = true;
             this.CancelButton.Click += new System.EventHandler(this.CancelButton_Click);
             // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(13, 356);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(154, 13);
+            this.label1.TabIndex = 6;
+            this.label1.Text = "Please select constraint action:";
+            // 
+            // ConstraintActionComboBox
+            // 
+            this.ConstraintActionComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.ConstraintActionComboBox.FormattingEnabled = true;
+            this.ConstraintActionComboBox.Location = new System.Drawing.Point(173, 353);
+            this.ConstraintActionComboBox.Name = "ConstraintActionComboBox";
+            this.ConstraintActionComboBox.Size = new System.Drawing.Size(121, 21);
+            this.ConstraintActionComboBox.TabIndex = 7;
+            // 
             // RegexBuilderWindow
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(473, 413);
+            this.ClientSize = new System.Drawing.Size(505, 458);
+            this.Controls.Add(this.ConstraintActionComboBox);
+            this.Controls.Add(this.label1);
             this.Controls.Add(this.CancelButton);
             this.Controls.Add(this.OKButton);
             this.Controls.Add(this.InverseEvaluationCheckBox);
@@ -186,5 +208,7 @@
         private System.Windows.Forms.ColumnHeader PatternColumn;
         private System.Windows.Forms.ColumnHeader DescriptionColumn;
         private System.Windows.Forms.ColumnHeader ExampleColumn;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.ComboBox ConstraintActionComboBox;
     }
 }

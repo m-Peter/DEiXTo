@@ -26,10 +26,12 @@ namespace DEiXTo.Presenters
 
         private void populateRegex()
         {
-            if (_node.HasRegex())
+            if (_node.HasRegexConstraint())
             {
-                View.RegexText = _node.GetRegex();
-                View.InverseRegex = _node.InverseRegex();
+                var constraint = _node.GetRegexConstraint();
+                View.RegexText = constraint.Pattern;
+                View.Action = constraint.Action;
+                
                 return;
             }
 
@@ -38,17 +40,17 @@ namespace DEiXTo.Presenters
 
         public void AddRegex()
         {
-            string regex = View.RegexText;
-            bool inverse = View.InverseRegex;
+            var pattern = View.RegexText;
+            var action = View.Action;
 
-            if (String.IsNullOrWhiteSpace(regex))
+            if (String.IsNullOrWhiteSpace(pattern))
             {
                 View.ShowInvalidRegexMessage();
                 return;
             }
 
-            _node.SetRegex(regex);
-            _node.SetInverse(inverse);
+            var constraint = new RegexConstraint(pattern, action);
+            _node.SetRegexConstraint(constraint);
 
             if (_node.NodeFont != null)
             {

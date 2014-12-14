@@ -1,4 +1,5 @@
-﻿using DEiXTo.Presenters;
+﻿using DEiXTo.Models;
+using DEiXTo.Presenters;
 using System;
 using System.Windows.Forms;
 
@@ -41,6 +42,12 @@ namespace DEiXTo.Views
                 AddRegexTextBox.SelectAll();
                 AddRegexTextBox.Focus();
             }
+        }
+
+        public ConstraintAction Action
+        {
+            get { return ConstraintAction.Match; }
+            set {  }
         }
 
         public bool InverseRegex
