@@ -7,13 +7,12 @@ using System.Text.RegularExpressions;
 namespace DEiXTo.Models.Tests
 {
     [TestClass]
-    public class RegexContraintTests
+    public class RegexConstraintTests
     {
         [TestMethod]
         public void TestCreateNewRegexConstraint()
         {
             // Arrange
-            var input = "[#1] International Trade";
             var pattern = @"\d+";
 
             // Act
