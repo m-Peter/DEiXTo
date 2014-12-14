@@ -5,13 +5,13 @@ using System.Windows.Forms;
 
 namespace DEiXTo.Services
 {
-    public class PatternExecutor
+    public class Executor
     {
         private ExtractionPattern _pattern;
         private TreeNodeCollection _domNodes;
         private List<Result> _results;
 
-        public PatternExecutor(ExtractionPattern pattern, TreeNodeCollection domNodes)
+        public Executor(ExtractionPattern pattern, TreeNodeCollection domNodes)
         {
             _pattern = pattern;
             _domNodes = domNodes;

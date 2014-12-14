@@ -167,7 +167,7 @@ namespace DEiXTo.Services.Tests
             var root = getRootTree();
             var extraction = new ExtractionPattern(root);
             var domNodes = getDOMNodes(1);
-            PatternExecutor pattern = new PatternExecutor(extraction, domNodes);
+            Executor pattern = new Executor(extraction, domNodes);
 
             // Act
             pattern.FindMatches();
@@ -183,7 +183,7 @@ namespace DEiXTo.Services.Tests
             var root = getRootTree();
             var extraction = new ExtractionPattern(root);
             var domNodes = getDOMNodes(2);
-            PatternExecutor pattern = new PatternExecutor(extraction, domNodes);
+            Executor pattern = new Executor(extraction, domNodes);
 
             // Act
             pattern.FindMatches();
@@ -199,7 +199,7 @@ namespace DEiXTo.Services.Tests
             var root = getRootTree();
             var extraction = new ExtractionPattern(root);
             var domNodes = getDOMNodes(11);
-            PatternExecutor pattern = new PatternExecutor(extraction, domNodes);
+            Executor pattern = new Executor(extraction, domNodes);
 
             // Act
             pattern.FindMatches();
@@ -215,7 +215,7 @@ namespace DEiXTo.Services.Tests
             var root = getRootTree();
             var extraction = new ExtractionPattern(root);
             var domNodes = getDOMNodes(10, true);
-            PatternExecutor pattern = new PatternExecutor(extraction, domNodes);
+            Executor pattern = new Executor(extraction, domNodes);
 
             // Act
             pattern.FindMatches();
@@ -236,7 +236,7 @@ namespace DEiXTo.Services.Tests
             div.AddNode(GetTreeWithUnchecked());
             div.AddNode(root);
             body.AddNode(div);
-            PatternExecutor pattern = new PatternExecutor(extraction, body.Nodes);
+            Executor pattern = new Executor(extraction, body.Nodes);
 
             // Act
             pattern.FindMatches();
@@ -256,7 +256,7 @@ namespace DEiXTo.Services.Tests
             nav.Nodes.Add(a);
             var extraction = new ExtractionPattern(nav);
             var nodes = CreateDomNodes();
-            PatternExecutor pattern = new PatternExecutor(extraction, nodes);
+            Executor pattern = new Executor(extraction, nodes);
 
             // Act
             pattern.FindMatches();
@@ -296,7 +296,7 @@ namespace DEiXTo.Services.Tests
             img5.SetAttributes(gif);
             AddNodesTo(div, img1, img2, img3, img4, img5);
             var extraction = new ExtractionPattern(img);
-            var pattern = new PatternExecutor(extraction, div.Nodes);
+            var pattern = new Executor(extraction, div.Nodes);
 
             // Act
             pattern.FindMatches();

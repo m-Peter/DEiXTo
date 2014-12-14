@@ -15,7 +15,7 @@ namespace DEiXTo.Services
         private IViewLoader _loader;
         private ISaveFileDialog _saveFileDialog;
         private IOpenFileDialog _openFileDialog;
-        private PatternExecutor _executor;
+        private Executor _executor;
         private ReadTargetUrls _readTargetUrls;
         private TextRecordsWriter _recordsWriter;
         private IExtractionPatternRepository _patternRepository;
@@ -179,7 +179,7 @@ namespace DEiXTo.Services
         public IExtraction Execute(TreeNode pattern, TreeNodeCollection domNodes)
         {
             var extractionPattern = new ExtractionPattern(pattern);
-            _executor = new PatternExecutor(extractionPattern, domNodes);
+            _executor = new Executor(extractionPattern, domNodes);
             _executor.FindMatches();
 
             var result = new ExtractionResult();
