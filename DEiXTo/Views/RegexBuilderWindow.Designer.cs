@@ -209,6 +209,6 @@
         private System.Windows.Forms.ColumnHeader DescriptionColumn;
         private System.Windows.Forms.ColumnHeader ExampleColumn;
         private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.ComboBox ConstraintActionComboBox;
+        public System.Windows.Forms.ComboBox ConstraintActionComboBox;
     }
 }

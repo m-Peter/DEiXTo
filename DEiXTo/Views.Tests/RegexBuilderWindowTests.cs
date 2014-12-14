@@ -45,9 +45,11 @@ namespace DEiXTo.Views.Tests
             // Act
             window.AddRegexTextBox.Text = "[0-9]{2}";
             window.InverseEvaluationCheckBox.Checked = true;
+            window.ConstraintActionComboBox.SelectedItem = ConstraintAction.Match;
             // Assert
             Assert.AreEqual("[0-9]{2}", window.RegexText);
             Assert.IsTrue(window.InverseRegex);
+            Assert.AreEqual(ConstraintAction.Match, window.Action);
 
             // Reset
             window.AddRegexTextBox.Text = string.Empty;
@@ -56,9 +58,11 @@ namespace DEiXTo.Views.Tests
             // Act
             window.RegexText = "[a-z]?";
             window.InverseRegex = true;
+            window.Action = ConstraintAction.MatchAndExtract;
             // Assert
             Assert.AreEqual("[a-z]?", window.AddRegexTextBox.Text);
             Assert.IsTrue(window.InverseEvaluationCheckBox.Checked);
+            Assert.AreEqual(ConstraintAction.MatchAndExtract, (ConstraintAction)window.ConstraintActionComboBox.SelectedItem);
         }
 
         [Test]
@@ -75,10 +79,13 @@ namespace DEiXTo.Views.Tests
 
             // Act
             window.AddRegexTextBox.Text = "[0-9]{2}";
+            window.ConstraintActionComboBox.SelectedItem = ConstraintAction.Match;
             presenter.AddRegex();
 
             // Assert
-            Assert.AreEqual("[0-9]{2}", node.GetRegex());
+            var constraint = node.GetRegexConstraint();
+            Assert.AreEqual("[0-9]{2}", constraint.Pattern);
+            Assert.AreEqual(ConstraintAction.Match, constraint.Action);
             eventHub.Verify(e => e.Publish(It.Is<RegexAdded>(sub => sub.Node == node)));
             Assert.AreEqual(FontStyle.Underline, node.NodeFont.Style);
         }
@@ -99,10 +106,13 @@ namespace DEiXTo.Views.Tests
 
             // Act
             window.AddRegexTextBox.Text = "[0-9]{2}";
+            window.ConstraintActionComboBox.SelectedItem = ConstraintAction.MatchAndExtract;
             presenter.AddRegex();
 
             // Assert
-            Assert.AreEqual("[0-9]{2}", node.GetRegex());
+            var constraint = node.GetRegexConstraint();
+            Assert.AreEqual("[0-9]{2}", constraint.Pattern);
+            Assert.AreEqual(ConstraintAction.MatchAndExtract, constraint.Action);
             eventHub.Verify(e => e.Publish(It.Is<RegexAdded>(sub => sub.Node == node)));
             Assert.AreEqual(FontStyle.Bold | FontStyle.Underline, node.NodeFont.Style);
         }
@@ -114,15 +124,15 @@ namespace DEiXTo.Views.Tests
             node = new TreeNode("SPAN");
             node.Tag = new NodeInfo();
             node.SetContent("$11.5");
-            node.SetRegex("[0-9]{2}");
-            node.SetInverse(true);
+            var constraint = new RegexConstraint("[0-9]{2}", ConstraintAction.Match);
+            node.SetRegexConstraint(constraint);
             eventHub = new Mock<IEventHub>();
             window = new RegexBuilderWindow();
             presenter = new RegexBuilderPresenter(window, node, eventHub.Object);
 
             // Assert
             Assert.AreEqual("[0-9]{2}", window.RegexText);
-            Assert.IsTrue(window.InverseRegex);
+            Assert.AreEqual(ConstraintAction.Match, window.Action);
         }
 
         [Test]
@@ -132,19 +142,21 @@ namespace DEiXTo.Views.Tests
             node = new TreeNode("SPAN");
             node.Tag = new NodeInfo();
             node.SetContent("$11.5");
-            node.SetRegex("[0-9]{2}");
+            var constraint = new RegexConstraint("[0-9]{2}", ConstraintAction.Match);
+            node.SetRegexConstraint(constraint);
             eventHub = new Mock<IEventHub>();
             window = new RegexBuilderWindow();
             presenter = new RegexBuilderPresenter(window, node, eventHub.Object);
 
             // Act
             window.RegexText = "[a-z]?";
-            window.InverseRegex = true;
+            window.Action = ConstraintAction.MatchAndExtract;
             presenter.AddRegex();
 
             // Assert
-            Assert.AreEqual("[a-z]?", node.GetRegex());
-            Assert.IsTrue(node.InverseRegex());
+            var result = node.GetRegexConstraint();
+            Assert.AreEqual("[a-z]?", result.Pattern);
+            Assert.AreEqual(ConstraintAction.MatchAndExtract, result.Action);
         }
     }
 }
