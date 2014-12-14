@@ -445,6 +445,36 @@ namespace DEiXTo.Services.Tests
             var leafNode = pattern.GetUpperTree();
         }
 
+        [TestMethod]
+        public void TestRegexConstraint()
+        {
+            // Arrange
+            var p = CreateRootNode("P");
+            p.SetRegexConstraint(new RegexConstraint(@"\d+"));
+            var div = CreateNode("DIV", NodeState.Grayed);
+            var p1 = CreateNode("P", NodeState.Grayed);
+            p1.Tag = new NodeInfo();
+            p1.SetContent("price 50");
+            var p2 = CreateNode("P", NodeState.Grayed);
+            p2.Tag = new NodeInfo();
+            p2.SetContent("price None");
+            var p3 = CreateNode("P", NodeState.Grayed);
+            p3.Tag = new NodeInfo();
+            p3.SetContent("price 60");
+            var p4 = CreateNode("P", NodeState.Grayed);
+            p4.Tag = new NodeInfo();
+            p4.SetContent("price None");
+            AddNodesTo(div, p1, p2, p3, p4);
+            var extraction = new ExtractionPattern(p);
+            var pattern = new Executor(extraction, div.Nodes);
+
+            // Act
+            pattern.FindMatches();
+
+            // Assert
+            Assert.AreEqual(2, pattern.Count);
+        }
+
         private TreeNode GetUnmatchingInstance()
         {
             var section = CreateNode("SECTION", NodeState.Grayed);

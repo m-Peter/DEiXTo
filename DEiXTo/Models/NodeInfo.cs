@@ -2,6 +2,9 @@
 {
     public class NodeInfo
     {
+        public RegexConstraint RegexConstraint { get; set; }
+
+
         public int SourceIndex { get; set; }
         public string Path { get; set; }
         public string Content { get; set; }

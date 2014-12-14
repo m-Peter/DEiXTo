@@ -217,9 +217,9 @@ namespace DEiXTo.Services
                 return false;
             }
 
-            if (left.HasRegex())
+            if (left.HasRegexConstraint())
             {
-                string content = right.GetContent();
+                /*string content = right.GetContent();
                 string regex = left.GetRegex();
 
                 Match match = Regex.Match(content, regex);
@@ -228,7 +228,22 @@ namespace DEiXTo.Services
                 {
                     return false;
                 }
-                right.SetContent(match.Value);
+                right.SetContent(match.Value);*/
+
+                // The RegEx builder window will set an RegexConstraint in the left node.
+                // If the left node we're currently at has a RegexConstraint, then we
+                // evaluate it. If the evaluation succeeds, then we add the value at
+                // the Result object.
+
+                var constraint = left.GetRegexConstraint();
+                var input = right.GetContent();
+                var evaluation = constraint.Evaluate(input);
+
+                if (!evaluation)
+                {
+                    return false;
+                }
+                right.SetContent(constraint.Value);
             }
 
             if (left.HasAttrConstraint())

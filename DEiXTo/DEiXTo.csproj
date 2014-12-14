@@ -74,6 +74,7 @@
   <ItemGroup>
     <Compile Include="IntegrationTests\MainWindowIntegrationTests.cs" />
     <Compile Include="Models.Tests\ExtractionPatternTests.cs" />
+    <Compile Include="Models.Tests\TreeNodeTests.cs" />
     <Compile Include="Models\RegexConstraint.cs" />
     <Compile Include="Models\TagAttributeConstraint.cs" />
     <Compile Include="Models\DeixtoWrapper.cs" />
@@ -167,7 +168,7 @@
     <Compile Include="Services\ReadWrapperSettings.cs" />
     <Compile Include="Services\RecordsWriterFactory.cs" />
     <Compile Include="Services\RegexAdded.cs" />
-    <Compile Include="Services\RegexContraintTests.cs" />
+    <Compile Include="Models.Tests\RegexContraintTests.cs" />
     <Compile Include="Services\RssDialogBuilder.cs" />
     <Compile Include="Services\SaveFileDialogWrapper.cs" />
     <Compile Include="Services\SimplifiedDOMBuilder.cs" />

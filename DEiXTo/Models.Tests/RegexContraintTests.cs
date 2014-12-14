@@ -4,7 +4,7 @@ using System;
 using System.Text;
 using System.Text.RegularExpressions;
 
-namespace DEiXTo.Services
+namespace DEiXTo.Models.Tests
 {
     [TestClass]
     public class RegexContraintTests
@@ -17,11 +17,11 @@ namespace DEiXTo.Services
             var pattern = @"\d+";
 
             // Act
-            var constraint = new RegexConstraint(input, pattern);
+            var constraint = new RegexConstraint(pattern);
 
             // Assert
-            Assert.AreEqual(input, constraint.Input);
             Assert.AreEqual(pattern, constraint.Pattern);
+            Assert.AreEqual(ConstraintAction.MatchAndExtract, constraint.Action);
         }
 
         [TestMethod]
@@ -32,10 +32,10 @@ namespace DEiXTo.Services
             var pattern = @"\d+";
 
             // Act
-            var constraint = new RegexConstraint(input, pattern);
+            var constraint = new RegexConstraint(pattern);
 
             // Assert
-            Assert.IsTrue(constraint.Evaluate());
+            Assert.IsTrue(constraint.Evaluate(input));
         }
 
         [TestMethod]
@@ -46,10 +46,10 @@ namespace DEiXTo.Services
             var pattern = @"\d+";
 
             // Act
-            var constraint = new RegexConstraint(input, pattern);
+            var constraint = new RegexConstraint(pattern);
 
             // Assert
-            Assert.IsFalse(constraint.Evaluate());
+            Assert.IsFalse(constraint.Evaluate(input));
         }
 
         [TestMethod]
@@ -60,11 +60,12 @@ namespace DEiXTo.Services
             var pattern = @"\d+";
 
             // Act
-            var constraint = new RegexConstraint(input, pattern, ConstraintAction.Match);
-            constraint.Evaluate();
+            var constraint = new RegexConstraint(pattern, ConstraintAction.Match);
+            constraint.Evaluate(input);
 
             // Assert
             Assert.AreEqual("[#1] International Trade", constraint.Value);
+            Assert.AreEqual(ConstraintAction.Match, constraint.Action);
         }
 
         [TestMethod]
@@ -75,15 +76,10 @@ namespace DEiXTo.Services
             var pattern = "[a-zA-Z]+";
 
             // Act
-            var constraint = new RegexConstraint(input, pattern);
-            constraint.Evaluate();
+            var constraint = new RegexConstraint(pattern);
+            constraint.Evaluate(input);
 
             // Assert
-            var match = Regex.Match(input, pattern);
-            Assert.IsTrue(match.Success);
-            Assert.AreEqual("International", match.Value);
-            var nextMatch = match.NextMatch();
-            Assert.AreEqual("Trade", nextMatch.Value);
             Assert.AreEqual("International Trade", constraint.Value);
         }
     }

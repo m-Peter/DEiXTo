@@ -17,9 +17,8 @@ namespace DEiXTo.Models
         private string _value;
         private ConstraintAction _action;
 
-        public RegexConstraint(string input, string pattern, ConstraintAction action = ConstraintAction.MatchAndExtract)
+        public RegexConstraint(string pattern, ConstraintAction action = ConstraintAction.MatchAndExtract)
         {
-            _input = input;
             _pattern = pattern;
             _value = String.Empty;
             _action = action;
@@ -35,9 +34,15 @@ namespace DEiXTo.Models
             get { return _pattern; }
         }
 
-        public bool Evaluate()
+        public ConstraintAction Action
         {
-            var match = Regex.Match(_input, _pattern);
+            get { return _action; }
+        }
+
+        public bool Evaluate(string input)
+        {
+            _input = input;
+            var match = Regex.Match(input, _pattern);
 
             if (!match.Success)
             {

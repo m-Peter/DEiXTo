@@ -5,6 +5,40 @@ namespace DEiXTo.Models
 {
     public static class TreeNodeExtensions
     {
+        public static void SetRegexConstraint(this TreeNode node, RegexConstraint constraint)
+        {
+            NodeInfo pInfo = GetPointerInfo(node);
+
+            if (pInfo != null)
+            {
+                pInfo.RegexConstraint = constraint;
+            }
+        }
+
+        public static RegexConstraint GetRegexConstraint(this TreeNode node)
+        {
+            NodeInfo pInfo = GetPointerInfo(node);
+
+            if (pInfo != null)
+            {
+                return pInfo.RegexConstraint;
+            }
+
+            return null;
+        }
+
+        public static bool HasRegexConstraint(this TreeNode node)
+        {
+            NodeInfo pInfo = GetPointerInfo(node);
+
+            if (pInfo != null)
+            {
+                return pInfo.RegexConstraint != null;
+            }
+
+            return false;
+        }
+
         public static string GetSource(this TreeNode node)
         {
             NodeInfo pInfo = GetPointerInfo(node);
