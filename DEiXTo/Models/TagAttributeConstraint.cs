@@ -5,10 +5,10 @@
         private string _attribute;
         private RegexConstraint _constraint;
 
-        public TagAttributeConstraint(string attribute, string value)
+        public TagAttributeConstraint(string attribute, string value, ConstraintAction action = ConstraintAction.MatchAndExtract)
         {
             _attribute = attribute;
-            _constraint = new RegexConstraint(value);
+            _constraint = new RegexConstraint(value, action);
         }
 
         public string Attribute
@@ -17,6 +17,11 @@
         }
 
         public string Value
+        {
+            get { return _constraint.Value; }
+        }
+
+        public string Pattern
         {
             get { return _constraint.Pattern; }
         }

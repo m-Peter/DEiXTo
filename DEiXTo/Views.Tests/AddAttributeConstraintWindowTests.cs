@@ -118,7 +118,7 @@ namespace DEiXTo.Views.Tests
             // Assert
             var constraint = node.GetAttrConstraint();
             Assert.AreEqual("Id", constraint.Attribute);
-            Assert.AreEqual("container", constraint.Value);
+            Assert.AreEqual("container", constraint.Pattern);
         }
     }
 }

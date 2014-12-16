@@ -270,7 +270,7 @@ namespace DEiXTo.Services.Tests
         {
             // Arrange
             var img = CreateRootNode("IMG");
-            var constraint = new TagAttributeConstraint("src", "/img/main/post.png");
+            var constraint = new TagAttributeConstraint("src", ".png");
             img.SetAttrConstraint(constraint);
             var div = CreateNode("DIV", NodeState.Grayed);
             var attributes = new TagAttributeCollection();

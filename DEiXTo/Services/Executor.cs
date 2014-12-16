@@ -219,11 +219,6 @@ namespace DEiXTo.Services
 
             if (left.HasRegexConstraint())
             {
-                // The RegEx builder window will set an RegexConstraint in the left node.
-                // If the left node we're currently at has a RegexConstraint, then we
-                // evaluate it. If the evaluation succeeds, then we add the value at
-                // the Result object.
-
                 var constraint = left.GetRegexConstraint();
                 var input = right.GetContent();
                 var evaluation = constraint.Evaluate(input);
@@ -237,18 +232,15 @@ namespace DEiXTo.Services
 
             if (left.HasAttrConstraint())
             {
-                // The AttributeConstraint window will create an TagAttributeConstraint in
-                // the left node.
                 var constraint = left.GetAttrConstraint();
-                var attr = constraint.Attribute;
-                var value = constraint.Value;
+                var attribute = constraint.Attribute;
+                var pattern = constraint.Pattern;
 
                 var attributes = right.GetAttributes();
-                var content = attributes.GetByName(attr).Value;
+                var input = attributes.GetByName(attribute).Value;
+                var evaluation = constraint.Evaluate(input);
 
-                var match = Regex.Match(content, value);
-
-                if (!match.Success)
+                if (!evaluation)
                 {
                     return false;
                 }
