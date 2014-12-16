@@ -16,11 +16,11 @@ namespace DEiXTo.Models.Tests
             var pattern = @"\d+";
 
             // Act
-            var constraint = new RegexConstraint(pattern);
+            var constraint = new RegexConstraint(pattern, NodeState.Grayed);
 
             // Assert
             Assert.AreEqual(pattern, constraint.Pattern);
-            Assert.AreEqual(ConstraintAction.MatchAndExtract, constraint.Action);
+            Assert.AreEqual(NodeState.Grayed, constraint.State);
         }
 
         [TestMethod]
@@ -31,7 +31,7 @@ namespace DEiXTo.Models.Tests
             var pattern = @"\d+";
 
             // Act
-            var constraint = new RegexConstraint(pattern);
+            var constraint = new RegexConstraint(pattern, NodeState.Grayed);
 
             // Assert
             Assert.IsTrue(constraint.Evaluate(input));
@@ -45,7 +45,7 @@ namespace DEiXTo.Models.Tests
             var pattern = @"\d+";
 
             // Act
-            var constraint = new RegexConstraint(pattern);
+            var constraint = new RegexConstraint(pattern, NodeState.Grayed);
 
             // Assert
             Assert.IsFalse(constraint.Evaluate(input));
@@ -59,12 +59,11 @@ namespace DEiXTo.Models.Tests
             var pattern = @"\d+";
 
             // Act
-            var constraint = new RegexConstraint(pattern, ConstraintAction.Match);
+            var constraint = new RegexConstraint(pattern, NodeState.Grayed);
             constraint.Evaluate(input);
 
             // Assert
             Assert.AreEqual("[#1] International Trade", constraint.Value);
-            Assert.AreEqual(ConstraintAction.Match, constraint.Action);
         }
 
         [TestMethod]
@@ -75,7 +74,7 @@ namespace DEiXTo.Models.Tests
             var pattern = "[a-zA-Z]+";
 
             // Act
-            var constraint = new RegexConstraint(pattern);
+            var constraint = new RegexConstraint(pattern, NodeState.Checked);
             constraint.Evaluate(input);
 
             // Assert

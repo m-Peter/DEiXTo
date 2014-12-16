@@ -67,7 +67,7 @@ namespace DEiXTo.Presenters
         public void AddConstraint(string attributeName)
         {
             var constraint = View.Constraint;
-            var attrConstraint = new TagAttributeConstraint(attributeName, constraint);
+            var attrConstraint = new TagAttributeConstraint(attributeName, constraint, NodeState.Grayed);
             _node.SetAttrConstraint(attrConstraint);
             View.Exit();
         }

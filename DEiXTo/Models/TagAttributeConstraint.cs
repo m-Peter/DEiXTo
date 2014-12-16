@@ -5,10 +5,10 @@
         private string _attribute;
         private RegexConstraint _constraint;
 
-        public TagAttributeConstraint(string attribute, string value, ConstraintAction action = ConstraintAction.MatchAndExtract)
+        public TagAttributeConstraint(string attribute, string value, NodeState state)
         {
             _attribute = attribute;
-            _constraint = new RegexConstraint(value, action);
+            _constraint = new RegexConstraint(value, state);
         }
 
         public string Attribute

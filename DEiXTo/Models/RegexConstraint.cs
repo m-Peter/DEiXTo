@@ -15,13 +15,13 @@ namespace DEiXTo.Models
         private string _input;
         private string _pattern;
         private string _value;
-        private ConstraintAction _action;
+        private NodeState _state;
 
-        public RegexConstraint(string pattern, ConstraintAction action = ConstraintAction.MatchAndExtract)
+        public RegexConstraint(string pattern, NodeState state)
         {
             _pattern = pattern;
             _value = String.Empty;
-            _action = action;
+            _state = state;
         }
 
         public string Input
@@ -34,9 +34,9 @@ namespace DEiXTo.Models
             get { return _pattern; }
         }
 
-        public ConstraintAction Action
+        public NodeState State
         {
-            get { return _action; }
+            get { return _state; }
         }
 
         public bool Evaluate(string input)
@@ -65,12 +65,12 @@ namespace DEiXTo.Models
         {
             get
             {
-                if (_action == ConstraintAction.Match)
+                if (_state == NodeState.Checked || _state == NodeState.CheckedImplied || _state == NodeState.CheckedSource)
                 {
-                    return _input;
+                    return _value;
                 }
 
-                return _value;
+                return _input;
             }
         }
     }

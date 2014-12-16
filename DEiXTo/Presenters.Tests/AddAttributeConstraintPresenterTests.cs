@@ -83,7 +83,7 @@ namespace DEiXTo.Presenters.Tests
         public void TestSelectSpecifiedAttributeConstraint()
         {
             // Arrange
-            var attrConstraint = new TagAttributeConstraint("id", "some-link");
+            var attrConstraint = new TagAttributeConstraint("id", "some-link", NodeState.Grayed);
             node.SetAttrConstraint(attrConstraint);
 
             // Act

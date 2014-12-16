@@ -12,7 +12,7 @@ namespace DEiXTo.Models.Tests
         {
             // Arrange
             var pattern = @"\d+";
-            var constraint = new RegexConstraint(pattern);
+            var constraint = new RegexConstraint(pattern, NodeState.Grayed);
 
             // Act
             var node = new TreeNode();
@@ -28,7 +28,7 @@ namespace DEiXTo.Models.Tests
         {
             // Arrange
             var pattern = @"\d+";
-            var constraint = new RegexConstraint(pattern);
+            var constraint = new RegexConstraint(pattern, NodeState.Grayed);
 
             // Act
             var node = new TreeNode();
@@ -39,7 +39,7 @@ namespace DEiXTo.Models.Tests
             var result = node.GetRegexConstraint();
             Assert.IsNotNull(result);
             Assert.AreEqual(pattern, result.Pattern);
-            Assert.AreEqual(ConstraintAction.MatchAndExtract, result.Action);
+            Assert.AreEqual(NodeState.Grayed, result.State);
         }
     }
 }

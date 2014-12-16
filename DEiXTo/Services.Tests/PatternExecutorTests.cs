@@ -270,7 +270,7 @@ namespace DEiXTo.Services.Tests
         {
             // Arrange
             var img = CreateRootNode("IMG");
-            var constraint = new TagAttributeConstraint("src", ".png");
+            var constraint = new TagAttributeConstraint("src", ".png", NodeState.Grayed);
             img.SetAttrConstraint(constraint);
             var div = CreateNode("DIV", NodeState.Grayed);
             var attributes = new TagAttributeCollection();
@@ -450,7 +450,7 @@ namespace DEiXTo.Services.Tests
         {
             // Arrange
             var p = CreateRootNode("P");
-            p.SetRegexConstraint(new RegexConstraint(@"\d+"));
+            p.SetRegexConstraint(new RegexConstraint(@"\d+", NodeState.Grayed));
             var div = CreateNode("DIV", NodeState.Grayed);
             var p1 = CreateNode("P", NodeState.Grayed);
             p1.Tag = new NodeInfo();

@@ -13,7 +13,7 @@ namespace DEiXTo.Models.Tests
             var pattern = ".png";
 
             // Act
-            var constraint = new TagAttributeConstraint(attribute, pattern);
+            var constraint = new TagAttributeConstraint(attribute, pattern, NodeState.Grayed);
 
             // Assert
             Assert.AreEqual("src", constraint.Attribute);
@@ -29,7 +29,7 @@ namespace DEiXTo.Models.Tests
             var input = "/images/main.png";
 
             // Act
-            var constraint = new TagAttributeConstraint(attribute, pattern);
+            var constraint = new TagAttributeConstraint(attribute, pattern, NodeState.Grayed);
 
             // Assert
             Assert.IsTrue(constraint.Evaluate(input));
@@ -44,7 +44,7 @@ namespace DEiXTo.Models.Tests
             var input = "/images/main.png";
 
             // Act
-            var constraint = new TagAttributeConstraint(attribute, pattern);
+            var constraint = new TagAttributeConstraint(attribute, pattern, NodeState.Grayed);
 
             // Assert
             Assert.IsFalse(constraint.Evaluate(input));
@@ -59,7 +59,7 @@ namespace DEiXTo.Models.Tests
             var input = "/images/main.png";
 
             // Act
-            var constraint = new TagAttributeConstraint(attribute, pattern, ConstraintAction.Match);
+            var constraint = new TagAttributeConstraint(attribute, pattern, NodeState.Grayed);
             constraint.Evaluate(input);
 
             // Assert
@@ -75,7 +75,7 @@ namespace DEiXTo.Models.Tests
             var input = "/images/main.png";
             
             // Act
-            var constraint = new TagAttributeConstraint(attribute, pattern);
+            var constraint = new TagAttributeConstraint(attribute, pattern, NodeState.Checked);
             constraint.Evaluate(input);
 
             // Assert

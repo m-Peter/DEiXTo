@@ -60,7 +60,7 @@ namespace DEiXTo.Views.Tests
             attributes.Add(id);
             attributes.Add(klass);
             node.SetAttributes(attributes);
-            var attrConstraint = new TagAttributeConstraint("class", "column");
+            var attrConstraint = new TagAttributeConstraint("class", "column", NodeState.Grayed);
             node.SetAttrConstraint(attrConstraint);
             window = new AddAttributeConstraintWindow();
             presenter = new AddAttributeConstraintPresenter(window, node);
