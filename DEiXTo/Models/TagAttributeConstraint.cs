@@ -2,7 +2,28 @@
 {
     public class TagAttributeConstraint
     {
-        public string Attribute { get; set; }
-        public string Value { get; set; }
+        private string _attribute;
+        private RegexConstraint _constraint;
+
+        public TagAttributeConstraint(string attribute, string value)
+        {
+            _attribute = attribute;
+            _constraint = new RegexConstraint(value);
+        }
+
+        public string Attribute
+        {
+            get { return _attribute; }
+        }
+
+        public string Value
+        {
+            get { return _constraint.Pattern; }
+        }
+
+        public bool Evaluate(string input)
+        {
+            return _constraint.Evaluate(input);
+        }
     }
 }
