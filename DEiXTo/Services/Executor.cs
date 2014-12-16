@@ -143,7 +143,9 @@ namespace DEiXTo.Services
                 return false;
             }
 
-            AddContentFromInstance(left.GetState(), right, result);
+            var content = right.GetContent();
+
+            AddContentFromInstance(left.GetState(), content, result); ;
 
             for (int i = 0; i < left.Nodes.Count; i++)
             {
@@ -181,16 +183,16 @@ namespace DEiXTo.Services
             }
         }
 
-        private void AddContentFromInstance(NodeState state, TreeNode node, Result result)
+        private void AddContentFromInstance(NodeState state, string content, Result result)
         {
             if (ContainsContent(state))
             {
-                result.AddContent(node.GetContent());
+                result.AddContent(content);
             }
 
             if (ContainsSource(state))
             {
-                result.AddContent(node.GetSource());
+                result.AddContent(content);
             }
         }
 
@@ -217,6 +219,8 @@ namespace DEiXTo.Services
                 return false;
             }
 
+            var content = right.GetContent();
+
             if (left.HasRegexConstraint())
             {
                 var constraint = left.GetRegexConstraint();
@@ -227,7 +231,7 @@ namespace DEiXTo.Services
                 {
                     return false;
                 }
-                right.SetContent(constraint.Value);
+                content = constraint.Value;
             }
 
             if (left.HasAttrConstraint())
@@ -244,9 +248,10 @@ namespace DEiXTo.Services
                 {
                     return false;
                 }
+                content = constraint.Value;
             }
 
-            AddContentFromInstance(left.GetState(), right, result);
+            AddContentFromInstance(left.GetState(), content, result);
 
             var childNodes = left.Nodes.Count;
 
