@@ -34,14 +34,14 @@ namespace DEiXTo.Services
 
             if (_pattern.RootNode.IsRoot())
             {
-                int counter = 0;
+                var counter = 0;
                 _pattern.TrimUncheckedNodes();
                 Match(_pattern.RootNode, _domNodes, ref counter);
                 return;
             }
 
             var upperTree = _pattern.GetUpperTree();
-            TreeNode vRoot = _pattern.FindVirtualRoot();
+            var vRoot = _pattern.FindVirtualRoot();
             MatchSplit(vRoot, _domNodes, upperTree);
         }
 
@@ -49,8 +49,8 @@ namespace DEiXTo.Services
             ref int counter)
         {
             var result = new Result();
-            int start = pattern.GetStartIndex();
-            int step = pattern.GetStepValue();
+            var start = pattern.GetStartIndex();
+            var step = pattern.GetStepValue();
 
             foreach (TreeNode node in nodes)
             {
@@ -90,7 +90,7 @@ namespace DEiXTo.Services
             {
                 if (CompareRecursiveTree(pattern, node, result))
                 {
-                    bool match = CheckUpper(upper, node, result);
+                    var match = CheckUpper(upper, node, result);
 
                     if (!match)
                     {
@@ -148,7 +148,7 @@ namespace DEiXTo.Services
             for (int i = 0; i < left.Nodes.Count; i++)
             {
                 var nextLeft = left.Nodes[i];
-                bool hasNode = HasNextNode(right, i);
+                var hasNode = HasNextNode(right, i);
 
                 if (hasNode)
                 {
@@ -173,7 +173,7 @@ namespace DEiXTo.Services
 
         public IEnumerable<Result> ExtractedResults()
         {
-            int count = _results.Count;
+            var count = _results.Count;
 
             for (int i = 0; i < count; i++)
             {
@@ -248,12 +248,12 @@ namespace DEiXTo.Services
 
             AddContentFromInstance(left.GetState(), right, result);
 
-            int childNodes = left.Nodes.Count;
+            var childNodes = left.Nodes.Count;
 
             for (int i = 0; i < childNodes; i++)
             {
                 var nextLeft = left.Nodes[i];
-                bool hasNode = HasNextNode(right, i);
+                var hasNode = HasNextNode(right, i);
 
                 if (nextLeft.IsRequired())
                 {
@@ -295,7 +295,7 @@ namespace DEiXTo.Services
         {
             if (left.HasLabel())
             {
-                string tag = getTag(left.Text);
+                var tag = getTag(left.Text);
 
                 return tag == right.Text;
             }

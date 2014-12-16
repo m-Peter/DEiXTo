@@ -30,7 +30,6 @@ namespace DEiXTo.Presenters
             {
                 var constraint = _node.GetRegexConstraint();
                 View.RegexText = constraint.Pattern;
-                //View.Action = constraint.Action;
                 
                 return;
             }
@@ -41,7 +40,6 @@ namespace DEiXTo.Presenters
         public void AddRegex()
         {
             var pattern = View.RegexText;
-            //var action = View.Action;
             var action = _node.GetState();
 
             if (String.IsNullOrWhiteSpace(pattern))

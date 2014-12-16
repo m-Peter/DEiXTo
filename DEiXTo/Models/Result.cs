@@ -41,7 +41,7 @@ namespace DEiXTo.Models
 
         public IEnumerable<string> Contents()
         {
-            int count = Count;
+            var count = Count;
 
             for (int i = 0; i < count; i++)
             {
