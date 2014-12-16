@@ -27,9 +27,6 @@ namespace DEiXTo.Services.Tests
             info = builder.SetLabel("SYNOPSIS").Build();
             Assert.AreEqual("SYNOPSIS", info.Label);
 
-            info = builder.SetRegex("/[a-z]/").Build();
-            Assert.AreEqual("/[a-z]/", info.Regex);
-
             info = builder.SetRoot(true).Build();
             Assert.AreEqual(true, info.IsRoot);
 

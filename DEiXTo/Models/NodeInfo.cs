@@ -3,15 +3,12 @@
     public class NodeInfo
     {
         public RegexConstraint RegexConstraint { get; set; }
-
-
         public int SourceIndex { get; set; }
         public string Path { get; set; }
         public string Content { get; set; }
         public string Source { get; set; }
         public string Label { get; set; }
         public string Regex { get; set; }
-        public bool InverseRegex { get; set; }
         public bool IsRoot { get; set; }
         public bool IsTextNode { get; set; }
         public NodeState State { get; set; }

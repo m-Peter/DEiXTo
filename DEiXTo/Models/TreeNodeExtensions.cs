@@ -298,28 +298,6 @@ namespace DEiXTo.Models
             return false;
         }
 
-        public static bool InverseRegex(this TreeNode node)
-        {
-            NodeInfo pInfo = GetPointerInfo(node);
-
-            if (pInfo != null)
-            {
-                return pInfo.InverseRegex;
-            }
-
-            return false;
-        }
-
-        public static void SetInverse(this TreeNode node, bool value)
-        {
-            NodeInfo pInfo = GetPointerInfo(node);
-
-            if (pInfo != null)
-            {
-                pInfo.InverseRegex = value;
-            }
-        }
-
         public static void AddNode(this TreeNode node, TreeNode newNode)
         {
             node.Nodes.Add(newNode);
