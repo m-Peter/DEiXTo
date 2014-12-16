@@ -29,10 +29,6 @@ namespace DEiXTo.Views
             PatternsListView.Items.Add(item8);
             PatternsListView.Items.Add(item9);
 
-            ConstraintActionComboBox.Items.Add(ConstraintAction.MatchAndExtract);
-            ConstraintActionComboBox.Items.Add(ConstraintAction.Match);
-            ConstraintActionComboBox.SelectedIndex = 0;
-
             this.KeyPreview = true;
             this.KeyDown += RegexBuilderWindow_KeyDown;
         }
@@ -46,12 +42,6 @@ namespace DEiXTo.Views
                 AddRegexTextBox.SelectAll();
                 AddRegexTextBox.Focus();
             }
-        }
-
-        public ConstraintAction Action
-        {
-            get { return (ConstraintAction)ConstraintActionComboBox.SelectedItem; }
-            set { ConstraintActionComboBox.SelectedItem = value; }
         }
 
         public bool InverseRegex

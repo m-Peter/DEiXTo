@@ -39,7 +39,6 @@ namespace DEiXTo.Presenters.Tests
         {
             // Arrange
             view.Setup(v => v.RegexText).Returns("some regex");
-            //view.Setup(v => v.Action).Returns(NodeState.Checked);
 
             // Act
             presenter.AddRegex();
@@ -47,7 +46,6 @@ namespace DEiXTo.Presenters.Tests
             // Assert
             var constraint = node.GetRegexConstraint();
             Assert.AreEqual("some regex", constraint.Pattern);
-            //Assert.AreEqual(NodeState.Checked, constraint.State);
             eventHub.Verify(e => e.Publish(It.Is<RegexAdded>(ra => ra.Node == node)));
             view.Verify(v => v.Exit());
         }
@@ -71,7 +69,6 @@ namespace DEiXTo.Presenters.Tests
         {
             // Arrange
             view.Setup(v => v.RegexText).Returns("some regex");
-            //view.Setup(v => v.Action).Returns(ConstraintAction.Match);
 
             // Act
             presenter.KeyDownPress(Keys.Enter);
@@ -79,7 +76,6 @@ namespace DEiXTo.Presenters.Tests
             // Assert
             var constraint = node.GetRegexConstraint();
             Assert.AreEqual("some regex", constraint.Pattern);
-            //Assert.AreEqual(ConstraintAction.Match, constraint.Action);
             eventHub.Verify(e => e.Publish(It.Is<RegexAdded>(ra => ra.Node == node)));
             view.Verify(v => v.Exit());
         }
@@ -96,7 +92,6 @@ namespace DEiXTo.Presenters.Tests
 
             // Assert
             view.VerifySet(v => v.RegexText = "[0-9]{2}");
-            //view.VerifySet(v => v.Action = ConstraintAction.Match);
         }
 
         [TestMethod]
@@ -109,13 +104,11 @@ namespace DEiXTo.Presenters.Tests
             // Act
             presenter = new RegexBuilderPresenter(view.Object, node, eventHub.Object);
             view.Setup(v => v.RegexText).Returns("[0-9]{2}");
-            view.Setup(v => v.Action).Returns(ConstraintAction.MatchAndExtract);
             presenter.AddRegex();
 
             // Assert
             var result = node.GetRegexConstraint();
             Assert.AreEqual("[0-9]{2}", result.Pattern);
-            //Assert.AreEqual(ConstraintAction.MatchAndExtract, result.Action);
             eventHub.Verify(e => e.Publish(It.Is<RegexAdded>(ra => ra.Node == node)));
             view.Verify(v => v.Exit());
         }

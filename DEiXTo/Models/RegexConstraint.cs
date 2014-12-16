@@ -4,12 +4,6 @@ using System.Text.RegularExpressions;
 
 namespace DEiXTo.Models
 {
-    public enum ConstraintAction
-    {
-        Match,
-        MatchAndExtract
-    }
-
     public class RegexConstraint
     {
         private string _input;

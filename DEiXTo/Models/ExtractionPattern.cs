@@ -39,7 +39,7 @@ namespace DEiXTo.Models
 
         public int CountOutputVariables()
         {
-            int outputVariables = 0;
+            var outputVariables = 0;
 
             countVariables(_rootNode, ref outputVariables);
 
@@ -48,8 +48,8 @@ namespace DEiXTo.Models
 
         public List<string> OutputVariableLabels()
         {
-            List<string> labels = new List<string>();
-            int counter = 1;
+            var labels = new List<string>();
+            var counter = 1;
 
             collectVariableLabels(_rootNode, labels, ref counter);
 
@@ -134,7 +134,7 @@ namespace DEiXTo.Models
 
         private void filterUncheckedNodes(TreeNode node)
         {
-            TreeNode parent = node.Parent;
+            var parent = node.Parent;
 
             if (node.IsSkipped())
             {
