@@ -10,15 +10,31 @@ namespace DEiXTo.Views
         public RegexBuilderWindow()
         {
             InitializeComponent();
-            ListViewItem item1 = new ListViewItem(new string[] { "^b", "Begin with 'b'", "some example use case" });
-            ListViewItem item2 = new ListViewItem(new string[] { "e$", "End with 'e'", "some example use case" });
-            ListViewItem item3 = new ListViewItem(new string[] { "sth", "Contains 'sth'", "some example use case" });
-            ListViewItem item4 = new ListViewItem(new string[] { ".*sth.*", "Contains 'sth' but gets all the text", "some example use case" });
-            ListViewItem item5 = new ListViewItem(new string[] { "^w$", "Exact match with 'w'", "some example use case" });
-            ListViewItem item6 = new ListViewItem(new string[] { "\\$", "Price in dollars", "some example use case" });
-            ListViewItem item7 = new ListViewItem(new string[] { "€", "Price in euro", "some example use case" });
-            ListViewItem item8 = new ListViewItem(new string[] { "\\$(\\d*,?\\d*\\.?\\d*)", "Extract just the price", "some example use case" });
-            ListViewItem item9 = new ListViewItem(new string[] { ".*", "Matches everything", "some example use case" });
+            var item1 = new ListViewItem(new string[] { "[abc]", "A single character of: a, b, or c" });
+            var item2 = new ListViewItem(new string[] { "[^abc]", "Any single character except: a, b, or c" });
+            var item3 = new ListViewItem(new string[] { "[a-z]", "Any single character in the range a-z" });
+            var item4 = new ListViewItem(new string[] { "[a-zA-Z]", "Any single character in the range a-z or A-Z" });
+            var item5 = new ListViewItem(new string[] { "^", "Start of line" });
+            var item6 = new ListViewItem(new string[] { "$", "End of line" });
+            var item7 = new ListViewItem(new string[] { "\\A", "Start of string" });
+            var item8 = new ListViewItem(new string[] { "\\z", "End of string" });
+            var item9 = new ListViewItem(new string[] { ".", "Any single character" });
+            var item10 = new ListViewItem(new string[] { "\\s", "Any whitespace character" });
+            var item11 = new ListViewItem(new string[] { "\\S", "Any non-whitespace character" });
+            var item12 = new ListViewItem(new string[] { "\\d", "Any digit" });
+            var item13 = new ListViewItem(new string[] { "\\D", "Any non-digit" });
+            var item14 = new ListViewItem(new string[] { "\\w", "Any word character (letter, number, underscore)" });
+            var item15 = new ListViewItem(new string[] { "\\W", "Any non-word character" });
+            var item16 = new ListViewItem(new string[] { "\\b", "Any word boundary" });
+            var item17 = new ListViewItem(new string[] { "(...)", "Capture everything enclosed" });
+            var item18 = new ListViewItem(new string[] { "(a|b)", "a or b" });
+            var item19 = new ListViewItem(new string[] { "a?", "Zero or one of a" });
+            var item20 = new ListViewItem(new string[] { "a*", "Zero or more of a" });
+            var item21 = new ListViewItem(new string[] { "a+", "One or more of a" });
+            var item22 = new ListViewItem(new string[] { "a{3}", "Exactly 3 of a" });
+            var item23 = new ListViewItem(new string[] { "a{3,}", "3 or more of a" });
+            var item24 = new ListViewItem(new string[] { "a{3,6}", "Between 3 and 6 of a" });
+
             PatternsListView.Items.Add(item1);
             PatternsListView.Items.Add(item2);
             PatternsListView.Items.Add(item3);
@@ -28,6 +44,21 @@ namespace DEiXTo.Views
             PatternsListView.Items.Add(item7);
             PatternsListView.Items.Add(item8);
             PatternsListView.Items.Add(item9);
+            PatternsListView.Items.Add(item10);
+            PatternsListView.Items.Add(item11);
+            PatternsListView.Items.Add(item12);
+            PatternsListView.Items.Add(item13);
+            PatternsListView.Items.Add(item14);
+            PatternsListView.Items.Add(item15);
+            PatternsListView.Items.Add(item16);
+            PatternsListView.Items.Add(item17);
+            PatternsListView.Items.Add(item18);
+            PatternsListView.Items.Add(item19);
+            PatternsListView.Items.Add(item20);
+            PatternsListView.Items.Add(item21);
+            PatternsListView.Items.Add(item22);
+            PatternsListView.Items.Add(item23);
+            PatternsListView.Items.Add(item24);
 
             this.KeyPreview = true;
             this.KeyDown += RegexBuilderWindow_KeyDown;

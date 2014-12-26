@@ -48,10 +48,10 @@
             // 
             this.PatternsTabControl.Controls.Add(this.tabPage1);
             this.PatternsTabControl.Controls.Add(this.tabPage2);
-            this.PatternsTabControl.Location = new System.Drawing.Point(12, 12);
+            this.PatternsTabControl.Location = new System.Drawing.Point(167, 29);
             this.PatternsTabControl.Name = "PatternsTabControl";
             this.PatternsTabControl.SelectedIndex = 0;
-            this.PatternsTabControl.Size = new System.Drawing.Size(453, 296);
+            this.PatternsTabControl.Size = new System.Drawing.Size(517, 356);
             this.PatternsTabControl.TabIndex = 0;
             // 
             // tabPage1
@@ -60,7 +60,7 @@
             this.tabPage1.Location = new System.Drawing.Point(4, 22);
             this.tabPage1.Name = "tabPage1";
             this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage1.Size = new System.Drawing.Size(445, 270);
+            this.tabPage1.Size = new System.Drawing.Size(509, 330);
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "Patterns";
             this.tabPage1.UseVisualStyleBackColor = true;
@@ -74,7 +74,7 @@
             this.PatternsListView.FullRowSelect = true;
             this.PatternsListView.Location = new System.Drawing.Point(6, 15);
             this.PatternsListView.Name = "PatternsListView";
-            this.PatternsListView.Size = new System.Drawing.Size(433, 249);
+            this.PatternsListView.Size = new System.Drawing.Size(497, 309);
             this.PatternsListView.TabIndex = 0;
             this.PatternsListView.UseCompatibleStateImageBehavior = false;
             this.PatternsListView.View = System.Windows.Forms.View.Details;
@@ -108,7 +108,7 @@
             // AddRegexLabel
             // 
             this.AddRegexLabel.AutoSize = true;
-            this.AddRegexLabel.Location = new System.Drawing.Point(13, 325);
+            this.AddRegexLabel.Location = new System.Drawing.Point(744, 497);
             this.AddRegexLabel.Name = "AddRegexLabel";
             this.AddRegexLabel.Size = new System.Drawing.Size(153, 13);
             this.AddRegexLabel.TabIndex = 1;
@@ -117,7 +117,7 @@
             // AddRegexTextBox
             // 
             this.AddRegexTextBox.HideSelection = false;
-            this.AddRegexTextBox.Location = new System.Drawing.Point(172, 322);
+            this.AddRegexTextBox.Location = new System.Drawing.Point(608, 461);
             this.AddRegexTextBox.Name = "AddRegexTextBox";
             this.AddRegexTextBox.Size = new System.Drawing.Size(289, 20);
             this.AddRegexTextBox.TabIndex = 2;
@@ -125,7 +125,7 @@
             // InverseEvaluationCheckBox
             // 
             this.InverseEvaluationCheckBox.AutoSize = true;
-            this.InverseEvaluationCheckBox.Location = new System.Drawing.Point(12, 357);
+            this.InverseEvaluationCheckBox.Location = new System.Drawing.Point(827, 435);
             this.InverseEvaluationCheckBox.Name = "InverseEvaluationCheckBox";
             this.InverseEvaluationCheckBox.Size = new System.Drawing.Size(151, 17);
             this.InverseEvaluationCheckBox.TabIndex = 3;
@@ -134,7 +134,7 @@
             // 
             // OKButton
             // 
-            this.OKButton.Location = new System.Drawing.Point(12, 390);
+            this.OKButton.Location = new System.Drawing.Point(903, 458);
             this.OKButton.Name = "OKButton";
             this.OKButton.Size = new System.Drawing.Size(75, 23);
             this.OKButton.TabIndex = 4;
@@ -144,7 +144,7 @@
             // 
             // CancelButton
             // 
-            this.CancelButton.Location = new System.Drawing.Point(109, 390);
+            this.CancelButton.Location = new System.Drawing.Point(903, 487);
             this.CancelButton.Name = "CancelButton";
             this.CancelButton.Size = new System.Drawing.Size(75, 23);
             this.CancelButton.TabIndex = 5;
@@ -156,7 +156,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(497, 431);
+            this.ClientSize = new System.Drawing.Size(990, 522);
             this.Controls.Add(this.CancelButton);
             this.Controls.Add(this.OKButton);
             this.Controls.Add(this.InverseEvaluationCheckBox);
