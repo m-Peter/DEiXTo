@@ -152,12 +152,17 @@ namespace DEiXTo.Views
 
         private void ShowMatches(Regex regex, Match match)
         {
-            string[] names = regex.GetGroupNames();
+            var names = regex.GetGroupNames();
+            int index = 0;
             for (int i = 1; i < names.Length; i++)
             {
-                Group grp = match.Groups[names[i]];
-                string format = string.Format("{0} {1}", names[i], grp.Value);
-                GroupsRtb.AppendText(format + "\n");
+                var grp = match.Groups[names[i]];
+                var format = string.Format("{0} {1}\n", names[i], grp.Value);
+                GroupsRtb.AppendText(format);
+                GroupsRtb.SelectionStart = index;
+                GroupsRtb.SelectionLength = names[i].Length;
+                GroupsRtb.SelectionBackColor = Color.LightSalmon;
+                index = (index + format.Length);
             }
         }
     }
