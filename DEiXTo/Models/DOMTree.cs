@@ -54,7 +54,7 @@ namespace DEiXTo.Models
                 }
             }
 
-            throw new NodeNotFound("Node wasn't found in DOMTree", pattern);
+            throw new NodeNotFound("Node wasn't found in DOMTree");
         }
 
         public TreeNode GetNodeFor(HtmlElement element)
