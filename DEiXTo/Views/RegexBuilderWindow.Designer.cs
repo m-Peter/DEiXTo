@@ -50,6 +50,7 @@
             this.label5 = new System.Windows.Forms.Label();
             this.button1 = new System.Windows.Forms.Button();
             this.MatchRtb = new System.Windows.Forms.RichTextBox();
+            this.GroupsRtb = new System.Windows.Forms.RichTextBox();
             this.PatternsTabControl.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.SuspendLayout();
@@ -110,7 +111,7 @@
             this.tabPage2.Location = new System.Drawing.Point(4, 22);
             this.tabPage2.Name = "tabPage2";
             this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage2.Size = new System.Drawing.Size(445, 270);
+            this.tabPage2.Size = new System.Drawing.Size(448, 246);
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "Syntax";
             this.tabPage2.UseVisualStyleBackColor = true;
@@ -165,7 +166,7 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(57, 16);
+            this.label1.Location = new System.Drawing.Point(60, 9);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(120, 13);
             this.label1.TabIndex = 6;
@@ -175,7 +176,7 @@
             // 
             this.label2.AutoSize = true;
             this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label2.Location = new System.Drawing.Point(43, 37);
+            this.label2.Location = new System.Drawing.Point(43, 25);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(14, 20);
             this.label2.TabIndex = 7;
@@ -185,7 +186,7 @@
             // 
             this.label3.AutoSize = true;
             this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label3.Location = new System.Drawing.Point(554, 39);
+            this.label3.Location = new System.Drawing.Point(554, 25);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(14, 20);
             this.label3.TabIndex = 8;
@@ -193,14 +194,14 @@
             // 
             // RegexTb
             // 
-            this.RegexTb.Location = new System.Drawing.Point(63, 39);
+            this.RegexTb.Location = new System.Drawing.Point(63, 25);
             this.RegexTb.Name = "RegexTb";
             this.RegexTb.Size = new System.Drawing.Size(485, 20);
             this.RegexTb.TabIndex = 9;
             // 
             // textBox2
             // 
-            this.textBox2.Location = new System.Drawing.Point(574, 39);
+            this.textBox2.Location = new System.Drawing.Point(574, 25);
             this.textBox2.Name = "textBox2";
             this.textBox2.Size = new System.Drawing.Size(100, 20);
             this.textBox2.TabIndex = 10;
@@ -208,7 +209,7 @@
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(60, 73);
+            this.label4.Location = new System.Drawing.Point(60, 57);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(80, 13);
             this.label4.TabIndex = 11;
@@ -216,7 +217,7 @@
             // 
             // InputTb
             // 
-            this.InputTb.Location = new System.Drawing.Point(63, 89);
+            this.InputTb.Location = new System.Drawing.Point(63, 73);
             this.InputTb.Multiline = true;
             this.InputTb.Name = "InputTb";
             this.InputTb.Size = new System.Drawing.Size(308, 131);
@@ -225,7 +226,7 @@
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(433, 73);
+            this.label5.Location = new System.Drawing.Point(433, 57);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(68, 13);
             this.label5.TabIndex = 14;
@@ -233,7 +234,7 @@
             // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(605, 245);
+            this.button1.Location = new System.Drawing.Point(645, 332);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(75, 23);
             this.button1.TabIndex = 15;
@@ -243,17 +244,26 @@
             // 
             // MatchRtb
             // 
-            this.MatchRtb.Location = new System.Drawing.Point(436, 89);
+            this.MatchRtb.Location = new System.Drawing.Point(436, 73);
             this.MatchRtb.Name = "MatchRtb";
             this.MatchRtb.Size = new System.Drawing.Size(171, 56);
             this.MatchRtb.TabIndex = 16;
             this.MatchRtb.Text = "";
+            // 
+            // GroupsRtb
+            // 
+            this.GroupsRtb.Location = new System.Drawing.Point(436, 136);
+            this.GroupsRtb.Name = "GroupsRtb";
+            this.GroupsRtb.Size = new System.Drawing.Size(171, 109);
+            this.GroupsRtb.TabIndex = 17;
+            this.GroupsRtb.Text = "";
             // 
             // RegexBuilderWindow
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(990, 522);
+            this.Controls.Add(this.GroupsRtb);
             this.Controls.Add(this.MatchRtb);
             this.Controls.Add(this.button1);
             this.Controls.Add(this.label5);
@@ -303,5 +313,6 @@
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.RichTextBox MatchRtb;
+        private System.Windows.Forms.RichTextBox GroupsRtb;
     }
 }

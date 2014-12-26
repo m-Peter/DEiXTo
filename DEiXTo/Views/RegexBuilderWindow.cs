@@ -126,24 +126,38 @@ namespace DEiXTo.Views
             // Gather Pattern, Input string
             var pattern = RegexTb.Text;
             var input = InputTb.Text;
-            var regex = Regex.Match(input, pattern);
+            var regex = new Regex(pattern);
+            var match = regex.Match(input);
+
+            ShowMatches(regex, match);
 
             MatchRtb.AppendText(input);
             int pos = 0;
             int index = -1;
 
-            while (regex.Success)
+            while (match.Success)
             {
                 // Get the value that matched (regex.value)
-                index = input.IndexOf(regex.Value, pos);
+                index = input.IndexOf(match.Value, pos);
                 // Advance the position, by the length of matched value
                 pos = index;
                 // Highlight the matched value
                 MatchRtb.SelectionStart = index;
-                MatchRtb.SelectionLength = regex.Value.Length;
+                MatchRtb.SelectionLength = match.Value.Length;
                 MatchRtb.SelectionColor = Color.BlueViolet;
                 // Move to the next regex
-                regex = regex.NextMatch();
+                match = match.NextMatch();
+            }
+        }
+
+        private void ShowMatches(Regex regex, Match match)
+        {
+            string[] names = regex.GetGroupNames();
+            for (int i = 1; i < names.Length; i++)
+            {
+                Group grp = match.Groups[names[i]];
+                string format = string.Format("{0} {1}", names[i], grp.Value);
+                GroupsRtb.AppendText(format + "\n");
             }
         }
     }
