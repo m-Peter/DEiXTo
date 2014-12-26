@@ -1,11 +1,14 @@
 ﻿using DEiXTo.Models;
 using DEiXTo.Presenters;
 using System;
+using System.Drawing;
+using System.Text;
+using System.Text.RegularExpressions;
 using System.Windows.Forms;
 
 namespace DEiXTo.Views
 {
-    public partial class RegexBuilderWindow : Form , IRegexBuilderView
+    public partial class RegexBuilderWindow : Form, IRegexBuilderView
     {
         public RegexBuilderWindow()
         {
@@ -115,6 +118,32 @@ namespace DEiXTo.Views
             if (e.IsSelected)
             {
                 AddRegexTextBox.Text = item.SubItems[0].Text;
+            }
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            // Gather Pattern, Input string
+            var pattern = RegexTb.Text;
+            var input = InputTb.Text;
+            var regex = Regex.Match(input, pattern);
+
+            MatchRtb.AppendText(input);
+            int pos = 0;
+            int index = -1;
+
+            while (regex.Success)
+            {
+                // Get the value that matched (regex.value)
+                index = input.IndexOf(regex.Value, pos);
+                // Advance the position, by the length of matched value
+                pos = index;
+                // Highlight the matched value
+                MatchRtb.SelectionStart = index;
+                MatchRtb.SelectionLength = regex.Value.Length;
+                MatchRtb.SelectionColor = Color.BlueViolet;
+                // Move to the next regex
+                regex = regex.NextMatch();
             }
         }
     }

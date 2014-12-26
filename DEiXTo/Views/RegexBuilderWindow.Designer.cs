@@ -43,12 +43,13 @@
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
-            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.RegexTb = new System.Windows.Forms.TextBox();
             this.textBox2 = new System.Windows.Forms.TextBox();
             this.label4 = new System.Windows.Forms.Label();
-            this.textBox3 = new System.Windows.Forms.TextBox();
-            this.textBox4 = new System.Windows.Forms.TextBox();
+            this.InputTb = new System.Windows.Forms.TextBox();
             this.label5 = new System.Windows.Forms.Label();
+            this.button1 = new System.Windows.Forms.Button();
+            this.MatchRtb = new System.Windows.Forms.RichTextBox();
             this.PatternsTabControl.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.SuspendLayout();
@@ -190,12 +191,12 @@
             this.label3.TabIndex = 8;
             this.label3.Text = "/";
             // 
-            // textBox1
+            // RegexTb
             // 
-            this.textBox1.Location = new System.Drawing.Point(63, 39);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(485, 20);
-            this.textBox1.TabIndex = 9;
+            this.RegexTb.Location = new System.Drawing.Point(63, 39);
+            this.RegexTb.Name = "RegexTb";
+            this.RegexTb.Size = new System.Drawing.Size(485, 20);
+            this.RegexTb.TabIndex = 9;
             // 
             // textBox2
             // 
@@ -213,21 +214,13 @@
             this.label4.TabIndex = 11;
             this.label4.Text = "Your test string:";
             // 
-            // textBox3
+            // InputTb
             // 
-            this.textBox3.Location = new System.Drawing.Point(63, 89);
-            this.textBox3.Multiline = true;
-            this.textBox3.Name = "textBox3";
-            this.textBox3.Size = new System.Drawing.Size(308, 131);
-            this.textBox3.TabIndex = 12;
-            // 
-            // textBox4
-            // 
-            this.textBox4.Location = new System.Drawing.Point(436, 89);
-            this.textBox4.Multiline = true;
-            this.textBox4.Name = "textBox4";
-            this.textBox4.Size = new System.Drawing.Size(238, 40);
-            this.textBox4.TabIndex = 13;
+            this.InputTb.Location = new System.Drawing.Point(63, 89);
+            this.InputTb.Multiline = true;
+            this.InputTb.Name = "InputTb";
+            this.InputTb.Size = new System.Drawing.Size(308, 131);
+            this.InputTb.TabIndex = 12;
             // 
             // label5
             // 
@@ -238,17 +231,36 @@
             this.label5.TabIndex = 14;
             this.label5.Text = "Match result:";
             // 
+            // button1
+            // 
+            this.button1.Location = new System.Drawing.Point(605, 245);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(75, 23);
+            this.button1.TabIndex = 15;
+            this.button1.Text = "Test";
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
+            // 
+            // MatchRtb
+            // 
+            this.MatchRtb.Location = new System.Drawing.Point(436, 89);
+            this.MatchRtb.Name = "MatchRtb";
+            this.MatchRtb.Size = new System.Drawing.Size(171, 56);
+            this.MatchRtb.TabIndex = 16;
+            this.MatchRtb.Text = "";
+            // 
             // RegexBuilderWindow
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(990, 522);
+            this.Controls.Add(this.MatchRtb);
+            this.Controls.Add(this.button1);
             this.Controls.Add(this.label5);
-            this.Controls.Add(this.textBox4);
-            this.Controls.Add(this.textBox3);
+            this.Controls.Add(this.InputTb);
             this.Controls.Add(this.label4);
             this.Controls.Add(this.textBox2);
-            this.Controls.Add(this.textBox1);
+            this.Controls.Add(this.RegexTb);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
@@ -284,11 +296,12 @@
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.TextBox RegexTb;
         private System.Windows.Forms.TextBox textBox2;
         private System.Windows.Forms.Label label4;
-        private System.Windows.Forms.TextBox textBox3;
-        private System.Windows.Forms.TextBox textBox4;
+        private System.Windows.Forms.TextBox InputTb;
         private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.RichTextBox MatchRtb;
     }
 }
