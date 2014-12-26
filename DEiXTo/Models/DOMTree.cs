@@ -2,9 +2,25 @@
 using System.Collections.Generic;
 using System.Windows.Forms;
 using DEiXTo.Services;
+using System;
 
 namespace DEiXTo.Models
 {
+    public class NodeNotFound : Exception
+    {
+        public NodeNotFound()
+        {
+        }
+
+        public NodeNotFound(string message) : base(message)
+        {
+        }
+
+        public NodeNotFound(string message, Exception inner) : base(message, inner)
+        {
+        }
+    }
+
     public class DOMTree
     {
         private IDictionary<IHTMLDOMNode, TreeNode> _DOMTree = new Dictionary<IHTMLDOMNode, TreeNode>();
@@ -38,7 +54,7 @@ namespace DEiXTo.Models
                 }
             }
 
-            return null;
+            throw new NodeNotFound("Node wasn't found in DOMTree", pattern);
         }
 
         public TreeNode GetNodeFor(HtmlElement element)
@@ -50,7 +66,7 @@ namespace DEiXTo.Models
                 return _DOMTree[curElem];
             }
 
-            return null;
+            throw new NodeNotFound("Node wasn't found in DOMTree");
         }
 
         public void Add(IHTMLDOMNode key, TreeNode value)
