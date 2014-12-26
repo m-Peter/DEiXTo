@@ -69,19 +69,19 @@ namespace DEiXTo.Views
 
         public string RegexText
         {
-            get { return AddRegexTextBox.Text; }
+            get { return RegexTb.Text; }
             set
             {
-                AddRegexTextBox.Text = value;
-                AddRegexTextBox.SelectAll();
-                AddRegexTextBox.Focus();
+                RegexTb.Text = value;
+                RegexTb.SelectAll();
+                RegexTb.Focus();
             }
         }
 
         public bool InverseRegex
         {
-            get { return InverseEvaluationCheckBox.Checked; }
-            set { InverseEvaluationCheckBox.Checked = value; }
+            get { return true; }
+            set {  }
         }
 
         public RegexBuilderPresenter Presenter { get; set; }
@@ -117,7 +117,7 @@ namespace DEiXTo.Views
 
             if (e.IsSelected)
             {
-                AddRegexTextBox.Text = item.SubItems[0].Text;
+                RegexTb.Text = item.SubItems[0].Text;
             }
         }
 
