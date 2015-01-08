@@ -38,7 +38,6 @@
             this.BrowseToURLButton = new System.Windows.Forms.Button();
             this.URLComboBox = new System.Windows.Forms.ComboBox();
             this.URLLabel = new System.Windows.Forms.Label();
-            this.WebBrowser = new System.Windows.Forms.WebBrowser();
             this.DOMGroupBox = new System.Windows.Forms.GroupBox();
             this.SimplifyDOMButton = new System.Windows.Forms.Button();
             this.RebuildDOMButton = new System.Windows.Forms.Button();
@@ -208,6 +207,7 @@
             this.DeleteNodeMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.EnableHighlightMenuStrip = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.EnableHighlightingMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.WebBrowser = new System.Windows.Forms.WebBrowser();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
@@ -316,7 +316,7 @@
             this.AutoScrollCheckBox.AutoSize = true;
             this.AutoScrollCheckBox.Checked = true;
             this.AutoScrollCheckBox.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.AutoScrollCheckBox.Location = new System.Drawing.Point(521, 181);
+            this.AutoScrollCheckBox.Location = new System.Drawing.Point(521, 179);
             this.AutoScrollCheckBox.Name = "AutoScrollCheckBox";
             this.AutoScrollCheckBox.Size = new System.Drawing.Size(74, 17);
             this.AutoScrollCheckBox.TabIndex = 5;
@@ -339,9 +339,9 @@
             // BrowseToURLButton
             // 
             this.BrowseToURLButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.BrowseToURLButton.Location = new System.Drawing.Point(595, 175);
+            this.BrowseToURLButton.Location = new System.Drawing.Point(595, 172);
             this.BrowseToURLButton.Name = "BrowseToURLButton";
-            this.BrowseToURLButton.Size = new System.Drawing.Size(53, 23);
+            this.BrowseToURLButton.Size = new System.Drawing.Size(53, 27);
             this.BrowseToURLButton.TabIndex = 3;
             this.BrowseToURLButton.Text = "Browse";
             this.BrowseToURLButton.UseVisualStyleBackColor = true;
@@ -361,24 +361,11 @@
             // 
             this.URLLabel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.URLLabel.AutoSize = true;
-            this.URLLabel.Location = new System.Drawing.Point(6, 183);
+            this.URLLabel.Location = new System.Drawing.Point(6, 179);
             this.URLLabel.Name = "URLLabel";
             this.URLLabel.Size = new System.Drawing.Size(32, 13);
             this.URLLabel.TabIndex = 1;
             this.URLLabel.Text = "URL:";
-            // 
-            // WebBrowser
-            // 
-            this.WebBrowser.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.WebBrowser.Location = new System.Drawing.Point(6, 19);
-            this.WebBrowser.MinimumSize = new System.Drawing.Size(20, 20);
-            this.WebBrowser.Name = "WebBrowser";
-            this.WebBrowser.ScriptErrorsSuppressed = true;
-            this.WebBrowser.Size = new System.Drawing.Size(642, 144);
-            this.WebBrowser.TabIndex = 0;
-            this.WebBrowser.DocumentCompleted += new System.Windows.Forms.WebBrowserDocumentCompletedEventHandler(this.WebBrowser_DocumentCompleted);
             // 
             // DOMGroupBox
             // 
@@ -1609,7 +1596,7 @@
             this.toolStripSeparator8,
             this.DeleteNodeMenuItem});
             this.AdjustpatternMenuStrip.Name = "AdjustpatternMenuStrip";
-            this.AdjustpatternMenuStrip.Size = new System.Drawing.Size(239, 420);
+            this.AdjustpatternMenuStrip.Size = new System.Drawing.Size(239, 398);
             // 
             // CheckedMenuItem
             // 
@@ -1970,6 +1957,19 @@
             this.EnableHighlightingMenuItem.Size = new System.Drawing.Size(179, 22);
             this.EnableHighlightingMenuItem.Text = "Enable Highlighting";
             this.EnableHighlightingMenuItem.Click += new System.EventHandler(this.EnableHighlightingMenuItem_Click);
+            // 
+            // WebBrowser
+            // 
+            this.WebBrowser.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.WebBrowser.Location = new System.Drawing.Point(6, 19);
+            this.WebBrowser.MinimumSize = new System.Drawing.Size(20, 20);
+            this.WebBrowser.Name = "WebBrowser";
+            this.WebBrowser.ScriptErrorsSuppressed = true;
+            this.WebBrowser.Size = new System.Drawing.Size(642, 144);
+            this.WebBrowser.TabIndex = 0;
+            this.WebBrowser.DocumentCompleted += new System.Windows.Forms.WebBrowserDocumentCompletedEventHandler(this.WebBrowser_DocumentCompleted);
             // 
             // DeixtoAgentWindow
             // 
