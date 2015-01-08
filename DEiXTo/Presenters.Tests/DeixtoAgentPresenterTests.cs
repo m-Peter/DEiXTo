@@ -603,7 +603,7 @@ namespace DEiXTo.Presenters.Tests
             presenter.RemoveRegex(node);
 
             // Assert
-            Assert.IsNull(node.GetRegex());
+            Assert.IsNull(node.GetRegexConstraint());
         }
 
         [TestMethod]

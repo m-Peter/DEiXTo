@@ -139,6 +139,7 @@
     <Compile Include="Services.Tests\NodeBuilderTests.cs" />
     <Compile Include="Services.Tests\SimplifiedDOMBuilderTests.cs" />
     <Compile Include="Services.Tests\TagTooltipExtractorTests.cs" />
+    <Compile Include="Services.Tests\TestTreeComparison.cs" />
     <Compile Include="Services.Tests\TooltipExtractionFactoryTests.cs" />
     <Compile Include="Services\DeixtoWrapperFileRepository.cs" />
     <Compile Include="Services\DeixtoWrapperMapper.cs" />

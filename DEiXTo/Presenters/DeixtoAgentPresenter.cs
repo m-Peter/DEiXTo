@@ -278,7 +278,7 @@ namespace DEiXTo.Presenters
         {
             var font = node.NodeFont;
             node.NodeFont = new Font(font, FontStyle.Regular);
-            node.SetRegex(null);
+            node.SetRegexConstraint(null);
         }
 
         public void RemoveLabel(TreeNode node)

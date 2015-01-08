@@ -646,7 +646,7 @@ namespace DEiXTo.Views
             AddNextSiblingMenuItem.Enabled = true;
             SetAsRootMenuItem.Enabled = false;
             RemoveLabelMenuItem.Enabled = node.HasLabel();
-            RemoveRegExMenuItem.Enabled = node.HasRegex();
+            RemoveRegExMenuItem.Enabled = node.HasRegexConstraint();
 
             if (node.IsRoot())
             {
@@ -1158,12 +1158,6 @@ namespace DEiXTo.Views
         private void GoButton_Click(object sender, EventArgs e)
         {
             Presenter.RunInAutoMode();
-        }
-
-        private void AddAttributeConstraintMenuItem_Click(object sender, EventArgs e)
-        {
-            //var node = WorkingPatternTreeView.SelectedNode;
-            //Presenter.AddAttributeConstraint(node);
         }
 
         private void DisableHighlightingMenuItem_Click(object sender, EventArgs e)
