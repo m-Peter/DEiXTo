@@ -16,6 +16,13 @@ namespace DEiXTo.Views.Tests
         private TreeNode node;
         private Mock<IEventHub> eventHub;
 
+        [SetUp]
+        public void SetUp()
+        {
+            eventHub = new Mock<IEventHub>();
+            window = new RegexBuilderWindow();
+        }
+
         [Test]
         public void TestStartingState()
         {
@@ -23,13 +30,10 @@ namespace DEiXTo.Views.Tests
             node = new TreeNode("SPAN");
             node.Tag = new NodeInfo();
             node.SetContent("$11.5");
-            eventHub = new Mock<IEventHub>();
-            window = new RegexBuilderWindow();
             presenter = new RegexBuilderPresenter(window, node, eventHub.Object);
 
             // Assert
-            //Assert.AreEqual("$11.5", window.AddRegexTextBox.Text);
-            //Assert.IsFalse(window.InverseEvaluationCheckBox.Checked);
+            Assert.AreEqual("$11.5", window.RegexTb.Text);
         }
 
         [Test]
@@ -39,26 +43,20 @@ namespace DEiXTo.Views.Tests
             node = new TreeNode("SPAN");
             node.Tag = new NodeInfo();
             node.SetContent("$11.5");
-            eventHub = new Mock<IEventHub>();
-            window = new RegexBuilderWindow();
             presenter = new RegexBuilderPresenter(window, node, eventHub.Object);
+
             // Act
-            //window.AddRegexTextBox.Text = "[0-9]{2}";
-            //window.InverseEvaluationCheckBox.Checked = true;
+            window.RegexTb.Text = "[0-9]{2}";
             // Assert
             Assert.AreEqual("[0-9]{2}", window.RegexText);
-            Assert.IsTrue(window.InverseRegex);
 
-            // Reset
-            //window.AddRegexTextBox.Text = string.Empty;
-            //window.InverseEvaluationCheckBox.Checked = false;
+            //Reset
+            window.RegexTb.Text = string.Empty;
 
             // Act
             window.RegexText = "[a-z]?";
-            window.InverseRegex = true;
             // Assert
-            //Assert.AreEqual("[a-z]?", window.AddRegexTextBox.Text);
-            //Assert.IsTrue(window.InverseEvaluationCheckBox.Checked);
+            Assert.AreEqual("[a-z]?", window.RegexTb.Text);
         }
 
         [Test]
@@ -68,13 +66,10 @@ namespace DEiXTo.Views.Tests
             node = new TreeNode("SPAN");
             node.Tag = new NodeInfo();
             node.SetContent("$11.5");
-            eventHub = new Mock<IEventHub>();
-            window = new RegexBuilderWindow();
             presenter = new RegexBuilderPresenter(window, node, eventHub.Object);
-            //window.AddRegexTextBox.Text = "[0-9]{2}";
 
             // Act
-            //window.AddRegexTextBox.Text = "[0-9]{2}";
+            window.RegexTb.Text = "[0-9]{2}";
             presenter.AddRegex();
 
             // Assert
@@ -91,15 +86,13 @@ namespace DEiXTo.Views.Tests
             node = new TreeNode("SPAN");
             node.Tag = new NodeInfo();
             node.SetContent("$11.5");
-            eventHub = new Mock<IEventHub>();
-            window = new RegexBuilderWindow();
             presenter = new RegexBuilderPresenter(window, node, eventHub.Object);
             var font = new Font(FontFamily.GenericSansSerif, 8.25f);
             var boldFont = new Font(font, FontStyle.Bold);
             node.NodeFont = boldFont;
 
             // Act
-            //window.AddRegexTextBox.Text = "[0-9]{2}";
+            window.RegexTb.Text = "[0-9]{2}";
             presenter.AddRegex();
 
             // Assert
@@ -118,8 +111,6 @@ namespace DEiXTo.Views.Tests
             node.SetContent("$11.5");
             var constraint = new RegexConstraint("[0-9]{2}", NodeState.Grayed);
             node.SetRegexConstraint(constraint);
-            eventHub = new Mock<IEventHub>();
-            window = new RegexBuilderWindow();
             presenter = new RegexBuilderPresenter(window, node, eventHub.Object);
 
             // Assert
@@ -135,8 +126,6 @@ namespace DEiXTo.Views.Tests
             node.SetContent("$11.5");
             var constraint = new RegexConstraint("[0-9]{2}", NodeState.Grayed);
             node.SetRegexConstraint(constraint);
-            eventHub = new Mock<IEventHub>();
-            window = new RegexBuilderWindow();
             presenter = new RegexBuilderPresenter(window, node, eventHub.Object);
 
             // Act
