@@ -150,13 +150,6 @@ namespace DEiXTo.Services
             for (int i = 0; i < left.Nodes.Count; i++)
             {
                 var nextLeft = left.Nodes[i];
-                var hasNode = right.HasNextNode(i);
-
-                if (hasNode)
-                {
-                    return false;
-                }
-
                 var nextRight = right.Nodes[i];
 
                 if (!CompareTrees(nextLeft, nextRight, result))
@@ -258,15 +251,9 @@ namespace DEiXTo.Services
             for (int i = 0; i < childNodes; i++)
             {
                 var nextLeft = left.Nodes[i];
-                var hasNode = right.HasNextNode(i);
 
                 if (nextLeft.IsRequired())
                 {
-                    if (hasNode)
-                    {
-                        return false;
-                    }
-
                     var nextRight = right.Nodes[i];
 
                     if (!CompareRecursiveTree(nextLeft, nextRight, result))
@@ -277,11 +264,6 @@ namespace DEiXTo.Services
 
                 if (nextLeft.IsOptional())
                 {
-                    if (hasNode)
-                    {
-                        return true;
-                    }
-
                     var nextRight = right.Nodes[i];
 
                     CompareRecursiveTree(nextLeft, nextRight, result);

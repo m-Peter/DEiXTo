@@ -94,9 +94,8 @@ namespace DEiXTo.Models
             for (int i = 0; i < left.Nodes.Count; i++)
             {
                 var nextLeft = left.Nodes[i];
-                var hasNode = right.HasNextNode(i);
-
-                if (hasNode)
+                
+                if (right.Nodes.Count <= i)
                 {
                     return false;
                 }
