@@ -214,7 +214,39 @@ namespace DEiXTo.Services
             }
 
             var content = right.GetContent();
+
+            if (left.HasRegexConstraint())
+            {
+                var constraint = left.GetRegexConstraint();
+                var input = right.GetContent();
+                var evaluation = constraint.Evaluate(input);
+
+                if (!evaluation)
+                {
+                    return false;
+                }
+                content = constraint.Value;
+            }
+
+            if (left.HasAttrConstraint())
+            {
+                var constraint = left.GetAttrConstraint();
+                var attribute = constraint.Attribute;
+                var pattern = constraint.Pattern;
+
+                var attributes = right.GetAttributes();
+                var input = attributes.GetByName(attribute).Value;
+                var evaluation = constraint.Evaluate(input);
+
+                if (!evaluation)
+                {
+                    return false;
+                }
+                content = constraint.Value;
+            }
+
             AddContentFromInstance(left.GetState(), content, result);
+            
             var childNodes = left.Nodes.Count;
 
             for (int i = 0; i < childNodes; i++)
