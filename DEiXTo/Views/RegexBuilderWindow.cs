@@ -78,6 +78,12 @@ namespace DEiXTo.Views
             }
         }
 
+        public string InputText
+        {
+            get { return InputTb.Text; }
+            set { InputTb.Text = value; }
+        }
+
         public RegexBuilderPresenter Presenter { get; set; }
 
         public void ShowInvalidRegexMessage()

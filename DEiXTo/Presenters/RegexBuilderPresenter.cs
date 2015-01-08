@@ -26,15 +26,13 @@ namespace DEiXTo.Presenters
 
         private void populateRegex()
         {
+            View.InputText = _node.GetContent();
+
             if (_node.HasRegexConstraint())
             {
                 var constraint = _node.GetRegexConstraint();
                 View.RegexText = constraint.Pattern;
-                
-                return;
             }
-
-            View.RegexText = _node.GetContent();
         }
 
         public void AddRegex()
