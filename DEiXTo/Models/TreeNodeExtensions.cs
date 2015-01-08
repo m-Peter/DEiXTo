@@ -5,6 +5,11 @@ namespace DEiXTo.Models
 {
     public static class TreeNodeExtensions
     {
+        public static bool HasNextNode(this TreeNode node, int index)
+        {
+            return node.Nodes.Count <= index;
+        }
+
         public static void SetRegexConstraint(this TreeNode node, RegexConstraint constraint)
         {
             NodeInfo pInfo = GetPointerInfo(node);

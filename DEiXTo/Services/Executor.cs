@@ -150,7 +150,7 @@ namespace DEiXTo.Services
             for (int i = 0; i < left.Nodes.Count; i++)
             {
                 var nextLeft = left.Nodes[i];
-                var hasNode = HasNextNode(right, i);
+                var hasNode = right.HasNextNode(i);
 
                 if (hasNode)
                 {
@@ -258,7 +258,7 @@ namespace DEiXTo.Services
             for (int i = 0; i < childNodes; i++)
             {
                 var nextLeft = left.Nodes[i];
-                var hasNode = HasNextNode(right, i);
+                var hasNode = right.HasNextNode(i);
 
                 if (nextLeft.IsRequired())
                 {
@@ -289,11 +289,6 @@ namespace DEiXTo.Services
             }
 
             return true;
-        }
-
-        private bool HasNextNode(TreeNode node, int index)
-        {
-            return node.Nodes.Count <= index;
         }
 
         private bool TagMatching(TreeNode left, TreeNode right)

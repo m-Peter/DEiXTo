@@ -94,7 +94,7 @@ namespace DEiXTo.Models
             for (int i = 0; i < left.Nodes.Count; i++)
             {
                 var nextLeft = left.Nodes[i];
-                bool hasNode = HasNextNode(right, i);
+                var hasNode = right.HasNextNode(i);
 
                 if (hasNode)
                 {
@@ -110,11 +110,6 @@ namespace DEiXTo.Models
             }
 
             return true;
-        }
-
-        private bool HasNextNode(TreeNode node, int index)
-        {
-            return node.Nodes.Count <= index;
         }
     }
 }
