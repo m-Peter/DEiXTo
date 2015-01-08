@@ -258,19 +258,29 @@ namespace DEiXTo.Services
                     return false;
                 }
 
-                var index = i;
-                var nextRight = right.Nodes[index];
-
-                if (!Compare(nextLeft, nextRight, result))
+                if (nextLeft.IsRequired())
                 {
-                    index += 1;
-                    if (right.Nodes.Count > index)
-                    {
-                        nextRight = right.Nodes[index];
-                        return CompareTrees(nextLeft, nextRight, result);
-                    }
+                    var index = i;
+                    var nextRight = right.Nodes[index];
 
-                    return false;
+                    if (!Compare(nextLeft, nextRight, result))
+                    {
+                        index += 1;
+                        if (right.Nodes.Count > index)
+                        {
+                            nextRight = right.Nodes[index];
+                            return Compare(nextLeft, nextRight, result);
+                        }
+
+                        return false;
+                    }
+                }
+
+                if (nextLeft.IsOptional())
+                {
+                    var nextRight = right.Nodes[i];
+
+                    Compare(nextLeft, nextRight, result);
                 }
             }
 
