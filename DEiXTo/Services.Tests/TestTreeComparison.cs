@@ -127,6 +127,25 @@ namespace DEiXTo.Services.Tests
             Assert.IsTrue(result);
         }
 
+        [TestMethod]
+        public void TestDoNotMatch()
+        {
+            var pattern = new TreeNode("DIV");
+            var pa = pattern.Nodes.Add("A");
+            pa.Nodes.Add("TEXT");
+            var pd = pattern.Nodes.Add("DIV");
+            pd.Nodes.Add("TEXT");
+            pd.Nodes.Add("DIV");
+
+            var instance = new TreeNode("DIV");
+            var ia = instance.Nodes.Add("A");
+            ia.Nodes.Add("TEXT");
+
+            var result = CompareTrees(pattern, instance);
+
+            Assert.IsFalse(result);
+        }
+
         private bool CompareTrees(TreeNode left, TreeNode right)
         {
             // Check for tag matching
@@ -135,50 +154,34 @@ namespace DEiXTo.Services.Tests
                 return false;
             }
 
-            if (left.Nodes.Count == 0)
+            var childNodes = left.Nodes.Count;
+
+            for (int i = 0; i < childNodes; i++)
             {
-                // The Extraction Pattern has no more nodes. That
-                // means it is contained in the current examined
-                // instance. We can return true.
-                return true;
+                var nextLeft = left.Nodes[i];
+                
+                if (right.Nodes.Count <= i)
+                {
+                    return false;
+                }
+                
+                var index = i;
+                var nextRight = right.Nodes[index];
+
+                if (!CompareTrees(nextLeft, nextRight))
+                {
+                    index += 1;
+                    if (right.Nodes.Count > index)
+                    {
+                        nextRight = right.Nodes[index];
+                        return CompareTrees(nextLeft, nextRight);
+                    }
+
+                    return false;
+                }
             }
 
-            // We retrieve the first child of the Extraction Pattern.
-            var nextLeft = left.Nodes[0];
-
-            // Check to see if the current instance has a child node.
-            if (right.Nodes.Count == 0)
-            {
-                // The instance does not have a child node. We know that the
-                // extraction pattern has at least one. This means the comparison
-                // has failed.
-                return false;
-            }
-            
-            // Retrieve the first child node of the current instance.
-            int index = 0;
-            var nextRight = right.Nodes[index];
-
-            // Continue the comparison with the two new child nodes from
-            // the extraction pattern and the examined instance.
-            if (CompareTrees(nextLeft, nextRight))
-            {
-                // The sub-trees match, so we can return true.
-                return true;
-            }
-
-            // The sub-trees don't match, so we pick the next child from
-            // the current examined instance.
-            index += 1;
-            if (right.Nodes.Count > index)
-            {
-                nextRight = right.Nodes[index];
-                return CompareTrees(nextLeft, nextRight);
-            }
-
-            // The current examined instance does not have another child, so
-            // the comparison has failed.
-            return false;
+            return true;
         }
     }
 }

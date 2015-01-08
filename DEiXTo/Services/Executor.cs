@@ -54,7 +54,8 @@ namespace DEiXTo.Services
 
             foreach (TreeNode node in nodes)
             {
-                if (CompareRecursiveTree(pattern, node, result))
+                //if (CompareRecursiveTree(pattern, node, result))
+                if (Compare(pattern, node, result))
                 {
                     if (counter < start)
                     {
@@ -204,6 +205,46 @@ namespace DEiXTo.Services
             return state == NodeState.CheckedSource;
         }
 
+        private bool Compare(TreeNode left, TreeNode right, Result result)
+        {
+            // Check for tag matching
+            if (left.Text != right.Text)
+            {
+                return false;
+            }
+
+            var content = right.GetContent();
+            AddContentFromInstance(left.GetState(), content, result);
+            var childNodes = left.Nodes.Count;
+
+            for (int i = 0; i < childNodes; i++)
+            {
+                var nextLeft = left.Nodes[i];
+
+                if (right.Nodes.Count <= i)
+                {
+                    return false;
+                }
+
+                var index = i;
+                var nextRight = right.Nodes[index];
+
+                if (!Compare(nextLeft, nextRight, result))
+                {
+                    index += 1;
+                    if (right.Nodes.Count > index)
+                    {
+                        nextRight = right.Nodes[index];
+                        return CompareTrees(nextLeft, nextRight, result);
+                    }
+
+                    return false;
+                }
+            }
+
+            return true;
+        }
+
         private bool CompareRecursiveTree(TreeNode left, TreeNode right,
             Result result)
         {
@@ -254,6 +295,10 @@ namespace DEiXTo.Services
 
                 if (nextLeft.IsRequired())
                 {
+                    if (right.Nodes.Count <= i)
+                    {
+                        return false;
+                    }
                     var nextRight = right.Nodes[i];
 
                     if (!CompareRecursiveTree(nextLeft, nextRight, result))
@@ -264,6 +309,10 @@ namespace DEiXTo.Services
 
                 if (nextLeft.IsOptional())
                 {
+                    if (right.Nodes.Count <= i)
+                    {
+                        return false;
+                    }
                     var nextRight = right.Nodes[i];
 
                     CompareRecursiveTree(nextLeft, nextRight, result);
