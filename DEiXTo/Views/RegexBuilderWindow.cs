@@ -78,12 +78,6 @@ namespace DEiXTo.Views
             }
         }
 
-        public bool InverseRegex
-        {
-            get { return true; }
-            set {  }
-        }
-
         public RegexBuilderPresenter Presenter { get; set; }
 
         public void ShowInvalidRegexMessage()
