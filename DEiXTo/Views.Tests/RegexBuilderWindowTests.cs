@@ -33,7 +33,7 @@ namespace DEiXTo.Views.Tests
             presenter = new RegexBuilderPresenter(window, node, eventHub.Object);
 
             // Assert
-            Assert.AreEqual("$11.5", window.RegexTb.Text);
+            Assert.AreEqual("$11.5", window.InputTb.Text);
         }
 
         [Test]

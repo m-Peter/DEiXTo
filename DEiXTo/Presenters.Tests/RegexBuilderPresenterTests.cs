@@ -31,7 +31,7 @@ namespace DEiXTo.Presenters.Tests
         public void TestRegexTextIsPopulatedWithNodeContent()
         {
             // Assert
-            view.VerifySet(v => v.RegexText = "This is the header");
+            view.VerifySet(v => v.InputText = "This is the header");
         }
 
         [TestMethod]

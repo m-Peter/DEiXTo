@@ -165,5 +165,14 @@ namespace DEiXTo.Views
                 index = (index + format.Length);
             }
         }
+
+        private void ClearButton_Click(object sender, EventArgs e)
+        {
+            RegexTb.Clear();
+            RegexOptionsTb.Clear();
+            InputTb.Clear();
+            MatchRtb.Clear();
+            GroupsRtb.Clear();
+        }
     }
 }
