@@ -51,6 +51,9 @@
             this.AttributesTabControl = new System.Windows.Forms.TabControl();
             this.Attributes = new System.Windows.Forms.TabPage();
             this.AttributesDataGridView = new System.Windows.Forms.DataGridView();
+            this.AttributeColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Value = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Constraint = new System.Windows.Forms.DataGridViewCheckBoxColumn();
             this.Auxiliary = new System.Windows.Forms.TabPage();
             this.AuxiliaryTreeView = new System.Windows.Forms.TreeView();
             this.ExecuteButton = new System.Windows.Forms.Button();
@@ -161,9 +164,6 @@
             this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
             this.AddRegexMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.RemoveRegExMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
-            this.AddAttributeConstraintMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.RemoveAttributeConstraintMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator11 = new System.Windows.Forms.ToolStripSeparator();
             this.EnterRemoveLabelMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.NewLabelMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -208,9 +208,6 @@
             this.DeleteNodeMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.EnableHighlightMenuStrip = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.EnableHighlightingMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.AttributeColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Value = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Constraint = new System.Windows.Forms.DataGridViewCheckBoxColumn();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
@@ -543,6 +540,26 @@
             this.AttributesDataGridView.Size = new System.Drawing.Size(226, 321);
             this.AttributesDataGridView.TabIndex = 0;
             this.AttributesDataGridView.DoubleClick += new System.EventHandler(this.AttributesDataGridView_DoubleClick);
+            // 
+            // AttributeColumn
+            // 
+            this.AttributeColumn.HeaderText = "Attribute";
+            this.AttributeColumn.Name = "AttributeColumn";
+            this.AttributeColumn.ReadOnly = true;
+            this.AttributeColumn.Width = 70;
+            // 
+            // Value
+            // 
+            this.Value.HeaderText = "Value";
+            this.Value.Name = "Value";
+            this.Value.ReadOnly = true;
+            this.Value.Width = 70;
+            // 
+            // Constraint
+            // 
+            this.Constraint.HeaderText = "Constraint";
+            this.Constraint.Name = "Constraint";
+            this.Constraint.ReadOnly = true;
             // 
             // Auxiliary
             // 
@@ -1577,9 +1594,6 @@
             this.toolStripSeparator2,
             this.AddRegexMenuItem,
             this.RemoveRegExMenuItem,
-            this.toolStripSeparator3,
-            this.AddAttributeConstraintMenuItem,
-            this.RemoveAttributeConstraintMenuItem,
             this.toolStripSeparator11,
             this.EnterRemoveLabelMenuItem,
             this.toolStripSeparator4,
@@ -1595,7 +1609,7 @@
             this.toolStripSeparator8,
             this.DeleteNodeMenuItem});
             this.AdjustpatternMenuStrip.Name = "AdjustpatternMenuStrip";
-            this.AdjustpatternMenuStrip.Size = new System.Drawing.Size(239, 448);
+            this.AdjustpatternMenuStrip.Size = new System.Drawing.Size(239, 420);
             // 
             // CheckedMenuItem
             // 
@@ -1658,24 +1672,6 @@
             this.RemoveRegExMenuItem.Size = new System.Drawing.Size(238, 22);
             this.RemoveRegExMenuItem.Text = "Remove Regular Expression";
             this.RemoveRegExMenuItem.Click += new System.EventHandler(this.RemoveRegExMenuItem_Click);
-            // 
-            // toolStripSeparator3
-            // 
-            this.toolStripSeparator3.Name = "toolStripSeparator3";
-            this.toolStripSeparator3.Size = new System.Drawing.Size(235, 6);
-            // 
-            // AddAttributeConstraintMenuItem
-            // 
-            this.AddAttributeConstraintMenuItem.Name = "AddAttributeConstraintMenuItem";
-            this.AddAttributeConstraintMenuItem.Size = new System.Drawing.Size(238, 22);
-            this.AddAttributeConstraintMenuItem.Text = "Enter Attribute Constraint";
-            this.AddAttributeConstraintMenuItem.Click += new System.EventHandler(this.AddAttributeConstraintMenuItem_Click);
-            // 
-            // RemoveAttributeConstraintMenuItem
-            // 
-            this.RemoveAttributeConstraintMenuItem.Name = "RemoveAttributeConstraintMenuItem";
-            this.RemoveAttributeConstraintMenuItem.Size = new System.Drawing.Size(238, 22);
-            this.RemoveAttributeConstraintMenuItem.Text = "Remove Attribute Constraint";
             // 
             // toolStripSeparator11
             // 
@@ -1975,26 +1971,6 @@
             this.EnableHighlightingMenuItem.Text = "Enable Highlighting";
             this.EnableHighlightingMenuItem.Click += new System.EventHandler(this.EnableHighlightingMenuItem_Click);
             // 
-            // AttributeColumn
-            // 
-            this.AttributeColumn.HeaderText = "Attribute";
-            this.AttributeColumn.Name = "AttributeColumn";
-            this.AttributeColumn.ReadOnly = true;
-            this.AttributeColumn.Width = 70;
-            // 
-            // Value
-            // 
-            this.Value.HeaderText = "Value";
-            this.Value.Name = "Value";
-            this.Value.ReadOnly = true;
-            this.Value.Width = 70;
-            // 
-            // Constraint
-            // 
-            this.Constraint.HeaderText = "Constraint";
-            this.Constraint.Name = "Constraint";
-            this.Constraint.ReadOnly = true;
-            // 
             // DeixtoAgentWindow
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -2199,7 +2175,6 @@
         private System.Windows.Forms.ToolStripMenuItem SetAsRootMenuItem;
         private System.Windows.Forms.ToolStripMenuItem DeleteNodeMenuItem;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
-        private System.Windows.Forms.ToolStripSeparator toolStripSeparator3;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator4;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator5;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator6;
@@ -2242,8 +2217,6 @@
         private System.Windows.Forms.ColumnHeader DescriptionColumn;
         private System.Windows.Forms.ColumnHeader ExampleColumn;
         private System.Windows.Forms.Button SaveToDiskButton;
-        private System.Windows.Forms.ToolStripMenuItem AddAttributeConstraintMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem RemoveAttributeConstraintMenuItem;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator11;
         private System.Windows.Forms.ContextMenuStrip EnableHighlightMenuStrip;
         private System.Windows.Forms.ToolStripMenuItem EnableHighlightingMenuItem;
