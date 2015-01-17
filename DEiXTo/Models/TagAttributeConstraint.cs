@@ -33,7 +33,8 @@
 
         public bool Evaluate(NodeInfo instance)
         {
-            return Evaluate(instance.Attributes.GetByName("src").Value);
+            var attribute = instance.Attributes.GetByName(_attribute);
+            return Evaluate(attribute.Value);
         }
     }
 }
