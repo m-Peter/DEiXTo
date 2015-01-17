@@ -54,7 +54,6 @@ namespace DEiXTo.Services
 
             foreach (TreeNode node in nodes)
             {
-                //if (CompareRecursiveTree(pattern, node, result))
                 if (Compare(pattern, node, result))
                 {
                     if (counter < start)
@@ -89,7 +88,7 @@ namespace DEiXTo.Services
 
             foreach (TreeNode node in nodes)
             {
-                if (CompareRecursiveTree(pattern, node, result))
+                if (Compare(pattern, node, result))
                 {
                     var match = CheckUpper(upper, node, result);
 
@@ -281,83 +280,6 @@ namespace DEiXTo.Services
                     var nextRight = right.Nodes[i];
 
                     Compare(nextLeft, nextRight, result);
-                }
-            }
-
-            return true;
-        }
-
-        private bool CompareRecursiveTree(TreeNode left, TreeNode right,
-            Result result)
-        {
-            if (!TagMatching(left, right))
-            {
-                return false;
-            }
-
-            var content = right.GetContent();
-
-            if (left.HasRegexConstraint())
-            {
-                var constraint = left.GetRegexConstraint();
-                var input = right.GetContent();
-                var evaluation = constraint.Evaluate(input);
-
-                if (!evaluation)
-                {
-                    return false;
-                }
-                content = constraint.Value;
-            }
-
-            if (left.HasAttrConstraint())
-            {
-                var constraint = left.GetAttrConstraint();
-                var attribute = constraint.Attribute;
-                var pattern = constraint.Pattern;
-
-                var attributes = right.GetAttributes();
-                var input = attributes.GetByName(attribute).Value;
-                var evaluation = constraint.Evaluate(input);
-
-                if (!evaluation)
-                {
-                    return false;
-                }
-                content = constraint.Value;
-            }
-
-            AddContentFromInstance(left.GetState(), content, result);
-
-            var childNodes = left.Nodes.Count;
-
-            for (int i = 0; i < childNodes; i++)
-            {
-                var nextLeft = left.Nodes[i];
-
-                if (nextLeft.IsRequired())
-                {
-                    if (right.Nodes.Count <= i)
-                    {
-                        return false;
-                    }
-                    var nextRight = right.Nodes[i];
-
-                    if (!CompareRecursiveTree(nextLeft, nextRight, result))
-                    {
-                        return false;
-                    }
-                }
-
-                if (nextLeft.IsOptional())
-                {
-                    if (right.Nodes.Count <= i)
-                    {
-                        return false;
-                    }
-                    var nextRight = right.Nodes[i];
-
-                    CompareRecursiveTree(nextLeft, nextRight, result);
                 }
             }
 
