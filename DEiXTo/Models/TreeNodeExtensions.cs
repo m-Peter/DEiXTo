@@ -5,6 +5,28 @@ namespace DEiXTo.Models
 {
     public static class TreeNodeExtensions
     {
+        public static void AddConstraint(this TreeNode node, IConstraint constraint)
+        {
+            NodeInfo nInfo = GetPointerInfo(node);
+
+            if (nInfo != null)
+            {
+                nInfo.AddConstraint(constraint);
+            }
+        }
+        public static EvaluationResult EvaluateConstraints(this TreeNode node, TreeNode instance)
+        {
+            NodeInfo nInfo = GetPointerInfo(node);
+            NodeInfo instanceInfo = GetPointerInfo(instance);
+
+            if (nInfo != null)
+            {
+                return nInfo.EvaluateConstraints(instanceInfo);
+            }
+
+            return null;
+        }
+
         public static void SetRegexConstraint(this TreeNode node, RegexConstraint constraint)
         {
             NodeInfo pInfo = GetPointerInfo(node);

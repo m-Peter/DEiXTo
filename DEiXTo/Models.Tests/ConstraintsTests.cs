@@ -65,8 +65,8 @@ namespace DEiXTo.Models.Tests
             pattern.AddConstraint(regex);
 
             // Assert
-            var match = pattern.EvaluateConstraints(instance);
-            Assert.IsTrue(match);
+            var evaluation = pattern.EvaluateConstraints(instance);
+            Assert.IsTrue(evaluation.Match);
         }
 
         [TestMethod]
@@ -82,8 +82,8 @@ namespace DEiXTo.Models.Tests
             pattern.AddConstraint(regex);
 
             // Assert
-            var match = pattern.EvaluateConstraints(instance);
-            Assert.IsFalse(match);
+            var evaluation = pattern.EvaluateConstraints(instance);
+            Assert.IsFalse(evaluation.Match);
         }
 
         [TestMethod]
@@ -101,8 +101,8 @@ namespace DEiXTo.Models.Tests
             pattern.AddConstraint(attribute);
 
             // Assert
-            var match = pattern.EvaluateConstraints(instance);
-            Assert.IsTrue(match);
+            var evaluation = pattern.EvaluateConstraints(instance);
+            Assert.IsTrue(evaluation.Match);
         }
     }
 }

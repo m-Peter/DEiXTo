@@ -2,6 +2,12 @@
 
 namespace DEiXTo.Models
 {
+    public class EvaluationResult
+    {
+        public bool Match { get; set; }
+        public string Value { get; set; }
+    }
+
     public class NodeInfo
     {
         public RegexConstraint RegexConstraint { get; set; }
@@ -37,16 +43,18 @@ namespace DEiXTo.Models
             _constraints.Add(constraint);
         }
 
-        public bool EvaluateConstraints(NodeInfo instance)
+        public EvaluationResult EvaluateConstraints(NodeInfo instance)
         {
-            var match = false;
+            var match = true;
+            var value = string.Empty;
 
             foreach (IConstraint constraint in Constraints)
             {
                 match = constraint.Evaluate(instance);
+                value = constraint.Value;
             }
 
-            return match;
+            return new EvaluationResult { Match = match, Value = value };
         }
 
         public int NumOfConstraints()

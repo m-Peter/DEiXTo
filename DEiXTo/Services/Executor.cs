@@ -213,56 +213,14 @@ namespace DEiXTo.Services
 
             var content = right.GetContent();
 
-            // How can I remove these checks from the algorithm?
-
-            // The Regex Filter retrieves the regex constraint from the
-            // left node (a node of the extraction pattern). So the left
-            // node is required. Then it retrieves the content from the
-            // right node (a node of the candidate instance). So the right
-            // node is also required. Then it evaluates the constraint, based
-            // on the given input. Last, it returns the value.
-            if (left.HasRegexConstraint())
+            var evaluation = left.EvaluateConstraints(right);
+            if (!evaluation.Match)
             {
-                var constraint = left.GetRegexConstraint();
-                var input = right.GetContent();
-                var evaluation = constraint.Evaluate(input);
-
-                if (!evaluation)
-                {
-                    return false;
-                }
-                content = constraint.Value;
+                return false;
             }
-
-            // The Attribute Filter retrieves the attribute constraint from
-            // the left node (a node of the extraction pattern). So the left
-            // node is required. Then it retrieves the available tag attributes
-            // for the right node (a node of the candidate instance). So the
-            // right node is also required. Then it evaluates the constraint,
-            // based on the given input. Last, it returns the value.
-            
-            // The pattern here is: We have the notion of a constraint. At the moment
-            // two available constraints exist, namely: RegexConstraint and AttributeConstraint.
-            // Each TreeNode can have zero or many constraints.
-            // When we compare an extraction node against a candidate node, each of the assigned
-            // constraints must evaluate to true. If not, the comparison has failed. If they
-            // succeed, then we retrieve the output (Value) of each constraint and assign it in the
-            // result object.
-            if (left.HasAttrConstraint())
+            if (evaluation.Value != string.Empty)
             {
-                var constraint = left.GetAttrConstraint();
-                var attribute = constraint.Attribute;
-                var pattern = constraint.Pattern;
-
-                var attributes = right.GetAttributes();
-                var input = attributes.GetByName(attribute).Value;
-                var evaluation = constraint.Evaluate(input);
-
-                if (!evaluation)
-                {
-                    return false;
-                }
-                content = constraint.Value;
+                content = evaluation.Value;
             }
 
             AddContentFromInstance(left.GetState(), content, result);

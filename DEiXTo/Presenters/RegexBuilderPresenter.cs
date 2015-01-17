@@ -47,7 +47,7 @@ namespace DEiXTo.Presenters
             }
 
             var constraint = new RegexConstraint(pattern, action);
-            _node.SetRegexConstraint(constraint);
+            _node.AddConstraint(constraint);
 
             if (_node.NodeFont != null)
             {

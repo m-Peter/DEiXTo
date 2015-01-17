@@ -40,8 +40,6 @@ namespace DEiXTo.Presenters
         {
             var constraint = _node.GetAttrConstraint();
             var selectedTag = GetSelectedAttribute(attributes, constraint.Attribute);
-
-            //View.SelectAttribute(selectedTag);
         }
 
         private TagAttribute GetSelectedAttribute(List<TagAttribute> attributes, string tagAttribute)
@@ -68,7 +66,7 @@ namespace DEiXTo.Presenters
         {
             var constraint = View.Constraint;
             var attrConstraint = new TagAttributeConstraint(attributeName, constraint, NodeState.Grayed);
-            _node.SetAttrConstraint(attrConstraint);
+            _node.AddConstraint(attrConstraint);
             View.Exit();
         }
 
