@@ -26,7 +26,7 @@ namespace DEiXTo.Models
         public TagAttributeCollection Attributes { get; set; }
         public TagAttributeConstraint AttrConstraint { get; set; }
 
-        private List<IConstraint> _constraints;
+        private List<IConstraint> _constraints = new List<IConstraint>();
 
         public NodeInfo()
         {

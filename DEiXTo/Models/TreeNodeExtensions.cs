@@ -5,6 +5,18 @@ namespace DEiXTo.Models
 {
     public static class TreeNodeExtensions
     {
+        public static int ConstraintsCount(this TreeNode node)
+        {
+            NodeInfo nInfo = GetPointerInfo(node);
+
+            if (nInfo != null)
+            {
+                return nInfo.NumOfConstraints();
+            }
+
+            return 0;
+        }
+
         public static void AddConstraint(this TreeNode node, IConstraint constraint)
         {
             NodeInfo nInfo = GetPointerInfo(node);
