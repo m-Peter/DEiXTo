@@ -95,9 +95,11 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="IntegrationTests\MainWindowIntegrationTests.cs" />
+    <Compile Include="Models.Tests\ConstraintsTests.cs" />
     <Compile Include="Models.Tests\ExtractionPatternTests.cs" />
     <Compile Include="Models.Tests\TagAttributeConstraintTests.cs" />
     <Compile Include="Models.Tests\TreeNodeTests.cs" />
+    <Compile Include="Models\IConstraint.cs" />
     <Compile Include="Models\RegexConstraint.cs" />
     <Compile Include="Models\TagAttributeConstraint.cs" />
     <Compile Include="Models\DeixtoWrapper.cs" />

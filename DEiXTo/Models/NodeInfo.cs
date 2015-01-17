@@ -1,4 +1,6 @@
-﻿namespace DEiXTo.Models
+﻿using System.Collections.Generic;
+
+namespace DEiXTo.Models
 {
     public class NodeInfo
     {
@@ -17,6 +19,40 @@
         public int SiblingOrderStep { get; set; }
         public TagAttributeCollection Attributes { get; set; }
         public TagAttributeConstraint AttrConstraint { get; set; }
+
+        private List<IConstraint> _constraints;
+
+        public NodeInfo()
+        {
+            _constraints = new List<IConstraint>();
+        }
+
+        public List<IConstraint> Constraints
+        {
+            get { return _constraints; }
+        }
+
+        public void AddConstraint(IConstraint constraint)
+        {
+            _constraints.Add(constraint);
+        }
+
+        public bool EvaluateConstraints(NodeInfo instance)
+        {
+            var match = false;
+
+            foreach (IConstraint constraint in Constraints)
+            {
+                match = constraint.Evaluate(instance);
+            }
+
+            return match;
+        }
+
+        public int NumOfConstraints()
+        {
+            return _constraints.Count;
+        }
 
         public class Builder
         {
@@ -162,11 +198,6 @@
             {
                 get { return _siblingOrderStep; }
             }
-        }
-
-        public NodeInfo()
-        {
-
         }
 
         private NodeInfo(Builder builder)

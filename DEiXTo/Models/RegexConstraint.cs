@@ -4,7 +4,7 @@ using System.Text.RegularExpressions;
 
 namespace DEiXTo.Models
 {
-    public class RegexConstraint
+    public class RegexConstraint : IConstraint
     {
         private string _input;
         private string _pattern;
@@ -53,6 +53,11 @@ namespace DEiXTo.Models
 
             _value = sb.ToString(0, sb.Length - 1);
             return true;
+        }
+
+        public bool Evaluate(NodeInfo instance)
+        {
+            return Evaluate(instance.Content);
         }
 
         public string Value

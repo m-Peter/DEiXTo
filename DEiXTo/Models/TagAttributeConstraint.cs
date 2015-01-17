@@ -1,6 +1,6 @@
 ﻿namespace DEiXTo.Models
 {
-    public class TagAttributeConstraint
+    public class TagAttributeConstraint : IConstraint
     {
         private string _attribute;
         private RegexConstraint _constraint;
@@ -29,6 +29,11 @@
         public bool Evaluate(string input)
         {
             return _constraint.Evaluate(input);
+        }
+
+        public bool Evaluate(NodeInfo instance)
+        {
+            return Evaluate(instance.Attributes.GetByName("src").Value);
         }
     }
 }
