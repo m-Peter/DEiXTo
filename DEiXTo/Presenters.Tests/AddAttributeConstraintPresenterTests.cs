@@ -62,7 +62,7 @@ namespace DEiXTo.Presenters.Tests
             //var attrConstraint = node.GetAttrConstraint();
             //Assert.AreEqual("id", attrConstraint.Attribute);
             //Assert.AreEqual("some-link", attrConstraint.Pattern);
-            Assert.AreEqual(1, node.ConstraintsCount());
+            Assert.IsInstanceOfType(node.GetConstraint(), typeof(TagAttributeConstraint));
             view.Verify(v => v.Exit());
         }
 

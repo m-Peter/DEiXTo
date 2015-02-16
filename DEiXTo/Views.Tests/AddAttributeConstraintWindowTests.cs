@@ -119,7 +119,7 @@ namespace DEiXTo.Views.Tests
             //var constraint = node.GetAttrConstraint();
             //Assert.AreEqual("Id", constraint.Attribute);
             //Assert.AreEqual("container", constraint.Pattern);
-            Assert.AreEqual(1, node.ConstraintsCount());
+            Assert.IsInstanceOfType(node.GetConstraint(), typeof(TagAttributeConstraint));
         }
     }
 }

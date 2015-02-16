@@ -46,7 +46,7 @@ namespace DEiXTo.Presenters.Tests
             // Assert
             //var constraint = node.GetRegexConstraint();
             //Assert.AreEqual("some regex", constraint.Pattern);
-            Assert.AreEqual(1, node.ConstraintsCount());
+            Assert.IsInstanceOfType(node.GetConstraint(), typeof(RegexConstraint));
             eventHub.Verify(e => e.Publish(It.Is<RegexAdded>(ra => ra.Node == node)));
             view.Verify(v => v.Exit());
         }
@@ -77,7 +77,7 @@ namespace DEiXTo.Presenters.Tests
             // Assert
             //var constraint = node.GetRegexConstraint();
             //Assert.AreEqual("some regex", constraint.Pattern);
-            Assert.AreEqual(1, node.ConstraintsCount());
+            Assert.IsInstanceOfType(node.GetConstraint(), typeof(RegexConstraint));
             eventHub.Verify(e => e.Publish(It.Is<RegexAdded>(ra => ra.Node == node)));
             view.Verify(v => v.Exit());
         }
@@ -111,7 +111,7 @@ namespace DEiXTo.Presenters.Tests
             // Assert
             //var result = node.GetRegexConstraint();
             //Assert.AreEqual("[0-9]{2}", result.Pattern);
-            Assert.AreEqual(1, node.ConstraintsCount());
+            Assert.IsInstanceOfType(node.GetConstraint(), typeof(RegexConstraint));
             eventHub.Verify(e => e.Publish(It.Is<RegexAdded>(ra => ra.Node == node)));
             view.Verify(v => v.Exit());
         }

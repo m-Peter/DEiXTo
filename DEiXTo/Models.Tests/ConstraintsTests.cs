@@ -14,10 +14,10 @@ namespace DEiXTo.Models.Tests
             var node = new NodeInfo();
 
             // Act
-            node.AddConstraint(constraint);
+            node.Constraint = constraint;
 
             // Assert
-            Assert.AreEqual(1, node.NumOfConstraints());
+            Assert.IsInstanceOfType(node.Constraint, typeof (RegexConstraint));
         }
 
         [TestMethod]
@@ -30,26 +30,10 @@ namespace DEiXTo.Models.Tests
             var node = new NodeInfo();
 
             // Act
-            node.AddConstraint(constraint);
+            node.Constraint = constraint;
 
             // Assert
-            Assert.AreEqual(1, node.NumOfConstraints());
-        }
-
-        [TestMethod]
-        public void TestAddRegexAndAttributeConstraint()
-        {
-            // Arrange
-            var regex = new RegexConstraint("a+", NodeState.Grayed);
-            var attribute = new TagAttributeConstraint("src", ".png", NodeState.Grayed);
-            var node = new NodeInfo();
-
-            // Act
-            node.AddConstraint(regex);
-            node.AddConstraint(attribute);
-
-            // Assert
-            Assert.AreEqual(2, node.NumOfConstraints());
+            Assert.IsInstanceOfType(node.Constraint, typeof(TagAttributeConstraint));
         }
 
         [TestMethod]
@@ -62,7 +46,7 @@ namespace DEiXTo.Models.Tests
             var regex = new RegexConstraint("\\d+", NodeState.Grayed);
 
             // Act
-            pattern.AddConstraint(regex);
+            pattern.Constraint = regex;
 
             // Assert
             var evaluation = pattern.EvaluateConstraints(instance);
@@ -79,7 +63,7 @@ namespace DEiXTo.Models.Tests
             var regex = new RegexConstraint("dd", NodeState.Grayed);
 
             // Act
-            pattern.AddConstraint(regex);
+            pattern.Constraint = regex;
 
             // Assert
             var evaluation = pattern.EvaluateConstraints(instance);
@@ -98,7 +82,7 @@ namespace DEiXTo.Models.Tests
             var attribute = new TagAttributeConstraint("src", ".png", NodeState.Grayed);
 
             // Act
-            pattern.AddConstraint(attribute);
+            pattern.Constraint = attribute;
 
             // Assert
             var evaluation = pattern.EvaluateConstraints(instance);

@@ -1,14 +1,14 @@
 ﻿using DEiXTo.Models;
 using DEiXTo.Presenters;
 using DEiXTo.Services;
-using NUnit.Framework;
 using System.Windows.Forms;
 using Moq;
 using System.Drawing;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace DEiXTo.Views.Tests
 {
-    [TestFixture]
+    [TestClass]
     public class RegexBuilderWindowTests
     {
         private RegexBuilderWindow window;
@@ -16,14 +16,14 @@ namespace DEiXTo.Views.Tests
         private TreeNode node;
         private Mock<IEventHub> eventHub;
 
-        [SetUp]
+        [TestInitialize]
         public void SetUp()
         {
             eventHub = new Mock<IEventHub>();
             window = new RegexBuilderWindow();
         }
 
-        [Test]
+        [TestMethod]
         public void TestStartingState()
         {
             // Arrange
@@ -36,7 +36,7 @@ namespace DEiXTo.Views.Tests
             Assert.AreEqual("$11.5", window.InputTb.Text);
         }
 
-        [Test]
+        [TestMethod]
         public void TestGetAndSetRegexFields()
         {
             // Arrange
@@ -59,7 +59,7 @@ namespace DEiXTo.Views.Tests
             Assert.AreEqual("[a-z]?", window.RegexTb.Text);
         }
 
-        [Test]
+        [TestMethod]
         public void TestAddRegex()
         {
             // Arrange
@@ -74,13 +74,13 @@ namespace DEiXTo.Views.Tests
 
             // Assert
             //var constraint = node.GetRegexConstraint();
-            Assert.AreEqual(1, node.ConstraintsCount());
+            Assert.IsInstanceOfType(node.GetConstraint(), typeof(RegexConstraint));
             //Assert.AreEqual("[0-9]{2}", constraint.Pattern);
             eventHub.Verify(e => e.Publish(It.Is<RegexAdded>(sub => sub.Node == node)));
             Assert.AreEqual(FontStyle.Underline, node.NodeFont.Style);
         }
 
-        [Test]
+        [TestMethod]
         public void TestAddRegexInBoldTreeNode()
         {
             // Arrange
@@ -99,12 +99,12 @@ namespace DEiXTo.Views.Tests
             // Assert
             //var constraint = node.GetRegexConstraint();
             //Assert.AreEqual("[0-9]{2}", constraint.Pattern);
-            Assert.AreEqual(1, node.ConstraintsCount());
+            Assert.IsInstanceOfType(node.GetConstraint(), typeof(RegexConstraint));
             eventHub.Verify(e => e.Publish(It.Is<RegexAdded>(sub => sub.Node == node)));
             Assert.AreEqual(FontStyle.Bold | FontStyle.Underline, node.NodeFont.Style);
         }
 
-        [Test]
+        [TestMethod]
         public void TestLoadExistingRegex()
         {
             // Arrange
@@ -119,7 +119,7 @@ namespace DEiXTo.Views.Tests
             Assert.AreEqual("[0-9]{2}", window.RegexText);
         }
 
-        [Test]
+        [TestMethod]
         public void TestChangeExistingRegex()
         {
             // Arrange
@@ -137,7 +137,7 @@ namespace DEiXTo.Views.Tests
             // Assert
             //var result = node.GetRegexConstraint();
             //Assert.AreEqual("[a-z]?", result.Pattern);
-            Assert.AreEqual(1, node.ConstraintsCount());
+            Assert.IsInstanceOfType(node.GetConstraint(), typeof(RegexConstraint));
         }
     }
 }

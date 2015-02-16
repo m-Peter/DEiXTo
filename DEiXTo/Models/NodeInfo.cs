@@ -26,21 +26,17 @@ namespace DEiXTo.Models
         public TagAttributeCollection Attributes { get; set; }
         public TagAttributeConstraint AttrConstraint { get; set; }
 
-        private List<IConstraint> _constraints = new List<IConstraint>();
+        private IConstraint _constraint;
 
         public NodeInfo()
         {
-            _constraints = new List<IConstraint>();
+
         }
 
-        public List<IConstraint> Constraints
+        public IConstraint Constraint
         {
-            get { return _constraints; }
-        }
-
-        public void AddConstraint(IConstraint constraint)
-        {
-            _constraints.Add(constraint);
+            get { return _constraint; }
+            set { _constraint = value; }
         }
 
         public EvaluationResult EvaluateConstraints(NodeInfo instance)
@@ -48,18 +44,13 @@ namespace DEiXTo.Models
             var match = true;
             var value = string.Empty;
 
-            foreach (IConstraint constraint in Constraints)
-            {
-                match = constraint.Evaluate(instance);
-                value = constraint.Value;
-            }
+            if (_constraint == null)
+                return new EvaluationResult { Match = match, Value = value };
+
+            match = _constraint.Evaluate(instance);
+            value = _constraint.Value;
 
             return new EvaluationResult { Match = match, Value = value };
-        }
-
-        public int NumOfConstraints()
-        {
-            return _constraints.Count;
         }
 
         public class Builder
