@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 
 namespace DEiXTo.Models
 {
@@ -33,7 +34,7 @@ namespace DEiXTo.Models
 
         public TagAttribute GetByName(string attributeName)
         {
-            return _attributes.Find(attribute => attribute.Name == attributeName);
+            return _attributes.First(attribute => attribute.Name == attributeName);
         }
     }
 }

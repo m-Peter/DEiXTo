@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Windows.Forms;
 using DEiXTo.Services;
 using System;
+using System.Linq;
 
 namespace DEiXTo.Models
 {
@@ -45,16 +46,13 @@ namespace DEiXTo.Models
         public TreeNode ScanTree(TreeNode pattern)
         {
             var nodes = _DOMTree.Values;
-            
-            foreach (var node in nodes)
-            {
-                if (CompareTrees(node, pattern))
-                {
-                    return node.GetClone();
-                }
-            }
 
-            throw new NodeNotFound("Node wasn't found in DOMTree");
+            var node = nodes.First(n => CompareTrees(n, pattern));
+
+            if (node == null)
+                throw new NodeNotFound("Node wasn't found in DOMTree");
+
+            return node;
         }
 
         public TreeNode GetNodeFor(HtmlElement element)
