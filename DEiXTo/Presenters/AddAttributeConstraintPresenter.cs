@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Windows.Forms;
 using DEiXTo.Services;
 using DEiXTo.Models;
+using System.Linq;
 
 namespace DEiXTo.Presenters
 {
@@ -44,15 +45,7 @@ namespace DEiXTo.Presenters
 
         private TagAttribute GetSelectedAttribute(List<TagAttribute> attributes, string tagAttribute)
         {
-            foreach (var tag in attributes)
-            {
-                if (tag.Name == tagAttribute)
-                {
-                    return tag;
-                }
-            }
-
-            return null;
+            return attributes.FirstOrDefault(attr => attr.Name == tagAttribute);
         }
 
         public IAddAttributeConstraintView View { get; set; }
